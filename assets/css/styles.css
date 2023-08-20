@@ -28,9 +28,9 @@ footer {
 	display: block;
 	position: absolute;
 	margin: auto;
-	top: 50%;
+	top: calc(50% - 80px);
 	left: 50%;
-	transform: translate(-50%, -50%);
+	transform: translate(-50%, calc(50% - 80px));
 }
 
 .logo {
