@@ -7,7 +7,7 @@ body {
 	margin-top: 0px;
 	margin-bottom: 0px;
 	background-color: #2D2D3A;
-	overflow-x: hidden;
+	overflow: hidden;
 }
 
 footer {
