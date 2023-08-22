@@ -8,5 +8,4 @@ window.addEventListener("load", (event) => {
   		footer.appendChild(footerText);
   		parent.insertBefore(footer, parent.lastChild);
   	}
-  	footer();
 });
