@@ -68,17 +68,6 @@ a {
 	text-decoration: underline;
 }
 
-footer {
-	display: block;
-	position: relative;
-	left: 50%;
-	transform: translateX(-50%);
-	width: 100%;
-    height: 80px;
-	background-color: #555BBB;
-	z-index: 1;
-}
-
 /*Classes*/
 
 .content {
@@ -104,17 +93,6 @@ footer {
 .fade-in {
 	opacity: 0.0;
 	transition: opacity 3s;
-}
-
-.footertext {
-	position: relative;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	color: white;
-	font-family: "Helvetica";
-	font-size: 12pt;
-	text-align: center;
 }
 
 .spacer1 {
