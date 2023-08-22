@@ -4,6 +4,7 @@ window.addEventListener("load", (event) => {
   		var footer = document.createElement("footer");
   		var footerText = document.createElement("div");
   		footerText.classList.add("footerText");
+  		footer.innerText = "Copyright © 2023 Universe Dev";
   		footer.appendChild(footerText);
   		parent.insertBefore(footer, parent.lastChild);
   	}
