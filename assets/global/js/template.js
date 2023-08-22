@@ -5,7 +5,7 @@ window.addEventListener("load", (event) => {
   		var footerText = document.createElement("div");
   		footerText.classList.add("footerText");
   		footer.appendChild(footerText);
-  		parent.insertAfter(footer, parent.lastChild);
+  		parent.insertBefore(footer, parent.lastChild);
   	}
   	footer();
 });
