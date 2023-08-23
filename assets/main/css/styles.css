@@ -6,7 +6,7 @@ body {
     margin-right: auto;
     margin-top: 0px;
     margin-bottom: 0px;
-    background-color: #2D2D3A;
+    background-color: #22222C;
     overflow: hidden;
 }
 
@@ -16,7 +16,7 @@ footer {
     bottom: 0;
     width: 100%;
     height: 60px;
-    background-color: #22222c;
+    background-color: #2D2D3A;
     z-index: 1;
 }
 
