@@ -13,9 +13,10 @@
 	//
 	//
 	document.addEventListener("DOMContentLoaded", function() {
-    	var url = window.location.href;
-    	var slug = url.pathname;
-    	console.log(slug);
+    	var url = window.location.pathname.split('/');
+    	console.log(url);
+ 		let path = url.toString();
+ 		console.log(path);
    //  	switch (slug) {
    //          case '/cl':
    //          window.location.href = "https://github.com/leminlimez/CowabungaLite/releases";
