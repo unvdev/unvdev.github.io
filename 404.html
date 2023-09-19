@@ -13,18 +13,19 @@
 	//
 	//
 	document.addEventListener("DOMContentLoaded", function() {
-    	var url = window.location.search;
-    	switch (url) {
-            case 'cl':
+    	var url = window.location.href;
+    	var slug = url.pathname;
+    	switch (slug) {
+            case '/cl':
             window.location.href = "https://github.com/leminlimez/CowabungaLite/releases";
 			break;
             
-            case 'sage':
+            case '/sage':
             window.location.href = "https://docs.google.com/document/d/1PkG_0pifdw2xrqQQCbP65p8qiaZLVBgK3rA7QByaiuM/edit";
             break;
             
 			default: 
-			document.write("404 error. Page not found.");
+			window.location.href = "https://www.uv.vu";
         };
 	});
 </script>
