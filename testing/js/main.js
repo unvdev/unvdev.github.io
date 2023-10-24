@@ -1,7 +1,6 @@
 //Dynamic Variables
 var siteURL = "https://www.uv.vu/";
-var dropdownBackgroundColor = "#2D2D3A";
-var stripeColor = "#555BBB";
+var stripeColor = "transparent";
 var stripeBorder = "2px solid #4E4E65";
 //
 window.addEventListener("load", (event) => {
@@ -31,7 +30,7 @@ window.addEventListener("load", (event) => {
             }
             if (document.querySelector(".stripe")) {
                 var stripe = document.querySelector(".stripe");
-                stripe.style.background = `${dropdownBackgroundColor}`;
+                stripe.style.background = `${stripeColor}`;
                 stripe.style.borderLeft = `${stripeBorder}`;
             }
             dropdownContent.style.display = "block";
