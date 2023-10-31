@@ -1,5 +1,58 @@
 /*Website: https://www.uv.vu*/
 /**/
+/*---Custom Styles---*/
+/**/
+/*Scroll-activated Main Image*/
+.customScrollingMainImage {
+    display: block;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 50%;
+    left: 50%;
+    transform: translate(calc(-50% - 27px), calc(-50% + 41px));
+    z-index: 1;
+    transition: opacity 0.25s ease-in-out;
+    -webkit-transition: opacity 0.25s ease-in-out;
+}
+
+@media screen and (max-width: 760px) {
+    .customScrollingMainImage {
+        transform: translate(-50%, calc(-50% + 41px));
+    }
+}
+
+.customScrollingMainImageContainer {
+    display: block;
+    position: relative;
+    height: 3000px;
+    transition: opacity 0.25s ease-in-out;
+    -webkit-transition: opacity 0.25s ease-in-out;
+}
+
+.customScrollingImage1 {
+    opacity: 0;
+    transition: opacity 0.25s ease-in-out;
+    -webkit-transition: opacity 0.25s ease-in-out;
+}
+
+.customScrollingImage2 {
+    opacity: 0;
+    transition: opacity 0.25s ease-in-out;
+    -webkit-transition: opacity 0.25s ease-in-out;
+}
+
+.customScrollingImage3 {
+    opacity: 0;
+    transition: opacity 0.25s ease-in-out;
+    -webkit-transition: opacity 0.25s ease-in-out;
+}
+
+.customScrollingImageVisibility {
+    opacity: 1.0 !important;
+}
+
+/**/
 /*---Global HTML Tags---*/
 /**/
 * {
@@ -38,16 +91,6 @@ body {
     height: 100%;
     z-index: 999999;
 }
-
-/*.loadscreen .loadingIcon {
-    display: block;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 55pt;
-    color: #FFFFFF;
-}*/
 
 .loadscreen .loadContainer {
     display: block;
@@ -133,7 +176,7 @@ header {
 /**/
 /*Page Background*/
 .pb {
-    background-color: #2D2D3A;
+    background-color: #22222C;
 }
 
 /*Content Backgrounds*/
@@ -645,4 +688,16 @@ h4 {
     left: 50%;
     transform: translate(-50%, -50%);
     object-fit: cover;
+}
+
+.imgs4 {
+    display: block;
+    position: absolute;
+    max-width: 80%;
+    width: auto;
+    max-height: 80%;
+    height: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

@@ -150,3 +150,44 @@ document.onreadystatechange = function() {
         }, 1000);
     }
 };
+
+//Custom Functions Below This Line
+
+if (document.querySelector(".customScrollingMainImage")) {
+    var customScrollingMainImage = document.querySelector(".customScrollingMainImage");
+    var customScrollingMainImageContainer = document.querySelector(".customScrollingMainImageContainer");
+    var customScrollingImage1 = document.querySelector(".customScrollingImage1");
+    var customScrollingImage2 = document.querySelector(".customScrollingImage2");
+    var customScrollingImage3 = document.querySelector(".customScrollingImage3");
+    function customScroll() {
+        var scrollValue = document.documentElement.scrollTop;
+        switch(true) {
+        case scrollValue >= 0 && scrollValue < 900:
+            clearCustomScrollingImage();
+            customScrollingImage1.classList.add("customScrollingImageVisibility");
+            break;
+        case scrollValue > 900 && scrollValue < 1800:
+            clearCustomScrollingImage();
+            customScrollingImage2.classList.add("customScrollingImageVisibility");
+            break;
+        case scrollValue > 1800 && scrollValue < 2700:
+            clearCustomScrollingImage();
+            customScrollingImage3.classList.add("customScrollingImageVisibility");
+            customScrollingMainImage.style.visibility = "visible";
+            customScrollingMainImage.style.opacity = "1.0";
+            break;
+        case scrollValue > 2700:
+            customScrollingMainImage.style.opacity = "0.0";
+            customScrollingMainImage.style.visibility = "hidden";
+            break;
+        default: //No values match.
+        }
+    };
+    customScroll();
+    function clearCustomScrollingImage() {
+        if (document.querySelector(".customScrollingImageVisibility")) {
+            document.querySelector(".customScrollingImageVisibility").classList.remove("customScrollingImageVisibility");
+        };
+    };
+    window.addEventListener("scroll", customScroll);
+};
