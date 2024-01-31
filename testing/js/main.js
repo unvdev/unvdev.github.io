@@ -1,125 +1,51 @@
-//Dynamic Variables
-var siteURL = "https://www.uv.vu/";
-var stripeColor = "transparent";
-var stripeBorder = "2px solid #4E4E65";
+//Website URL
+var websiteURL = "https://www.uv.vu/";
 //
 window.addEventListener("load", (event) => {
 
-    document.querySelector(".headerIMG").onclick = () => {
-        window.location.href = `${siteURL}`;
+    document.querySelector(".header-image").onclick = () => {
+        window.location.href = `${websiteURL}`;
     };
 
-    var dropdownContent = document.querySelector(".dropdownContent");
-    var dropdownBackground = document.querySelector(".dropdownBackground");
+    var navigation = document.querySelector(".navigation");
+    var navigationDropdownIcon = document.querySelector(".navigation-dropdown-icon");
+    var navigationDropdownList = document.querySelector(".navigation-dropdown-list");
+    var navigationDropdownBackground = document.querySelector(".navigation-dropdown-background");
 
-    let dropdownStatus = "closed";
+    let navigationDropdownStatus = "closed";
 
     function dropdownToggle() {
-        if (dropdownStatus === "closed") {
-            document.body.classList.add("sj");
-            if (document.querySelector(".nvt")) {
-                var navTop = document.querySelector(".nvt");
-                var dropdown = document.querySelector(".nvtDropdown");
-                navTop.style.zIndex = "999";
-                dropdown.classList.add("fa-xmark-large");
-            } else if (document.querySelector(".nvr")) {
-                var navRight = document.querySelector(".nvr");
-                var dropdown = document.querySelector(".nvrDropdown");
-                navRight.style.zIndex = "999";
-                dropdown.classList.add("fa-xmark-large");
-            }
-            if (document.querySelector(".stripe")) {
-                var stripe = document.querySelector(".stripe");
-                stripe.style.background = `${stripeColor}`;
-                stripe.style.borderLeft = `${stripeBorder}`;
-            }
-            dropdownContent.style.display = "block";
-            dropdownBackground.style.display = "block";
+        if (navigationDropdownStatus === "closed") {
+            document.body.classList.add("scrolljack");
+            navigation.style.zIndex = "999";
+            navigationDropdownIcon.classList.add("fa-xmark-large");
+            navigationDropdownIcon.style.marginRight = "17px";
+            navigationDropdownList.style.display = "block";
+            navigationDropdownBackground.style.display = "block";
             setTimeout(function() {
-                dropdownStatus = "open";
+                navigationDropdownStatus = "open";
             }, 100);
         } else {
-            if (document.querySelector(".nvt")) {
-                var navTop = document.querySelector(".nvt");
-                var dropdown = document.querySelector(".nvtDropdown");
-                navTop.style.zIndex = null;
-                dropdown.classList.remove("fa-xmark-large");
-            } else if (document.querySelector(".nvr")) {
-                var navRight = document.querySelector(".nvr");
-                var dropdown = document.querySelector(".nvrDropdown");
-                navRight.style.zIndex = null;
-                dropdown.classList.remove("fa-xmark-large");
-            }
-            if (document.querySelector(".stripe")) {
-                var stripe = document.querySelector(".stripe");
-                stripe.style.background = null;
-                stripe.style.borderLeft = null;
-            }
-            dropdownContent.style.display = "none";
-            dropdownBackground.style.display = "none";
-            document.body.classList.remove("sj");
+            navigation.style.zIndex = null;
+            navigationDropdownIcon.classList.remove("fa-xmark-large");
+            navigationDropdownIcon.style.marginRight = null;
+            navigationDropdownList.style.display = "none";
+            navigationDropdownBackground.style.display = "none";
+            document.body.classList.remove("scrolljack");
             setTimeout(function() {
-                dropdownStatus = "closed";
+                navigationDropdownStatus = "closed";
             }, 100);
         }
     }
-    if (document.querySelector(".nvt")) {
-        var dropdown = document.querySelector(".nvtDropdown");
-        dropdown.addEventListener('click', dropdownToggle);
-    } else if (document.querySelector(".nvr")) {
-        var dropdown = document.querySelector(".nvrDropdown");
-        dropdown.addEventListener('click', dropdownToggle);
-    }
-    if (document.querySelector(".stripe")) {
-        var stripe = document.querySelector(".stripe");
-        stripe.addEventListener('click', dropdownToggle);
-    };
-
-    if (document.querySelector(".stripe") && document.querySelector(".nvr")) {
-        var stripe = document.querySelector(".stripe");
-        var dropdown = document.querySelector(".nvrDropdown");
-        var mouseEvents = [stripe, dropdown];
-
-        function animateStripe() {
-            if (window.innerWidth > 760) {
-                for (var i = 0; i < mouseEvents.length; i++) {
-                    mouseEvents[i].onmouseover = () => {
-                        stripe.style.width = "64px";
-                        stripe.style.boxShadow = "-5px 0px 10px 1px rgba(0, 0, 0, 0.25)";
-                        dropdown.style.right = "15.5px";
-                    }
-                    mouseEvents[i].onmouseout = () => {
-                        stripe.style.width = null;
-                        stripe.style.boxShadow = null;
-                        dropdown.style.right = null;
-                    }
-                }
-            } else {
-                for (var i = 0; i < mouseEvents.length; i++) {
-                    mouseEvents[i].onmouseover = () => {
-                        stripe.style.width = null;
-                        stripe.style.boxShadow = null;
-                        dropdown.style.right = null;
-                    }
-                    mouseEvents[i].onmouseout = () => {
-                        stripe.style.width = null;
-                        dropdown.style.right = null;
-                    }
-                }
-            }
-        };
-        animateStripe();
-        window.addEventListener("resize", animateStripe);
-    };
-
+    navigationDropdownIcon.addEventListener('click', dropdownToggle);
 });
 
 document.onreadystatechange = function() {
     if (document.readyState !== "complete") {
-        document.body.classList.add("sj");
+        document.body.classList.add("scrolljack");
         document.body.style.visibility = "hidden";
         document.querySelector(".loadscreen").style.visibility = "visible";
-        var loader = document.querySelectorAll(".circle");
+        var loader = document.querySelectorAll(".loading-circle");
         for (var i = 0; i < loader.length; i++) {
             function animateLoader() {
                 setTimeout(function() {
@@ -146,7 +72,7 @@ document.onreadystatechange = function() {
         setTimeout(function() {
             document.querySelector(".loadscreen").style.display = "none";
             document.body.style.visibility = "visible";
-            document.body.classList.remove("sj");
+            document.body.classList.remove("scrolljack");
         }, 1000);
     }
 };
