@@ -90,6 +90,12 @@ header {
     border-bottom: 2px solid #4E4E65;
 }
 
+@media screen and (max-width: 760px) {
+    header {
+        height: 120px;
+    }
+}
+
 .header {
     width: 100vw;
 }
@@ -103,6 +109,43 @@ header {
     transform: translate(-50%, -50%);
     z-index: 1;
     cursor: pointer;
+}
+
+@media screen and (max-width: 760px) {
+    .header-image {
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.header-link-icons {
+    display: block;
+    position: absolute;
+    margin-left: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+@media screen and (max-width: 760px) {
+    .header-link-icons {
+        top: 70%;
+        left: 50%;
+        transform: translate(-70%, -50%);
+    }
+}
+
+.header-link-icons a {
+    display: inline-block;
+    text-decoration: none;
+}
+
+.header-link-icons i {
+    display: block;
+    padding-left: 3px;
+    padding-right: 3px;
+    font-size: 20pt;
+    color: #FFFFFF;
 }
 
 /**/
