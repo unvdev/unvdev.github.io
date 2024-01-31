@@ -1,7 +1,5 @@
 /*Website: https://www.uv.vu*/
-/**/
 /*---Global HTML Tags---*/
-/**/
 * {
     margin: 0;
     padding: 0;
@@ -27,9 +25,7 @@ body {
     overflow: hidden;
 }
 
-/**/
 /*---Page Loader---*/
-/**/
 /*Loader Styles*/
 .loadscreen {
     display: block;
@@ -77,9 +73,7 @@ body {
   }
 }
 
-/*
 /*---Header Styles---*/
-/**/
 /*Header Elements*/
 header {
     position: fixed;
@@ -114,8 +108,6 @@ header {
 @media screen and (max-width: 760px) {
     .header-image {
         top: 30%;
-        left: 50%;
-        transform: translate(-50%, -50%);
     }
 }
 
@@ -129,9 +121,10 @@ header {
 
 @media screen and (max-width: 760px) {
     .header-link-icons {
+        margin-left: 0px;
         top: 70%;
         left: 50%;
-        transform: translate(-70%, -50%);
+        transform: translate(-50%, -50%);
     }
 }
 
@@ -148,10 +141,65 @@ header {
     color: #FFFFFF;
 }
 
-/**/
+/*---Footer Styles---*/
+/*Footer Elements*/
+footer {
+    position: relative;
+    display: block;
+    margin: auto;
+    height: 200px;
+    z-index: 999;
+    border-bottom: 2px solid #4E4E65;
+}
+
+.footer {
+    width: 100vw;
+}
+
+.footer-image {
+    position: absolute;
+    width: 200px;
+    height: auto;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    cursor: pointer;
+}
+
+.footer-link-icons {
+    display: block;
+    position: absolute;
+    margin: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.footer-link-icons a {
+    display: inline-block;
+    text-decoration: none;
+}
+
+.footer-link-icons i {
+    display: block;
+    padding-left: 3px;
+    padding-right: 3px;
+    font-size: 20pt;
+    color: #FFFFFF;
+}
+
+.footer-text {
+    display: block;
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 /*---Dynamic Site Styles---*/
-/**/
 /*Page Background*/
+
 .page-background-color {
     background-color: #22222C;
 }
@@ -206,7 +254,6 @@ header {
     color: #555BBB;
 }
 
-/**/
 /*--Font Styles--*/
 /*Fonts*/
 p {
@@ -270,9 +317,7 @@ h4 {
     text-align: center;
 }
 
-/**/
 /*---Navigation Styles---*/
-/**/
 /*Navigation Top Sleek*/
 .navigation {
     position: absolute;
@@ -343,10 +388,9 @@ h4 {
     z-index: 9;
 }
 
-/**/
 /*---Content Styles---*/
-/**/
 /*Content Helpers*/
+
 .desktop-content {
     display: block !important;
 }
