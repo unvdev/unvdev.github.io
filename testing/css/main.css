@@ -23,7 +23,7 @@ body {
 }
 
 /*Scroll Jack*/
-.sj {
+.scrolljack {
     overflow: hidden;
 }
 
@@ -39,7 +39,7 @@ body {
     z-index: 999999;
 }
 
-.loadscreen .loadContainer {
+.loadscreen .load-container {
     display: block;
     position: absolute;
     top: calc(50% - 10px);
@@ -47,7 +47,7 @@ body {
     transform: translate(-50%, -50%);
 }
 
-.loadscreen .circle {
+.loadscreen .loading-circle {
     position: fixed;
     display: inline-block;
     width: 20px;
@@ -59,15 +59,15 @@ body {
     -webkit-transition: opacity 0.25s ease-in-out;
 }
 
-.loadscreen .circle:nth-child(1) {
+.loadscreen .loading-circle:nth-child(1) {
     transform: translateX(-30px);
 }
 
-.loadscreen .circle:nth-child(2) {
+.loadscreen .loading-circle:nth-child(2) {
     transform: translateX(0px);
 }
 
-.loadscreen .circle:nth-child(3) {
+.loadscreen .loading-circle:nth-child(3) {
     transform: translateX(+30px);
 }
 
@@ -80,23 +80,6 @@ body {
 /*
 /*---Header Styles---*/
 /**/
-/*Header Helpers*/
-.header1 {
-    width: 100vw;
-}
-
-.header2 {
-    width: calc(100vw - 27px);
-    transform: translateX(-27px);
-}
-
-@media screen and (max-width: 760px) {
-    .header2 {
-        width: 100vw;
-        transform: translateX(0px);
-    }
-}
-
 /*Header Elements*/
 header {
     position: fixed;
@@ -107,7 +90,11 @@ header {
     border-bottom: 2px solid #4E4E65;
 }
 
-.headerIMG {
+.header {
+    width: 100vw;
+}
+
+.header-image {
     position: absolute;
     width: 200px;
     height: auto;
@@ -122,57 +109,57 @@ header {
 /*---Dynamic Site Styles---*/
 /**/
 /*Page Background*/
-.pb {
+.page-background-color {
     background-color: #22222C;
 }
 
 /*Content Backgrounds*/
-.bgc1 {
+.background-color-1 {
     background-color: #F6F6F6;
 }
 
-.bgc2 {
+.background-color-2 {
     background-color: #EAEAEA;
 }
 
-.bgc3 {
+.background-color-3 {
     background-color: #DDDDDD;
 }
 
-.bgc4 {
+.background-color-4 {
     background-color: #D0D0D0;
 }
 
-.bgc5 {
+.background-color-5 {
     background-color: #C3C3C3;
 }
 
-.bgc6 {
+.background-color-6 {
     background-color: #2E2E2E;
 }
 
-.bgc7 {
+.background-color-7 {
     background-color: #555BBB;
 }
 
-.bgc8 {
+.background-color-8 {
     background-color: #22222C;
 }
 
-.bgc9 {
+.background-color-9 {
     background-color: #2D2D3A;
 }
 
 /*Font Colors*/
-.ftc1 {
+.font-color-1 {
     color: #000000;
 }
 
-.ftc2 {
+.font-color-2 {
     color: #FFFFFF;
 }
 
-.ftc3 {
+.font-color-3 {
     color: #555BBB;
 }
 
@@ -219,24 +206,24 @@ h4 {
     width: 100%;
 }
 
-.icon1 {
+.icon-size-1 {
     font-size: 36pt;
 }
 
-.icon2 {
+.icon-size-2 {
     font-size: 56pt;
 }
 
-/*Font Alignment*/
-.ftLeft {
+/*Text Alignment*/
+.text-alignment-left {
     text-align: left;
 }
 
-.ftRight {
+.text-alignment-right {
     text-align: left;
 }
 
-.ftCenter {
+.text-alignment-center {
     text-align: center;
 }
 
@@ -244,7 +231,7 @@ h4 {
 /*---Navigation Styles---*/
 /**/
 /*Navigation Top Sleek*/
-.nvt {
+.navigation {
     position: absolute;
     display: block;
     width: 100vw;
@@ -252,7 +239,7 @@ h4 {
     z-index: -1;
 }
 
-.nvtDropdown {
+.navigation-dropdown-icon {
     position: fixed;
     top: 21px;
     right: 27.5px;
@@ -262,7 +249,7 @@ h4 {
     z-index: 9999;
 }
 
-.nvt .title {
+.navigation .title {
     display: block;
     position: relative;
     padding-top: calc(100vh / 33.33);
@@ -280,16 +267,16 @@ h4 {
     z-index: 99;
 }
 
-.nvt .title:hover {
+.navigation .title:hover {
     background: #383848;
     color: #555BBB;
 }
 
-.nvt .title:last-child {
+.navigation .title:last-child {
     border-bottom: 0px;
 }
 
-.nvt .dropdownContent {
+.navigation .navigation-dropdown-list {
     display: none;
     position: fixed;
     width: 100%;
@@ -300,7 +287,7 @@ h4 {
     z-index: 99;
 }
 
-.nvt .dropdownBackground {
+.navigation .navigation-dropdown-background {
     display: none;
     position: fixed;
     width: 9999999999px;
@@ -313,164 +300,46 @@ h4 {
     z-index: 9;
 }
 
-/*Navigation Right Sleek*/
-.nvr {
-    position: fixed;
-    display: block;
-    width: 100vw;
-    height: 100vh;
-    z-index: -1;
-}
-
-.nvrDropdown {
-    position: fixed;
-    top: calc(50% - 20px);
-    right: 10.5px;
-    transform: translateY(-50%);
-    transform: rotate(90deg);
-    color: #FFFFFF;
-    font-size: 40px;
-    cursor: pointer;
-    z-index: 9999;
-}
-
-@media screen and (max-width: 760px) {
-    .nvrDropdown {
-        top: 21px;
-        right: 27.5px;
-        transform: translateY(0%);
-        transform: rotate(0deg);
-    }
-}
-
-.stripe {
-    position: fixed;
-    display: block;
-    width: 54px;
-    height: 100vh;
-    right: 0px;
-    cursor: pointer;
-    background: #555BBB;
-    border-left: 2px solid #797eca;
-    z-index: 9998;
-}
-
-@media screen and (max-width: 760px) {
-    .stripe {
-        display: none;
-    }
-}
-
-.nvr .title {
-    display: block;
-    position: relative;
-    padding-top: calc(100vh / 33.33);
-    padding-bottom: calc(100vh / 33.33);
-    font-family: 'Rubik', sans-serif;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.6);
-    text-align: center;
-    cursor: pointer;
-    text-transform: uppercase;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    z-index: 99;
-}
-
-.nvr .title:hover {
-    background: #383848;
-    color: #555BBB;
-}
-
-.nvr .title:last-child {
-    border-bottom: 0px;
-}
-
-.nvr .dropdownContent {
-    display: none;
-    position: fixed;
-    width: 100%;
-    max-width: 480px;
-    top: 50%;
-    left: 50%;
-    transform: translate(calc(-50% - 27px), -50%);
-    z-index: 99;
-}
-
-@media screen and (max-width: 760px) {
-    .nvr .dropdownContent {
-        transform: translate(-50%, -50%);
-    }
-}
-
-.nvr .dropdownBackground {
-    display: none;
-    position: fixed;
-    width: 9999999999px;
-    height: 9999999999px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #2D2D3A;
-    z-index: 9;
-}
-
 /**/
 /*---Content Styles---*/
 /**/
 /*Content Helpers*/
-.content1 {
+.desktop-content {
+    display: block !important;
+}
+
+@media screen and (max-width: 760px) {
+    .desktop-content {
+        display: none !important;
+    }
+}
+
+.mobile-content {
+    display: none !important;
+}
+
+@media screen and (max-width: 760px) {
+    .mobile-content {
+        display: block !important;
+    }
+}
+
+/*Content Structure*/
+.page-content {
     display: relative;
     margin: auto;
     width: 100vw;
     transform: translateY(82px);
 }
 
-.content2 {
-    display: relative;
-    margin: auto;
-    width: calc(100vw - 54px);
-    transform: translate(-27px, 82px);
-}
-
-@media screen and (max-width: 760px) {
-    .content2 {
-        width: 100vw;
-        transform: translate(0px, 82px);
-    }
-}
-
-.desktop {
-    display: block !important;
-}
-
-@media screen and (max-width: 760px) {
-    .desktop {
-        display: none !important;
-    }
-}
-
-.mobile {
-    display: none !important;
-}
-
-@media screen and (max-width: 760px) {
-    .mobile {
-        display: block !important;
-    }
-}
-
-/*Content Structure*/
-.layout {
+.content-layout {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     width: 100%;
 }
 
-.layout .single {
+.content-layout .layout-single {
     display: flex;
     flex-direction: column;
     flex-basis: 100%;
@@ -480,7 +349,7 @@ h4 {
     margin-right: 40px;
 }
 
-.layout .double {
+.content-layout .layout-double {
     display: flex;
     flex-direction: column;
     flex-basis: 100%;
@@ -490,74 +359,73 @@ h4 {
     margin-right: 40px;
 }
 
-.layout .stretch {
+.content-layout .layout-stretch {
     display: flex;
     flex-direction: column;
     flex-basis: 100%;
 }
 
 @media screen and (min-width: 760px) {
-    .layout .single {
+    .content-layout .layout-single {
         flex: 1
     }
 
-    .layout .double {
+    .content-layout .layout-double {
         flex: 2
     }
 }
 
 @media screen and (min-width: 900px) {
-    .layout .stretch {
+    .content-layout .layout-stretch {
         flex: 1
     }
 }
 
-.spacer1 {
+.content-spacer-1 {
     padding-top: 10px;
     padding-bottom: 10px;
 }
 
-.spacer2 {
+.content-spacer-2 {
     padding-top: 20px;
     padding-bottom: 20px;
 }
 
-.spacer3 {
+.content-spacer-3 {
     padding-top: 50px;
     padding-bottom: 50px;
 }
 
-.spacer4 {
+.content-spacer-4 {
     padding-top: 100px;
     padding-bottom: 100px;
 }
 
-.spacer5 {
+.content-spacer-5 {
     padding-top: 200px;
     padding-bottom: 200px;
 }
 
-.spacer6 {
+.content-spacer-6 {
     padding-top: 300px;
     padding-bottom: 300px;
 }
 
-.spacer7 {
+.content-spacer-7 {
     margin-top: 10px;
     margin-bottom: 10px;
     margin-left: 40px;
     margin-right: 40px;
 }
 
-/*Content Alignent*/
-.alg1 {
+.content-alignment-1 {
     position: relative;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-.alg2 {
+.content-alignment-2 {
     position: relative;
     top: 50%;
     left: 50%;
@@ -565,14 +433,14 @@ h4 {
 }
 
 @media screen and (max-width: 760px) {
-    .alg2 {
+    .content-alignment-2 {
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
     }
 }
 
-.alg3 {
+.content-alignment-3 {
     position: relative;
     top: 50%;
     left: 50%;
@@ -580,7 +448,7 @@ h4 {
 }
 
 @media screen and (max-width: 760px) {
-    .alg3 {
+    .content-alignment-3 {
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -588,7 +456,39 @@ h4 {
 }
 
 /*Images*/
-.imgl {
+.image-style-1 {
+    display: block;
+    position: relative;
+    max-width: 600px;
+    width: 100%;
+    height: auto;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.image-style-2 {
+    display: block;
+    position: relative;
+    max-width: 600px;
+    width: 100%;
+    height: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.image-style-3 {
+    display: block;
+    position: relative;
+    width: auto;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+}
+
+.image-style-4 {
     display: block;
     position: relative;
     margin: 0;
@@ -600,39 +500,7 @@ h4 {
 }
 
 @media screen and (max-width: 760px) {
-    .imgl {
+    .image-size-4 {
         width: 80%;
     }
-}
-
-.imgs1 {
-    display: block;
-    position: relative;
-    max-width: 600px;
-    width: 100%;
-    height: auto;
-    left: 50%;
-    transform: translate(-50%);
-}
-
-.imgs2 {
-    display: block;
-    position: relative;
-    max-width: 600px;
-    width: 100%;
-    height: auto;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.imgs3 {
-    display: block;
-    position: relative;
-    width: auto;
-    height: 100%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    object-fit: cover;
 }
