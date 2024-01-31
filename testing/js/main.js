@@ -19,7 +19,6 @@ window.addEventListener("load", (event) => {
             document.body.classList.add("scrolljack");
             navigation.style.zIndex = "999";
             navigationDropdownIcon.classList.add("fa-xmark-large");
-            navigationDropdownIcon.style.marginRight = "17px";
             navigationDropdownList.style.display = "block";
             navigationDropdownBackground.style.display = "block";
             setTimeout(function() {
@@ -28,7 +27,6 @@ window.addEventListener("load", (event) => {
         } else {
             navigation.style.zIndex = null;
             navigationDropdownIcon.classList.remove("fa-xmark-large");
-            navigationDropdownIcon.style.marginRight = null;
             navigationDropdownList.style.display = "none";
             navigationDropdownBackground.style.display = "none";
             document.body.classList.remove("scrolljack");
