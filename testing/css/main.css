@@ -529,6 +529,7 @@ h4 {
     left: 50%;
     transform: translate(-50%, -50%);
     object-fit: cover;
+    overflow-x: hidden;
 }
 
 .image-style-4 {
