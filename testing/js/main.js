@@ -1,43 +1,6 @@
 //Website URL
 var websiteURL = "https://www.uv.vu/";
 //
-window.addEventListener("load", (event) => {
-
-    document.querySelector(".header-image").onclick = () => {
-        window.location.href = `${websiteURL}`;
-    };
-
-    var navigation = document.querySelector(".navigation");
-    var navigationDropdownIcon = document.querySelector(".navigation-dropdown-icon");
-    var navigationDropdownList = document.querySelector(".navigation-dropdown-list");
-    var navigationDropdownBackground = document.querySelector(".navigation-dropdown-background");
-
-    let navigationDropdownStatus = "closed";
-
-    function dropdownToggle() {
-        if (navigationDropdownStatus === "closed") {
-            document.body.classList.add("scrolljack");
-            navigation.style.zIndex = "999";
-            navigationDropdownIcon.classList.add("fa-xmark-large");
-            navigationDropdownList.style.display = "block";
-            navigationDropdownBackground.style.display = "block";
-            setTimeout(function() {
-                navigationDropdownStatus = "open";
-            }, 100);
-        } else {
-            navigation.style.zIndex = null;
-            navigationDropdownIcon.classList.remove("fa-xmark-large");
-            navigationDropdownList.style.display = "none";
-            navigationDropdownBackground.style.display = "none";
-            document.body.classList.remove("scrolljack");
-            setTimeout(function() {
-                navigationDropdownStatus = "closed";
-            }, 100);
-        }
-    }
-    navigationDropdownIcon.addEventListener('click', dropdownToggle);
-});
-
 document.onreadystatechange = function() {
     if (document.readyState !== "complete") {
         document.body.classList.add("scrolljack");
@@ -68,11 +31,60 @@ document.onreadystatechange = function() {
         };
     } else {
         setTimeout(function() {
-            document.querySelector(".loadscreen").style.display = "none";
+            document.querySelector(".loadscreen").style.visibility = "hidden";
             document.body.style.visibility = "visible";
             document.body.classList.remove("scrolljack");
         }, 1000);
     }
 };
 
-//Custom Functions Below This Line
+window.addEventListener("load", (event) => {
+
+    document.querySelector(".header-image").onclick = () => {
+        window.location.href = `${websiteURL}`;
+    };
+
+    var header = document.querySelector("header");
+    var navigation = document.querySelector(".navigation");
+    var navigationDropdownIcon = document.querySelector(".navigation-dropdown-icon");
+    var navigationDropdownList = document.querySelector(".navigation-dropdown-list");
+    var navigationDropdownBackground = document.querySelector(".navigation-dropdown-background");
+
+    let navigationDropdownStatus = "closed";
+    function dropdownToggle() {
+        if (navigationDropdownStatus === "closed") {
+            document.body.classList.add("scrolljack");
+            navigation.style.zIndex = "999";
+            navigationDropdownIcon.classList.add("fa-xmark-large");
+            navigationDropdownList.style.display = "block";
+            navigationDropdownBackground.style.display = "block";
+            setTimeout(function() {
+                navigationDropdownStatus = "open";
+            }, 100);
+        } else {
+            navigation.style.zIndex = null;
+            navigationDropdownIcon.classList.remove("fa-xmark-large");
+            navigationDropdownList.style.display = "none";
+            navigationDropdownBackground.style.display = "none";
+            document.body.classList.remove("scrolljack");
+            setTimeout(function() {
+                navigationDropdownStatus = "closed";
+            }, 100);
+        }
+    }
+    navigationDropdownIcon.addEventListener('click', dropdownToggle);
+
+    let lastScroll = 0;
+    document.onscroll = function() {
+        let scrollvalue = window.scrollY;
+        if (scrollvalue > lastScroll) {
+            header.style.display = "none";
+            navigationDropdownIcon.style.display = "none";
+        } else if (scrollvalue < lastScroll) {
+            header.style.display = "block";
+            navigationDropdownIcon.style.display = "block";
+        };
+        //Mobile
+        lastScroll = scrollvalue <= 0 ? 0 : scrollvalue;
+    };
+});
