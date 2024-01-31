@@ -44,6 +44,10 @@ window.addEventListener("load", (event) => {
         window.location.href = `${websiteURL}`;
     };
 
+    document.querySelector(".footer-image").onclick = () => {
+        window.location.href = `${websiteURL}`;
+    };
+
     var header = document.querySelector("header");
     var navigation = document.querySelector(".navigation");
     var navigationDropdownIcon = document.querySelector(".navigation-dropdown-icon");
