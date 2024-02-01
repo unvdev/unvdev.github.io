@@ -35,7 +35,7 @@ body {
     z-index: 999999;
 }
 
-.loadscreen .load-container {
+.load-container {
     display: block;
     position: absolute;
     top: calc(50% - 10px);
@@ -43,7 +43,7 @@ body {
     transform: translate(-50%, -50%);
 }
 
-.loadscreen .loading-circle {
+.loading-circle {
     position: fixed;
     display: inline-block;
     width: 20px;
@@ -55,15 +55,15 @@ body {
     -webkit-transition: opacity 0.25s ease-in-out;
 }
 
-.loadscreen .loading-circle:nth-child(1) {
+.loading-circle:nth-child(1) {
     transform: translateX(-30px);
 }
 
-.loadscreen .loading-circle:nth-child(2) {
+.loading-circle:nth-child(2) {
     transform: translateX(0px);
 }
 
-.loadscreen .loading-circle:nth-child(3) {
+.loading-circle:nth-child(3) {
     transform: translateX(+30px);
 }
 
@@ -144,36 +144,19 @@ header {
 /*---Footer Styles---*/
 /*Footer Elements*/
 footer {
-    position: relative;
-    display: block;
-    margin: auto;
-    height: 200px;
-    z-index: 999;
-    border-bottom: 2px solid #4E4E65;
-}
-
-.footer {
-    width: 100vw;
+    z-index: -1;
 }
 
 .footer-image {
-    position: absolute;
+    position: relative;
     width: 200px;
     height: auto;
-    top: 20%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     z-index: 1;
     cursor: pointer;
 }
 
 .footer-link-icons {
     display: block;
-    position: absolute;
-    margin: auto;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 }
 
 .footer-link-icons a {
@@ -189,13 +172,31 @@ footer {
     color: #FFFFFF;
 }
 
-.footer-text {
+.footer-navigation {
     display: block;
-    position: absolute;
-    top: 80%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    width: 100%;
+    z-index: 999;
 }
+
+.test {
+    display: inline-block;
+    position: relative;
+    padding: 16px 30px;
+    border: 0;
+    border-radius: 30px;
+    white-space: nowrap;
+    cursor: pointer;
+    text-transform: uppercase;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.test:hover {
+    background: #FFFFFF;
+    color: #555BBB;
+}
+
 
 /*---Dynamic Site Styles---*/
 /*Page Background*/
@@ -260,6 +261,20 @@ p {
     font-family: 'Rubik', sans-serif;
     font-size: 14pt;
     width: 100%;
+}
+
+.bold {
+    font-family: 'Rubik', sans-serif;
+    font-size: 14pt;
+    width: 100%;
+    font-weight: 600;
+}
+
+.strong {
+    font-family: 'Rubik', sans-serif;
+    font-size: 14pt;
+    width: 100%;
+    font-weight: 600;
 }
 
 @supports (-webkit-text-stroke: 1px black) {
@@ -337,15 +352,11 @@ h4 {
     z-index: 9999;
 }
 
-.navigation .title {
+.title {
     display: block;
     position: relative;
     padding-top: calc(100vh / 33.33);
     padding-bottom: calc(100vh / 33.33);
-    font-family: "Open Sans", sans-serif;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.6);
-    text-align: center;
     cursor: pointer;
     text-transform: uppercase;
     border-bottom: 1px solid rgba(255, 255, 255, 0.6);
@@ -355,16 +366,20 @@ h4 {
     z-index: 99;
 }
 
-.navigation .title:hover {
+.title:hover {
     background: #383848;
     color: #555BBB;
 }
 
-.navigation .title:last-child {
+.title:last-child {
     border-bottom: 0px;
 }
 
-.navigation .navigation-dropdown-list {
+.active {
+    color: #555BBB !important;
+}
+
+.navigation-dropdown-list {
     display: none;
     position: fixed;
     width: 100%;
@@ -375,7 +390,7 @@ h4 {
     z-index: 99;
 }
 
-.navigation .navigation-dropdown-background {
+.navigation-dropdown-background {
     display: none;
     position: fixed;
     width: 9999999999px;
@@ -415,9 +430,8 @@ h4 {
 .page-content {
     display: relative;
     margin: auto;
+    padding-top: 82px;
     width: 100vw;
-    top: 82px;
-    bottom: 200px;
 }
 
 .content-layout {
@@ -427,7 +441,7 @@ h4 {
     width: 100%;
 }
 
-.content-layout .layout-single {
+.layout-single {
     display: flex;
     flex-direction: column;
     flex-basis: 100%;
@@ -435,7 +449,7 @@ h4 {
     margin-right: 40px;
 }
 
-.content-layout .layout-double {
+.layout-double {
     display: flex;
     flex-direction: column;
     flex-basis: 100%;
@@ -443,26 +457,31 @@ h4 {
     margin-right: 40px;
 }
 
-.content-layout .layout-stretch {
+.layout-stretch {
     display: flex;
     flex-direction: column;
     flex-basis: 100%;
 }
 
 @media screen and (min-width: 760px) {
-    .content-layout .layout-single {
+    .layout-single {
         flex: 1
     }
 
-    .content-layout .layout-double {
+    .layout-double {
         flex: 2
     }
 }
 
 @media screen and (min-width: 900px) {
-    .content-layout .layout-stretch {
+    .layout-stretch {
         flex: 1
     }
+}
+
+.content-spacer-0 {
+    padding-top: 0px;
+    padding-bottom: 0px;
 }
 
 .content-spacer-1 {
@@ -589,6 +608,9 @@ h4 {
     white-space: nowrap;
     cursor: pointer;
     text-transform: uppercase;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .button-style-sharp {
@@ -599,4 +621,7 @@ h4 {
     white-space: nowrap;
     cursor: pointer;
     text-transform: uppercase;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
