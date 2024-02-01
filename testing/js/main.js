@@ -26,7 +26,7 @@ document.onreadystatechange = function() {
                         animateLoader();
                     };
                 }, 1000);
-            }
+            };
             animateLoader();
         };
     } else {
@@ -35,7 +35,7 @@ document.onreadystatechange = function() {
             document.body.style.visibility = "visible";
             document.body.classList.remove("scrolljack");
         }, 1000);
-    }
+    };
 };
 
 window.addEventListener("load", (event) => {
@@ -74,13 +74,13 @@ window.addEventListener("load", (event) => {
             setTimeout(function() {
                 navigationDropdownStatus = "closed";
             }, 100);
-        }
-    }
+        };
+    };
     navigationDropdownIcon.addEventListener('click', dropdownToggle);
 
     let lastScroll = 0;
     document.onscroll = function() {
-        let scrollvalue = window.scrollY;
+        var scrollvalue = window.scrollY;
         if (scrollvalue > lastScroll) {
             header.style.display = "none";
             navigationDropdownIcon.style.display = "none";
@@ -90,5 +90,17 @@ window.addEventListener("load", (event) => {
         };
         //Mobile
         lastScroll = scrollvalue <= 0 ? 0 : scrollvalue;
+    };
+
+    var pages = document.querySelectorAll(".title > *");
+    var currentPage = window.location.pathname.split('/');
+    currentPage = currentPage.slice(-1).toString().toLowerCase().replace(/\W+.*/, '');
+    console.log(currentPage);
+    console.log(pages);
+    for (var i = 0; i < pages.length; i++) {
+        console.log(pages[i].innerText);
+        if (currentPage.includes(pages[i].innerText.toLowerCase())) {
+            pages[i].classList.add("active");
+        };
     };
 });
