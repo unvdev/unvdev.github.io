@@ -141,6 +141,75 @@ header {
     color: #FFFFFF;
 }
 
+.navigation {
+    position: absolute;
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+}
+
+.navigation-dropdown-icon {
+    position: fixed;
+    top: 21px;
+    right: 27.5px;
+    color: #FFFFFF;
+    font-size: 40px;
+    cursor: pointer;
+    z-index: 9999;
+}
+
+.navigation-link {
+    display: block;
+    position: relative;
+    padding-top: calc(100vh / 33.33);
+    padding-bottom: calc(100vh / 33.33);
+    cursor: pointer;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    z-index: 99;
+}
+
+.navigation-link:hover {
+    background: #383848;
+    color: #555BBB;
+}
+
+.navigation-link:last-child {
+    border-bottom: 0px;
+}
+
+.active {
+    color: #555BBB !important;
+}
+
+.navigation-dropdown-list {
+    display: none;
+    position: fixed;
+    width: 100%;
+    max-width: 480px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 99;
+}
+
+.navigation-dropdown-background {
+    display: none;
+    position: fixed;
+    width: 9999999999px;
+    height: 9999999999px;
+    background: #2D2D3A !important;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #2D2D3A;
+    z-index: 9;
+}
+
 /*---Footer Styles---*/
 /*Footer Elements*/
 footer {
@@ -178,7 +247,7 @@ footer {
     z-index: 999;
 }
 
-.test {
+.footer-navigation-link {
     display: inline-block;
     position: relative;
     padding: 16px 30px;
@@ -192,7 +261,7 @@ footer {
     user-select: none;
 }
 
-.test:hover {
+.footer-navigation-link:hover {
     background: #FFFFFF;
     color: #555BBB;
 }
@@ -264,16 +333,6 @@ p {
 }
 
 .bold {
-    font-family: 'Rubik', sans-serif;
-    font-size: 14pt;
-    width: 100%;
-    font-weight: 600;
-}
-
-.strong {
-    font-family: 'Rubik', sans-serif;
-    font-size: 14pt;
-    width: 100%;
     font-weight: 600;
 }
 
@@ -330,77 +389,6 @@ h4 {
 
 .text-alignment-center {
     text-align: center;
-}
-
-/*---Navigation Styles---*/
-/*Navigation Top Sleek*/
-.navigation {
-    position: absolute;
-    display: block;
-    width: 100vw;
-    height: 100vh;
-    z-index: -1;
-}
-
-.navigation-dropdown-icon {
-    position: fixed;
-    top: 21px;
-    right: 27.5px;
-    color: #FFFFFF;
-    font-size: 40px;
-    cursor: pointer;
-    z-index: 9999;
-}
-
-.title {
-    display: block;
-    position: relative;
-    padding-top: calc(100vh / 33.33);
-    padding-bottom: calc(100vh / 33.33);
-    cursor: pointer;
-    text-transform: uppercase;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    z-index: 99;
-}
-
-.title:hover {
-    background: #383848;
-    color: #555BBB;
-}
-
-.title:last-child {
-    border-bottom: 0px;
-}
-
-.active {
-    color: #555BBB !important;
-}
-
-.navigation-dropdown-list {
-    display: none;
-    position: fixed;
-    width: 100%;
-    max-width: 480px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 99;
-}
-
-.navigation-dropdown-background {
-    display: none;
-    position: fixed;
-    width: 9999999999px;
-    height: 9999999999px;
-    background: #2D2D3A !important;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #2D2D3A;
-    z-index: 9;
 }
 
 /*---Content Styles---*/
