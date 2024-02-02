@@ -55,6 +55,7 @@ window.addEventListener("load", (event) => {
     var navigationDropdownBackground = document.querySelector(".navigation-dropdown-background");
 
     let navigationDropdownStatus = "closed";
+
     function dropdownToggle() {
         if (navigationDropdownStatus === "closed") {
             document.body.classList.add("scrolljack");
@@ -100,4 +101,20 @@ window.addEventListener("load", (event) => {
             pages[i].classList.add("active");
         };
     };
+
+    var accordion = document.querySelectorAll(".accordion");
+    for (var i = 0; i < accordion.length; i++) {
+        accordion[i].onclick = function() {
+            console.log(this.nextElementSibling);
+            if (this.nextElementSibling.getAttribute("class") == "accordion-content") {
+                if (this.nextElementSibling.style.display != "block") {
+                    this.nextElementSibling.style.display = "block";
+                } else {
+                    this.nextElementSibling.style.display = "none";
+                };
+            };
+        };
+    };
+
+
 });
