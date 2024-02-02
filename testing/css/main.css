@@ -613,3 +613,20 @@ h4 {
     -ms-user-select: none;
     user-select: none;
 }
+
+/*Accordion*/
+
+.accordion {
+  width: 100%;
+  opacity: 50%;
+}
+
+.active, .accordion:hover {
+    opacity: 70%;
+    cursor: pointer;
+}
+
+.accordion-content {
+    display: none;
+    overflow: hidden;
+}
