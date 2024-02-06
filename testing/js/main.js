@@ -98,19 +98,20 @@ window.addEventListener("load", (event) => {
     currentPage = currentPage.slice(-1).toString().toLowerCase().replace(/\W+.*/, '');
     for (var i = 0; i < pages.length; i++) {
         if (currentPage.includes(pages[i].innerText.toLowerCase())) {
-            pages[i].classList.add("active");
+            pages[i].classList.add("navigation-active");
         };
     };
 
     var accordion = document.querySelectorAll(".accordion");
     for (var i = 0; i < accordion.length; i++) {
         accordion[i].onclick = function() {
-            console.log(this.nextElementSibling);
             if (this.nextElementSibling.getAttribute("class") == "accordion-content") {
                 if (this.nextElementSibling.style.display != "block") {
                     this.nextElementSibling.style.display = "block";
+                    this.firstElementChild.classList.add("accordion-active");
                 } else {
                     this.nextElementSibling.style.display = "none";
+                    this.firstElementChild.classList.remove("accordion-active");
                 };
             };
         };
