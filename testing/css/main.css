@@ -1,3 +1,14 @@
+.hidden {
+    opacity: 0;
+    filter: blur(5px);
+    transform: translatex(-100%);
+    transition: all 1s;
+}
+.show {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translatex(0);
+}
 /*Website: https://www.uv.vu*/
 /*---Global HTML Tags---*/
 * {
@@ -216,10 +227,21 @@ footer {
     z-index: -1;
 }
 
+.footer-content {
+    position: relative;
+    max-width: 1000px;
+    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
 .footer-image {
     position: relative;
     width: 200px;
     height: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: 1;
     cursor: pointer;
 }
@@ -330,6 +352,10 @@ footer {
     background-color: #5D62B0;
 }
 
+.background-color-12 {
+    background-color: #383848;
+}
+
 /*Font Colors*/
 .text-color-1 {
     color: #000000;
@@ -385,7 +411,7 @@ h2 {
 h3 {
     font-family: 'Rubik', sans-serif;
     font-size: 20pt;
-    font-weight: 300;
+    font-weight: 600;
     text-transform: uppercase;
     width: 100%;
 }
@@ -393,7 +419,7 @@ h3 {
 h4 {
     font-family: 'Rubik', sans-serif;
     font-size: 20pt;
-    font-weight: 300;
+    font-weight: 600;
     width: 100%;
 }
 
@@ -420,6 +446,14 @@ h4 {
 
 .icon-size-2 {
     font-size: 56pt;
+}
+
+.icon-size-3 {
+    font-size: 14pt;
+}
+
+.icon-size-4 {
+    font-size: 18pt;
 }
 
 /*Text Alignment*/
