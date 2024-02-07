@@ -1,16 +1,7 @@
-.hidden {
-    opacity: 0;
-    filter: blur(5px);
-    transform: translatex(-100%);
-    transition: all 1s;
-}
-.show {
-    opacity: 1;
-    filter: blur(0px);
-    transform: translatex(0);
-}
 /*Website: https://www.uv.vu*/
-/*---Global HTML Tags---*/
+
+/*Global Styles*/
+
 * {
     margin: 0;
     padding: 0;
@@ -32,12 +23,13 @@ body {
 }
 
 /*Scroll Jack*/
+
 .scrolljack {
     overflow: hidden;
 }
 
-/*---Page Loader---*/
-/*Loader Styles*/
+/*Page Loadscreen*/
+
 .loadscreen {
     display: block;
     position: fixed;
@@ -84,8 +76,8 @@ body {
   }
 }
 
-/*---Header Styles---*/
-/*Header Elements*/
+/*Header Styles*/
+
 header {
     position: fixed;
     display: block;
@@ -221,8 +213,8 @@ header {
     z-index: 9;
 }
 
-/*---Footer Styles---*/
-/*Footer Elements*/
+/*Footer Styles*/
+
 footer {
     z-index: -1;
 }
@@ -299,7 +291,7 @@ footer {
     }
 }
 
-
+/********************************************************************************************************/
 /*---Dynamic Site Styles---*/
 /*Page Background*/
 
@@ -357,6 +349,7 @@ footer {
 }
 
 /*Font Colors*/
+
 .text-color-1 {
     color: #000000;
 }
@@ -376,9 +369,10 @@ footer {
 .text-shadow-2 {
     text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.50);
 }
+/********************************************************************************************************/
 
-/*--Font Styles--*/
 /*Fonts*/
+
 p {
     font-family: 'Rubik', sans-serif;
     font-size: 14pt;
@@ -469,8 +463,7 @@ h4 {
     text-align: center;
 }
 
-/*---Content Styles---*/
-/*Content Helpers*/
+/*Content Styles*/
 
 .desktop-content {
     display: block !important;
@@ -493,6 +486,7 @@ h4 {
 }
 
 /*Content Structure*/
+
 .page-content {
     display: relative;
     margin: auto;
@@ -625,6 +619,7 @@ h4 {
 }
 
 /*Images*/
+
 .image-style-1 {
     display: block;
     position: relative;
@@ -689,6 +684,7 @@ h4 {
 }
 
 /*Buttons*/
+
 .button-style-round {
     position: relative;
     display: inline-block;
@@ -755,4 +751,56 @@ h4 {
 .accordion-content {
     display: none;
     overflow: hidden;
+}
+
+/*Animations*/
+
+.animate-left {
+    opacity: 0;
+    filter: blur(5px);
+    transform: translateX(-100%);
+    transition-duration: 1s;
+    transition-timing-function: ease-in;
+    transition-delay: 250ms;
+}
+
+.animate-right {
+    opacity: 0;
+    filter: blur(5px);
+    transform: translateX(100%);
+    transition-duration: 750ms;
+    transition-timing-function: ease-in;
+    transition-delay: 250ms;
+}
+
+.animate-top {
+    opacity: 0;
+    filter: blur(5px);
+    transform: translateY(100%);
+    transition-duration: 750ms;
+    transition-timing-function: ease-in;
+    transition-delay: 250ms;
+}
+
+.animate-bottom {
+    opacity: 0;
+    filter: blur(5px);
+    transform: translateY(-100%);
+    transition-duration: 750ms;
+    transition-timing-function: ease-in;
+    transition-delay: 250ms;
+}
+
+.animate-fade {
+    opacity: 0;
+    filter: blur(5px);
+    transition-duration: 750ms;
+    transition-timing-function: ease-in;
+    transition-delay: 250ms;
+}
+
+.animate {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translatex(0);
 }
