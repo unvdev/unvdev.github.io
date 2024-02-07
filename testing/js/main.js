@@ -117,5 +117,30 @@ window.addEventListener("load", (event) => {
         };
     };
 
+    // Beta parallax Movements
+    // var mainImage = document.querySelector(".image-style-4");
+    // document.onscroll = function() {
+    //     let value = window.scrollY;
+    //     if (value < 300) {
+    //         mainImage.style.top = value * 1.1 + "px";
+    //         mainImage.style.opacity = 1.0;
+    //     };
+    //     if (value > 300) {
+    //         mainImage.style.opacity = 0.0;
+    //     };
+    // };
 
+const observer = new IntersectionObserver((entries) => {
+entries.forEach( (entry) => {
+console.log(entry)
+if (entry.isIntersecting) {
+entry.target.classList.add("show");
+} else {
+entry.target.classList.remove("show");
+}
+});
+});
+
+const hiddenElements = document.querySelectorAll(".hidden") ;
+hiddenElements.forEach((el) => observer.observe(el)) ;
 });
