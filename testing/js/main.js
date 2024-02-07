@@ -54,8 +54,9 @@ window.addEventListener("load", (event) => {
     var navigationDropdownList = document.querySelector(".navigation-dropdown-list");
     var navigationDropdownBackground = document.querySelector(".navigation-dropdown-background");
 
-    let navigationDropdownStatus = "closed";
+    //Navigation Behavior
 
+    let navigationDropdownStatus = "closed";
     function dropdownToggle() {
         if (navigationDropdownStatus === "closed") {
             document.body.classList.add("scrolljack");
@@ -79,6 +80,8 @@ window.addEventListener("load", (event) => {
     };
     navigationDropdownIcon.addEventListener('click', dropdownToggle);
 
+    //Header Behavior
+
     let lastScroll = 0;
     document.onscroll = function() {
         var scrollvalue = window.scrollY;
@@ -93,6 +96,8 @@ window.addEventListener("load", (event) => {
         lastScroll = scrollvalue <= 0 ? 0 : scrollvalue;
     };
 
+    //Active Navigation Page
+
     var pages = document.querySelectorAll(".navigation-link > *");
     var currentPage = window.location.pathname.split('/');
     currentPage = currentPage.slice(-1).toString().toLowerCase().replace(/\W+.*/, '');
@@ -101,6 +106,8 @@ window.addEventListener("load", (event) => {
             pages[i].classList.add("navigation-active");
         };
     };
+
+    //Accordions
 
     var accordion = document.querySelectorAll(".accordion");
     for (var i = 0; i < accordion.length; i++) {
@@ -118,6 +125,7 @@ window.addEventListener("load", (event) => {
     };
 
     // Beta parallax Movements
+
     // var mainImage = document.querySelector(".image-style-4");
     // document.onscroll = function() {
     //     let value = window.scrollY;
@@ -130,17 +138,20 @@ window.addEventListener("load", (event) => {
     //     };
     // };
 
-const observer = new IntersectionObserver((entries) => {
-entries.forEach( (entry) => {
-console.log(entry)
-if (entry.isIntersecting) {
-entry.target.classList.add("show");
-} else {
-entry.target.classList.remove("show");
-}
-});
-});
+    //Fluid Animations
 
-const hiddenElements = document.querySelectorAll(".hidden") ;
-hiddenElements.forEach((el) => observer.observe(el)) ;
+    let observer = new IntersectionObserver((entries) => {
+        for (var i = 0; i < entries.length; i++) {
+            if (entries[i].isIntersecting) {
+                entries[i].target.classList.add("animate");
+            } else {
+                entries[i].target.classList.remove("animate");
+            };
+        };
+    });
+
+    var hiddenElements = document.querySelectorAll(".animate-top, .animate-bottom, .animate-left, .animate-right, .animate-fade");
+    for (var i = 0; i < hiddenElements.length; i++) {
+        observer.observe(hiddenElements[i]);
+    };
 });
