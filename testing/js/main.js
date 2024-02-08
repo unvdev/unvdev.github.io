@@ -57,6 +57,7 @@ window.addEventListener("load", (event) => {
     //Navigation Behavior
 
     let navigationDropdownStatus = "closed";
+
     function dropdownToggle() {
         if (navigationDropdownStatus === "closed") {
             document.body.classList.add("scrolljack");
@@ -124,18 +125,12 @@ window.addEventListener("load", (event) => {
         };
     };
 
-    // Beta parallax Movements
+    // Beta Parallax Movements
 
-    // var mainImage = document.querySelector(".image-style-4");
+    // var mainImage = document.querySelector(".image-style-3");
     // document.onscroll = function() {
     //     let value = window.scrollY;
-    //     if (value < 300) {
-    //         mainImage.style.top = value * 1.1 + "px";
-    //         mainImage.style.opacity = 1.0;
-    //     };
-    //     if (value > 300) {
-    //         mainImage.style.opacity = 0.0;
-    //     };
+    //     mainImage.style.top = value / 3 + "px";
     // };
 
     //Fluid Animations
@@ -154,4 +149,51 @@ window.addEventListener("load", (event) => {
     for (var i = 0; i < hiddenElements.length; i++) {
         observer.observe(hiddenElements[i]);
     };
+
+    //Beta Smooth Scrolling
+
+    // const body = document.body;
+    // const main = document.querySelector('.smooth-scrolling');
+
+    // let sx = 0;
+    // let sy = 0;
+
+    // let dx = sx;
+    // let dy = sy;
+
+    // window.addEventListener("resize", function() {
+    //     setTimeout(function() {
+    //         body.style.height = main.clientHeight + 'px';
+    //     }, 1250);
+    // });
+
+    // body.style.height = main.clientHeight + 'px';
+
+    // window.addEventListener('scroll', scroll);
+
+    // function scroll() {
+    //     sx = window.pageXOffset;
+    //     sy = window.pageYOffset;
+    // };
+
+    // window.requestAnimationFrame(render);
+
+    // function render() {
+
+    //     dx = lerp(dx, sx, 0.1);
+    //     dy = lerp(dy, sy, 0.1);
+
+    //     dx = Math.floor(dx * 100) / 100;
+    //     dy = Math.floor(dy * 100) / 100;
+
+    //     main.style.transform = `translate(-${dx}px, -${dy}px)`;
+
+    //     window.requestAnimationFrame(render);
+    // };
+
+    // // This is our Linear Interpolation method.
+    // function lerp(a, b, n) {
+    //     return (1 - n) * a + n * b;
+    // };
+
 });
