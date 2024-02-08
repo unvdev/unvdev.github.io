@@ -20,6 +20,7 @@ body {
     height: 100vh;
     overflow-x: hidden;
     overscroll-behavior: none;
+    scroll-behavior: smooth;
 }
 
 /*Scroll Jack*/
@@ -488,7 +489,8 @@ h4 {
 /*Content Structure*/
 
 .page-content {
-    display: relative;
+    display: block;
+    position: relative;
     margin: auto;
     padding-top: 82px;
     width: 100vw;
@@ -804,3 +806,11 @@ h4 {
     filter: blur(0px);
     transform: translatex(0);
 }
+
+/*Beta Scroll Smooth*/
+
+/*.smooth-scrolling {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+}*/
