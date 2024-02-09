@@ -12,16 +12,17 @@
     background: transparent;
     overscroll-behavior: none !important;
     -webkit-overscroll-behavior: none !important;
+    -webkit-overflow-scrolling: none !important;
+    overflow-x: hidden !important;
 }
 
 body {
     display: block;
     position: relative;
     margin: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     scroll-behavior: smooth;
-    overflow-x: hidden !important;
 }
 
 /*Scroll Jack*/
@@ -96,7 +97,7 @@ header {
 }
 
 .header {
-    width: 100vw;
+    width: 100%;
 }
 
 .header-image {
@@ -149,8 +150,8 @@ header {
 .navigation {
     position: absolute;
     display: block;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     z-index: -1;
 }
 
@@ -167,8 +168,8 @@ header {
 .navigation-link {
     display: block;
     position: relative;
-    padding-top: calc(100vh / 33.33);
-    padding-bottom: calc(100vh / 33.33);
+    padding-top: calc(100% / 33.33);
+    padding-bottom: calc(100% / 33.33);
     cursor: pointer;
     text-transform: uppercase;
     border-bottom: 1px solid rgba(255, 255, 255, 0.6);
@@ -488,7 +489,7 @@ h4 {
     position: relative;
     margin: auto;
     padding-top: 82px;
-    width: 100vw;
+    width: 100%;
 }
 
 .content-layout {
