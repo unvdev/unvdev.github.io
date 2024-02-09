@@ -168,8 +168,8 @@ header {
 .navigation-link {
     display: block;
     position: relative;
-    padding-top: calc(100% / 33.33);
-    padding-bottom: calc(100% / 33.33);
+    padding-top: calc(100vh / 33.33);
+    padding-bottom: calc(100vh / 33.33);
     cursor: pointer;
     text-transform: uppercase;
     border-bottom: 1px solid rgba(255, 255, 255, 0.6);
