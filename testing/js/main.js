@@ -86,7 +86,8 @@ window.addEventListener("load", (event) => {
     let lastScroll = 0;
     document.onscroll = function() {
         var scrollvalue = window.scrollY;
-        if (scrollvalue > lastScroll) {
+        var headerValue = header.getBoundingClientRect();
+        if (scrollvalue > lastScroll && scrollvalue > headerValue.height * 3) {
             header.style.display = "none";
             navigationDropdownIcon.style.display = "none";
         } else if (scrollvalue < lastScroll) {
@@ -135,65 +136,66 @@ window.addEventListener("load", (event) => {
 
     //Fluid Animations
 
-    let observer = new IntersectionObserver((entries) => {
-        for (var i = 0; i < entries.length; i++) {
-            if (entries[i].isIntersecting) {
-                entries[i].target.classList.add("animate");
-            } else {
-                entries[i].target.classList.remove("animate");
+    (function () {
+        let observer = new IntersectionObserver((entries) => {
+            for (var i = 0; i < entries.length; i++) {
+                if (entries[i].isIntersecting) {
+                    entries[i].target.classList.add("animate");
+                } else {
+                    entries[i].target.classList.remove("animate");
+                };
             };
+        });
+        var hiddenElements = document.querySelectorAll(".animate-top, .animate-bottom, .animate-left, .animate-right, .animate-fade");
+        for (var i = 0; i < hiddenElements.length; i++) {
+            observer.observe(hiddenElements[i]);
         };
-    });
+    })();
 
-    var hiddenElements = document.querySelectorAll(".animate-top, .animate-bottom, .animate-left, .animate-right, .animate-fade");
-    for (var i = 0; i < hiddenElements.length; i++) {
-        observer.observe(hiddenElements[i]);
+    //Smooth Scrolling
+
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) != true ) {
+    (function () {
+        const body = document.body;
+        const smoothScrollingContainer = document.querySelector('.smooth-scrolling');
+        window.addEventListener("resize", function() {
+            setTimeout(function() {
+                body.style.height = smoothScrollingContainer.clientHeight + 'px';
+            }, 1250);
+        });
+        body.style.height = smoothScrollingContainer.clientHeight + 'px';
+        let sx = 0;
+        let sy = 0;
+        let dx = sx;
+        let dy = sy;
+        window.addEventListener("scroll", function() {
+            sx = window.pageXOffset;
+            sy = window.pageYOffset;
+        });
+        window.requestAnimationFrame(render);
+
+        function render() {
+            dx = lerp(dx, sx, 0.1);
+            dy = lerp(dy, sy, 0.1);
+            dx = Math.floor(dx * 100) / 100;
+            dy = Math.floor(dy * 100) / 100;
+            smoothScrollingContainer.style.transform = `translate(-${dx}px, -${dy}px)`;
+            window.requestAnimationFrame(render);
+        };
+
+        function lerp(a, b, n) {
+            return (1 - n) * a + n * b;
+        };
+
+        //Custom Smooth Scrolling Functions
+        
+        customFooterAccordion = document.querySelector("#custom-footer-accordion");
+        customFooterAccordion.addEventListener("click", function() {
+            body.style.height = smoothScrollingContainer.clientHeight + 'px';
+        });
+    })();
+
+    } else {
+        document.querySelector('.smooth-scrolling').classList.remove("smooth-scrolling");
     };
-
-    //Beta Smooth Scrolling
-
-    // const body = document.body;
-    // const main = document.querySelector('.smooth-scrolling');
-
-    // let sx = 0;
-    // let sy = 0;
-
-    // let dx = sx;
-    // let dy = sy;
-
-    // window.addEventListener("resize", function() {
-    //     setTimeout(function() {
-    //         body.style.height = main.clientHeight + 'px';
-    //     }, 1250);
-    // });
-
-    // body.style.height = main.clientHeight + 'px';
-
-    // window.addEventListener('scroll', scroll);
-
-    // function scroll() {
-    //     sx = window.pageXOffset;
-    //     sy = window.pageYOffset;
-    // };
-
-    // window.requestAnimationFrame(render);
-
-    // function render() {
-
-    //     dx = lerp(dx, sx, 0.1);
-    //     dy = lerp(dy, sy, 0.1);
-
-    //     dx = Math.floor(dx * 100) / 100;
-    //     dy = Math.floor(dy * 100) / 100;
-
-    //     main.style.transform = `translate(-${dx}px, -${dy}px)`;
-
-    //     window.requestAnimationFrame(render);
-    // };
-
-    // // This is our Linear Interpolation method.
-    // function lerp(a, b, n) {
-    //     return (1 - n) * a + n * b;
-    // };
-
 });
