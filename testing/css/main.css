@@ -10,6 +10,8 @@
     font-size: 100%;
     vertical-align: baseline;
     background: transparent;
+    overscroll-behavior: none !important;
+    -webkit-overscroll-behavior: none !important;
 }
 
 body {
@@ -18,9 +20,8 @@ body {
     margin: 0;
     width: 100vw;
     height: 100vh;
-    overflow-x: hidden;
-    overscroll-behavior: none;
     scroll-behavior: smooth;
+    overflow-x: hidden !important;
 }
 
 /*Scroll Jack*/
@@ -293,14 +294,8 @@ footer {
 }
 
 /********************************************************************************************************/
-/*---Dynamic Site Styles---*/
-/*Page Background*/
-
-.page-background-color {
-    background-color: #22222C;
-}
-
 /*Content Backgrounds*/
+
 .background-color-1 {
     background-color: #F6F6F6;
 }
@@ -576,6 +571,13 @@ h4 {
     padding-bottom: 300px;
 }
 
+@media screen and (max-width: 760px) {
+    .content-spacer-4, .content-spacer-5, .content-spacer-6 {
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
+}
+
 .content-alignment-1 {
     position: relative;
     top: 50%;
@@ -761,36 +763,48 @@ h4 {
     opacity: 0;
     filter: blur(5px);
     transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+    -webkit-transform-style: preserve-3d;
     transition-duration: 1s;
     transition-timing-function: ease-in;
     transition-delay: 250ms;
+    will-change: transform;
 }
 
 .animate-right {
     opacity: 0;
     filter: blur(5px);
     transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+    -webkit-transform-style: preserve-3d;
     transition-duration: 750ms;
     transition-timing-function: ease-in;
     transition-delay: 250ms;
+    will-change: transform !important;
 }
 
 .animate-top {
     opacity: 0;
     filter: blur(5px);
-    transform: translateY(100%);
+    transform: translateY(33%);
+    -webkit-transform: translateY(33%);
+    -webkit-transform-style: preserve-3d;
     transition-duration: 750ms;
     transition-timing-function: ease-in;
     transition-delay: 250ms;
+    will-change: transform !important;
 }
 
 .animate-bottom {
     opacity: 0;
     filter: blur(5px);
-    transform: translateY(-100%);
+    transform: translateY(-33%);
+    -webkit-transform: translateY(-33%);
+    -webkit-transform-style: preserve-3d;
     transition-duration: 750ms;
     transition-timing-function: ease-in;
     transition-delay: 250ms;
+    will-change: transform !important;
 }
 
 .animate-fade {
@@ -799,18 +813,31 @@ h4 {
     transition-duration: 750ms;
     transition-timing-function: ease-in;
     transition-delay: 250ms;
+    will-change: transform !important;
+}
+
+@media screen and (max-width: 760px) {
+    .animate-left, .animate-right, .animate-top, .animate-bottom, .animate-fade {
+        opacity: 1;
+        filter: blur(0px);
+        transform: translate(0, 0);
+        -webkit-transform: translate(0, 0);
+        will-change: transform !important;
+    }
 }
 
 .animate {
     opacity: 1;
     filter: blur(0px);
-    transform: translatex(0);
+    transform: translate(0, 0);
+    -webkit-transform: translate(0, 0);
+    will-change: transform !important;
 }
 
-/*Beta Scroll Smooth*/
+/*Smooth Scrolling*/
 
-/*.smooth-scrolling {
+.smooth-scrolling {
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
-}*/
+}
