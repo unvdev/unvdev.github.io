@@ -517,6 +517,21 @@ h4 {
     flex-basis: 100%;
 }
 
+.layout-display {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    width: 100vw;
+    height: 100vh;
+}
+
+@media screen and (max-width: 760px) {
+    .layout-display {
+        width: auto;
+        height: auto;  
+    }
+}
+
 @media screen and (min-width: 760px) {
     .layout-single {
         flex: 1
@@ -524,6 +539,10 @@ h4 {
 
     .layout-double {
         flex: 2
+    }
+
+    .layout-display {
+        flex: 1
     }
 }
 
@@ -765,6 +784,9 @@ h4 {
     opacity: 0;
     transform: translateX(-100%);
     -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    -o-transform: translateX(-100%);
     -webkit-transform-style: preserve-3d;
     transition-duration: 750ms;;
     transition-timing-function: ease-in;
@@ -776,6 +798,9 @@ h4 {
     opacity: 0;
     transform: translateX(100%);
     -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    -o-transform: translateX(100%);
     -webkit-transform-style: preserve-3d;
     transition-duration: 750ms;
     transition-timing-function: ease-in;
@@ -787,6 +812,9 @@ h4 {
     opacity: 0;
     transform: translateY(33%);
     -webkit-transform: translateY(33%);
+    -moz-transform: translateY(33%);
+    -ms-transform: translateY(33%);
+    -o-transform: translateY(33%);
     -webkit-transform-style: preserve-3d;
     transition-duration: 750ms;
     transition-timing-function: ease-in;
@@ -798,6 +826,9 @@ h4 {
     opacity: 0;
     transform: translateY(-33%);
     -webkit-transform: translateY(-33%);
+    -moz-transform: translateY(-33%);
+    -ms-transform: translateY(-33%);
+    -o-transform: translateY(-33%);
     -webkit-transform-style: preserve-3d;
     transition-duration: 750ms;
     transition-timing-function: ease-in;
@@ -813,10 +844,27 @@ h4 {
     will-change: transform !important;
 }
 
+.animate-tv {
+    opacity: 0;
+    transform: scaleY(0.25);
+    -webkit-transform: scaleY(0.25);
+    -moz-transform: scaleY(0.25);
+    -ms-transform: scaleY(0.25);
+    -o-transform: scaleY(0.25);
+    -webkit-transform-style: preserve-3d;
+    transition-duration: 750ms;
+    transition-timing-function: ease-in;
+    transition-delay: 250ms;
+    will-change: transform !important;
+}
+
 .animate-grow {
     opacity: 0;
     transform: scale(33%);
     -webkit-transform: scale(33%);
+    -moz-transform: scale(33%);
+    -ms-transform: scale(33%);
+    -o-transform: scale(33%);
     -webkit-transform-style: preserve-3d;
     transition-duration: 750ms;
     transition-timing-function: ease-in;
@@ -828,6 +876,9 @@ h4 {
     opacity: 0;
     transform: rotate(180deg);
     -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
     -webkit-transform-style: preserve-3d;
     transition-duration: 750ms;
     transition-timing-function: ease-in;
@@ -839,6 +890,9 @@ h4 {
     opacity: 0;
     transform: rotate(-180deg);
     -webkit-transform: rotate(-180deg);
+    -moz-transform: rotate(-180deg);
+    -ms-transform: rotate(-180deg);
+    -o-transform: rotate(-180deg);
     -webkit-transform-style: preserve-3d;
     transition-duration: 750ms;
     transition-timing-function: ease-in;
@@ -855,17 +909,24 @@ h4 {
     }
 }
 
-.animate {
-    opacity: 1;
-    transform: translate(0, 0);
-    -webkit-transform: translate(0, 0);
-    transform: scale(100%);
-    -webkit-transform: scale(100%);
-    transform: rotate(0deg);
-    -webkit-transform: rotate(0deg);
+.animate-typewriter {
+    opacity: 0;
+    transition-duration: 750ms;
+    transition-timing-function: ease-in;
+    transition-delay: 250ms;
     will-change: transform !important;
+    /*Use alongside animations to produce the typewriter effect.*/
 }
 
 .animate-loop {
     /*Use alongside animations to prevent them from only firing once. The animation will always be triggered when scrolling.*/
+}
+
+.animate {
+    opacity: 1;
+    -webkit-transform: none;
+    -moz-transform: none;
+    -ms-transform: none;
+    -o-transform: none;
+    transform: none;
 }
