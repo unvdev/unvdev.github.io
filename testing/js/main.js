@@ -34,7 +34,7 @@ document.onreadystatechange = function() {
             document.querySelector(".loadscreen").style.visibility = "hidden";
             document.body.style.visibility = "visible";
             document.body.classList.remove("scrolljack");
-        }, 1000);
+        }, 0);
     };
 };
 
@@ -100,10 +100,10 @@ window.addEventListener("load", (event) => {
     //Active Navigation Page
 
     var navigationLinks = document.querySelectorAll(".header-navigation-link > *, .footer-navigation-link > *");
-    console.log(navigationLinks);
     var currentPage = window.location.pathname.split("/");
     currentPage = currentPage.slice(-1).toString().toLowerCase().replace(/\.[A-Za-z0-9]+/, "");
     currentPage = currentPage.replace(/%[0-9A-Fa-f][0-9A-Fa-f]/, " ");
+    currentPage = currentPage.replace(/[^A-Za-z0-9]/g, " ");
     for (var i = 0; i < navigationLinks.length; i++) {
         if (navigationLinks[i].innerHTML.toLowerCase().includes(currentPage)) {
             navigationLinks[i].classList.add("navigation-active");
@@ -127,19 +127,34 @@ window.addEventListener("load", (event) => {
         };
     };
 
-    //Classic Animations
+    //Animations
 
     let observer = new IntersectionObserver((entries) => {
         for (var i = 0; i < entries.length; i++) {
-            if (entries[i].isIntersecting) {
+            if (entries[i].isIntersecting == true) {
                 entries[i].target.classList.add("animate");
             };
-            if (entries[i].isIntersecting != true && entries[i].target.classList.contains("animate-loop")) {
+            if (entries[i].isIntersecting == true && entries[i].target.classList.contains("animate-typewriter") == true && entries[i].target.classList.contains("stop-typewriter") != true) {
+                console.log(entries[i].target);
+                var test = entries[i].target;
+                var text = entries[i].target.innerHTML;
+                var result = "";
+                setTimeout(function() {
+                for (let i = 0; i < text.length; i++) {
+                        setTimeout(function () {
+                            result += text[i];
+                            test.innerHTML = result;
+                        }, 120 * i);
+                    };
+                }, 500);
+                entries[i].target.classList.add("stop-typewriter");
+            };
+            if (entries[i].isIntersecting != true && entries[i].target.classList.contains("animate-loop") == true) {
                 entries[i].target.classList.remove("animate");
             };
         };
     });
-    var animations = document.querySelectorAll(".animate-top, .animate-bottom, .animate-left, .animate-right, .animate-fade, .animate-grow, .animate-rotate-left, .animate-rotate-right");
+    var animations = document.querySelectorAll(".animate-top, .animate-bottom, .animate-left, .animate-right, .animate-fade, .animate-grow, .animate-rotate-left, .animate-rotate-right, .animate-tv, .animate-typewriter");
     for (var i = 0; i < animations.length; i++) {
         observer.observe(animations[i]);
     };
