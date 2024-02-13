@@ -48,51 +48,50 @@ window.addEventListener("load", (event) => {
         window.location.href = `${websiteURL}`;
     };
 
-    var header = document.querySelector("header");
-    var navigation = document.querySelector(".navigation");
-    var navigationDropdownIcon = document.querySelector(".navigation-dropdown-icon");
-    var navigationDropdownList = document.querySelector(".navigation-dropdown-list");
-    var navigationDropdownBackground = document.querySelector(".navigation-dropdown-background");
-
     //Navigation Behavior
 
-    let navigationDropdownStatus = "closed";
-
+    var headerNavigation = document.querySelector(".header-navigation");
+    var headerNavigationDropdownIcon = document.querySelector(".header-navigation-dropdown-icon");
+    var headerNavigationDropdownList = document.querySelector(".header-navigation-dropdown-list");
+    var headerNavigationDropdownBackground = document.querySelector(".header-navigation-dropdown-background");
+    let headerNavigationDropdownStatus = "closed";
     function dropdownToggle() {
-        if (navigationDropdownStatus === "closed") {
+        if (headerNavigationDropdownStatus === "closed") {
             document.body.classList.add("scrolljack");
-            navigation.style.zIndex = "999";
-            navigationDropdownIcon.classList.add("fa-xmark-large");
-            navigationDropdownList.style.display = "block";
-            navigationDropdownBackground.style.display = "block";
+            headerNavigation.style.zIndex = "999";
+            headerNavigationDropdownIcon.classList.add("fa-xmark-large");
+            headerNavigationDropdownList.style.display = "block";
+            headerNavigationDropdownBackground.style.display = "block";
             setTimeout(function() {
-                navigationDropdownStatus = "open";
+                headerNavigationDropdownStatus = "open";
             }, 100);
         } else {
-            navigation.style.zIndex = null;
-            navigationDropdownIcon.classList.remove("fa-xmark-large");
-            navigationDropdownList.style.display = "none";
-            navigationDropdownBackground.style.display = "none";
+            headerNavigation.style.zIndex = null;
+            headerNavigationDropdownIcon.classList.remove("fa-xmark-large");
+            headerNavigationDropdownList.style.display = "none";
+            headerNavigationDropdownBackground.style.display = "none";
             document.body.classList.remove("scrolljack");
             setTimeout(function() {
-                navigationDropdownStatus = "closed";
+                headerNavigationDropdownStatus = "closed";
             }, 100);
         };
     };
-    navigationDropdownIcon.addEventListener('click', dropdownToggle);
+    headerNavigationDropdownIcon.addEventListener("click", dropdownToggle);
 
     //Header Behavior
 
+    var header = document.querySelector("header");
+    var headerNavigationDropdownIcon = document.querySelector(".header-navigation-dropdown-icon");
     let lastScroll = 0;
     document.onscroll = function() {
         var scrollvalue = window.scrollY;
         var headerValue = header.getBoundingClientRect();
         if (scrollvalue > lastScroll && scrollvalue > headerValue.height * 3) {
             header.style.display = "none";
-            navigationDropdownIcon.style.display = "none";
+            headerNavigationDropdownIcon.style.display = "none";
         } else if (scrollvalue < lastScroll) {
             header.style.display = "block";
-            navigationDropdownIcon.style.display = "block";
+            headerNavigationDropdownIcon.style.display = "block";
         };
         //Mobile
         lastScroll = scrollvalue <= 0 ? 0 : scrollvalue;
@@ -100,12 +99,14 @@ window.addEventListener("load", (event) => {
 
     //Active Navigation Page
 
-    var pages = document.querySelectorAll(".navigation-link > *");
-    var currentPage = window.location.pathname.split('/');
-    currentPage = currentPage.slice(-1).toString().toLowerCase().replace(/\W+.*/, '');
-    for (var i = 0; i < pages.length; i++) {
-        if (currentPage.includes(pages[i].innerText.toLowerCase())) {
-            pages[i].classList.add("navigation-active");
+    var navigationLinks = document.querySelectorAll(".header-navigation-link > *, .footer-navigation-link > *");
+    console.log(navigationLinks);
+    var currentPage = window.location.pathname.split("/");
+    currentPage = currentPage.slice(-1).toString().toLowerCase().replace(/\.[A-Za-z0-9]+/, "");
+    currentPage = currentPage.replace(/%[0-9A-Fa-f][0-9A-Fa-f]/, " ");
+    for (var i = 0; i < navigationLinks.length; i++) {
+        if (navigationLinks[i].innerHTML.toLowerCase().includes(currentPage)) {
+            navigationLinks[i].classList.add("navigation-active");
         };
     };
 
@@ -126,27 +127,20 @@ window.addEventListener("load", (event) => {
         };
     };
 
-    // Beta Parallax Movements
-
-    // var mainImage = document.querySelector(".image-style-3");
-    // document.onscroll = function() {
-    //     let value = window.scrollY;
-    //     mainImage.style.top = value / 3 + "px";
-    // };
-
-    //Fluid Animations
+    //Classic Animations
 
     let observer = new IntersectionObserver((entries) => {
         for (var i = 0; i < entries.length; i++) {
             if (entries[i].isIntersecting) {
                 entries[i].target.classList.add("animate");
-            } else {
+            };
+            if (entries[i].isIntersecting != true && entries[i].target.classList.contains("animate-loop")) {
                 entries[i].target.classList.remove("animate");
             };
         };
     });
-    var hiddenElements = document.querySelectorAll(".animate-top, .animate-bottom, .animate-left, .animate-right, .animate-fade");
-    for (var i = 0; i < hiddenElements.length; i++) {
-        observer.observe(hiddenElements[i]);
+    var animations = document.querySelectorAll(".animate-top, .animate-bottom, .animate-left, .animate-right, .animate-fade, .animate-grow, .animate-rotate-left, .animate-rotate-right");
+    for (var i = 0; i < animations.length; i++) {
+        observer.observe(animations[i]);
     };
 });
