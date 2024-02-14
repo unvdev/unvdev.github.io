@@ -841,7 +841,6 @@ h4 {
     transition-duration: 750ms;
     transition-timing-function: ease-in;
     transition-delay: 250ms;
-    will-change: transform !important;
 }
 
 .animate-tv {
@@ -900,22 +899,20 @@ h4 {
     will-change: transform !important;
 }
 
-@media screen and (max-width: 760px) {
-    .animate-left, .animate-right, .animate-top, .animate-bottom, .animate-fade, .animate-grow, .animate-rotate-left, .animate-rotate-right {
-        opacity: 1;
-        transform: translate(0, 0);
-        -webkit-transform: translate(0, 0);
-        will-change: transform !important;
-    }
-}
-
 .animate-typewriter {
     opacity: 0;
     transition-duration: 750ms;
     transition-timing-function: ease-in;
     transition-delay: 250ms;
-    will-change: transform !important;
-    /*Use alongside animations to produce the typewriter effect.*/
+}
+
+@media screen and (max-width: 760px) {
+    .animate-left, .animate-right, .animate-top, .animate-bottom, .animate-fade, .animate-grow, .animate-rotate-left, .animate-rotate-right, .animate-tv, .animate-typewriter {
+        opacity: 1;
+        transform: translate(0, 0);
+        -webkit-transform: translate(0, 0);
+        will-change: transform !important;
+    }
 }
 
 .animate-loop {
