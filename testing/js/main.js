@@ -134,8 +134,10 @@ window.addEventListener("load", (event) => {
             if (entries[i].isIntersecting == true) {
                 entries[i].target.classList.add("animate");
             };
-            if (entries[i].isIntersecting == true && entries[i].target.classList.contains("animate-typewriter") == true && entries[i].target.classList.contains("stop-typewriter") != true) {
-                console.log(entries[i].target);
+            if (entries[i].isIntersecting == true &&
+                entries[i].target.classList.contains("animate-typewriter") == true &&
+                entries[i].target.classList.contains("stop-typewriter") != true &&
+                window.innerWidth > 760 == true) {
                 var test = entries[i].target;
                 var text = entries[i].target.innerHTML;
                 var result = "";
