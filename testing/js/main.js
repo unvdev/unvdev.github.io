@@ -136,8 +136,7 @@ window.addEventListener("load", (event) => {
             };
             if (entries[i].isIntersecting == true &&
                 entries[i].target.classList.contains("animate-typewriter") == true &&
-                entries[i].target.classList.contains("stop-typewriter") != true &&
-                window.innerWidth > 760 == true) {
+                entries[i].target.classList.contains("stop-typewriter") != true) {
                 var test = entries[i].target;
                 var text = entries[i].target.innerHTML;
                 var result = "";
@@ -157,7 +156,13 @@ window.addEventListener("load", (event) => {
         };
     });
     var animations = document.querySelectorAll(".animate-top, .animate-bottom, .animate-left, .animate-right, .animate-fade, .animate-grow, .animate-rotate-left, .animate-rotate-right, .animate-tv, .animate-typewriter");
-    for (var i = 0; i < animations.length; i++) {
-        observer.observe(animations[i]);
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) != true) {
+        for (var i = 0; i < animations.length; i++) {
+            observer.observe(animations[i]);
+        };
+    } else {
+        for (var i = 0; i < animations.length; i++) {
+            animations[i].classList.add("animate");
+        };
     };
 });
