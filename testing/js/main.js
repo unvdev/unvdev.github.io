@@ -137,17 +137,15 @@ window.addEventListener("load", (event) => {
             if (entries[i].isIntersecting == true &&
                 entries[i].target.classList.contains("animate-typewriter") == true &&
                 entries[i].target.classList.contains("stop-typewriter") != true) {
-                var test = entries[i].target;
-                var text = entries[i].target.innerHTML;
-                var result = "";
-                setTimeout(function() {
-                for (let i = 0; i < text.length; i++) {
-                        setTimeout(function () {
-                            result += text[i];
-                            test.innerHTML = result;
-                        }, 120 * i);
-                    };
-                }, 500);
+                var typewriterElement = entries[i].target;
+                var typewriterText = entries[i].target.textContent;;
+                var typewriterTextResult = "";
+                for (let i = 0; i < typewriterText.length; i++) {
+                    setTimeout(function () {
+                        typewriterTextResult += typewriterText[i];
+                        typewriterElement.innerHTML = typewriterTextResult;
+                    }, 100 * i);
+                };
                 entries[i].target.classList.add("stop-typewriter");
             };
             if (entries[i].isIntersecting != true && entries[i].target.classList.contains("animate-loop") == true) {
