@@ -59,6 +59,7 @@ window.addEventListener("load", (event) => {
         if (headerNavigationDropdownStatus === "closed") {
             document.body.classList.add("scrolljack");
             headerNavigation.style.zIndex = "999";
+            headerNavigation.style.display = "block";
             headerNavigationDropdownIcon.classList.add("fa-xmark-large");
             headerNavigationDropdownList.style.display = "block";
             headerNavigationDropdownBackground.style.display = "block";
@@ -67,6 +68,7 @@ window.addEventListener("load", (event) => {
             }, 100);
         } else {
             headerNavigation.style.zIndex = null;
+            headerNavigation.style.display = "none";
             headerNavigationDropdownIcon.classList.remove("fa-xmark-large");
             headerNavigationDropdownList.style.display = "none";
             headerNavigationDropdownBackground.style.display = "none";
@@ -87,11 +89,11 @@ window.addEventListener("load", (event) => {
         var scrollvalue = window.scrollY;
         var headerValue = header.getBoundingClientRect();
         if (scrollvalue > lastScroll && scrollvalue > headerValue.height * 3) {
-            header.style.display = "none";
-            headerNavigationDropdownIcon.style.display = "none";
+            header.style.visibility = "hidden";
+            headerNavigationDropdownIcon.style.visibility = "hidden";
         } else if (scrollvalue < lastScroll) {
-            header.style.display = "block";
-            headerNavigationDropdownIcon.style.display = "block";
+            header.style.visibility = "visible";
+            headerNavigationDropdownIcon.style.visibility = "visible";
         };
         //Mobile
         lastScroll = scrollvalue <= 0 ? 0 : scrollvalue;
@@ -128,7 +130,6 @@ window.addEventListener("load", (event) => {
     };
 
     //Animations
-
     let observer = new IntersectionObserver((entries) => {
         for (var i = 0; i < entries.length; i++) {
             if (entries[i].isIntersecting == true) {
@@ -164,10 +165,13 @@ window.addEventListener("load", (event) => {
         };
     };
 
-    //Beta Testing Code
+    //Custom CSS Styles
 
-    //Anchor Jumps
-    // var hashes = document.querySelectorAll("a[href*='#']");
-    // window.location.href = hashes[0];
+    var contentSpacerViewport = document.querySelectorAll(".content-spacer-viewport");
+    for (var i = 0; i < contentSpacerViewport.length; i++) {
+        contentSpacerViewport[0].style.height = "calc(100vh - 82px)";
 
+    };
+
+    tsParticles.load("isotope-backgrond-1", { "fullScreen": false, "background": { "image": " linear-gradient(19deg, #21D4FD 0%, #B721FF 100%)" }, "particles": { "number": { "value": 10, "density": { "enable": true, "value_area": 600 } }, "color": { "value": "#ffffff" }, "shape": { "type": "circle", "stroke": { "width": 0, "color": "#000000" }, "polygon": { "nb_sides": 5 } }, "opacity": { "value": 0.25, "random": true, "anim": { "enable": false, "speed": 1, "opacity_min": 0.1, "sync": false } }, "size": { "value": 9, "random": true, "anim": { "enable": false, "speed": 4, "size_min": 0.1, "sync": false } }, "line_linked": { "enable": false, "distance": 300, "color": "#ffffff", "opacity": 0, "width": 0 }, "move": { "enable": true, "speed": 1, "random": true, "direction": "top", "straight": true } }, "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": false, "mode": "repulse" }, "onClick": { "enable": true, "mode": "push" }, "resize": true }, "modes": { "grab": { "distance": 800, "line_linked": { "opacity": 1 } }, "bubble": { "distance": 790, "size": 79, "duration": 2, "opacity": 0.8, "speed": 3 }, "repulse": { "distance": 400, "duration": 0.4 }, "push": { "particles_nb": 4 }, "remove": { "particles_nb": 2 } } }, "retina_detect": true });
 });
