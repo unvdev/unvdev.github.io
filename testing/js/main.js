@@ -163,4 +163,11 @@ window.addEventListener("load", (event) => {
             animations[i].classList.add("animate");
         };
     };
+
+    //Beta Testing Code
+
+    //Anchor Jumps
+    // var hashes = document.querySelectorAll("a[href*='#']");
+    // window.location.href = hashes[0];
+
 });
