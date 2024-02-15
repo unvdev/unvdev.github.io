@@ -380,20 +380,18 @@ p {
     font-weight: 600;
 }
 
-@supports (-webkit-text-stroke: 1px black) {
-    h1 {
-        font-family: "Rubik", sans-serif;
-        font-size: 36pt;
-        font-weight: 600;
-        text-transform: uppercase;
-        -webkit-text-stroke: 1px white;
-        width: 100%;
-    }
+h1 {
+    font-family: "Rubik", sans-serif;
+    font-size: 38pt;
+    font-weight: 600;
+    text-transform: uppercase;
+    -webkit-text-stroke: 1px white;
+    width: 100%;
 }
 
 h2 {
     font-family: "Rubik", sans-serif;
-    font-size: 24pt;
+    font-size: 32pt;
     font-weight: 600;
     text-transform: uppercase;
     width: 100%;
@@ -401,7 +399,7 @@ h2 {
 
 h3 {
     font-family: "Rubik", sans-serif;
-    font-size: 20pt;
+    font-size: 24pt;
     font-weight: 600;
     text-transform: uppercase;
     width: 100%;
@@ -414,19 +412,18 @@ h4 {
     width: 100%;
 }
 
-@supports (-webkit-text-stroke: 1px black) {
-    h5 {
-        font-family: "Rubik", sans-serif;
-        font-size: 48pt;
-        font-weight: 600;
-        text-transform: uppercase;
-        width: 100%;
-    }
+
+h5 {
+    font-family: "Rubik", sans-serif;
+    font-size: 48pt;
+    font-weight: 600;
+    text-transform: uppercase;
+    width: 100%;
 }
 
 @media screen and (max-width: 760px) {
     h5 {
-        font-size: 36pt;
+        font-size: 32pt;
     }
 }
 
@@ -495,6 +492,12 @@ h4 {
     width: 100%;
 }
 
+@media screen and (max-width: 760px) {
+    .page-content {
+        padding-top: 122px;
+    }
+}
+
 .content-layout {
     display: flex;
     flex-direction: row;
@@ -523,14 +526,6 @@ h4 {
     flex-direction: column;
     flex-basis: 100%;
     width: 100vw;
-}
-
-.layout-full {
-    display: flex;
-    flex-direction: column;
-    flex-basis: 100%;
-    width: 100vw;
-    height: calc(100vh - 82px);
 }
 
 
@@ -586,24 +581,24 @@ h4 {
 }
 
 .content-spacer-7 {
-    padding-left: 50px;
-    padding-right: 50px;
+    padding-left: 5vw;
+    padding-right: 5vw;
 }
 
-.content-spacer-8 {
-    padding-left: 100px;
-    padding-right: 100px;
-}
-
-.content-spacer-9 {
-    padding-left: 10vw;
-    padding-right: 10vw;
+.content-spacer-viewport {
+    position: relative;
+    width: 100vw;
+    height: calc(100vh - 82px);
 }
 
 @media screen and (max-width: 760px) {
-    .content-spacer-4, .content-spacer-5, .content-spacer-6 {
+    .content-spacer-4, .content-spacer-5, .content-spacer-6, .content-spacer-7, .content-spacer-viewport {
+        width: auto;
+        height: auto;
         padding-top: 50px;
         padding-bottom: 50px;
+        padding-left: 0;
+        padding-right: 0;
     }
 }
 
