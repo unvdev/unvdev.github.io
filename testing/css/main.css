@@ -416,6 +416,7 @@ h4 {
 h5 {
     font-family: "Rubik", sans-serif;
     font-size: 48pt;
+    font-size: 7.5vh;
     font-weight: 600;
     text-transform: uppercase;
     width: 100%;
@@ -423,7 +424,8 @@ h5 {
 
 @media screen and (max-width: 760px) {
     h5 {
-        font-size: 32pt;
+        font-size: 24pt;
+        font-size: 9vw;
     }
 }
 
@@ -488,7 +490,7 @@ h5 {
     display: block;
     position: relative;
     margin: auto;
-    padding-top: 82px;
+/*    padding-top: 82px;*/
     width: 100%;
 }
 
@@ -588,7 +590,7 @@ h5 {
 .content-spacer-viewport {
     position: relative;
     width: 100vw;
-    height: calc(100vh - 82px);
+    height: 100vh;
 }
 
 @media screen and (max-width: 760px) {
@@ -647,6 +649,7 @@ h5 {
 }
 
 /*Active Navigation*/
+
 .navigation-active {
     color: #6F90AF !important;
 }
@@ -925,4 +928,17 @@ h5 {
     -ms-transform: none;
     -o-transform: none;
     transform: none;
+}
+
+/*Testing*/
+
+.isotope-gradient-1 {
+    background: linear-gradient(90deg, hsla(276, 91%, 79%, 1), hsla(254, 74%, 65%, 1));
+}
+
+#isotope-backgrond-1 {
+position: absolute;
+width: 100vw;
+height: 100vh;
+z-index: -1;
 }
