@@ -56,23 +56,24 @@
         <div class="header-navigation-dropdown-background"></div>
     </nav>
     <div class="page-content">
-        <div class="content-layout background-color-1">
-            <div class="layout-single content-spacer-6">
+        <div class="content-layout">
+            <div class="layout-single content-spacer-viewport">
                 <div class="content-alignment-1">
                     <div class="text-alignment-center content-spacer-7">
-                        <h5 class="animate-top text-color-3">Welcome to my world of creativity.&nbsp;&nbsp;I'm Isaac, a graphic designer, web developer, and photographer.</h5>
+                        <h5 class="animate-top text-color-2">Welcome to my world of creativity.&nbsp;&nbsp;I'm Isaac, a graphic designer, web developer, and photographer.</h5>
                         <div class="desktop-content animate-fade">
                             <a href="#Graphics">
-                                <i class="fa-solid fa-circle-arrow-down icon-size-5 text-color-4 content-spacer-2"></i>
+                                <i class="fa-solid fa-circle-arrow-down icon-size-5 text-color-2 content-spacer-2"></i>
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
+            <div id="isotope-backgrond-1"></div>
         </div>
 
         <div class="content-layout background-color-2">
-            <div class="layout-single content-spacer-6">
+            <div class="layout-single content-spacer-viewport">
                 <div class="content-alignment-3">
                     <div class="text-alignment-center">
                         <i class="fa-solid fa-pen-nib text-color-4 icon-size-2 content-spacer-2 animate-fade" aria-hidden="true"></i>
@@ -123,7 +124,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="layout-double animate-right">
+                <div class="layout-double animate-left">
                     <img class="image-style-2" src="https://placehold.jp/00e1ff/ffffff/2000x2500.png" />
                 </div>
             </div>
@@ -167,7 +168,7 @@
                 </div>
             </div>
         </div> -->
-        
+
         <div class="content-layout background-color-3">
             <div class="layout-single animate-fade">
                 <div class="content-alignment-1 content-spacer-3">
@@ -273,6 +274,10 @@
         </footer>
     </div>
     <script type="text/javascript" src="./js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@1.18.3/dist/tsparticles.min.js"></script>
+    <script>
+    tsParticles.load("isotope-backgrond-1", { "fullScreen": false, "background": { "image": " linear-gradient(19deg, #21D4FD 0%, #B721FF 100%)" }, "particles": { "number": { "value": 10, "density": { "enable": true, "value_area": 600 } }, "color": { "value": "#ffffff" }, "shape": { "type": "circle", "stroke": { "width": 0, "color": "#000000" }, "polygon": { "nb_sides": 5 } }, "opacity": { "value": 0.25, "random": true, "anim": { "enable": false, "speed": 1, "opacity_min": 0.1, "sync": false } }, "size": { "value": 9, "random": true, "anim": { "enable": false, "speed": 4, "size_min": 0.1, "sync": false } }, "line_linked": { "enable": false, "distance": 300, "color": "#ffffff", "opacity": 0, "width": 0 }, "move": { "enable": true, "speed": 1, "random": true, "direction": "top", "straight": true } }, "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": false, "mode": "repulse" }, "onClick": { "enable": true, "mode": "push" }, "resize": true }, "modes": { "grab": { "distance": 800, "line_linked": { "opacity": 1 } }, "bubble": { "distance": 790, "size": 79, "duration": 2, "opacity": 0.8, "speed": 3 }, "repulse": { "distance": 400, "duration": 0.4 }, "push": { "particles_nb": 4 }, "remove": { "particles_nb": 2 } } }, "retina_detect": true });
+    </script>
 </body>
 
 </html>
