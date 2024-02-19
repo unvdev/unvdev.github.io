@@ -920,13 +920,6 @@ h4 {
     will-change: transform !important;
 }
 
-.animate-typewriter {
-    opacity: 0;
-    transition-duration: 750ms;
-    transition-timing-function: ease-in;
-    transition-delay: 250ms;
-}
-
 .animate-loop {
     /*Use alongside animations to prevent them from only firing once. The animation will always be triggered when scrolling.*/
 }
