@@ -54,9 +54,9 @@ window.addEventListener("load", (event) => {
     var headerNavigationDropdownIcon = document.querySelector(".header-navigation-dropdown-icon");
     var headerNavigationDropdownList = document.querySelector(".header-navigation-dropdown-list");
     var headerNavigationDropdownBackground = document.querySelector(".header-navigation-dropdown-background");
-    let headerNavigationDropdownStatus = "closed";
+    let headerNavigationStatus = "closed";
     function dropdownToggle() {
-        if (headerNavigationDropdownStatus === "closed") {
+        if (headerNavigationStatus === "closed") {
             document.body.classList.add("scrolljack");
             headerNavigation.style.zIndex = "999";
             headerNavigation.style.display = "block";
@@ -64,17 +64,19 @@ window.addEventListener("load", (event) => {
             headerNavigationDropdownList.style.display = "block";
             headerNavigationDropdownBackground.style.display = "block";
             setTimeout(function() {
-                headerNavigationDropdownStatus = "open";
+                headerNavigationStatus = "open";
             }, 100);
         } else {
+            setTimeout(function() {
             headerNavigation.style.zIndex = null;
             headerNavigation.style.display = "none";
             headerNavigationDropdownIcon.classList.remove("fa-xmark-large");
             headerNavigationDropdownList.style.display = "none";
             headerNavigationDropdownBackground.style.display = "none";
             document.body.classList.remove("scrolljack");
+            }, 1600);
             setTimeout(function() {
-                headerNavigationDropdownStatus = "closed";
+                headerNavigationStatus = "closed";
             }, 100);
         };
     };
@@ -134,20 +136,6 @@ window.addEventListener("load", (event) => {
         for (var i = 0; i < entries.length; i++) {
             if (entries[i].isIntersecting == true) {
                 entries[i].target.classList.add("animate");
-            };
-            if (entries[i].isIntersecting == true &&
-                entries[i].target.classList.contains("animate-typewriter") == true &&
-                entries[i].target.classList.contains("stop-typewriter") != true) {
-                var typewriterElement = entries[i].target;
-                var typewriterText = entries[i].target.textContent;;
-                var typewriterTextResult = "";
-                for (let i = 0; i < typewriterText.length; i++) {
-                    setTimeout(function () {
-                        typewriterTextResult += typewriterText[i];
-                        typewriterElement.innerHTML = typewriterTextResult;
-                    }, 100 * i);
-                };
-                entries[i].target.classList.add("stop-typewriter");
             };
             if (entries[i].isIntersecting != true && entries[i].target.classList.contains("animate-loop") == true) {
                 entries[i].target.classList.remove("animate");
