@@ -67,7 +67,7 @@ const section1Animations = gsap.timeline();
 section1Animations
     .from(mainText, {
         opacity: 0,
-        scale: 0.5,
+        y: 100,
         duration: 1
     })
 
@@ -85,9 +85,39 @@ gsap.to(mainText, {
         scrub: 1,
     },
     scale: 1.4,
-    transformOrigin: "bottom",
-    immediateRender: false
-})
+    transformOrigin: "bottom"
+});
+
+// Debounce the scroll event
+function debounce(func, delay) {
+    let timeoutId;
+    return function() {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(func, delay);
+    };
+}
+const debouncedRefreshScrollTrigger = debounce(function() {
+    ScrollTrigger.refresh(); // Refresh ScrollTrigger
+}, 100);
+window.addEventListener('scroll', debouncedRefreshScrollTrigger);
+
+document.addEventListener('DOMContentLoaded', function() {
+    stopScrollTriggersIfViewportLessThan760px();
+});
+
+function stopScrollTriggersIfViewportLessThan760px() {
+    if (window.innerWidth < 760) {
+        ScrollTrigger.getAll().forEach(trigger => {
+            trigger.disable();
+        });
+    } else {
+        ScrollTrigger.getAll().forEach(trigger => {
+            trigger.enable();
+        });
+    }
+}
+window.addEventListener('resize', stopScrollTriggersIfViewportLessThan760px);
+
 
 ////Footer & helpful for bottom content
 // gsap.from(footerContent, {
