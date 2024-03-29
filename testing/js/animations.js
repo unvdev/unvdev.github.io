@@ -1,5 +1,6 @@
-//GSAP Plugins
+//GSAP Elements
 gsap.registerPlugin(ScrollTrigger);
+let media = gsap.matchMedia();
 
 //Document Elements
 ////Header
@@ -12,17 +13,21 @@ var headerNavigationStatus = "closed";
 
 ////Home Page
 ////////Section1
-var section1 = document.querySelector("#animation-section-1");
+var animationSection1 = document.querySelector("#animation-section-1");
 var mainText = document.querySelector("#main-text");
-var mainTextZoom = document.querySelector("#main-text-zoom");
 var downArrow = document.querySelector("#down-arrow");
+
+////////Section2
+var animationSection2 = document.querySelector("#animation-section-2");
+var section2SkillText = document.querySelectorAll(".section-2-skill-text");
+var section2BottomText = document.querySelector("#section-2-bottom-text");
 
 ////Footer
 var footer = document.querySelector('footer');
 var footerContent = document.querySelector('.footer-content');
 
-//All Animations
 ////Header Icons And Navigation Icon
+media.add("(min-width: 760px)", () => {
 const headerAnimation = gsap.timeline();
 headerAnimation
     .from(headerLinkIcon, {
@@ -34,7 +39,7 @@ headerAnimation
         opacity: 0,
         x: 33
     }, '-=1')
-
+});
 ////Header Navigation
 const navigationAnimation = gsap.timeline();
 navigationAnimation
@@ -63,6 +68,7 @@ headerNavigationDropdownIcon.onclick = function() {
 };
 
 ////Section1
+media.add("(min-width: 760px)", () => {
 const section1Animations = gsap.timeline();
 section1Animations
     .from(mainText, {
@@ -75,11 +81,11 @@ section1Animations
         opacity: 0,
         y: 100,
         duration: 1
-    })
+    })   
 
 gsap.to(mainText, {
     scrollTrigger: {
-        trigger: section1,
+        trigger: animationSection1,
         start: "center center",
         end: "bottom top",
         scrub: 1,
@@ -87,37 +93,33 @@ gsap.to(mainText, {
     scale: 1.4,
     transformOrigin: "bottom"
 });
+}); 
 
-// Debounce the scroll event
-function debounce(func, delay) {
-    let timeoutId;
-    return function() {
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(func, delay);
-    };
-}
-const debouncedRefreshScrollTrigger = debounce(function() {
-    ScrollTrigger.refresh(); // Refresh ScrollTrigger
-}, 100);
-window.addEventListener('scroll', debouncedRefreshScrollTrigger);
-
-document.addEventListener('DOMContentLoaded', function() {
-    stopScrollTriggersIfViewportLessThan760px();
-});
-
-function stopScrollTriggersIfViewportLessThan760px() {
-    if (window.innerWidth < 760) {
-        ScrollTrigger.getAll().forEach(trigger => {
-            trigger.disable();
-        });
-    } else {
-        ScrollTrigger.getAll().forEach(trigger => {
-            trigger.enable();
-        });
-    }
-}
-window.addEventListener('resize', stopScrollTriggersIfViewportLessThan760px);
-
+////Section2
+media.add("(min-width: 760px)", () => {
+gsap.from(section2SkillText, {
+    scrollTrigger: {
+        trigger: animationSection2,
+        start: "top center",
+        end: "center center",
+        scrub: 1,
+    },
+    opacity: 0,
+    x: -33,
+    stagger: 0.25
+})
+    
+gsap.from(section2BottomText, {
+    scrollTrigger: {
+        trigger: animationSection2,
+        start: "center center",
+        end: "center center",
+        scrub: 1,
+    },
+    opacity: 0,
+    y: 33
+    })
+}); 
 
 ////Footer & helpful for bottom content
 // gsap.from(footerContent, {
