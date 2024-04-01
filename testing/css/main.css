@@ -468,6 +468,31 @@ h4 {
     display: inline-block;
 }
 
+.custom-list {
+  position: relative;
+  padding-left: 80px;
+}
+
+@media screen and (max-width: 760px) {
+    .custom-list {
+        padding-left: 40px;
+    }  
+}
+
+
+@media screen and (max-height: 600px) {
+    .custom-list {
+        padding-left: 2.5vw;
+    }  
+}
+
+.custom-list-bullets {
+  position: absolute;
+  left: -40px;
+  top: 50%;
+  transform: translate(0%, -50%);
+}
+
 /*Content Styles*/
 
 .desktop-content {
@@ -674,8 +699,6 @@ h4 {
     max-width: 600px;
     width: 100%;
     height: auto;
-    left: 50%;
-    transform: translate(-50%);
 }
 
 .image-style-2 {
