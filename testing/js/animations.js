@@ -13,14 +13,10 @@ var headerNavigationStatus = "closed";
 
 ////Home Page
 ////////Section1
-var animationSection1 = document.querySelector("#animation-section-1");
-var mainText = document.querySelector("#main-text");
-var downArrow = document.querySelector("#down-arrow");
+var animationSection1 = document.querySelectorAll(".animation-section-1");
 
 ////////Section2
-var animationSection2 = document.querySelector("#animation-section-2");
-var section2SkillText = document.querySelectorAll(".section-2-skill-text");
-var section2BottomText = document.querySelector("#section-2-bottom-text");
+var animationSection2 = document.querySelectorAll(".animation-section-2");
 
 ////Footer
 var footer = document.querySelector('footer');
@@ -69,23 +65,23 @@ headerNavigationDropdownIcon.onclick = function() {
 
 ////Section1
 media.add("(min-width: 760px)", () => {
-const section1Animations = gsap.timeline();
-section1Animations
-    .from(mainText, {
+const section1 = gsap.timeline();
+section1
+    .from(animationSection1[1], {
         opacity: 0,
         y: 100,
         duration: 1
     })
 
-    .from(downArrow, {
+    .from(animationSection1[2], {
         opacity: 0,
         y: 100,
         duration: 1
     })   
 
-gsap.to(mainText, {
+gsap.to(animationSection1[1], {
     scrollTrigger: {
-        trigger: animationSection1,
+        trigger: animationSection1[0],
         start: "center center",
         end: "bottom top",
         scrub: 1,
@@ -97,11 +93,11 @@ gsap.to(mainText, {
 
 ////Section2
 media.add("(min-width: 760px)", () => {
-gsap.from(section2SkillText, {
+gsap.from([animationSection2[1], animationSection2[2], animationSection2[3]], {
     scrollTrigger: {
-        trigger: animationSection2,
+        trigger: animationSection2[0],
         start: "top center",
-        end: "center center",
+        end: "top",
         scrub: 1,
     },
     opacity: 0,
@@ -109,15 +105,54 @@ gsap.from(section2SkillText, {
     stagger: 0.25
 })
     
-gsap.from(section2BottomText, {
+gsap.from(animationSection2[4], {
     scrollTrigger: {
-        trigger: animationSection2,
-        start: "center center",
-        end: "center center",
+        trigger: animationSection2[0],
+        start: "top+=400 center",
+        end: "top",
         scrub: 1,
     },
     opacity: 0,
     y: 33
+    })
+
+gsap.from(animationSection2[5], {
+    scrollTrigger: {
+        trigger: animationSection2[0],
+        start: "+=400px top",
+        end: "+=200px",
+        scrub: 1,
+        markers: true,
+    },
+    opacity: 0,
+    y: -600,
+    duration: 0.25
+    })
+
+gsap.from(animationSection2[6], {
+    scrollTrigger: {
+        trigger: animationSection2[0],
+        start: "+=1200px top",
+        end: "+=200px",
+        scrub: 1,
+        markers: true,
+    },
+    opacity: 0,
+    y: -600,
+    duration: 0.25
+    })
+
+gsap.from(animationSection2[7], {
+    scrollTrigger: {
+        trigger: animationSection2[0],
+        start: "+=2200px top",
+        end: "+=200px",
+        scrub: 1,
+        markers: true,
+    },
+    opacity: 0,
+    y: -600,
+    duration: 0.25
     })
 }); 
 
