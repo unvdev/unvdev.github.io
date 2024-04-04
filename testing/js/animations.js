@@ -11,16 +11,14 @@ var headerNavigationBackground = document.querySelector('.header-navigation-drop
 var headerLinkIcon = document.querySelectorAll('.header-link-icon');
 var headerNavigationStatus = "closed";
 
-////Home Page
 ////////Section1
 var animationSection1 = document.querySelectorAll(".animation-section-1");
 
 ////////Section2
 var animationSection2 = document.querySelectorAll(".animation-section-2");
 
-////Footer
-var footer = document.querySelector('footer');
-var footerContent = document.querySelector('.footer-content');
+////////Section3
+var animationSection3 = document.querySelectorAll(".animation-section-3");
 
 ////Header Icons And Navigation Icon
 media.add("(min-width: 760px)", () => {
@@ -93,76 +91,82 @@ gsap.to(animationSection1[1], {
 
 ////Section2
 media.add("(min-width: 760px)", () => {
+for (var i = 0; i < [animationSection2[1], animationSection2[2], animationSection2[3]].length; i++) {
+    var animationSection2_customHeight1 = [animationSection2[1], animationSection2[2], animationSection2[3]][i].getBoundingClientRect().height;
+};
 gsap.from([animationSection2[1], animationSection2[2], animationSection2[3]], {
     scrollTrigger: {
-        trigger: animationSection2[0],
-        start: "top center",
-        end: "top",
+        trigger: [animationSection2[1], animationSection2[2], animationSection2[3]],
+        start: `top-=${animationSection2_customHeight1} center`,
+        end: `bottom+=${animationSection2_customHeight1} center`,
         scrub: 1,
     },
     opacity: 0,
-    x: -33,
+    x: -66,
     stagger: 0.25
 })
     
 gsap.from(animationSection2[4], {
     scrollTrigger: {
-        trigger: animationSection2[0],
-        start: "top+=400 center",
-        end: "top",
+        trigger: animationSection2[4],
+        start: "top center",
+        end: "center center",
         scrub: 1,
     },
     opacity: 0,
-    y: 33
-    })
+    y: 66
+})
 
-gsap.from(animationSection2[5], {
+gsap.from([animationSection2[5], animationSection2[6], animationSection2[7]], {
+    scrollTrigger: {
+        trigger: [animationSection2[5], animationSection2[6], animationSection2[7]],
+        start: "top center",
+        end: "center center",
+        scrub: 1,
+    },
+    opacity: 0,
+    y: 66,
+    stagger: 0.25
+})
+
+gsap.from(animationSection2[8], {
+    scrollTrigger: {
+        trigger: animationSection2[8],
+        start: "top-=200 center",
+        end: "center center",
+        scrub: 1,
+    },
+    opacity: 0,
+    scale: 0
+})
+
+gsap.to(document.body, {
     scrollTrigger: {
         trigger: animationSection2[0],
-        start: "+=400px top",
-        end: "+=200px",
+        start: "bottom center",
+        end: "bottom center",
         scrub: 1,
         markers: true,
     },
-    opacity: 0,
-    y: -600,
-    duration: 0.25
-    })
+    // opacity: 0,
+    backgroundColor: "#2E2E2E"
+})
+});
 
-gsap.from(animationSection2[6], {
+////Section3
+media.add("(min-width: 760px)", () => {
+for (var i = 0; i < [animationSection3[1], animationSection3[2], animationSection3[3]].length; i++) {
+    var animationSection3_customHeight1 = [animationSection3[1], animationSection3[2], animationSection3[3]][i].getBoundingClientRect().height;
+};
+gsap.from([animationSection3[1], animationSection3[2], animationSection3[3]], {
     scrollTrigger: {
-        trigger: animationSection2[0],
-        start: "+=1200px top",
-        end: "+=200px",
+        trigger: [animationSection3[1], animationSection3[2], animationSection3[3]],
+        start: `top-=${animationSection3_customHeight1} center`,
+        end: `bottom+=${animationSection3_customHeight1} center`,
         scrub: 1,
-        markers: true,
     },
     opacity: 0,
-    y: -600,
-    duration: 0.25
-    })
-
-gsap.from(animationSection2[7], {
-    scrollTrigger: {
-        trigger: animationSection2[0],
-        start: "+=2200px top",
-        end: "+=200px",
-        scrub: 1,
-        markers: true,
-    },
-    opacity: 0,
-    y: -600,
-    duration: 0.25
-    })
-}); 
-
-////Footer & helpful for bottom content
-// gsap.from(footerContent, {
-//     opacity: 0,
-//     duration: 3,
-//     scrollTrigger: {
-//         trigger: footer,
-//         start: "top bottom",
-//         toggleActions: 'play none restart reset',
-//     }
-// })
+    x: 66,
+    stagger: 0.25
+})
+});
