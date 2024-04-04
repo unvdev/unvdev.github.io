@@ -493,6 +493,11 @@ h4 {
   transform: translate(0%, -50%);
 }
 
+.custom-bullets-2 {
+    text-indent: -24px;
+    padding-left: 48px;
+}
+
 /*Content Styles*/
 
 .desktop-content {
@@ -967,6 +972,12 @@ h4 {
 #isotope-backgrond-1 {
 position: absolute;
 width: 100vw;
-height: 100vh;
+height: calc(100vh - 82px);
 z-index: -1;
+}
+
+@media screen and (max-width: 760px) {
+    #isotope-backgrond-1 {
+        display: none;
+    }
 }
