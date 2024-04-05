@@ -468,36 +468,6 @@ h4 {
     display: inline-block;
 }
 
-.custom-list {
-  position: relative;
-  padding-left: 80px;
-}
-
-@media screen and (max-width: 760px) {
-    .custom-list {
-        padding-left: 40px;
-    }  
-}
-
-
-@media screen and (max-height: 600px) {
-    .custom-list {
-        padding-left: 2.5vw;
-    }  
-}
-
-.custom-list-bullets {
-  position: absolute;
-  left: -40px;
-  top: 50%;
-  transform: translate(0%, -50%);
-}
-
-.custom-bullets-2 {
-    text-indent: -24px;
-    padding-left: 48px;
-}
-
 /*Content Styles*/
 
 .desktop-content {
@@ -963,7 +933,7 @@ h4 {
     transform: none;
 }
 
-/*Testing*/
+/*Custom Content*/
 
 .isotope-gradient-1 {
     background: linear-gradient(90deg, hsla(276, 91%, 79%, 1), hsla(254, 74%, 65%, 1));
@@ -981,3 +951,77 @@ z-index: -1;
         display: none;
     }
 }
+
+
+.section2-custom-list-1 ul {
+    list-style: none;
+    padding-right: 0;
+    text-align: left;
+}
+
+.section2-custom-list-1 li {
+    position: relative;
+    padding-left: 100px;
+    padding-right: 30px;
+}
+
+.section2-custom-list-1 li::before {
+    content: '\f111';
+    font-family: 'FontAwesome';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.section2-custom-list-1 li:nth-child(1):before {
+    font: var(--fa-font-solid);
+    content: '\e611';
+}
+
+.section2-custom-list-1 li:nth-child(2):before {
+    font: var(--fa-font-solid);
+    content: '\f247';
+}
+
+.section2-custom-list-1 li:nth-child(3):before {
+    font: var(--fa-font-solid);
+    content: '\f626';
+}
+
+/*Right Side Bullets*/
+/*.section2-custom-list-1 ul {
+    list-style: none;
+    padding-left: 0;
+    text-align: right;
+}
+
+.section2-custom-list-1 li {
+    position: relative;
+    padding-left: 30px;
+    padding-right: 100px;
+}
+
+.section2-custom-list-1 li::before {
+    content: '\f111';
+    font-family: 'FontAwesome';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.section2-custom-list-1 li:nth-child(1):before {
+    font: var(--fa-font-solid);
+    content: '\e611';
+}
+
+.section2-custom-list-1 li:nth-child(2):before {
+    font: var(--fa-font-solid);
+    content: '\f247';
+}
+
+.section2-custom-list-1 li:nth-child(3):before {
+    font: var(--fa-font-solid);
+    content: '\f626';
+}*/
