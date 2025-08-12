@@ -12,14 +12,23 @@
         [contenteditable="true"]:focus {
             outline: none;
         }
+        .cms-menu-bar {
+            display: block;
+            position: fixed;
+            background-color: blue;
+            height: 40px;
+            width: 100vw;
+        }
     </style>
 </head>
 <body>
+    <div class="cms-menu-bar">
+    <input class="target-page" style="width: 300px; height: 20px;" type="text">
+        <button class="load-page">Grab Page Code</button>
+        <button class="delete-element">Delete Element</button>
+    </div>    
     <div id="loaded-page">
     </div>
-    <input class="target-page" style="width: 300px; height: 20px;" type="text">
-    <button class="load-page">Grab Page Code</button>
-    <button class="delete-element">Delete Element</button>
     <script>
         let paramString = window.location.search.split('?')[1];
         let queryString = new URLSearchParams(paramString);
