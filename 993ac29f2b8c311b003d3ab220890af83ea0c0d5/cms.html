@@ -71,6 +71,33 @@ loadedPage.addEventListener("click", function(event) {
     }
 });
 
+loadedPage.addEventListener("dblclick", function(event) {
+    if (event.target !== loadedPage) {
+        let parentElement = event.target.parentElement;
+        if (parentElement) {
+            makeEditable(parentElement);
+        }
+    }
+});
+
+document.addEventListener("keydown", function(event) {
+    if (currentlyEditable) {
+        if (event.key === 'ArrowUp') {
+            event.preventDefault(); // Prevents default browser scrolling
+            let previousElement = currentlyEditable.previousElementSibling;
+            if (previousElement) {
+                currentlyEditable.parentElement.insertBefore(currentlyEditable, previousElement);
+            }
+        } else if (event.key === 'ArrowDown') {
+            event.preventDefault(); // Prevents default browser scrolling
+            let nextElement = currentlyEditable.nextElementSibling;
+            if (nextElement) {
+                nextElement.parentElement.insertBefore(nextElement, currentlyEditable);
+            }
+        }
+    }
+});
+
 loadedPage.addEventListener("mousedown", function(event) {
     let deleteTarget = event.target.closest('p, h1, h2, h3, h4, h5, h6, span, div, a, li');
     if (deleteTarget && deleteTarget !== loadedPage && !deleteTarget.closest('header') && !deleteTarget.closest('footer')) {
