@@ -77,7 +77,7 @@ loadedPage.addEventListener("mousedown", function(event) {
                     currentlyEditable = null;
                 }
             }
-            currentDeleteTarget.style.backgroundColor = '';
+            currentDeleteTarget.style.backgroundColor = 'transparent';
             deleteTimeout = null;
             currentDeleteTarget = null;
         }, 1500);
@@ -88,7 +88,7 @@ loadedPage.addEventListener("mouseup", function(event) {
     if (deleteTimeout) {
         clearTimeout(deleteTimeout);
         if (currentDeleteTarget) {
-            currentDeleteTarget.style.backgroundColor = 'transparent';
+            currentDeleteTarget.style.backgroundColor = '';
         }
         deleteTimeout = null;
         currentDeleteTarget = null;
