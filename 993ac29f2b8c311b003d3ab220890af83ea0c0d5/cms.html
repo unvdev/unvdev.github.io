@@ -15,11 +15,10 @@
         .cms-menu-bar {
             display: block;
             position: fixed;
-            margin-bottom: 40px;
             background-color: blue;
             height: 40px;
             width: 100vw;
-            z-index: 999;
+            z-index: 1000000;
         }
     </style>
 </head>
@@ -28,7 +27,8 @@
     <input class="target-page" style="width: 300px; height: 20px;" type="text">
         <button class="load-page">Grab Page Code</button>
         <button class="delete-element">Delete Element</button>
-    </div>    
+    </div>
+    <div style="margin-top: 40px;"></div>
     <div id="loaded-page">
     </div>
     <script>
