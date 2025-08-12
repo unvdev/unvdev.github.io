@@ -1,22 +1,59 @@
-<html><head>
+<html>
+<head>
     <title>WeatherHTML 16 &amp; 17</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="title" content="CMS">
+    <meta name="title" content="CMS">
     <meta name="description" content="Edit your website.">
-	<meta name="robots" content="noindex">
+    <meta name="robots" content="noindex">
     <link rel="stylesheet" href="https://www.uv.vu/assets/global/css/globalstyles.css">
-<link rel="stylesheet" href="chrome-extension://ihcjicgdanjaechkgeegckofjjedodee/app/content-style.css"></head>
-
+</head>
 <body>
 <p>Hello World.</p>
+<input class="target-page" style="width: 300px; height: 20px;" type="text">
+<button class="load-page">Grab Page Code</button>
 <script>
-let paramString = window.location.search.split('?')[1];
-let queryString = new URLSearchParams(paramString);
-let nva = parseInt(queryString.get('nva'));
-let now = new Date().getTime();
-if (Number.isNaN(nva) || now > nva) {
-	window.location = '/cms_login';
-};
+    let paramString = window.location.search.split('?')[1];
+    let queryString = new URLSearchParams(paramString);
+    let nva = parseInt(queryString.get('nva'));
+    let now = new Date().getTime();
+    if (Number.isNaN(nva) || now > nva) {
+        window.location = '/cms_login';
+    }
 </script>
-</body></html>
+<script>
+    const loadPage = document.querySelector(".load-page");
+    const targetPageInput = document.querySelector(".target-page");
+
+    loadPage.addEventListener("click", function() {
+        const targetPage = targetPageInput.value;
+
+        if (!targetPage) {
+            console.error("Please enter a page path.");
+            return;
+        }
+
+        async function fetchOtherPageHTML(path) {
+            try {
+                const response = await fetch(path);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const htmlString = await response.text();
+                return htmlString;
+            } catch (error) {
+                console.error("Error fetching the page:", error);
+                return null;
+            }
+        }
+
+        fetchOtherPageHTML(targetPage).then(html => {
+            if (html) {
+                console.log("Successfully fetched the HTML:");
+                console.log(html);
+            }
+        });
+    });
+</script>
+</body>
+</html>
