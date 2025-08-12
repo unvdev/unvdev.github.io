@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="https://www.uv.vu/assets/global/css/globalstyles.css">
 </head>
 <body>
-<p>Hello World.</p>
+<div id="loaded-page">
+</div>
 <input class="target-page" style="width: 300px; height: 20px;" type="text">
 <button class="load-page">Grab Page Code</button>
 <script>
@@ -22,8 +23,9 @@
     }
 </script>
 <script>
-    const loadPage = document.querySelector(".load-page");
     const targetPageInput = document.querySelector(".target-page");
+    const loadPage = document.querySelector(".load-page");
+    const loadedPage = document.querySelector("#loaded-page");
 
     loadPage.addEventListener("click", function() {
         const targetPage = targetPageInput.value;
@@ -49,8 +51,7 @@
 
         fetchOtherPageHTML(targetPage).then(html => {
             if (html) {
-                console.log("Successfully fetched the HTML:");
-                console.log(html);
+                loadedPage.innerHTML = html;
             }
         });
     });
