@@ -36,11 +36,13 @@ loadedPage.addEventListener("click", function(event) {
         let parentElement = event.target.closest('p, h1, h2, h3, h4, h5, h6, span, div');
         
         if (parentElement) {
-            // Check if the clicked element is already the currently editable one
-            if (parentElement === currentlyEditable) {
-                return; // Do nothing if we click on the same editable element
+            // New check to ensure the parent element is not a HEADER or FOOTER
+            if (parentElement.tagName !== 'HEADER' && parentElement.tagName !== 'FOOTER') {
+                if (parentElement === currentlyEditable) {
+                    return; // Do nothing if we click on the same editable element
+                }
+                makeEditable(parentElement);
             }
-            makeEditable(parentElement);
         } else {
             // If we click on an element without a valid parent, just make the current one non-editable
             if (currentlyEditable) {
