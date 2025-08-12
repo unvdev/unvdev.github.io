@@ -40,11 +40,14 @@
 
         fetchOtherPageHTML(targetPage).then(html => {
             if (html) {
+                // Clear the existing content
                 loadedPage.innerHTML = '';
                 
+                // Parse the fetched HTML string into a DOM element
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
 
+                // Load and append CSS
                 doc.head.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
                     document.head.appendChild(link);
                 });
@@ -52,10 +55,12 @@
                     document.head.appendChild(style);
                 });
 
+                // Append body content to the loaded-page div FIRST
                 doc.body.childNodes.forEach(node => {
                     loadedPage.appendChild(node);
                 });
-
+                
+                // Now execute the scripts AFTER the HTML elements are in the DOM
                 doc.body.querySelectorAll('script').forEach(script => {
                     const newScript = document.createElement('script');
                     if (script.src) {
@@ -63,7 +68,6 @@
                     } else {
                         newScript.textContent = script.textContent;
                     }
-                    
                     loadedPage.appendChild(newScript);
                 });
             }
