@@ -59,7 +59,9 @@ loadedPage.addEventListener("mousedown", function(event) {
     let deleteTarget = event.target.closest('p, h1, h2, h3, h4, h5, h6, span, div, a, li');
     if (deleteTarget && deleteTarget !== loadedPage && !deleteTarget.closest('header') && !deleteTarget.closest('footer')) {
         currentDeleteTarget = deleteTarget;
-        currentDeleteTarget.style.border = '2px solid red'; // Highlight red to indicate deletion is imminent
+        setTimeout(function() {
+            currentDeleteTarget.style.border = '2px solid red'; // Highlight red to indicate deletion is imminent
+        },500);
         deleteTimeout = setTimeout(() => {
             if (confirm('Are you sure you want to delete this element?')) {
                 currentDeleteTarget.remove();
