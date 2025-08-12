@@ -39,7 +39,7 @@ function makeEditable(element) {
     }
 
     element.contentEditable = 'true';
-    element.style.boxShadow = 'inset 0 0 0 6px yellow'; // Using box-shadow for an inside border effect
+    element.style.boxShadow = 'inset 0 0 0 2px yellow'; // Adjusted to 2px for a thinner line
     element.focus();
     currentlyEditable = element;
 }
@@ -68,7 +68,7 @@ loadedPage.addEventListener("mousedown", function(event) {
     if (deleteTarget && deleteTarget !== loadedPage && !deleteTarget.closest('header') && !deleteTarget.closest('footer')) {
         currentDeleteTarget = deleteTarget;
         setTimeout(function() {
-            currentDeleteTarget.style.boxShadow = 'inset 0 0 0 6px red'; // Using box-shadow for an inside border effect
+            currentDeleteTarget.style.boxShadow = 'inset 0 0 0 2px red'; // Adjusted to 2px for a thinner line
         }, 500);
         deleteTimeout = setTimeout(() => {
             if (confirm('Are you sure you want to delete this element?')) {
@@ -89,7 +89,7 @@ loadedPage.addEventListener("mouseup", function(event) {
         clearTimeout(deleteTimeout);
         if (currentDeleteTarget) {
             if (currentlyEditable === currentDeleteTarget) {
-                currentDeleteTarget.style.boxShadow = 'inset 0 0 0 6px yellow';
+                currentDeleteTarget.style.boxShadow = 'inset 0 0 0 2px yellow';
             } else {
                 currentDeleteTarget.style.boxShadow = 'none';
             }
