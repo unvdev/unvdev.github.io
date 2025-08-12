@@ -55,25 +55,36 @@
                     document.head.appendChild(style);
                 });
 
-                // Remove scripts from the fetched content to prevent immediate execution
-                const scripts = doc.body.querySelectorAll('script');
-                scripts.forEach(script => script.remove());
+                // Collect all scripts and HTML nodes
+                const htmlNodes = [];
+                const scripts = [];
 
-                // Append the modified body content to the loaded-page div
                 doc.body.childNodes.forEach(node => {
+                    if (node.nodeName === 'SCRIPT') {
+                        scripts.push(node);
+                    } else {
+                        htmlNodes.push(node);
+                    }
+                });
+
+                // Append all HTML nodes at once
+                htmlNodes.forEach(node => {
                     loadedPage.appendChild(node);
                 });
 
-                // Now execute the scripts AFTER the HTML elements are in the DOM
-                scripts.forEach(script => {
-                    const newScript = document.createElement('script');
-                    if (script.src) {
-                        newScript.src = script.src;
-                    } else {
-                        newScript.textContent = script.textContent;
-                    }
-                    loadedPage.appendChild(newScript);
-                });
+                // Use a short timeout to ensure the DOM has finished rendering the HTML
+                setTimeout(() => {
+                    // Now execute the scripts
+                    scripts.forEach(script => {
+                        const newScript = document.createElement('script');
+                        if (script.src) {
+                            newScript.src = script.src;
+                        } else {
+                            newScript.textContent = script.textContent;
+                        }
+                        loadedPage.appendChild(newScript);
+                    });
+                }, 50); // 50ms delay is usually sufficient
             }
         });
     });
