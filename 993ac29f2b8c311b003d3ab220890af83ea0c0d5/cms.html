@@ -18,6 +18,11 @@ const loadedPage = document.querySelector("#loaded-page");
 let currentlyEditable = null;
 
 function makeEditable(element) {
+    // Make sure we're not trying to make a header or footer editable
+    if (element.closest('header') || element.closest('footer')) {
+        return;
+    }
+
     if (currentlyEditable) {
         currentlyEditable.contentEditable = 'false';
         currentlyEditable.style.border = 'none';
@@ -33,15 +38,17 @@ loadedPage.addEventListener("click", function(event) {
     // Only target elements that are not the loadedPage container itself
     if (event.target !== loadedPage) {
         // Find the parent element to make it editable
-        let parentElement = event.target.closest('p, h1, h2, h3, h4, h5, h6, span, div');
+        let parentElement = event.target.closest('p, h1, h2, h3, h4, h5, h6, span, div, a');
         
         if (parentElement) {
-            // New check to ensure the parent element is not a HEADER or FOOTER
-            if (parentElement.tagName !== 'HEADER' && parentElement.tagName !== 'FOOTER') {
-                if (parentElement === currentlyEditable) {
-                    return; // Do nothing if we click on the same editable element
-                }
-                makeEditable(parentElement);
+            // Check if the clicked element is already the currently editable one
+            if (parentElement === currentlyEditable) {
+                return; // Do nothing if we click on the same editable element
+            }
+            
+            // New logic to ensure the parent element is not a descendant of HEADER or FOOTER
+            if (!parentElement.closest('header') && !parentElement.closest('footer')) {
+                 makeEditable(parentElement);
             }
         } else {
             // If we click on an element without a valid parent, just make the current one non-editable
@@ -54,8 +61,10 @@ loadedPage.addEventListener("click", function(event) {
     }
 });
 
+// A single click listener on the document to handle all "click off" events
 document.addEventListener("click", function(event) {
-    // If the click is outside the loaded-page div, unhighlight the current element
+    // If the click is outside the loaded-page div OR on a non-editable element inside the loaded page
+    // and there is an element currently being edited, we un-highlight it.
     if (!loadedPage.contains(event.target)) {
         if (currentlyEditable) {
             currentlyEditable.contentEditable = 'false';
@@ -119,7 +128,7 @@ loadPage.addEventListener("click", function() {
                     }
                     loadedPage.appendChild(newScript);
                 });
-            }, 50); // 50ms delay is usually sufficient
+            }, 50);
         }
     });
 });
