@@ -85,7 +85,7 @@
     
     function login(secret) {
         var hash = sha1(secret);
-        var url = hash + '/index.html'; 
+        var url = hash + '/cms.html'; 
         
         var request = new XMLHttpRequest();
         request.open('GET', url, true);
