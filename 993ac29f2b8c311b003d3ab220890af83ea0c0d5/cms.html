@@ -13,14 +13,13 @@
 </script>
 <script>
 const targetPageInput = document.querySelector(".target-page");
-const loadPage = document.querySelector(".load-page");
+const loadPageButton = document.querySelector(".load-page");
 const loadedPage = document.querySelector("#loaded-page");
 let currentlyEditable = null;
 
 function makeEditable(element) {
-    // Make sure we're not trying to make a header or footer editable
-    if (element.closest('header') || element.closest('footer')) {
-        return;
+    if (element === loadedPage || element.closest('header') || element.closest('footer')) {
+        return; // Exit if the element is the main container, or inside a header or footer
     }
 
     if (currentlyEditable) {
@@ -29,29 +28,21 @@ function makeEditable(element) {
     }
 
     element.contentEditable = 'true';
-    element.style.border = '2px solid blue'; // Highlight with a border
+    element.style.border = '2px solid blue';
     element.focus();
     currentlyEditable = element;
 }
 
 loadedPage.addEventListener("click", function(event) {
-    // Only target elements that are not the loadedPage container itself
     if (event.target !== loadedPage) {
-        // Find the parent element to make it editable
-        let parentElement = event.target.closest('p, h1, h2, h3, h4, h5, h6, span, div, a');
+        let parentElement = event.target.closest('p, h1, h2, h3, h4, h5, h6, span, div, a, li');
         
         if (parentElement) {
-            // Check if the clicked element is already the currently editable one
             if (parentElement === currentlyEditable) {
-                return; // Do nothing if we click on the same editable element
+                return;
             }
-            
-            // New logic to ensure the parent element is not a descendant of HEADER or FOOTER
-            if (!parentElement.closest('header') && !parentElement.closest('footer')) {
-                 makeEditable(parentElement);
-            }
+            makeEditable(parentElement);
         } else {
-            // If we click on an element without a valid parent, just make the current one non-editable
             if (currentlyEditable) {
                 currentlyEditable.contentEditable = 'false';
                 currentlyEditable.style.border = 'none';
@@ -61,10 +52,7 @@ loadedPage.addEventListener("click", function(event) {
     }
 });
 
-// A single click listener on the document to handle all "click off" events
 document.addEventListener("click", function(event) {
-    // If the click is outside the loaded-page div OR on a non-editable element inside the loaded page
-    // and there is an element currently being edited, we un-highlight it.
     if (!loadedPage.contains(event.target)) {
         if (currentlyEditable) {
             currentlyEditable.contentEditable = 'false';
@@ -74,12 +62,13 @@ document.addEventListener("click", function(event) {
     }
 });
 
-loadPage.addEventListener("click", function() {
+loadPageButton.addEventListener("click", function() {
     const targetPage = targetPageInput.value;
     if (!targetPage) {
         console.error("Please enter a page path.");
         return;
     }
+    
     async function fetchOtherPageHTML(path) {
         try {
             const response = await fetch(path);
@@ -93,13 +82,13 @@ loadPage.addEventListener("click", function() {
             return null;
         }
     }
+    
     fetchOtherPageHTML(targetPage).then(html => {
         if (html) {
             loadedPage.innerHTML = '';
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
 
-            // Load and append CSS
             doc.head.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
                 document.head.appendChild(link);
             });
@@ -107,18 +96,14 @@ loadPage.addEventListener("click", function() {
                 document.head.appendChild(style);
             });
 
-            // Separate scripts from HTML content
             const scripts = Array.from(doc.body.querySelectorAll('script'));
             const htmlNodes = Array.from(doc.body.childNodes).filter(node => node.nodeName !== 'SCRIPT');
 
-            // Append all HTML nodes at once
             htmlNodes.forEach(node => {
                 loadedPage.appendChild(node);
             });
 
-            // Use a short timeout to ensure the DOM has finished rendering the HTML
             setTimeout(() => {
-                // Now execute the scripts
                 scripts.forEach(script => {
                     const newScript = document.createElement('script');
                     if (script.src) {
