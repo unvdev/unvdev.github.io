@@ -29,90 +29,26 @@
     }
 </script>
 <script>
-const targetPageInput = document.querySelector(".target-page");
-const loadPageButton = document.querySelector(".load-page");
-const loadedPage = document.querySelector("#loaded-page");
-let currentlyEditable = null;
-let deleteTimeout = null;
-let currentDeleteTarget = null;
-
-function makeEditable(element) {
-    if (element === loadedPage || element.closest('header') || element.closest('footer')) {
-        return;
-    }
-
-    if (currentlyEditable) {
-        currentlyEditable.contentEditable = 'false';
-        currentlyEditable.style.boxShadow = 'none';
-    }
-
-    element.contentEditable = 'true';
-    element.style.boxShadow = 'inset 0 0 0 2px yellow';
-    element.focus();
-    currentlyEditable = element;
-}
-
-loadedPage.addEventListener("click", function(event) {
-    if (event.target !== loadedPage) {
-        let parentElement = event.target.closest('p, h1, h2, h3, h4, h5, h6, span, div, a, li');
-        
-        if (parentElement) {
-            if (parentElement === currentlyEditable) {
-                return;
-            }
-            makeEditable(parentElement);
-        } else {
-            if (currentlyEditable) {
-                currentlyEditable.contentEditable = 'false';
-                currentlyEditable.style.boxShadow = 'none';
-                currentlyEditable = null;
-            }
-        }
-    }
-});
-
-loadedPage.addEventListener("dblclick", function(event) {
-    if (event.target !== loadedPage) {
-        let parentElement = event.target.parentElement;
-        if (parentElement) {
-            makeEditable(parentElement);
-        }
-    }
-});
-
-document.addEventListener("keydown", function(event) {
-    if (currentlyEditable) {
-        if (event.key === 'ArrowUp') {
-            event.preventDefault(); // Prevents default browser scrolling
-            let previousElement = currentlyEditable.previousElementSibling;
-            if (previousElement) {
-                currentlyEditable.parentElement.insertBefore(currentlyEditable, previousElement);
-            }
-        } else if (event.key === 'ArrowDown') {
-            event.preventDefault(); // Prevents default browser scrolling
-            let nextElement = currentlyEditable.nextElementSibling;
-            if (nextElement) {
-                nextElement.parentElement.insertBefore(nextElement, currentlyEditable);
-            }
-        }
-    }
-});
-
 loadedPage.addEventListener("mousedown", function(event) {
     let deleteTarget = event.target.closest('p, h1, h2, h3, h4, h5, h6, span, div, a, li');
     if (deleteTarget && deleteTarget !== loadedPage && !deleteTarget.closest('header') && !deleteTarget.closest('footer')) {
         currentDeleteTarget = deleteTarget;
         setTimeout(function() {
-            currentDeleteTarget.style.boxShadow = 'inset 0 0 0 2px red';
+            if (currentDeleteTarget) { // Check if the element still exists
+                currentDeleteTarget.style.boxShadow = 'inset 0 0 0 2px red';
+            }
         }, 500);
         deleteTimeout = setTimeout(() => {
-            if (confirm('Are you sure you want to delete this element?')) {
-                currentDeleteTarget.remove();
-                if (currentlyEditable === currentDeleteTarget) {
-                    currentlyEditable = null;
+            if (currentDeleteTarget) { // Check if the element still exists
+                if (confirm('Are you sure you want to delete this element?')) {
+                    currentDeleteTarget.remove();
+                    if (currentlyEditable === currentDeleteTarget) {
+                        currentlyEditable = null;
+                    }
+                } else {
+                    currentDeleteTarget.style.boxShadow = 'none';
                 }
             }
-            currentDeleteTarget.style.boxShadow = 'none';
             deleteTimeout = null;
             currentDeleteTarget = null;
         }, 1500);
@@ -122,7 +58,7 @@ loadedPage.addEventListener("mousedown", function(event) {
 loadedPage.addEventListener("mouseup", function(event) {
     if (deleteTimeout) {
         clearTimeout(deleteTimeout);
-        if (currentDeleteTarget) {
+        if (currentDeleteTarget) { // Check if the element still exists
             if (currentlyEditable === currentDeleteTarget) {
                 currentDeleteTarget.style.boxShadow = 'inset 0 0 0 2px yellow';
             } else {
@@ -132,72 +68,6 @@ loadedPage.addEventListener("mouseup", function(event) {
         deleteTimeout = null;
         currentDeleteTarget = null;
     }
-});
-
-document.addEventListener("click", function(event) {
-    if (!loadedPage.contains(event.target)) {
-        if (currentlyEditable) {
-            currentlyEditable.contentEditable = 'false';
-            currentlyEditable.style.boxShadow = 'none';
-            currentlyEditable = null;
-        }
-    }
-});
-
-loadPageButton.addEventListener("click", function() {
-    const targetPage = targetPageInput.value;
-    if (!targetPage) {
-        console.error("Please enter a page path.");
-        return;
-    }
-    
-    async function fetchOtherPageHTML(path) {
-        try {
-            const response = await fetch(path);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const htmlString = await response.text();
-            return htmlString;
-        } catch (error) {
-            console.error("Error fetching the page:", error);
-            return null;
-        }
-    }
-    
-    fetchOtherPageHTML(targetPage).then(html => {
-        if (html) {
-            loadedPage.innerHTML = '';
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-
-            doc.head.querySelectorAll('link').forEach(link => {
-                document.head.appendChild(link);
-            });
-            doc.head.querySelectorAll('style').forEach(style => {
-                document.head.appendChild(style);
-            });
-
-            const scripts = Array.from(doc.body.querySelectorAll('script'));
-            const htmlNodes = Array.from(doc.body.childNodes).filter(node => node.nodeName !== 'SCRIPT');
-
-            htmlNodes.forEach(node => {
-                loadedPage.appendChild(node);
-            });
-
-            setTimeout(() => {
-                scripts.forEach(script => {
-                    const newScript = document.createElement('script');
-                    if (script.src) {
-                        newScript.src = script.src;
-                    } else {
-                        newScript.textContent = script.textContent;
-                    }
-                    loadedPage.appendChild(newScript);
-                });
-            }, 50);
-        }
-    });
 });
 </script>
 </body>
