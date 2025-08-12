@@ -12,7 +12,7 @@
     }
 </script>
 <script>
- const targetPageInput = document.querySelector(".target-page");
+const targetPageInput = document.querySelector(".target-page");
 const loadPage = document.querySelector(".load-page");
 const loadedPage = document.querySelector("#loaded-page");
 let currentlyEditable = null;
@@ -87,18 +87,27 @@ loadPage.addEventListener("click", function() {
             loadedPage.innerHTML = '';
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
+
+            // Load and append CSS
             doc.head.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
                 document.head.appendChild(link);
             });
             doc.head.querySelectorAll('style').forEach(style => {
                 document.head.appendChild(style);
             });
-            const scripts = doc.body.querySelectorAll('script');
-            scripts.forEach(script => script.remove());
-            doc.body.childNodes.forEach(node => {
+
+            // Separate scripts from HTML content
+            const scripts = Array.from(doc.body.querySelectorAll('script'));
+            const htmlNodes = Array.from(doc.body.childNodes).filter(node => node.nodeName !== 'SCRIPT');
+
+            // Append all HTML nodes at once
+            htmlNodes.forEach(node => {
                 loadedPage.appendChild(node);
             });
+
+            // Use a short timeout to ensure the DOM has finished rendering the HTML
             setTimeout(() => {
+                // Now execute the scripts
                 scripts.forEach(script => {
                     const newScript = document.createElement('script');
                     if (script.src) {
@@ -108,7 +117,7 @@ loadPage.addEventListener("click", function() {
                     }
                     loadedPage.appendChild(newScript);
                 });
-            }, 1000);
+            }, 50); // 50ms delay is usually sufficient
         }
     });
 });
