@@ -12,80 +12,104 @@
     }
 </script>
 <script>
-    const targetPageInput = document.querySelector(".target-page");
-    const loadPage = document.querySelector(".load-page");
-    const loadedPage = document.querySelector("#loaded-page");
+ const targetPageInput = document.querySelector(".target-page");
+const loadPage = document.querySelector(".load-page");
+const loadedPage = document.querySelector("#loaded-page");
+let currentlyEditable = null;
 
-    loadPage.addEventListener("click", function() {
-        const targetPage = targetPageInput.value;
+function makeEditable(element) {
+    if (currentlyEditable) {
+        currentlyEditable.contentEditable = 'false';
+        currentlyEditable.style.border = 'none';
+    }
 
-        if (!targetPage) {
-            console.error("Please enter a page path.");
-            return;
-        }
+    element.contentEditable = 'true';
+    element.style.border = '2px solid blue'; // Highlight with a border
+    element.focus();
+    currentlyEditable = element;
+}
 
-        async function fetchOtherPageHTML(path) {
-            try {
-                const response = await fetch(path);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const htmlString = await response.text();
-                return htmlString;
-            } catch (error) {
-                console.error("Error fetching the page:", error);
-                return null;
+loadedPage.addEventListener("click", function(event) {
+    // Only target elements that are not the loadedPage container itself
+    if (event.target !== loadedPage) {
+        // Find the parent element to make it editable
+        let parentElement = event.target.closest('p, h1, h2, h3, h4, h5, h6, span, div');
+        
+        if (parentElement) {
+            // Check if the clicked element is already the currently editable one
+            if (parentElement === currentlyEditable) {
+                return; // Do nothing if we click on the same editable element
+            }
+            makeEditable(parentElement);
+        } else {
+            // If we click on an element without a valid parent, just make the current one non-editable
+            if (currentlyEditable) {
+                currentlyEditable.contentEditable = 'false';
+                currentlyEditable.style.border = 'none';
+                currentlyEditable = null;
             }
         }
+    }
+});
 
-        fetchOtherPageHTML(targetPage).then(html => {
-            if (html) {
-                // Clear the existing content
-                loadedPage.innerHTML = '';
-                
-                // Parse the fetched HTML string into a DOM element
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
+document.addEventListener("click", function(event) {
+    // If the click is outside the loaded-page div, unhighlight the current element
+    if (!loadedPage.contains(event.target)) {
+        if (currentlyEditable) {
+            currentlyEditable.contentEditable = 'false';
+            currentlyEditable.style.border = 'none';
+            currentlyEditable = null;
+        }
+    }
+});
 
-                // Load and append CSS
-                doc.head.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
-                    document.head.appendChild(link);
-                });
-                doc.head.querySelectorAll('style').forEach(style => {
-                    document.head.appendChild(style);
-                });
-
-                // Collect all scripts and HTML nodes
-                const htmlNodes = [];
-                const scripts = [];
-
-                doc.body.childNodes.forEach(node => {
-                    if (node.nodeName === 'SCRIPT') {
-                        scripts.push(node);
+loadPage.addEventListener("click", function() {
+    const targetPage = targetPageInput.value;
+    if (!targetPage) {
+        console.error("Please enter a page path.");
+        return;
+    }
+    async function fetchOtherPageHTML(path) {
+        try {
+            const response = await fetch(path);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const htmlString = await response.text();
+            return htmlString;
+        } catch (error) {
+            console.error("Error fetching the page:", error);
+            return null;
+        }
+    }
+    fetchOtherPageHTML(targetPage).then(html => {
+        if (html) {
+            loadedPage.innerHTML = '';
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            doc.head.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
+                document.head.appendChild(link);
+            });
+            doc.head.querySelectorAll('style').forEach(style => {
+                document.head.appendChild(style);
+            });
+            const scripts = doc.body.querySelectorAll('script');
+            scripts.forEach(script => script.remove());
+            doc.body.childNodes.forEach(node => {
+                loadedPage.appendChild(node);
+            });
+            setTimeout(() => {
+                scripts.forEach(script => {
+                    const newScript = document.createElement('script');
+                    if (script.src) {
+                        newScript.src = script.src;
                     } else {
-                        htmlNodes.push(node);
+                        newScript.textContent = script.textContent;
                     }
+                    loadedPage.appendChild(newScript);
                 });
-
-                // Append all HTML nodes at once
-                htmlNodes.forEach(node => {
-                    loadedPage.appendChild(node);
-                });
-
-                // Use a short timeout to ensure the DOM has finished rendering the HTML
-                setTimeout(() => {
-                    // Now execute the scripts
-                    scripts.forEach(script => {
-                        const newScript = document.createElement('script');
-                        if (script.src) {
-                            newScript.src = script.src;
-                        } else {
-                            newScript.textContent = script.textContent;
-                        }
-                        loadedPage.appendChild(newScript);
-                    });
-                }, 50); // 50ms delay is usually sufficient
-            }
-        });
+            }, 50);
+        }
     });
+});
 </script>
