@@ -12,6 +12,15 @@
         [contenteditable="true"]:focus {
             outline: none;
         }
+        .cms-menu-bar {
+            display: block;
+            position: fixed;
+            margin-top: -40px;
+            background-color: blue;
+            height: 40px;
+            width: 100vw;
+            z-index: 1000000;
+        }
     </style>
 </head>
 <body>
@@ -46,14 +55,15 @@ function makeEditable(element) {
     if (currentlyEditable) {
         currentlyEditable.contentEditable = 'false';
         currentlyEditable.style.boxShadow = 'none';
-        if (quill) {
+        // Only destroy Quill if it has been initialized
+        if (currentlyEditable.classList.contains('text-box') && quill) {
             quill.destroy();
             quill = null;
         }
     }
 
     element.contentEditable = 'true';
-    element.style.boxShadow = 'inset 0 0 0 2px yellow';
+    element.style.boxShadow = 'inset 0 0 0 2px magenta'; // Changed to magenta
     element.focus();
     currentlyEditable = element;
     
@@ -69,11 +79,11 @@ function deleteElement() {
     if (currentlyEditable) {
         if (confirm('Are you sure you want to delete this element?')) {
             currentlyEditable.remove();
-            currentlyEditable = null;
-            if (quill) {
+            if (currentlyEditable.classList.contains('text-box') && quill) {
                 quill.destroy();
-                quill = null;
             }
+            currentlyEditable = null;
+            quill = null;
         }
     }
 }
@@ -91,11 +101,12 @@ loadedPage.addEventListener("click", function(event) {
             if (currentlyEditable) {
                 currentlyEditable.contentEditable = 'false';
                 currentlyEditable.style.boxShadow = 'none';
-                currentlyEditable = null;
-                if (quill) {
+                // Only destroy Quill if it has been initialized
+                if (currentlyEditable.classList.contains('text-box') && quill) {
                     quill.destroy();
-                    quill = null;
                 }
+                currentlyEditable = null;
+                quill = null;
             }
         }
     }
@@ -135,11 +146,12 @@ document.addEventListener("click", function(event) {
         if (currentlyEditable) {
             currentlyEditable.contentEditable = 'false';
             currentlyEditable.style.boxShadow = 'none';
-            currentlyEditable = null;
-            if (quill) {
+            // Only destroy Quill if it has been initialized
+            if (currentlyEditable.classList.contains('text-box') && quill) {
                 quill.destroy();
-                quill = null;
             }
+            currentlyEditable = null;
+            quill = null;
         }
     }
 });
