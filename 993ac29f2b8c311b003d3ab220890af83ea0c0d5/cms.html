@@ -65,14 +65,15 @@ function activateEditable(element) {
         return;
     }
 
-    // Deactivate any previous element before activating the new one
+    if (currentlyEditable && currentlyEditable === element) {
+        return;
+    }
+
     deactivateEditable();
 
-    // Set the box shadow regardless of whether it's an image or not
     element.style.boxShadow = 'inset 0 0 0 2px magenta';
     currentlyEditable = element;
     
-    // Only make the element content editable and instantiate Quill if it's not an image
     if (element.tagName.toLowerCase() !== 'img') {
         element.contentEditable = 'true';
         element.id = 'editor';
@@ -80,6 +81,10 @@ function activateEditable(element) {
         quillInstance = new Quill(element, {
             theme: 'snow'
         });
+    } else {
+        // Even for images, we need to make it focusable to listen for key events
+        element.tabIndex = 0;
+        element.focus();
     }
 }
 
@@ -96,23 +101,15 @@ function deleteElement() {
 }
 
 loadedPage.addEventListener("click", function(event) {
-    // Check if the click is on Quill's toolbar to avoid deactivating the editor
     if (event.target.closest('.ql-toolbar')) {
         return;
     }
     
     let targetElement = event.target.closest('p, h1, h2, h3, h4, h5, h6, span, div, a, li, img');
     
-    // If we have a target and it's the SAME as the currently editable one, do nothing.
-    if (targetElement && targetElement === currentlyEditable) {
-        return;
-    }
-    
-    // If we click on a valid, new editable element, activate it.
     if (targetElement && targetElement !== loadedPage) {
         activateEditable(targetElement);
     } else {
-        // If we click on a non-editable area, deactivate the current element.
         deactivateEditable();
     }
 });
@@ -126,13 +123,13 @@ loadedPage.addEventListener("dblclick", function(event) {
 
 document.addEventListener("keydown", function(event) {
     if (currentlyEditable) {
-        if (quillInstance && (event.key === 'ArrowUp' || event.key === 'ArrowDown')) {
-            // Deactivate Quill before moving the element
-            quillInstance.root.innerHTML = currentlyEditable.innerHTML;
+        // Deactivate Quill before moving the element
+        if (quillInstance) {
+            let content = quillInstance.root.innerHTML;
+            currentlyEditable.innerHTML = content;
             quillInstance = null;
             currentlyEditable.removeAttribute('id');
             currentlyEditable.contentEditable = 'false';
-            currentlyEditable.style.boxShadow = 'inset 0 0 0 2px magenta';
         }
 
         if (event.key === 'ArrowUp') {
@@ -148,6 +145,9 @@ document.addEventListener("keydown", function(event) {
                 nextElement.parentElement.insertBefore(nextElement, currentlyEditable);
             }
         }
+        // After moving, re-activate the element to keep the highlight
+        currentlyEditable.focus();
+        currentlyEditable.style.boxShadow = 'inset 0 0 0 2px magenta';
     }
 });
 
