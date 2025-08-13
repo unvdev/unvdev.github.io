@@ -46,17 +46,8 @@ const loadedPage = document.querySelector("#loaded-page");
 let currentlyEditable = null;
 let quillInstance = null;
 
-function makeEditable(element) {
-    if (element === loadedPage || element.closest('header') || element.closest('footer')) {
-        return;
-    }
-
-    // Check if the clicked element is already the currently editable one
-    if (element === currentlyEditable) {
-        return; // Do nothing if we click on the same editable element
-    }
-    
-    // De-activate the previous element before activating the new one
+// The deactivation logic is now in a separate function for clarity and reuse
+function deactivateEditable() {
     if (currentlyEditable) {
         if (quillInstance) {
             let content = quillInstance.root.innerHTML;
@@ -66,15 +57,21 @@ function makeEditable(element) {
         currentlyEditable.contentEditable = 'false';
         currentlyEditable.style.boxShadow = 'none';
         currentlyEditable.removeAttribute('id');
+        currentlyEditable = null;
     }
+}
 
+// The activation logic is now in a separate function
+function activateEditable(element) {
+    if (element === loadedPage || element.closest('header') || element.closest('footer')) {
+        return;
+    }
+    deactivateEditable(); // Deactivate any previous element first
     element.contentEditable = 'true';
-    element.style.boxShadow = 'inset 0 0 0 2px magenta'; // Changed to magenta
+    element.style.boxShadow = 'inset 0 0 0 2px magenta';
     element.id = 'editor';
     element.focus();
     currentlyEditable = element;
-    
-    // Initialize Quill on the newly active element
     quillInstance = new Quill(element, {
         theme: 'snow'
     });
@@ -93,39 +90,32 @@ function deleteElement() {
 }
 
 loadedPage.addEventListener("click", function(event) {
-    // Prevent the event listener from running if the click is on Quill's toolbar
+    // Check if the click is on Quill's toolbar to avoid deactivating the editor
     if (event.target.closest('.ql-toolbar')) {
         return;
     }
 
-    if (event.target !== loadedPage) {
-        let parentElement = event.target.closest('p, h1, h2, h3, h4, h5, h6, span, div, a, li');
-        
-        if (parentElement) {
-            makeEditable(parentElement);
-        } else {
-            // Logic for clicking on an element that is not a valid parent
-            if (currentlyEditable) {
-                if (quillInstance) {
-                    let content = quillInstance.root.innerHTML;
-                    currentlyEditable.innerHTML = content;
-                    quillInstance = null;
-                }
-                currentlyEditable.contentEditable = 'false';
-                currentlyEditable.style.boxShadow = 'none';
-                currentlyEditable.removeAttribute('id');
-                currentlyEditable = null;
-            }
-        }
+    let targetElement = event.target.closest('p, h1, h2, h3, h4, h5, h6, span, div, a, li');
+    
+    // Check if the clicked element is the same as the currently editable one
+    if (targetElement && targetElement === currentlyEditable) {
+        // We've clicked on the same element, so we do nothing.
+        return;
+    }
+    
+    // Check if we clicked on a new editable element.
+    if (targetElement && targetElement !== loadedPage) {
+        activateEditable(targetElement);
+    } else {
+        // If we clicked on a non-editable area, deactivate the current element.
+        deactivateEditable();
     }
 });
 
 loadedPage.addEventListener("dblclick", function(event) {
-    if (event.target !== loadedPage) {
-        let parentElement = event.target.parentElement;
-        if (parentElement) {
-            makeEditable(parentElement);
-        }
+    let targetElement = event.target.parentElement;
+    if (targetElement) {
+        activateEditable(targetElement);
     }
 });
 
@@ -150,18 +140,9 @@ document.addEventListener("keydown", function(event) {
 deleteButton.addEventListener("click", deleteElement);
 
 document.addEventListener("click", function(event) {
+    // This listener handles clicks outside the loaded page and delete button
     if (!loadedPage.contains(event.target) && event.target !== deleteButton && !event.target.closest('.ql-toolbar')) {
-        if (currentlyEditable) {
-            if (quillInstance) {
-                let content = quillInstance.root.innerHTML;
-                currentlyEditable.innerHTML = content;
-                quillInstance = null;
-            }
-            currentlyEditable.contentEditable = 'false';
-            currentlyEditable.style.boxShadow = 'none';
-            currentlyEditable.removeAttribute('id');
-            currentlyEditable = null;
-        }
+        deactivateEditable();
     }
 });
 
