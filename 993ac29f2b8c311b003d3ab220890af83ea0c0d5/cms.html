@@ -55,9 +55,13 @@ function deactivateEditable() {
         }
         const toolbar = document.querySelector('.ql-toolbar');
         if (toolbar) toolbar.remove();
+
         currentlyEditable.contentEditable = 'false';
-        currentlyEditable.style.boxShadow = 'none';
         currentlyEditable.removeAttribute('id');
+
+        // ✅ Always remove highlight
+        currentlyEditable.style.boxShadow = 'none';
+
         currentlyEditable = null;
     }
 }
@@ -112,7 +116,7 @@ loadedPage.addEventListener("click", function(event) {
     let targetElement = event.target.closest('p, h1, h2, h3, h4, h5, h6, span, div, a, li, img');
 
     if (!targetElement || targetElement === loadedPage) {
-        deactivateEditable();
+        deactivateEditable(); // outside -> remove highlight
         return;
     }
 
