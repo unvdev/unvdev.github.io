@@ -64,7 +64,7 @@ function activateEditable(element) {
     if (element === loadedPage || element.closest('header') || element.closest('footer')) {
         return;
     }
-    
+
     // Deactivate any previous element before activating the new one
     deactivateEditable();
 
@@ -126,6 +126,15 @@ loadedPage.addEventListener("dblclick", function(event) {
 
 document.addEventListener("keydown", function(event) {
     if (currentlyEditable) {
+        if (quillInstance && (event.key === 'ArrowUp' || event.key === 'ArrowDown')) {
+            // Deactivate Quill before moving the element
+            quillInstance.root.innerHTML = currentlyEditable.innerHTML;
+            quillInstance = null;
+            currentlyEditable.removeAttribute('id');
+            currentlyEditable.contentEditable = 'false';
+            currentlyEditable.style.boxShadow = 'inset 0 0 0 2px magenta';
+        }
+
         if (event.key === 'ArrowUp') {
             event.preventDefault();
             let previousElement = currentlyEditable.previousElementSibling;
