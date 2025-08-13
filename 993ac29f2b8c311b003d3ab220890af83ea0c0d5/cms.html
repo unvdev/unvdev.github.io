@@ -39,35 +39,25 @@
     </div>
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
 <script>
-    let quillInstance = null; // A global variable to hold the single Quill instance
-
-    // Your CMS and login scripts
-    let paramString = window.location.search.split('?')[1];
-    let queryString = new URLSearchParams(paramString);
-    let nva = parseInt(queryString.get('nva'));
-    let now = new Date().getTime();
-    if (Number.isNaN(nva) || now > nva) {
-        window.location = '/cms_login';
-    }
-
-    const targetPageInput = document.querySelector(".target-page");
-    const loadPageButton = document.querySelector(".load-page");
-    const deleteButton = document.querySelector(".delete-element");
-    const loadedPage = document.querySelector("#loaded-page");
-    let currentlyEditable = null;
+const targetPageInput = document.querySelector(".target-page");
+const loadPageButton = document.querySelector(".load-page");
+const deleteButton = document.querySelector(".delete-element");
+const loadedPage = document.querySelector("#loaded-page");
+let currentlyEditable = null;
+let quillInstance = null;
 
 function makeEditable(element) {
     if (element === loadedPage || element.closest('header') || element.closest('footer')) {
         return;
     }
 
+    // Check if the clicked element is already the currently editable one
     if (element === currentlyEditable) {
-        // If the element is already the current editable, do nothing.
-        return;
+        return; // Do nothing if we click on the same editable element
     }
     
+    // De-activate the previous element before activating the new one
     if (currentlyEditable) {
-        // Destroy Quill and reset the element's state
         if (quillInstance) {
             let content = quillInstance.root.innerHTML;
             currentlyEditable.innerHTML = content;
@@ -79,7 +69,7 @@ function makeEditable(element) {
     }
 
     element.contentEditable = 'true';
-    element.style.boxShadow = 'inset 0 0 0 2px magenta';
+    element.style.boxShadow = 'inset 0 0 0 2px magenta'; // Changed to magenta
     element.id = 'editor';
     element.focus();
     currentlyEditable = element;
@@ -90,78 +80,32 @@ function makeEditable(element) {
     });
 }
 
-    function deleteElement() {
-        if (currentlyEditable) {
-            if (confirm('Are you sure you want to delete this element?')) {
-                // Destroy Quill before removing the element
-                if (quillInstance) {
-                    quillInstance = null;
-                }
-                currentlyEditable.remove();
-                currentlyEditable = null;
+function deleteElement() {
+    if (currentlyEditable) {
+        if (confirm('Are you sure you want to delete this element?')) {
+            if (quillInstance) {
+                quillInstance = null;
             }
+            currentlyEditable.remove();
+            currentlyEditable = null;
         }
     }
+}
 
-    loadedPage.addEventListener("click", function(event) {
-        if (event.target !== loadedPage) {
-            let parentElement = event.target.closest('p, h1, h2, h3, h4, h5, h6, span, div, a, li');
-            
-            if (parentElement) {
-                if (parentElement === currentlyEditable) {
-                    return;
-                }
-                makeEditable(parentElement);
-            } else {
-                if (currentlyEditable) {
-                    // Destroy Quill and reset the element's state
-                    if (quillInstance) {
-                        let content = quillInstance.root.innerHTML;
-                        currentlyEditable.innerHTML = content;
-                        quillInstance = null;
-                    }
-                    currentlyEditable.contentEditable = 'false';
-                    currentlyEditable.style.boxShadow = 'none';
-                    currentlyEditable.removeAttribute('id');
-                    currentlyEditable = null;
-                }
-            }
-        }
-    });
+loadedPage.addEventListener("click", function(event) {
+    // Prevent the event listener from running if the click is on Quill's toolbar
+    if (event.target.closest('.ql-toolbar')) {
+        return;
+    }
 
-    loadedPage.addEventListener("dblclick", function(event) {
-        if (event.target !== loadedPage) {
-            let parentElement = event.target.parentElement;
-            if (parentElement) {
-                makeEditable(parentElement);
-            }
-        }
-    });
-
-    document.addEventListener("keydown", function(event) {
-        if (currentlyEditable) {
-            if (event.key === 'ArrowUp') {
-                event.preventDefault();
-                let previousElement = currentlyEditable.previousElementSibling;
-                if (previousElement) {
-                    currentlyEditable.parentElement.insertBefore(currentlyEditable, previousElement);
-                }
-            } else if (event.key === 'ArrowDown') {
-                event.preventDefault();
-                let nextElement = currentlyEditable.nextElementSibling;
-                if (nextElement) {
-                    nextElement.parentElement.insertBefore(nextElement, currentlyEditable);
-                }
-            }
-        }
-    });
-
-    deleteButton.addEventListener("click", deleteElement);
-
-    document.addEventListener("click", function(event) {
-        if (!loadedPage.contains(event.target) && event.target !== deleteButton && !event.target.closest('.ql-toolbar')) {
+    if (event.target !== loadedPage) {
+        let parentElement = event.target.closest('p, h1, h2, h3, h4, h5, h6, span, div, a, li');
+        
+        if (parentElement) {
+            makeEditable(parentElement);
+        } else {
+            // Logic for clicking on an element that is not a valid parent
             if (currentlyEditable) {
-                // Destroy Quill and reset the element's state
                 if (quillInstance) {
                     let content = quillInstance.root.innerHTML;
                     currentlyEditable.innerHTML = content;
@@ -173,63 +117,109 @@ function makeEditable(element) {
                 currentlyEditable = null;
             }
         }
-    });
+    }
+});
 
-    loadPageButton.addEventListener("click", function() {
-        const targetPage = targetPageInput.value;
-        if (!targetPage) {
-            console.error("Please enter a page path.");
-            return;
+loadedPage.addEventListener("dblclick", function(event) {
+    if (event.target !== loadedPage) {
+        let parentElement = event.target.parentElement;
+        if (parentElement) {
+            makeEditable(parentElement);
         }
-        
-        async function fetchOtherPageHTML(path) {
-            try {
-                const response = await fetch(path);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const htmlString = await response.text();
-                return htmlString;
-            } catch (error) {
-                console.error("Error fetching the page:", error);
-                return null;
+    }
+});
+
+document.addEventListener("keydown", function(event) {
+    if (currentlyEditable) {
+        if (event.key === 'ArrowUp') {
+            event.preventDefault();
+            let previousElement = currentlyEditable.previousElementSibling;
+            if (previousElement) {
+                currentlyEditable.parentElement.insertBefore(currentlyEditable, previousElement);
+            }
+        } else if (event.key === 'ArrowDown') {
+            event.preventDefault();
+            let nextElement = currentlyEditable.nextElementSibling;
+            if (nextElement) {
+                nextElement.parentElement.insertBefore(nextElement, currentlyEditable);
             }
         }
-        
-        fetchOtherPageHTML(targetPage).then(html => {
-            if (html) {
-                loadedPage.innerHTML = '';
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
+    }
+});
 
-                doc.head.querySelectorAll('link').forEach(link => {
-                    document.head.appendChild(link);
-                });
-                doc.head.querySelectorAll('style').forEach(style => {
-                    document.head.appendChild(style);
-                });
+deleteButton.addEventListener("click", deleteElement);
 
-                const scripts = Array.from(doc.body.querySelectorAll('script'));
-                const htmlNodes = Array.from(doc.body.childNodes).filter(node => node.nodeName !== 'SCRIPT');
-
-                htmlNodes.forEach(node => {
-                    loadedPage.appendChild(node);
-                });
-
-                setTimeout(() => {
-                    scripts.forEach(script => {
-                        const newScript = document.createElement('script');
-                        if (script.src) {
-                            newScript.src = script.src;
-                        } else {
-                            newScript.textContent = script.textContent;
-                        }
-                        loadedPage.appendChild(newScript);
-                    });
-                }, 50);
+document.addEventListener("click", function(event) {
+    if (!loadedPage.contains(event.target) && event.target !== deleteButton && !event.target.closest('.ql-toolbar')) {
+        if (currentlyEditable) {
+            if (quillInstance) {
+                let content = quillInstance.root.innerHTML;
+                currentlyEditable.innerHTML = content;
+                quillInstance = null;
             }
-        });
+            currentlyEditable.contentEditable = 'false';
+            currentlyEditable.style.boxShadow = 'none';
+            currentlyEditable.removeAttribute('id');
+            currentlyEditable = null;
+        }
+    }
+});
+
+loadPageButton.addEventListener("click", function() {
+    const targetPage = targetPageInput.value;
+    if (!targetPage) {
+        console.error("Please enter a page path.");
+        return;
+    }
+    
+    async function fetchOtherPageHTML(path) {
+        try {
+            const response = await fetch(path);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const htmlString = await response.text();
+            return htmlString;
+        } catch (error) {
+            console.error("Error fetching the page:", error);
+            return null;
+        }
+    }
+    
+    fetchOtherPageHTML(targetPage).then(html => {
+        if (html) {
+            loadedPage.innerHTML = '';
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+
+            doc.head.querySelectorAll('link').forEach(link => {
+                document.head.appendChild(link);
+            });
+            doc.head.querySelectorAll('style').forEach(style => {
+                document.head.appendChild(style);
+            });
+
+            const scripts = Array.from(doc.body.querySelectorAll('script'));
+            const htmlNodes = Array.from(doc.body.childNodes).filter(node => node.nodeName !== 'SCRIPT');
+
+            htmlNodes.forEach(node => {
+                loadedPage.appendChild(node);
+            });
+
+            setTimeout(() => {
+                scripts.forEach(script => {
+                    const newScript = document.createElement('script');
+                    if (script.src) {
+                        newScript.src = script.src;
+                    } else {
+                        newScript.textContent = script.textContent;
+                    }
+                    loadedPage.appendChild(newScript);
+                });
+            }, 50);
+        }
     });
+});
 </script>
 </body>
 
