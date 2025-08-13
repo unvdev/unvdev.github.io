@@ -56,35 +56,39 @@
     const loadedPage = document.querySelector("#loaded-page");
     let currentlyEditable = null;
 
-    function makeEditable(element) {
-        if (element === loadedPage || element.closest('header') || element.closest('footer')) {
-            return;
-        }
-
-        if (currentlyEditable) {
-            // Destroy Quill and reset the element's state
-            if (quillInstance) {
-                // Quill's destroy method is not public, so we set innerHTML and remove the class
-                let content = quillInstance.root.innerHTML;
-                currentlyEditable.innerHTML = content;
-                quillInstance = null;
-            }
-            currentlyEditable.contentEditable = 'false';
-            currentlyEditable.style.boxShadow = 'none';
-            currentlyEditable.removeAttribute('id');
-        }
-
-        element.contentEditable = 'true';
-        element.style.boxShadow = 'inset 0 0 0 2px yellow';
-        element.id = 'editor';
-        element.focus();
-        currentlyEditable = element;
-        
-        // Initialize Quill on the newly active element
-        quillInstance = new Quill(element, {
-            theme: 'snow'
-        });
+function makeEditable(element) {
+    if (element === loadedPage || element.closest('header') || element.closest('footer')) {
+        return;
     }
+
+    if (element === currentlyEditable) {
+        // If the element is already the current editable, do nothing.
+        return;
+    }
+    
+    if (currentlyEditable) {
+        // Destroy Quill and reset the element's state
+        if (quillInstance) {
+            let content = quillInstance.root.innerHTML;
+            currentlyEditable.innerHTML = content;
+            quillInstance = null;
+        }
+        currentlyEditable.contentEditable = 'false';
+        currentlyEditable.style.boxShadow = 'none';
+        currentlyEditable.removeAttribute('id');
+    }
+
+    element.contentEditable = 'true';
+    element.style.boxShadow = 'inset 0 0 0 2px yellow';
+    element.id = 'editor';
+    element.focus();
+    currentlyEditable = element;
+    
+    // Initialize Quill on the newly active element
+    quillInstance = new Quill(element, {
+        theme: 'snow'
+    });
+}
 
     function deleteElement() {
         if (currentlyEditable) {
