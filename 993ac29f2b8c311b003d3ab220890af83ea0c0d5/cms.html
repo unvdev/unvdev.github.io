@@ -68,7 +68,11 @@ function activateEditable(element) {
     // Deactivate any previous element before activating the new one
     deactivateEditable();
 
-    // New check: if the element is an image, do not set contentEditable
+    // Set the box shadow regardless of whether it's an image or not
+    element.style.boxShadow = 'inset 0 0 0 2px magenta';
+    currentlyEditable = element;
+    
+    // Only make the element content editable and instantiate Quill if it's not an image
     if (element.tagName.toLowerCase() !== 'img') {
         element.contentEditable = 'true';
         element.id = 'editor';
@@ -77,9 +81,6 @@ function activateEditable(element) {
             theme: 'snow'
         });
     }
-
-    element.style.boxShadow = 'inset 0 0 0 2px magenta';
-    currentlyEditable = element;
 }
 
 function deleteElement() {
@@ -144,7 +145,6 @@ document.addEventListener("keydown", function(event) {
 deleteButton.addEventListener("click", deleteElement);
 
 document.addEventListener("click", function(event) {
-    // This listener handles clicks outside the loaded page and delete button
     if (!loadedPage.contains(event.target) && event.target !== deleteButton && !event.target.closest('.ql-toolbar')) {
         deactivateEditable();
     }
