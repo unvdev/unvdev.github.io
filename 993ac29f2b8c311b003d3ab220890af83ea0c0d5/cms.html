@@ -21,15 +21,16 @@
             width: 100vw;
             z-index: 1000000;
         }
-        /**/
     </style>
 </head>
 <body>
     <div id="loaded-page">
     </div>
+    <div class="cms-menu-bar">
     <input class="target-page" style="width: 300px; height: 20px;" type="text">
     <button class="load-page">Grab Page Code</button>
     <button class="delete-element">Delete Element</button>
+    </div>
     <script>
         let paramString = window.location.search.split('?')[1];
         let queryString = new URLSearchParams(paramString);
