@@ -49,122 +49,151 @@
         const loadPageButton = document.querySelector(".load-page");
         const deleteButton = document.querySelector(".delete-element");
         const loadedPage = document.querySelector("#loaded-page");
-        let currentlySelected = null; // The element with the magenta box, can be moved
-        let currentlyEditable = null; // The text-box element currently being edited
-        let quill = null;
 
-        function deselectCurrentElement() {
+        let currentlySelected = null; // The building-block element with the magenta box (movable)
+        let currentlyEditable = null; // The text-box element currently being edited by Quill
+        let quill = null; // The Quill instance
+
+        /**
+         * Resets all current selections and editing states, destroying Quill if active.
+         */
+        function deselectAll() {
+            // If a text-box is currently being edited, disable contenteditable and destroy Quill
+            if (currentlyEditable) {
+                currentlyEditable.contentEditable = 'false';
+                // Ensure Quill's own classes are removed for a clean slate
+                currentlyEditable.classList.remove('ql-container', 'ql-snow');
+                if (quill && typeof quill.destroy === 'function') {
+                    quill.destroy();
+                }
+                quill = null;
+                currentlyEditable = null;
+            }
+
+            // If a building-block is currently selected for movement, remove its border
             if (currentlySelected) {
                 currentlySelected.style.boxShadow = 'none';
                 currentlySelected = null;
             }
-            if (currentlyEditable) {
-                currentlyEditable.contentEditable = 'false';
-                currentlyEditable.classList.remove('ql-container', 'ql-snow');
-                currentlyEditable = null;
-            }
-            if (quill) {
-                quill.destroy();
-                quill = null;
-            }
         }
 
+        /**
+         * Selects a building-block element for movement, applying a magenta border.
+         * @param {HTMLElement} element The building-block element to select.
+         */
         function selectBuildingBlock(element) {
-            deselectCurrentElement();
+            // Do nothing if the element is already selected and not currently being edited
+            if (currentlySelected === element && currentlyEditable !== element) {
+                return;
+            }
+            deselectAll(); // Clear any existing selections/edits
             currentlySelected = element;
             currentlySelected.style.boxShadow = 'inset 0 0 0 2px magenta';
         }
 
+        /**
+         * Enables editing for a text-box element using Quill.
+         * @param {HTMLElement} element The text-box element to make editable.
+         */
         function editTextBox(element) {
-            // Deselect any currently selected building block
-            if (currentlySelected && currentlySelected !== element) {
-                currentlySelected.style.boxShadow = 'none';
-                currentlySelected = null;
+            // If this text-box is already editable, do nothing
+            if (currentlyEditable === element) {
+                return;
             }
 
-            // If an element is already being edited, deselect it first
-            if (currentlyEditable) {
-                currentlyEditable.contentEditable = 'false';
-                currentlyEditable.classList.remove('ql-container', 'ql-snow');
-                if (quill) {
-                    quill.destroy();
-                    quill = null;
-                }
-            }
-            
-            // Make the new element editable
+            deselectAll(); // Clear any existing selections/edits
+
             currentlyEditable = element;
             currentlyEditable.contentEditable = 'true';
-            currentlyEditable.style.boxShadow = 'inset 0 0 0 2px magenta';
+            currentlyEditable.style.boxShadow = 'inset 0 0 0 2px magenta'; // Indicate editing state
             currentlyEditable.focus();
             
-            // Initialize Quill for text-box elements
+            // Initialize Quill on the text-box element
             quill = new Quill(currentlyEditable, {
                 theme: 'snow'
             });
         }
 
+        /**
+         * Deletes the currently selected building-block element.
+         */
         function deleteElement() {
             if (currentlySelected) {
                 if (confirm('Are you sure you want to delete this element?')) {
-                    if (currentlyEditable) {
-                        quill.destroy();
+                    // If the selected element is also the one being edited, clean up Quill first
+                    if (currentlySelected === currentlyEditable) {
+                        if (quill && typeof quill.destroy === 'function') {
+                            quill.destroy();
+                            quill = null;
+                        }
+                        if (currentlyEditable) {
+                            currentlyEditable.contentEditable = 'false';
+                            currentlyEditable.classList.remove('ql-container', 'ql-snow');
+                            currentlyEditable = null;
+                        }
                     }
-                    currentlySelected.remove();
+                    currentlySelected.remove(); // Remove the element from the DOM
                     currentlySelected = null;
-                    currentlyEditable = null;
-                    quill = null;
                 }
             }
         }
 
+        // --- Event Listeners ---
+
+        // Single click: Select a building-block for movement
         loadedPage.addEventListener("click", function(event) {
-            let target = event.target.closest('.building-block');
+            const target = event.target.closest('.building-block');
             
-            if (target) {
-                if (currentlySelected === target) {
-                    return; // Don't re-select the same element
-                }
+            // Only select if it's a building-block and not currently editable (as double-click handles editable state)
+            if (target && currentlyEditable !== target) {
                 selectBuildingBlock(target);
-            } else {
-                deselectCurrentElement();
+            } else if (!target) { // Clicked outside any building-block
+                deselectAll();
             }
         });
 
+        // Double click: Edit a text-box
         loadedPage.addEventListener("dblclick", function(event) {
-            let target = event.target.closest('.text-box');
+            const target = event.target.closest('.text-box');
             if (target) {
                 editTextBox(target);
             }
         });
 
+        // Keyboard arrow keys: Move the currently selected building-block
         document.addEventListener("keydown", function(event) {
-            if (currentlySelected) {
+            if (currentlySelected && !currentlyEditable) { // Only move if a block is selected and not in edit mode
+                event.preventDefault(); // Prevent default arrow key scrolling
                 if (event.key === 'ArrowUp') {
-                    event.preventDefault();
-                    let previousElement = currentlySelected.previousElementSibling;
+                    const previousElement = currentlySelected.previousElementSibling;
                     if (previousElement) {
                         currentlySelected.parentElement.insertBefore(currentlySelected, previousElement);
                     }
                 } else if (event.key === 'ArrowDown') {
-                    event.preventDefault();
-                    let nextElement = currentlySelected.nextElementSibling;
+                    const nextElement = currentlySelected.nextElementSibling;
                     if (nextElement) {
-                        nextElement.parentElement.insertBefore(nextElement, currentlySelected);
+                        currentlySelected.parentElement.insertBefore(nextElement, currentlySelected.nextElementSibling.nextElementSibling);
                     }
                 }
             }
         });
 
+        // Delete button click: Delete the currently selected building-block
         deleteButton.addEventListener("click", deleteElement);
 
+        // Global click: Deselect all if clicked outside active areas (loaded page, delete button, Quill toolbar)
         document.addEventListener("click", function(event) {
-            // Check if the click is outside the loadedPage, delete button, or quill toolbar
-            if (!loadedPage.contains(event.target) && event.target !== deleteButton && !event.target.closest('.ql-toolbar')) {
-                deselectCurrentElement();
+            const isClickInsideLoadedPage = loadedPage.contains(event.target);
+            const isClickOnDeleteButton = event.target === deleteButton;
+            const isClickOnQuillToolbar = event.target.closest('.ql-toolbar');
+
+            // Deselect only if the click is outside all designated interactive areas.
+            if (!isClickInsideLoadedPage && !isClickOnDeleteButton && !isClickOnQuillToolbar) {
+                deselectAll();
             }
         });
 
+        // --- Page Loading Logic ---
         loadPageButton.addEventListener("click", function() {
             const targetPage = targetPageInput.value;
             if (!targetPage) {
@@ -188,14 +217,20 @@
             
             fetchOtherPageHTML(targetPage).then(html => {
                 if (html) {
+                    deselectAll(); // Clean up current state before loading new page
                     loadedPage.innerHTML = '';
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(html, 'text/html');
 
-                    doc.head.querySelectorAll('link').forEach(link => {
-                        document.head.appendChild(link);
+                    // Append stylesheets from the fetched page's head
+                    doc.head.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
+                        // Check if the link is already in the document head to avoid duplicates
+                        if (!document.head.querySelector(`link[href="${link.href}"]`)) {
+                            document.head.appendChild(link);
+                        }
                     });
                     doc.head.querySelectorAll('style').forEach(style => {
+                         // Check for duplicate style tags if necessary, or assume dynamic content
                         document.head.appendChild(style);
                     });
 
@@ -206,6 +241,7 @@
                         loadedPage.appendChild(node);
                     });
 
+                    // Execute scripts after a short delay to ensure DOM is ready
                     setTimeout(() => {
                         scripts.forEach(script => {
                             const newScript = document.createElement('script');
