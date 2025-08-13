@@ -46,7 +46,6 @@ const loadedPage = document.querySelector("#loaded-page");
 let currentlyEditable = null;
 let quillInstance = null;
 
-// The deactivation logic is now in a separate function for clarity and reuse
 function deactivateEditable() {
     if (currentlyEditable) {
         if (quillInstance) {
@@ -61,20 +60,26 @@ function deactivateEditable() {
     }
 }
 
-// The activation logic is now in a separate function
 function activateEditable(element) {
     if (element === loadedPage || element.closest('header') || element.closest('footer')) {
         return;
     }
-    deactivateEditable(); // Deactivate any previous element first
-    element.contentEditable = 'true';
+    
+    // Deactivate any previous element before activating the new one
+    deactivateEditable();
+
+    // New check: if the element is an image, do not set contentEditable
+    if (element.tagName.toLowerCase() !== 'img') {
+        element.contentEditable = 'true';
+        element.id = 'editor';
+        element.focus();
+        quillInstance = new Quill(element, {
+            theme: 'snow'
+        });
+    }
+
     element.style.boxShadow = 'inset 0 0 0 2px magenta';
-    element.id = 'editor';
-    element.focus();
     currentlyEditable = element;
-    quillInstance = new Quill(element, {
-        theme: 'snow'
-    });
 }
 
 function deleteElement() {
@@ -94,20 +99,19 @@ loadedPage.addEventListener("click", function(event) {
     if (event.target.closest('.ql-toolbar')) {
         return;
     }
-
-    let targetElement = event.target.closest('p, h1, h2, h3, h4, h5, h6, span, div, a, li');
     
-    // Check if the clicked element is the same as the currently editable one
+    let targetElement = event.target.closest('p, h1, h2, h3, h4, h5, h6, span, div, a, li, img');
+    
+    // If we have a target and it's the SAME as the currently editable one, do nothing.
     if (targetElement && targetElement === currentlyEditable) {
-        // We've clicked on the same element, so we do nothing.
         return;
     }
     
-    // Check if we clicked on a new editable element.
+    // If we click on a valid, new editable element, activate it.
     if (targetElement && targetElement !== loadedPage) {
         activateEditable(targetElement);
     } else {
-        // If we clicked on a non-editable area, deactivate the current element.
+        // If we click on a non-editable area, deactivate the current element.
         deactivateEditable();
     }
 });
