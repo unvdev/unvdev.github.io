@@ -49,80 +49,88 @@ const targetPageInput = document.querySelector(".target-page");
 const loadPageButton = document.querySelector(".load-page");
 const deleteButton = document.querySelector(".delete-element");
 const loadedPage = document.querySelector("#loaded-page");
-let currentlyEditable = null;
-let quill = null;
 
-function makeEditable(element) {
+let currentlyEditable = null;
+let quillInstance = null;
+
+function deactivateEditable() {
+    if (currentlyEditable) {
+        if (quillInstance) {
+            let content = quillInstance.root.innerHTML;
+            currentlyEditable.innerHTML = content;
+            quillInstance = null;
+        }
+
+        const toolbar = document.querySelector('.ql-toolbar');
+        if (toolbar) toolbar.remove();
+
+        currentlyEditable.contentEditable = 'false';
+        currentlyEditable.removeAttribute('id');
+
+        // Reset styling to avoid ghost borders/spacing
+        currentlyEditable.style.boxShadow = 'none';
+
+        currentlyEditable = null;
+    }
+}
+
+function activateEditable(element) {
+    // Prevent editing header/footer/wrapper
     if (element === loadedPage || element.closest('header') || element.closest('footer')) {
         return;
     }
-
-    if (currentlyEditable) {
-        currentlyEditable.contentEditable = 'false';
-        currentlyEditable.style.boxShadow = 'none';
-        // Only destroy Quill if it has been initialized
-        if (currentlyEditable.classList.contains('text-box') && quill) {
-            quill.destroy();
-            quill = null;
-        }
+    // Prevent re-initializing if already Quill host
+    if (element.id === 'editor') {
+        return;
     }
 
+    deactivateEditable();
+
     element.contentEditable = 'true';
-    element.style.boxShadow = 'inset 0 0 0 2px magenta'; // Changed to magenta
-    element.focus();
+    element.style.boxShadow = 'inset 0 0 0 2px magenta';
     currentlyEditable = element;
-    
+
     // Initialize Quill only for elements with the 'text-box' class
     if (element.classList.contains('text-box')) {
-        quill = new Quill(element, {
-            theme: 'snow'
-        });
+        element.id = 'editor';
+        element.focus();
+        quillInstance = new Quill(element, { theme: 'snow' });
+    } else {
+        // Handle non-Quill elements
+        element.tabIndex = 0;
+        element.focus();
     }
 }
 
 function deleteElement() {
     if (currentlyEditable) {
         if (confirm('Are you sure you want to delete this element?')) {
+            deactivateEditable(); // Clean up Quill and styling before removing the element
             currentlyEditable.remove();
-            if (currentlyEditable.classList.contains('text-box') && quill) {
-                quill.destroy();
-            }
             currentlyEditable = null;
-            quill = null;
         }
     }
 }
 
 loadedPage.addEventListener("click", function(event) {
-    if (event.target !== loadedPage) {
-        let parentElement = event.target.closest('.building-block');
-        
-        if (parentElement) {
-            if (parentElement === currentlyEditable) {
-                return;
-            }
-            makeEditable(parentElement);
-        } else {
-            if (currentlyEditable) {
-                currentlyEditable.contentEditable = 'false';
-                currentlyEditable.style.boxShadow = 'none';
-                // Only destroy Quill if it has been initialized
-                if (currentlyEditable.classList.contains('text-box') && quill) {
-                    quill.destroy();
-                }
-                currentlyEditable = null;
-                quill = null;
-            }
+    if (event.target.closest('.ql-toolbar')) return;
+
+    let targetElement = event.target.closest('.building-block');
+    
+    if (targetElement) {
+        if (targetElement === currentlyEditable) {
+            return;
         }
+        activateEditable(targetElement);
+    } else {
+        deactivateEditable();
     }
 });
 
 loadedPage.addEventListener("dblclick", function(event) {
-    if (event.target !== loadedPage) {
-        let parentElement = event.target.closest('.building-block');
-        if (parentElement) {
-            makeEditable(parentElement);
-        }
+    let targetElement = event.target.closest('.building-block');
+    if (targetElement) {
+        activateEditable(targetElement);
     }
 });
 
@@ -131,13 +139,13 @@ document.addEventListener("keydown", function(event) {
         if (event.key === 'ArrowUp') {
             event.preventDefault();
             let previousElement = currentlyEditable.previousElementSibling;
-            if (previousElement) {
+            if (previousElement && previousElement.classList.contains('building-block')) {
                 currentlyEditable.parentElement.insertBefore(currentlyEditable, previousElement);
             }
         } else if (event.key === 'ArrowDown') {
             event.preventDefault();
             let nextElement = currentlyEditable.nextElementSibling;
-            if (nextElement) {
+            if (nextElement && nextElement.classList.contains('building-block')) {
                 nextElement.parentElement.insertBefore(nextElement, currentlyEditable);
             }
         }
@@ -148,16 +156,7 @@ deleteButton.addEventListener("click", deleteElement);
 
 document.addEventListener("click", function(event) {
     if (!loadedPage.contains(event.target) && event.target !== deleteButton && !event.target.closest('.ql-toolbar')) {
-        if (currentlyEditable) {
-            currentlyEditable.contentEditable = 'false';
-            currentlyEditable.style.boxShadow = 'none';
-            // Only destroy Quill if it has been initialized
-            if (currentlyEditable.classList.contains('text-box') && quill) {
-                quill.destroy();
-            }
-            currentlyEditable = null;
-            quill = null;
-        }
+        deactivateEditable();
     }
 });
 
