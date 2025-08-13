@@ -24,6 +24,13 @@
             width: 100vw;
             z-index: 1000000;
         }
+
+        .editable.ql-editor {
+            border: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            box-shadow: none !important;
+        }
     </style>
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 </head>
@@ -43,6 +50,7 @@ const targetPageInput = document.querySelector(".target-page");
 const loadPageButton = document.querySelector(".load-page");
 const deleteButton = document.querySelector(".delete-element");
 const loadedPage = document.querySelector("#loaded-page");
+
 let currentlyEditable = null;
 let quillInstance = null;
 
@@ -53,14 +61,21 @@ function deactivateEditable() {
             currentlyEditable.innerHTML = content;
             quillInstance = null;
         }
+
         const toolbar = document.querySelector('.ql-toolbar');
         if (toolbar) toolbar.remove();
 
         currentlyEditable.contentEditable = 'false';
         currentlyEditable.removeAttribute('id');
 
-        // ✅ Always remove highlight
+        // ✅ Remove highlight & reset styling to avoid ghost borders/spacing
         currentlyEditable.style.boxShadow = 'none';
+        currentlyEditable.style.border = 'none';
+        currentlyEditable.style.margin = '0';
+        currentlyEditable.style.padding = '0';
+        currentlyEditable.classList.remove('ql-editor');
+        currentlyEditable.removeAttribute('data-gramm');
+        currentlyEditable.removeAttribute('spellcheck');
 
         currentlyEditable = null;
     }
@@ -75,7 +90,7 @@ function activateEditable(element) {
     if (element === loadedPage || element.closest('header') || element.closest('footer')) {
         return;
     }
-    // If clicking the same Quill host again, do nothing
+    // Prevent re-initializing if already Quill host
     if (element.id === 'editor') {
         return;
     }
@@ -89,8 +104,28 @@ function activateEditable(element) {
         element.contentEditable = 'true';
         element.id = 'editor';
         element.focus();
+
         quillInstance = new Quill(element, { theme: 'snow' });
+
+        // ✅ Arrow key image movement inside Quill
+        quillInstance.root.addEventListener('keydown', function (e) {
+            const sel = quillInstance.getSelection();
+            if (!sel) return;
+
+            const [leaf] = quillInstance.getLeaf(sel.index);
+            if (leaf && leaf.domNode && leaf.domNode.tagName === 'IMG') {
+                e.preventDefault();
+                const img = leaf.domNode;
+                if (e.key === 'ArrowUp' && img.previousElementSibling) {
+                    img.parentNode.insertBefore(img, img.previousElementSibling);
+                } else if (e.key === 'ArrowDown' && img.nextElementSibling) {
+                    img.parentNode.insertBefore(img.nextElementSibling, img);
+                }
+            }
+        });
+
     } else {
+        // Image only mode
         element.tabIndex = 0;
         element.focus();
     }
@@ -116,11 +151,10 @@ loadedPage.addEventListener("click", function(event) {
     let targetElement = event.target.closest('p, h1, h2, h3, h4, h5, h6, span, div, a, li, img');
 
     if (!targetElement || targetElement === loadedPage) {
-        deactivateEditable(); // outside -> remove highlight
+        deactivateEditable();
         return;
     }
 
-    // NEW: do nothing if clicking the active element or anything inside it
     if (currentlyEditable && (targetElement === currentlyEditable || currentlyEditable.contains(targetElement))) {
         return;
     }
@@ -132,7 +166,6 @@ loadedPage.addEventListener("dblclick", function(event) {
     let targetElement = event.target.parentElement;
     if (!targetElement) return;
 
-    // Same no-op rule on double-click
     if (currentlyEditable && (targetElement === currentlyEditable || currentlyEditable.contains(targetElement))) {
         return;
     }
@@ -142,7 +175,6 @@ loadedPage.addEventListener("dblclick", function(event) {
 
 document.addEventListener("keydown", function(event) {
     if (currentlyEditable) {
-        // Always destroy Quill when moving elements
         if (quillInstance) {
             let content = quillInstance.root.innerHTML;
             currentlyEditable.innerHTML = content;
