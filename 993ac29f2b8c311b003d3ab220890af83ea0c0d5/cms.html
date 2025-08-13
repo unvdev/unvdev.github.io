@@ -86,6 +86,10 @@
             if (currentlySelected === element && currentlyEditable !== element) {
                 return;
             }
+            // Ignore selection if the element is a Quill-generated empty paragraph
+            if (element.classList.contains('text-box') && element.textContent.trim() === '') {
+                return;
+            }
             deselectAll(); // Clear any existing selections/edits
             currentlySelected = element;
             currentlySelected.style.boxShadow = 'inset 0 0 0 2px magenta';
@@ -172,7 +176,8 @@
                 } else if (event.key === 'ArrowDown') {
                     const nextElement = currentlySelected.nextElementSibling;
                     if (nextElement) {
-                        currentlySelected.parentElement.insertBefore(nextElement, currentlySelected.nextElementSibling.nextElementSibling);
+                        currentlySelected.parentElement.insertBefore(nextElement, currentlySelected);
+                        currentlySelected.parentElement.insertBefore(currentlySelected, nextElement.nextElementSibling);
                     }
                 }
             }
