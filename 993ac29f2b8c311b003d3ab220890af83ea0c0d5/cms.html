@@ -63,12 +63,19 @@ function deactivateEditable() {
 }
 
 function activateEditable(element) {
+    // Ignore clicks on the same active element or inside it
+    if (currentlyEditable && (element === currentlyEditable || currentlyEditable.contains(element))) {
+        return;
+    }
+    // Prevent editing header/footer/wrapper
     if (element === loadedPage || element.closest('header') || element.closest('footer')) {
         return;
     }
+    // If clicking the same Quill host again, do nothing
     if (element.id === 'editor') {
-        return; // already editing this one
+        return;
     }
+
     deactivateEditable();
 
     element.style.boxShadow = 'inset 0 0 0 2px magenta';
@@ -101,21 +108,37 @@ function deleteElement() {
 
 loadedPage.addEventListener("click", function(event) {
     if (event.target.closest('.ql-toolbar')) return;
+
     let targetElement = event.target.closest('p, h1, h2, h3, h4, h5, h6, span, div, a, li, img');
-    if (targetElement && targetElement !== loadedPage) {
-        activateEditable(targetElement);
-    } else {
+
+    if (!targetElement || targetElement === loadedPage) {
         deactivateEditable();
+        return;
     }
+
+    // NEW: do nothing if clicking the active element or anything inside it
+    if (currentlyEditable && (targetElement === currentlyEditable || currentlyEditable.contains(targetElement))) {
+        return;
+    }
+
+    activateEditable(targetElement);
 });
 
 loadedPage.addEventListener("dblclick", function(event) {
     let targetElement = event.target.parentElement;
-    if (targetElement) activateEditable(targetElement);
+    if (!targetElement) return;
+
+    // Same no-op rule on double-click
+    if (currentlyEditable && (targetElement === currentlyEditable || currentlyEditable.contains(targetElement))) {
+        return;
+    }
+
+    activateEditable(targetElement);
 });
 
 document.addEventListener("keydown", function(event) {
     if (currentlyEditable) {
+        // Always destroy Quill when moving elements
         if (quillInstance) {
             let content = quillInstance.root.innerHTML;
             currentlyEditable.innerHTML = content;
@@ -139,6 +162,7 @@ document.addEventListener("keydown", function(event) {
                 nextElement.parentElement.insertBefore(nextElement, currentlyEditable);
             }
         }
+
         currentlyEditable.focus();
         currentlyEditable.style.boxShadow = 'inset 0 0 0 2px magenta';
     }
