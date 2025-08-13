@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,9 +10,11 @@
         :focus {
             outline: none;
         }
+
         [contenteditable="true"]:focus {
             outline: none;
         }
+
         .cms-menu-bar {
             display: block;
             position: fixed;
@@ -22,16 +25,24 @@
             z-index: 1000000;
         }
     </style>
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 </head>
+
 <body>
     <div class="cms-menu-bar">
-    <input class="target-page" style="width: 300px; height: 20px;" type="text">
+        <input class="target-page" style="width: 300px; height: 20px;" type="text">
         <button class="load-page">Load Page</button>
         <button class="delete-element">Delete Element</button>
     </div>
     <div style="margin-top: 40px;"></div>
     <div id="loaded-page">
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+    <script>
+        const quill = new Quill('#editor', {
+            theme: 'snow'
+        });
+    </script>
     <script>
         let paramString = window.location.search.split('?')[1];
         let queryString = new URLSearchParams(paramString);
@@ -56,10 +67,12 @@ function makeEditable(element) {
     if (currentlyEditable) {
         currentlyEditable.contentEditable = 'false';
         currentlyEditable.style.boxShadow = 'none';
+        currentlyEditable.removeAttribute('id'); // Remove the ID when no longer active
     }
 
     element.contentEditable = 'true';
     element.style.boxShadow = 'inset 0 0 0 2px yellow';
+    element.id = 'editor'; // Add the ID when the element becomes active
     element.focus();
     currentlyEditable = element;
 }
@@ -86,6 +99,7 @@ loadedPage.addEventListener("click", function(event) {
             if (currentlyEditable) {
                 currentlyEditable.contentEditable = 'false';
                 currentlyEditable.style.boxShadow = 'none';
+                currentlyEditable.removeAttribute('id'); // Remove the ID
                 currentlyEditable = null;
             }
         }
@@ -126,6 +140,7 @@ document.addEventListener("click", function(event) {
         if (currentlyEditable) {
             currentlyEditable.contentEditable = 'false';
             currentlyEditable.style.boxShadow = 'none';
+            currentlyEditable.removeAttribute('id'); // Remove the ID
             currentlyEditable = null;
         }
     }
@@ -188,4 +203,5 @@ loadPageButton.addEventListener("click", function() {
 });
     </script>
 </body>
+
 </html>
