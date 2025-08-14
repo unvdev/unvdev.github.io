@@ -57,14 +57,15 @@
             align-items: center;
             max-width: 100%; 
         }
-
-        .building-column-1 > *,
-        .building-column-2 > *,
-        .building-column-3 > *,
-        .building-column-4 > *,
-        .building-column-5 > *,
-        .building-column-6 > * {
-            min-width: 0;
+        @media screen and (max-width: 600px) {
+            .building-column-1,
+            .building-column-2,
+            .building-column-3,
+            .building-column-4,
+            .building-column-5,
+            .building-column-6 {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
