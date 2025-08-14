@@ -89,7 +89,7 @@
         }
 
         function selectBuildingBlock(element) {
-            if (currentlySelected === element && !currentlyEditable) return;
+            // Simplified logic: always deselect all, then select the new element.
             deselectAll();
             currentlySelected = element;
             currentlySelected.classList.add('selected');
@@ -130,26 +130,22 @@
         document.addEventListener('click', (e) => {
             const target = e.target;
             
-            // --- THIS IS THE FIX ---
-            // Added .ql-action to specifically ignore the link editor's "Save" button.
-            const quillUI = '.ql-container, .ql-toolbar, .ql-picker, .ql-tooltip, .ql-action';
-            if (target.closest(quillUI)) {
+            // Define all UI elements that should be ignored by this handler.
+            const uiElements = '.ql-container, .ql-toolbar, .ql-picker, .ql-tooltip, .ql-action, .cms-menu-bar';
+            if (target.closest(uiElements)) {
                 return;
             }
 
-            if (target.closest('.cms-menu-bar')) {
-                return;
+            // If the click wasn't on UI, check if it was on a content block.
+            const targetBlock = target.closest('.building-block');
+            if (targetBlock) {
+                // If a block was clicked, select it.
+                selectBuildingBlock(targetBlock);
+            } else {
+                // Otherwise, the click was on the background. Deselect everything.
+                deselectAll();
             }
-
-            const selectedBlock = target.closest('#loaded-page .building-block');
-            if (selectedBlock) {
-                selectBuildingBlock(selectedBlock);
-                return;
-            }
-
-            deselectAll();
         });
-
 
         loadedPage.addEventListener("dblclick", e => {
             const target = e.target.closest('.text-box');
