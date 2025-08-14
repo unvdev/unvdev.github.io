@@ -78,9 +78,6 @@
                 }
                 currentlyEditable.innerHTML = content;
                 currentlyEditable.quillInstance = null;
-                
-                // --- THIS IS THE FIX ---
-                // Remove the classes Quill added to the container element
                 currentlyEditable.classList.remove('ql-container', 'ql-snow');
             }
             currentlyEditable = null;
@@ -130,7 +127,8 @@
             }
         }
         
-        document.addEventListener('click', (e) => {
+        // Listen for 'mousedown' instead of 'click' to avoid race conditions with Quill's UI.
+        document.addEventListener('mousedown', (e) => {
             const target = e.target;
 
             if (target.closest('.ql-container, .ql-toolbar, .ql-picker, .ql-tooltip')) {
