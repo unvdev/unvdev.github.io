@@ -5,68 +5,46 @@
     <meta name="description" content="A Simplistic HTML Weather Widget For iOS 16 &amp; 17.">
     <link rel="stylesheet" href="https://www.uv.vu/assets/global/css/globalstyles.css">
     <style>
-        .building-container {
-            display: block;
-            position: relative;
-        }
-        .building-column-1 {
-            display: grid;
-            grid-template-rows: auto;
-            grid-template-columns: auto;
-            justify-items: center;
-            align-items: center;
-            max-width: 100%; 
-        }
-        .building-column-2 {
-            display: grid;
-            grid-template-rows: auto;
-            grid-template-columns: repeat(2, minmax(300px, 1fr));
-            justify-items: center;
-            align-items: center;
-            max-width: 100%; 
-        }
-        .building-column-3 {
-            display: grid;
-            grid-template-rows: auto;
-            grid-template-columns: repeat(3, minmax(200px, 1fr));
-            justify-items: center;
-            align-items: center;
-            max-width: 100%; 
-        }
-        .building-column-4 {
-            display: grid;
-            grid-template-rows: auto;
-            grid-template-columns: repeat(4, minmax(150px, 1fr));
-            justify-items: center;
-            align-items: center;
-            max-width: 100%; 
-        }
-        .building-column-5 {
-            display: grid;
-            grid-template-rows: auto;
-            grid-template-columns: repeat(5, minmax(120px, 1fr));
-            justify-items: center;
-            align-items: center;
-            max-width: 100%; 
-        }
-        .building-column-6 {
-            display: grid;
-            grid-template-rows: auto;
-            grid-template-columns: repeat(6, minmax(100px, 1fr));
-            justify-items: center;
-            align-items: center;
-            max-width: 100%; 
-        }
-        @media screen and (max-width: 600px) {
-            .building-column-1,
-            .building-column-2,
-            .building-column-3,
-            .building-column-4,
-            .building-column-5,
-            .building-column-6 {
-                grid-template-columns: 1fr;
-            }
-        }
+       .building-column-2,
+.building-column-3,
+.building-column-4,
+.building-column-5,
+.building-column-6 {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 1rem;
+    justify-content: center;
+    max-width: 100%; 
+}
+
+.building-column-1 > * {
+    width: 100%;
+}
+
+.building-column-2 > * {
+    flex-grow: 1;
+    flex-basis: 300px;
+}
+
+.building-column-3 > * {
+    flex-grow: 1;
+    flex-basis: 200px;
+}
+
+.building-column-4 > * {
+    flex-grow: 1;
+    flex-basis: 150px;
+}
+
+.building-column-5 > * {
+    flex-grow: 1;
+    flex-basis: 120px;
+}
+
+.building-column-6 > * {
+    flex-grow: 1;
+    flex-basis: 100px;
+}
     </style>
 </head>
 
