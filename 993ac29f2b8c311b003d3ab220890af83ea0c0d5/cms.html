@@ -37,10 +37,28 @@
             margin: 10px 0;
         }
 
+        /* --- CSS CHANGES START HERE --- */
+
         .selected {
+            position: relative; /* Crucial for positioning the move handle inside it */
             box-shadow: inset 0 0 0 2px magenta;
-            cursor: move !important;
+            cursor: default; /* The element itself isn't draggable, the handle is */
         }
+
+        .move-handle {
+            position: absolute;
+            top: 50%;
+            left: -35px; /* Position it 35px to the left of the element's edge */
+            transform: translateY(-50%); /* Vertically center the handle */
+            width: 56px; /* The size of your icon */
+            height: 56px;
+            background-image: url('/assets/cms/move.png');
+            background-size: contain;
+            cursor: move; /* Use the move cursor only for the handle */
+            z-index: 100;
+        }
+        
+        /* --- CSS CHANGES END HERE --- */
 
         .building-block {
             cursor: pointer;
@@ -78,6 +96,13 @@
         let currentlyEditable = null;
 
         function deselectAll() {
+            // --- JS CHANGE ---
+            // Find and remove the existing move handle before doing anything else
+            const existingHandle = document.getElementById('move-handle-dynamic');
+            if (existingHandle) {
+                existingHandle.remove();
+            }
+
             if (currentlyEditable && currentlyEditable.quillInstance) {
                 const quillInstance = currentlyEditable.quillInstance;
                 const content = quillInstance.getSemanticHTML();
@@ -101,30 +126,30 @@
             deselectAll();
             currentlySelected = element;
             currentlySelected.classList.add('selected');
+
+            // --- JS CHANGE ---
+            // Create the move handle and add it to the selected element
+            const moveHandle = document.createElement('div');
+            moveHandle.className = 'move-handle';
+            moveHandle.id = 'move-handle-dynamic'; // Give it an ID for easy removal
+            currentlySelected.appendChild(moveHandle);
         }
 
         function editTextBox(element) {
-    if (currentlyEditable === element) return;
-    
-    // This function already removes the .selected class.
-    deselectAll();
+            if (currentlyEditable === element) return;
+            deselectAll();
 
-    // The lines below that re-selected the element are now removed.
-    // currentlySelected = element; <-- REMOVE
-    // currentlySelected.classList.add('selected'); <-- REMOVE
+            currentlyEditable = element;
 
-    // Set the element as editable and initialize Quill.
-    currentlyEditable = element;
+            const newQuill = new Quill(currentlyEditable, {
+                scrollingContainer: document.body,
+                bounds: loadedPage,
+                theme: 'snow'
+            });
 
-    const newQuill = new Quill(currentlyEditable, {
-        scrollingContainer: document.body,
-        bounds: loadedPage,
-        theme: 'snow'
-    });
-
-    currentlyEditable.quillInstance = newQuill;
-    newQuill.focus();
-}
+            currentlyEditable.quillInstance = newQuill;
+            newQuill.focus();
+        }
 
         function deleteElement() {
             if (currentlySelected) {
@@ -144,6 +169,12 @@
         
         document.addEventListener('click', (e) => {
             const target = e.target;
+            
+            // --- JS CHANGE ---
+            // If the user clicks the move handle, don't deselect the element
+            if (target.id === 'move-handle-dynamic') {
+                return;
+            }
             
             const uiElements = '.ql-container, .ql-toolbar, .ql-picker, .ql-tooltip, .ql-action, .cms-menu-bar';
             if (target.closest(uiElements)) {
