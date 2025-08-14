@@ -138,9 +138,8 @@ function editTextBox(element) {
 
     currentlyEditable = element;
     currentlyEditable.style.boxShadow = 'inset 0 0 0 2px magenta';
-    currentlyEditable.contentEditable = false; // outer container not editable
+    currentlyEditable.contentEditable = false;
 
-    // create inner Quill container dynamically
     const editorDiv = document.createElement('div');
     editorDiv.classList.add('ql-editor-container');
     editorDiv.innerHTML = element.innerHTML;
@@ -150,11 +149,17 @@ function editTextBox(element) {
     quillToolbar.hidden = false;
     quillToolbar.inert = false;
 
-    quill = new Quill(editorDiv, {
-        theme: 'snow',
-        modules: { toolbar: '#quill-toolbar' }
-    });
-    quill.focus();
+    setTimeout(() => {
+        quill = new Quill(editorDiv, {
+            theme: 'snow',
+            modules: { toolbar: '#quill-toolbar' }
+        });
+
+        // Ensure valid selection for toolbar actions
+        quill.focus();
+        const length = quill.getLength();
+        quill.setSelection(length, 0);
+    }, 10);
 }
 
 function deleteElement() {
