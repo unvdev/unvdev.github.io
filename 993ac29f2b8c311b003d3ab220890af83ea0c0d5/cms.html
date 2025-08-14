@@ -22,11 +22,9 @@
             padding: 5px;
         }
 
-        /* The quill toolbar should be part of the editor */
         .ql-toolbar {
             position: relative;
             z-index: 1000001;
-            /* above CMS bar */
             display: block;
         }
 
@@ -35,7 +33,7 @@
             margin: 10px 0;
         }
 
-        /* Use a single class to handle the magenta box */
+        /* This rule provides the magenta highlight */
         .text-box.selected {
             box-shadow: inset 0 0 0 2px magenta;
         }
@@ -72,29 +70,20 @@
         let currentlyEditable = null;
 
         function deselectAll() {
-            // First, clean up the Quill editor if it exists.
+            // First, handle Quill cleanup if an element is being edited
             if (currentlyEditable && currentlyEditable.quillInstance) {
                 const quillInstance = currentlyEditable.quillInstance;
-
-                // 1. Get the HTML content from the editor.
                 const content = quillInstance.getSemanticHTML();
-
-                // 2. Remove the Quill toolbar (it's the previous sibling element).
                 const toolbar = quillInstance.container.previousElementSibling;
                 if (toolbar && toolbar.classList.contains('ql-toolbar')) {
                     toolbar.remove();
                 }
-
-                // 3. Restore the original element's HTML, removing the Quill editor structure.
                 currentlyEditable.innerHTML = content;
-
-                // 4. Clear the state.
                 currentlyEditable.quillInstance = null;
-                currentlyEditable.classList.remove('selected');
-                currentlyEditable = null;
             }
+            currentlyEditable = null; // Always clear the editable state
 
-            // Then, clear any lingering selection state.
+            // Then, handle the visual deselection from the single source of truth
             if (currentlySelected) {
                 currentlySelected.classList.remove('selected');
                 currentlySelected = null;
@@ -102,7 +91,7 @@
         }
 
         function selectBuildingBlock(element) {
-            if (currentlySelected === element && currentlyEditable !== element) return;
+            if (currentlySelected === element && !currentlyEditable) return; // Don't re-select a movable element
             deselectAll();
             currentlySelected = element;
             currentlySelected.classList.add('selected');
@@ -112,42 +101,50 @@
             if (currentlyEditable === element) return;
             deselectAll();
 
+            // An editable element is also the selected element
+            currentlySelected = element;
             currentlyEditable = element;
-            currentlyEditable.classList.add('selected');
+            currentlySelected.classList.add('selected');
 
-            // The 'snow' theme automatically creates a toolbar *before* the container.
             const newQuill = new Quill(currentlyEditable, {
                 theme: 'snow'
             });
 
-            currentlyEditable.quillInstance = newQuill; // Store the instance on the element
+            currentlyEditable.quillInstance = newQuill;
             newQuill.focus();
         }
 
         function deleteElement() {
             if (currentlySelected) {
                 if (confirm('Are you sure you want to delete this element?')) {
-                    // If the element being deleted is also the one being edited...
-                    if (currentlySelected === currentlyEditable && currentlyEditable.quillInstance) {
-                        // ...just remove the Quill toolbar first.
-                        const toolbar = currentlyEditable.quillInstance.container.previousElementSibling;
+                    // No need to call deselectAll() here, just remove the element
+                    // which implicitly deselects it.
+                    if (currentlyEditable && currentlyEditable.quillInstance) {
+                         const toolbar = currentlyEditable.quillInstance.container.previousElementSibling;
                         if (toolbar && toolbar.classList.contains('ql-toolbar')) {
                             toolbar.remove();
                         }
-                        currentlyEditable = null;
                     }
-                    // Now remove the element itself.
                     currentlySelected.remove();
                     currentlySelected = null;
+                    currentlyEditable = null;
                 }
             }
         }
 
         loadedPage.addEventListener("click", e => {
+            if (currentlyEditable && currentlyEditable.contains(e.target)) {
+                return;
+            }
+
             const target = e.target.closest('.building-block');
-            if (target && currentlyEditable !== target) {
-                selectBuildingBlock(target);
-            } else if (!target) {
+            if (target) {
+                // If the target is not the currently active editor, select it
+                if (target !== currentlyEditable) {
+                    selectBuildingBlock(target);
+                }
+            } else {
+                // Clicked on the background
                 deselectAll();
             }
         });
@@ -173,7 +170,6 @@
         deleteButton.addEventListener("click", deleteElement);
 
         document.addEventListener("click", e => {
-            // Check if the click is inside any part of the Quill UI, including pop-ups
             const isClickInsideEditor = e.target.closest('.ql-toolbar, .ql-container, .ql-picker, .ql-tooltip');
             const isClickInsideLoadedPage = loadedPage.contains(e.target);
             const isClickOnDeleteButton = e.target === deleteButton;
