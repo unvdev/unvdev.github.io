@@ -54,30 +54,24 @@
         let quill = null;
 
         function deselectAll() {
-            // If editing text with Quill
             if (quill && currentlyEditable) {
                 // Save edits back to element
                 currentlyEditable.innerHTML = quill.root.innerHTML;
 
-                // Remove Quill toolbar
-                const toolbar = document.querySelector('.ql-toolbar');
-                if (toolbar && toolbar.parentNode) {
-                    toolbar.parentNode.removeChild(toolbar);
-                }
+                // Remove toolbar & extra UI
+                document.querySelectorAll('.ql-toolbar, .ql-clipboard, .ql-tooltip').forEach(el => el.remove());
 
-                // Remove Quill container classes
+                // Remove container classes
                 currentlyEditable.classList.remove('ql-container', 'ql-snow');
 
-                // Disable content editing
+                // Disable editing
                 currentlyEditable.contentEditable = 'false';
                 currentlyEditable.style.boxShadow = 'none';
 
-                // Clear references
                 quill = null;
                 currentlyEditable = null;
             }
 
-            // Clear selected block
             if (currentlySelected) {
                 currentlySelected.style.boxShadow = 'none';
                 currentlySelected = null;
@@ -94,11 +88,9 @@
         }
 
         function editTextBox(element) {
-            // Prevent re-initializing if already active
             if (currentlyEditable === element && quill) {
                 return;
             }
-            // Prevent starting if already a Quill container
             if (element.classList.contains('ql-container')) {
                 return;
             }
@@ -171,9 +163,9 @@
         document.addEventListener("click", function(event) {
             const isClickInsideLoadedPage = loadedPage.contains(event.target);
             const isClickOnDeleteButton = event.target === deleteButton;
-            const isClickOnQuillToolbar = event.target.closest('.ql-toolbar');
+            const isClickInsideEditor = event.target.closest('.ql-toolbar, .ql-container');
 
-            if (!isClickInsideLoadedPage && !isClickOnDeleteButton && !isClickOnQuillToolbar) {
+            if (!isClickInsideLoadedPage && !isClickOnDeleteButton && !isClickInsideEditor) {
                 deselectAll();
             }
         });
