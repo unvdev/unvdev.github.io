@@ -33,7 +33,6 @@
             margin: 10px 0;
         }
 
-        /* This rule provides the magenta highlight */
         .text-box.selected {
             box-shadow: inset 0 0 0 2px magenta;
         }
@@ -70,7 +69,6 @@
         let currentlyEditable = null;
 
         function deselectAll() {
-            // First, handle Quill cleanup if an element is being edited
             if (currentlyEditable && currentlyEditable.quillInstance) {
                 const quillInstance = currentlyEditable.quillInstance;
                 const content = quillInstance.getSemanticHTML();
@@ -81,9 +79,8 @@
                 currentlyEditable.innerHTML = content;
                 currentlyEditable.quillInstance = null;
             }
-            currentlyEditable = null; // Always clear the editable state
+            currentlyEditable = null;
 
-            // Then, handle the visual deselection from the single source of truth
             if (currentlySelected) {
                 currentlySelected.classList.remove('selected');
                 currentlySelected = null;
@@ -91,7 +88,7 @@
         }
 
         function selectBuildingBlock(element) {
-            if (currentlySelected === element && !currentlyEditable) return; // Don't re-select a movable element
+            if (currentlySelected === element && !currentlyEditable) return;
             deselectAll();
             currentlySelected = element;
             currentlySelected.classList.add('selected');
@@ -101,7 +98,6 @@
             if (currentlyEditable === element) return;
             deselectAll();
 
-            // An editable element is also the selected element
             currentlySelected = element;
             currentlyEditable = element;
             currentlySelected.classList.add('selected');
@@ -117,10 +113,8 @@
         function deleteElement() {
             if (currentlySelected) {
                 if (confirm('Are you sure you want to delete this element?')) {
-                    // No need to call deselectAll() here, just remove the element
-                    // which implicitly deselects it.
                     if (currentlyEditable && currentlyEditable.quillInstance) {
-                         const toolbar = currentlyEditable.quillInstance.container.previousElementSibling;
+                        const toolbar = currentlyEditable.quillInstance.container.previousElementSibling;
                         if (toolbar && toolbar.classList.contains('ql-toolbar')) {
                             toolbar.remove();
                         }
@@ -131,23 +125,33 @@
                 }
             }
         }
+        
+        // --- REPLACED ALL CLICK LISTENERS WITH THIS SINGLE, UNIFIED HANDLER ---
+        document.addEventListener('click', (e) => {
+            const target = e.target;
 
-        loadedPage.addEventListener("click", e => {
-            if (currentlyEditable && currentlyEditable.contains(e.target)) {
+            // Priority 1: Ignore clicks inside any Quill UI element. Let Quill handle it.
+            if (target.closest('.ql-container, .ql-toolbar, .ql-picker, .ql-tooltip')) {
                 return;
             }
 
-            const target = e.target.closest('.building-block');
-            if (target) {
-                // If the target is not the currently active editor, select it
-                if (target !== currentlyEditable) {
-                    selectBuildingBlock(target);
-                }
-            } else {
-                // Clicked on the background
-                deselectAll();
+            // Priority 2: Ignore clicks on the CMS menu bar itself.
+            if (target.closest('.cms-menu-bar')) {
+                // Let dedicated listeners for buttons inside the bar handle their events.
+                return;
             }
+
+            // Priority 3: Check if a selectable block was clicked.
+            const selectedBlock = target.closest('#loaded-page .building-block');
+            if (selectedBlock) {
+                selectBuildingBlock(selectedBlock);
+                return; // Action handled, we're done.
+            }
+
+            // Priority 4: If none of the above, the click was "outside." Deselect everything.
+            deselectAll();
         });
+
 
         loadedPage.addEventListener("dblclick", e => {
             const target = e.target.closest('.text-box');
@@ -167,19 +171,8 @@
             }
         });
 
+        // The button-specific listeners remain.
         deleteButton.addEventListener("click", deleteElement);
-
-        document.addEventListener("click", e => {
-            const isClickInsideEditor = e.target.closest('.ql-toolbar, .ql-container, .ql-picker, .ql-tooltip');
-            const isClickInsideLoadedPage = loadedPage.contains(e.target);
-            const isClickOnDeleteButton = e.target === deleteButton;
-            const isClickOnCmsBar = e.target.closest('.cms-menu-bar');
-
-            if (!isClickInsideEditor && !isClickInsideLoadedPage && !isClickOnDeleteButton && !isClickOnCmsBar) {
-                deselectAll();
-            }
-        });
-
         loadPageButton.addEventListener("click", async () => {
             const targetPage = targetPageInput.value;
             if (!targetPage) return console.error("Please enter a page path.");
