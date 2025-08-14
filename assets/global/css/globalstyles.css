@@ -114,8 +114,6 @@ a {
 .content {
     display: block;
     position: relative;
-    left: 50%;
-    transform: translateX(-50%);
 }
 
 .featuredImage {
