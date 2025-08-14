@@ -7,9 +7,6 @@
     <meta name="robots" content="noindex">
     <title>CMS</title>
     <style>
-        html, body {
-            overflow-x: visible !important;
-        }
         :focus {
             outline: none;
         }
@@ -42,6 +39,11 @@
 
         .selected {
             box-shadow: inset 0 0 0 2px magenta;
+            cursor: move;
+        }
+
+        .building-block {
+            cursor: pointer;
         }
     </style>
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
@@ -102,24 +104,27 @@
         }
 
         function editTextBox(element) {
-            if (currentlyEditable === element) return;
-            deselectAll();
+    if (currentlyEditable === element) return;
+    
+    // This function already removes the .selected class.
+    deselectAll();
 
-            currentlySelected = element;
-            currentlyEditable = element;
-            currentlySelected.classList.add('selected');
+    // The lines below that re-selected the element are now removed.
+    // currentlySelected = element; <-- REMOVE
+    // currentlySelected.classList.add('selected'); <-- REMOVE
 
-            const newQuill = new Quill(currentlyEditable, {
-                // --- THIS IS THE FIX ---
-                // This makes the tooltip a child of <body>, preventing it from being cut off.
-                scrollingContainer: document.body,
-                bounds: loadedPage,
-                theme: 'snow'
-            });
+    // Set the element as editable and initialize Quill.
+    currentlyEditable = element;
 
-            currentlyEditable.quillInstance = newQuill;
-            newQuill.focus();
-        }
+    const newQuill = new Quill(currentlyEditable, {
+        scrollingContainer: document.body,
+        bounds: loadedPage,
+        theme: 'snow'
+    });
+
+    currentlyEditable.quillInstance = newQuill;
+    newQuill.focus();
+}
 
         function deleteElement() {
             if (currentlySelected) {
