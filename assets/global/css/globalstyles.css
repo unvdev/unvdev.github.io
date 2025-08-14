@@ -112,9 +112,10 @@ a {
 }
 
 .content {
-    display: block;
-    position: relative;
-}/**/
+    width: 100%;
+    max-width: 95%;
+    margin: 0 auto;
+}
 
 .featuredImage {
     position: relative;
