@@ -21,6 +21,15 @@
             width: 100vw;
             z-index: 1000000;
         }
+        /* External Quill Toolbar styling */
+        #quill-toolbar {
+            border: 1px solid #ccc;
+            background: #f8f8f8;
+            padding: 4px;
+            margin: 8px 0;
+            display: none;
+            z-index: 1000001; /* above everything else */
+        }
     </style>
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 </head>
@@ -30,6 +39,10 @@
         <button class="load-page">Grab Page Code</button>
         <button class="delete-element">Delete Element</button>
     </div>
+
+    <!-- External Quill Toolbar -->
+    <div id="quill-toolbar"></div>
+
     <div style="margin-top: 40px;"></div>
     <div id="loaded-page"></div>
 
@@ -48,6 +61,7 @@
         const loadPageButton = document.querySelector(".load-page");
         const deleteButton = document.querySelector(".delete-element");
         const loadedPage = document.querySelector("#loaded-page");
+        const quillToolbar = document.getElementById('quill-toolbar');
 
         let currentlySelected = null;
         let currentlyEditable = null;
@@ -55,22 +69,14 @@
 
         function deselectAll() {
             if (quill && currentlyEditable) {
-                // Save edits back to element
                 currentlyEditable.innerHTML = quill.root.innerHTML;
-
-                // Remove toolbar & extra UI
-                document.querySelectorAll('.ql-toolbar, .ql-clipboard, .ql-tooltip').forEach(el => el.remove());
-
-                // Remove container classes
                 currentlyEditable.classList.remove('ql-container', 'ql-snow');
-
-                // Disable editing
                 currentlyEditable.contentEditable = 'false';
                 currentlyEditable.style.boxShadow = 'none';
-
                 quill = null;
                 currentlyEditable = null;
             }
+            quillToolbar.style.display = 'none';
 
             if (currentlySelected) {
                 currentlySelected.style.boxShadow = 'none';
@@ -88,12 +94,8 @@
         }
 
         function editTextBox(element) {
-            if (currentlyEditable === element && quill) {
-                return;
-            }
-            if (element.classList.contains('ql-container')) {
-                return;
-            }
+            if (currentlyEditable === element && quill) return;
+            if (element.classList.contains('ql-container')) return;
 
             deselectAll();
 
@@ -102,8 +104,13 @@
             currentlyEditable.style.boxShadow = 'inset 0 0 0 2px magenta';
             currentlyEditable.focus();
 
+            quillToolbar.style.display = 'block';
+
             quill = new Quill(currentlyEditable, {
-                theme: 'snow'
+                theme: 'snow',
+                modules: {
+                    toolbar: '#quill-toolbar'
+                }
             });
         }
 
@@ -118,6 +125,7 @@
                         currentlyEditable.contentEditable = 'false';
                         currentlyEditable.classList.remove('ql-container', 'ql-snow');
                         currentlyEditable = null;
+                        quillToolbar.style.display = 'none';
                     }
                     currentlySelected.remove();
                     currentlySelected = null;
@@ -163,7 +171,7 @@
         document.addEventListener("click", function(event) {
             const isClickInsideLoadedPage = loadedPage.contains(event.target);
             const isClickOnDeleteButton = event.target === deleteButton;
-            const isClickInsideEditor = event.target.closest('.ql-toolbar, .ql-container');
+            const isClickInsideEditor = (currentlyEditable && currentlyEditable.contains(event.target)) || quillToolbar.contains(event.target);
 
             if (!isClickInsideLoadedPage && !isClickOnDeleteButton && !isClickInsideEditor) {
                 deselectAll();
@@ -180,11 +188,8 @@
             async function fetchOtherPageHTML(path) {
                 try {
                     const response = await fetch(path);
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    const htmlString = await response.text();
-                    return htmlString;
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    return await response.text();
                 } catch (error) {
                     console.error("Error fetching the page:", error);
                     return null;
@@ -199,29 +204,20 @@
                     const doc = parser.parseFromString(html, 'text/html');
 
                     doc.head.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
-                        if (!document.head.querySelector(`link[href="${link.href}"]`)) {
-                            document.head.appendChild(link);
-                        }
+                        if (!document.head.querySelector(`link[href="${link.href}"]`)) document.head.appendChild(link);
                     });
-                    doc.head.querySelectorAll('style').forEach(style => {
-                        document.head.appendChild(style);
-                    });
+                    doc.head.querySelectorAll('style').forEach(style => document.head.appendChild(style));
 
                     const scripts = Array.from(doc.body.querySelectorAll('script'));
                     const htmlNodes = Array.from(doc.body.childNodes).filter(node => node.nodeName !== 'SCRIPT');
 
-                    htmlNodes.forEach(node => {
-                        loadedPage.appendChild(node);
-                    });
+                    htmlNodes.forEach(node => loadedPage.appendChild(node));
 
                     setTimeout(() => {
                         scripts.forEach(script => {
                             const newScript = document.createElement('script');
-                            if (script.src) {
-                                newScript.src = script.src;
-                            } else {
-                                newScript.textContent = script.textContent;
-                            }
+                            if (script.src) newScript.src = script.src;
+                            else newScript.textContent = script.textContent;
                             loadedPage.appendChild(newScript);
                         });
                     }, 50);
