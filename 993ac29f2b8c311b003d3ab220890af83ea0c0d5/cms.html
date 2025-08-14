@@ -28,8 +28,6 @@
             display: block;
         }
 
-        /* --- FIX #1: ADD THIS RULE --- */
-        /* This forces the tooltip to appear on top of all other elements. */
         .ql-tooltip {
             z-index: 1000002 !important;
         }
@@ -109,8 +107,9 @@
             currentlySelected.classList.add('selected');
 
             const newQuill = new Quill(currentlyEditable, {
-                // --- FIX #2: REFINE THE BOUNDS ---
-                // This makes the boundary container more specific.
+                // --- THIS IS THE FIX ---
+                // This makes the tooltip a child of <body>, preventing it from being cut off.
+                scrollingContainer: document.body,
                 bounds: loadedPage,
                 theme: 'snow'
             });
