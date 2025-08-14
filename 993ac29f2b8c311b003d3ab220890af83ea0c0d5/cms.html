@@ -1,230 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex">
-    <title>CMS</title>
-    <style>
-        :focus {
-            outline: none;
-        }
-        [contenteditable="true"]:focus {
-            outline: none;
-        }
-        .cms-menu-bar {
-            display: block;
-            position: fixed;
-            margin-top: -40px;
-            background-color: blue;
-            height: 40px;
-            width: 100vw;
-            z-index: 1000000;
-        }
-        /* External Quill Toolbar styling */
-        #quill-toolbar {
-            position: fixed;        /* Fix position on screen */
-            top: 140px;              /* Just below CMS menu bar */
-            left: 0;
-            right: 0;
-            z-index: 1000002;       /* Above CMS menu bar */
-            border: 1px solid #ccc;
-            background: #f8f8f8;
-            padding: 4px;
-            display: none;
-        }
-    </style>
-    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>CMS</title>
+<style>
+    :focus {
+        outline: none;
+    }
+    [contenteditable="true"]:focus {
+        outline: none;
+    }
+    .cms-menu-bar {
+        display: block;
+        position: fixed;
+        margin-top: -40px;
+        background-color: blue;
+        height: 40px;
+        width: 100vw;
+        z-index: 1000000;
+    }
+    /* Fixed external Quill toolbar */
+    #quill-toolbar {
+        position: fixed;
+        top: 40px;             /* Below CMS bar */
+        left: 0;
+        right: 0;
+        z-index: 1000002;      /* Above CMS bar */
+        border: 1px solid #ccc;
+        background: #f8f8f8;
+        padding: 4px;
+        display: none;         /* Hidden until editing */
+    }
+</style>
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="cms-menu-bar">
-        <input class="target-page" style="width: 300px; height: 20px;" type="text">
-        <button class="load-page">Grab Page Code</button>
-        <button class="delete-element">Delete Element</button>
-    </div>
+<div class="cms-menu-bar">
+    <input class="target-page" style="width: 300px; height: 20px;" type="text">
+    <button class="load-page">Grab Page Code</button>
+    <button class="delete-element">Delete Element</button>
+</div>
 
-    <!-- External Quill Toolbar -->
-    <div id="quill-toolbar"></div>
+<!-- Fixed external toolbar -->
+<div id="quill-toolbar"></div>
 
-    <div style="margin-top: 40px;"></div>
-    <div id="loaded-page"></div>
+<div style="margin-top: 40px;"></div>
+<div id="loaded-page"></div>
 
-    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
-    <script>
-        let paramString = window.location.search.split('?')[1];
-        let queryString = new URLSearchParams(paramString);
-        let nva = parseInt(queryString.get('nva'));
-        let now = new Date().getTime();
-        if (Number.isNaN(nva) || now > nva) {
-            window.location = '/cms_login';
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+<script>
+let paramString = window.location.search.split('?')[1];
+let queryString = new URLSearchParams(paramString);
+let nva = parseInt(queryString.get('nva'));
+let now = new Date().getTime();
+if (Number.isNaN(nva) || now > nva) {
+    window.location = '/cms_login';
+}
+</script>
+<script>
+const targetPageInput = document.querySelector(".target-page");
+const loadPageButton = document.querySelector(".load-page");
+const deleteButton = document.querySelector(".delete-element");
+const loadedPage = document.querySelector("#loaded-page");
+const quillToolbar = document.getElementById('quill-toolbar');
+
+let currentlySelected = null;
+let currentlyEditable = null;
+let quill = null;
+
+// Populate external toolbar with default Quill buttons
+quillToolbar.innerHTML = `
+  <span class="ql-formats">
+    <button class="ql-bold"></button>
+    <button class="ql-italic"></button>
+    <button class="ql-underline"></button>
+  </span>
+  <span class="ql-formats">
+    <select class="ql-header">
+      <option selected></option>
+      <option value="1"></option>
+      <option value="2"></option>
+      <option value="3"></option>
+    </select>
+  </span>
+  <span class="ql-formats">
+    <button class="ql-list" value="ordered"></button>
+    <button class="ql-list" value="bullet"></button>
+  </span>
+  <span class="ql-formats">
+    <button class="ql-link"></button>
+    <button class="ql-image"></button>
+    <button class="ql-clean"></button>
+  </span>
+`;
+
+function deselectAll() {
+    if (quill && currentlyEditable) {
+        currentlyEditable.innerHTML = quill.root.innerHTML;
+        currentlyEditable.classList.remove('ql-container', 'ql-snow');
+        currentlyEditable.contentEditable = 'false';
+        currentlyEditable.style.boxShadow = 'none';
+        quill = null;
+        currentlyEditable = null;
+    }
+    quillToolbar.style.display = 'none';
+
+    if (currentlySelected) {
+        currentlySelected.style.boxShadow = 'none';
+        currentlySelected = null;
+    }
+}
+
+function selectBuildingBlock(element) {
+    if (currentlySelected === element && currentlyEditable !== element) return;
+    deselectAll();
+    currentlySelected = element;
+    currentlySelected.style.boxShadow = 'inset 0 0 0 2px magenta';
+}
+
+function editTextBox(element) {
+    if (currentlyEditable === element && quill) return;
+    if (element.classList.contains('ql-container')) return;
+
+    deselectAll();
+
+    currentlyEditable = element;
+    currentlyEditable.contentEditable = 'true';
+    currentlyEditable.style.boxShadow = 'inset 0 0 0 2px magenta';
+    currentlyEditable.focus();
+
+    quillToolbar.style.display = 'block';
+
+    quill = new Quill(currentlyEditable, {
+        theme: 'snow',
+        modules: {
+            toolbar: '#quill-toolbar'
         }
-    </script>
-    <script>
-        const targetPageInput = document.querySelector(".target-page");
-        const loadPageButton = document.querySelector(".load-page");
-        const deleteButton = document.querySelector(".delete-element");
-        const loadedPage = document.querySelector("#loaded-page");
-        const quillToolbar = document.getElementById('quill-toolbar');
+    });
+}
 
-        let currentlySelected = null;
-        let currentlyEditable = null;
-        let quill = null;
-
-        function deselectAll() {
-            if (quill && currentlyEditable) {
-                currentlyEditable.innerHTML = quill.root.innerHTML;
-                currentlyEditable.classList.remove('ql-container', 'ql-snow');
+function deleteElement() {
+    if (currentlySelected) {
+        if (confirm('Are you sure you want to delete this element?')) {
+            if (currentlySelected === currentlyEditable) {
+                if (quill) {
+                    currentlyEditable.innerHTML = quill.root.innerHTML;
+                    quill = null;
+                }
                 currentlyEditable.contentEditable = 'false';
-                currentlyEditable.style.boxShadow = 'none';
-                quill = null;
+                currentlyEditable.classList.remove('ql-container', 'ql-snow');
                 currentlyEditable = null;
+                quillToolbar.style.display = 'none';
             }
-            quillToolbar.style.display = 'none';
+            currentlySelected.remove();
+            currentlySelected = null;
+        }
+    }
+}
 
-            if (currentlySelected) {
-                currentlySelected.style.boxShadow = 'none';
-                currentlySelected = null;
+loadedPage.addEventListener("click", function(event) {
+    const target = event.target.closest('.building-block');
+    if (target && currentlyEditable !== target) {
+        selectBuildingBlock(target);
+    } else if (!target) {
+        deselectAll();
+    }
+});
+
+loadedPage.addEventListener("dblclick", function(event) {
+    const target = event.target.closest('.text-box');
+    if (target) {
+        editTextBox(target);
+    }
+});
+
+document.addEventListener("keydown", function(event) {
+    if (currentlySelected && !currentlyEditable) {
+        event.preventDefault();
+        if (event.key === 'ArrowUp') {
+            const previousElement = currentlySelected.previousElementSibling;
+            if (previousElement) {
+                currentlySelected.parentElement.insertBefore(currentlySelected, previousElement);
+            }
+        } else if (event.key === 'ArrowDown') {
+            const nextElement = currentlySelected.nextElementSibling;
+            if (nextElement) {
+                currentlySelected.parentElement.insertBefore(currentlySelected, nextElement.nextElementSibling);
             }
         }
+    }
+});
 
-        function selectBuildingBlock(element) {
-            if (currentlySelected === element && currentlyEditable !== element) return;
+deleteButton.addEventListener("click", deleteElement);
+
+document.addEventListener("click", function(event) {
+    const isClickInsideLoadedPage = loadedPage.contains(event.target);
+    const isClickOnDeleteButton = event.target === deleteButton;
+    const isClickInsideEditor = (currentlyEditable && currentlyEditable.contains(event.target)) || quillToolbar.contains(event.target);
+
+    if (!isClickInsideLoadedPage && !isClickOnDeleteButton && !isClickInsideEditor) {
+        deselectAll();
+    }
+});
+
+loadPageButton.addEventListener("click", function() {
+    const targetPage = targetPageInput.value;
+    if (!targetPage) {
+        console.error("Please enter a page path.");
+        return;
+    }
+
+    async function fetchOtherPageHTML(path) {
+        try {
+            const response = await fetch(path);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            return await response.text();
+        } catch (error) {
+            console.error("Error fetching the page:", error);
+            return null;
+        }
+    }
+
+    fetchOtherPageHTML(targetPage).then(html => {
+        if (html) {
             deselectAll();
-            currentlySelected = element;
-            currentlySelected.style.boxShadow = 'inset 0 0 0 2px magenta';
-        }
+            loadedPage.innerHTML = '';
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
 
-        function editTextBox(element) {
-            if (currentlyEditable === element && quill) return;
-            if (element.classList.contains('ql-container')) return;
-
-            deselectAll();
-
-            currentlyEditable = element;
-            currentlyEditable.contentEditable = 'true';
-            currentlyEditable.style.boxShadow = 'inset 0 0 0 2px magenta';
-            currentlyEditable.focus();
-
-            quillToolbar.style.display = 'block';
-
-            quill = new Quill(currentlyEditable, {
-                theme: 'snow',
-                modules: {
-                    toolbar: '#quill-toolbar'
-                }
+            doc.head.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
+                if (!document.head.querySelector(`link[href="${link.href}"]`)) document.head.appendChild(link);
             });
+            doc.head.querySelectorAll('style').forEach(style => document.head.appendChild(style));
+
+            const scripts = Array.from(doc.body.querySelectorAll('script'));
+            const htmlNodes = Array.from(doc.body.childNodes).filter(node => node.nodeName !== 'SCRIPT');
+
+            htmlNodes.forEach(node => loadedPage.appendChild(node));
+
+            setTimeout(() => {
+                scripts.forEach(script => {
+                    const newScript = document.createElement('script');
+                    if (script.src) newScript.src = script.src;
+                    else newScript.textContent = script.textContent;
+                    loadedPage.appendChild(newScript);
+                });
+            }, 50);
         }
-
-        function deleteElement() {
-            if (currentlySelected) {
-                if (confirm('Are you sure you want to delete this element?')) {
-                    if (currentlySelected === currentlyEditable) {
-                        if (quill) {
-                            currentlyEditable.innerHTML = quill.root.innerHTML;
-                            quill = null;
-                        }
-                        currentlyEditable.contentEditable = 'false';
-                        currentlyEditable.classList.remove('ql-container', 'ql-snow');
-                        currentlyEditable = null;
-                        quillToolbar.style.display = 'none';
-                    }
-                    currentlySelected.remove();
-                    currentlySelected = null;
-                }
-            }
-        }
-
-        loadedPage.addEventListener("click", function(event) {
-            const target = event.target.closest('.building-block');
-            if (target && currentlyEditable !== target) {
-                selectBuildingBlock(target);
-            } else if (!target) {
-                deselectAll();
-            }
-        });
-
-        loadedPage.addEventListener("dblclick", function(event) {
-            const target = event.target.closest('.text-box');
-            if (target) {
-                editTextBox(target);
-            }
-        });
-
-        document.addEventListener("keydown", function(event) {
-            if (currentlySelected && !currentlyEditable) {
-                event.preventDefault();
-                if (event.key === 'ArrowUp') {
-                    const previousElement = currentlySelected.previousElementSibling;
-                    if (previousElement) {
-                        currentlySelected.parentElement.insertBefore(currentlySelected, previousElement);
-                    }
-                } else if (event.key === 'ArrowDown') {
-                    const nextElement = currentlySelected.nextElementSibling;
-                    if (nextElement) {
-                        currentlySelected.parentElement.insertBefore(currentlySelected, nextElement.nextElementSibling);
-                    }
-                }
-            }
-        });
-
-        deleteButton.addEventListener("click", deleteElement);
-
-        document.addEventListener("click", function(event) {
-            const isClickInsideLoadedPage = loadedPage.contains(event.target);
-            const isClickOnDeleteButton = event.target === deleteButton;
-            const isClickInsideEditor = (currentlyEditable && currentlyEditable.contains(event.target)) || quillToolbar.contains(event.target);
-
-            if (!isClickInsideLoadedPage && !isClickOnDeleteButton && !isClickInsideEditor) {
-                deselectAll();
-            }
-        });
-
-        loadPageButton.addEventListener("click", function() {
-            const targetPage = targetPageInput.value;
-            if (!targetPage) {
-                console.error("Please enter a page path.");
-                return;
-            }
-
-            async function fetchOtherPageHTML(path) {
-                try {
-                    const response = await fetch(path);
-                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                    return await response.text();
-                } catch (error) {
-                    console.error("Error fetching the page:", error);
-                    return null;
-                }
-            }
-
-            fetchOtherPageHTML(targetPage).then(html => {
-                if (html) {
-                    deselectAll();
-                    loadedPage.innerHTML = '';
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-
-                    doc.head.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
-                        if (!document.head.querySelector(`link[href="${link.href}"]`)) document.head.appendChild(link);
-                    });
-                    doc.head.querySelectorAll('style').forEach(style => document.head.appendChild(style));
-
-                    const scripts = Array.from(doc.body.querySelectorAll('script'));
-                    const htmlNodes = Array.from(doc.body.childNodes).filter(node => node.nodeName !== 'SCRIPT');
-
-                    htmlNodes.forEach(node => loadedPage.appendChild(node));
-
-                    setTimeout(() => {
-                        scripts.forEach(script => {
-                            const newScript = document.createElement('script');
-                            if (script.src) newScript.src = script.src;
-                            else newScript.textContent = script.textContent;
-                            loadedPage.appendChild(newScript);
-                        });
-                    }, 50);
-                }
-            });
-        });
-    </script>
+    });
+});
+</script>
 </body>
 </html>
