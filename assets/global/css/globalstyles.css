@@ -114,8 +114,7 @@ a {
 .content {
     display: block;
     position: relative;
-    width: 60%;
-    max-width: 876px;
+    width: 95%;
     left: 50%;
     transform: translateX(-50%);
 }
