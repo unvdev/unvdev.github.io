@@ -6,12 +6,8 @@
 <meta name="robots" content="noindex">
 <title>CMS</title>
 <style>
-    :focus {
-        outline: none;
-    }
-    [contenteditable="true"]:focus {
-        outline: none;
-    }
+    :focus { outline: none; }
+    [contenteditable="true"]:focus { outline: none; }
     .cms-menu-bar {
         display: block;
         position: fixed;
@@ -21,17 +17,26 @@
         width: 100vw;
         z-index: 1000000;
     }
-    /* Fixed external Quill toolbar */
+
     #quill-toolbar {
         position: fixed;
-        top: 40px;             /* Below CMS bar */
+        top: 40px;  /* Below CMS bar */
         left: 0;
         right: 0;
-        z-index: 1000002;      /* Above CMS bar */
+        z-index: 1000002; /* Above CMS bar */
         border: 1px solid #ccc;
         background: #f8f8f8;
         padding: 4px;
-        display: none;         /* Hidden until editing */
+        hidden: true;
+    }
+
+    .text-box {
+        min-height: 20px;
+        border: 1px solid transparent;
+    }
+
+    .ql-editor-container {
+        min-height: 20px;
     }
 </style>
 <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
@@ -43,7 +48,6 @@
     <button class="delete-element">Delete Element</button>
 </div>
 
-<!-- Fixed external toolbar -->
 <div id="quill-toolbar"></div>
 
 <div style="margin-top: 40px;"></div>
@@ -70,42 +74,46 @@ let currentlySelected = null;
 let currentlyEditable = null;
 let quill = null;
 
-// Populate external toolbar with default Quill buttons
+// Populate external toolbar
 quillToolbar.innerHTML = `
-  <span class="ql-formats">
-    <button class="ql-bold"></button>
-    <button class="ql-italic"></button>
-    <button class="ql-underline"></button>
-  </span>
-  <span class="ql-formats">
-    <select class="ql-header">
-      <option selected></option>
-      <option value="1"></option>
-      <option value="2"></option>
-      <option value="3"></option>
-    </select>
-  </span>
-  <span class="ql-formats">
-    <button class="ql-list" value="ordered"></button>
-    <button class="ql-list" value="bullet"></button>
-  </span>
-  <span class="ql-formats">
-    <button class="ql-link"></button>
-    <button class="ql-image"></button>
-    <button class="ql-clean"></button>
-  </span>
+<span class="ql-formats">
+  <button class="ql-bold"></button>
+  <button class="ql-italic"></button>
+  <button class="ql-underline"></button>
+</span>
+<span class="ql-formats">
+  <select class="ql-header">
+    <option selected></option>
+    <option value="1"></option>
+    <option value="2"></option>
+    <option value="3"></option>
+  </select>
+</span>
+<span class="ql-formats">
+  <button class="ql-list" value="ordered"></button>
+  <button class="ql-list" value="bullet"></button>
+</span>
+<span class="ql-formats">
+  <button class="ql-link"></button>
+  <button class="ql-image"></button>
+  <button class="ql-clean"></button>
+</span>
 `;
+quillToolbar.hidden = true;
+quillToolbar.inert = true;
 
 function deselectAll() {
     if (quill && currentlyEditable) {
         currentlyEditable.innerHTML = quill.root.innerHTML;
-        currentlyEditable.classList.remove('ql-container', 'ql-snow');
-        currentlyEditable.contentEditable = 'false';
         currentlyEditable.style.boxShadow = 'none';
-        quill = null;
+        currentlyEditable.querySelector('.ql-editor-container').remove();
+        currentlyEditable.contentEditable = 'false';
         currentlyEditable = null;
+
+        quillToolbar.hidden = true;
+        quillToolbar.inert = true;
+        quill = null;
     }
-    quillToolbar.style.display = 'none';
 
     if (currentlySelected) {
         currentlySelected.style.boxShadow = 'none';
@@ -122,23 +130,30 @@ function selectBuildingBlock(element) {
 
 function editTextBox(element) {
     if (currentlyEditable === element && quill) return;
-    if (element.classList.contains('ql-container')) return;
 
     deselectAll();
 
     currentlyEditable = element;
-    currentlyEditable.contentEditable = 'true';
     currentlyEditable.style.boxShadow = 'inset 0 0 0 2px magenta';
-    currentlyEditable.focus();
+    currentlyEditable.contentEditable = 'true';
 
-    quillToolbar.style.display = 'block';
+    // Create inner container for Quill
+    const editorDiv = document.createElement('div');
+    editorDiv.classList.add('ql-editor-container');
+    editorDiv.innerHTML = element.innerHTML;
+    element.innerHTML = '';
+    element.appendChild(editorDiv);
 
-    quill = new Quill(currentlyEditable, {
+    quillToolbar.hidden = false;
+    quillToolbar.inert = false;
+
+    quill = new Quill(editorDiv, {
         theme: 'snow',
         modules: {
             toolbar: '#quill-toolbar'
         }
     });
+    quill.focus();
 }
 
 function deleteElement() {
@@ -150,9 +165,10 @@ function deleteElement() {
                     quill = null;
                 }
                 currentlyEditable.contentEditable = 'false';
-                currentlyEditable.classList.remove('ql-container', 'ql-snow');
+                currentlyEditable.style.boxShadow = 'none';
                 currentlyEditable = null;
-                quillToolbar.style.display = 'none';
+                quillToolbar.hidden = true;
+                quillToolbar.inert = true;
             }
             currentlySelected.remove();
             currentlySelected = null;
@@ -162,33 +178,24 @@ function deleteElement() {
 
 loadedPage.addEventListener("click", function(event) {
     const target = event.target.closest('.building-block');
-    if (target && currentlyEditable !== target) {
-        selectBuildingBlock(target);
-    } else if (!target) {
-        deselectAll();
-    }
+    if (target && currentlyEditable !== target) selectBuildingBlock(target);
+    else if (!target) deselectAll();
 });
 
 loadedPage.addEventListener("dblclick", function(event) {
     const target = event.target.closest('.text-box');
-    if (target) {
-        editTextBox(target);
-    }
+    if (target) editTextBox(target);
 });
 
 document.addEventListener("keydown", function(event) {
     if (currentlySelected && !currentlyEditable) {
         event.preventDefault();
         if (event.key === 'ArrowUp') {
-            const previousElement = currentlySelected.previousElementSibling;
-            if (previousElement) {
-                currentlySelected.parentElement.insertBefore(currentlySelected, previousElement);
-            }
+            const prev = currentlySelected.previousElementSibling;
+            if (prev) currentlySelected.parentElement.insertBefore(currentlySelected, prev);
         } else if (event.key === 'ArrowDown') {
-            const nextElement = currentlySelected.nextElementSibling;
-            if (nextElement) {
-                currentlySelected.parentElement.insertBefore(currentlySelected, nextElement.nextElementSibling);
-            }
+            const next = currentlySelected.nextElementSibling;
+            if (next) currentlySelected.parentElement.insertBefore(currentlySelected, next.nextElementSibling);
         }
     }
 });
@@ -207,10 +214,7 @@ document.addEventListener("click", function(event) {
 
 loadPageButton.addEventListener("click", function() {
     const targetPage = targetPageInput.value;
-    if (!targetPage) {
-        console.error("Please enter a page path.");
-        return;
-    }
+    if (!targetPage) { console.error("Please enter a page path."); return; }
 
     async function fetchOtherPageHTML(path) {
         try {
