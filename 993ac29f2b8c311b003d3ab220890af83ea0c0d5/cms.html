@@ -70,18 +70,19 @@
 
         let currentlySelected = null;
         let currentlyEditable = null;
-        let quill = null;
 
         function deselectAll() {
-            if (currentlyEditable && quill) {
-                currentlyEditable.innerHTML = quill.root.innerHTML;
-                quill.destroy();
-                quill = null;
-            }
-            if (currentlyEditable) {
+            // First, destroy Quill and reset its state if it exists.
+            if (currentlyEditable && currentlyEditable.quillInstance) {
+                const quillInstance = currentlyEditable.quillInstance;
+                currentlyEditable.innerHTML = quillInstance.root.innerHTML;
+                quillInstance.destroy();
+                currentlyEditable.quillInstance = null; // Clear the reference
                 currentlyEditable.classList.remove('selected');
                 currentlyEditable = null;
             }
+            
+            // Then, clear any lingering selection state.
             if (currentlySelected) {
                 currentlySelected.classList.remove('selected');
                 currentlySelected = null;
@@ -89,31 +90,36 @@
         }
 
         function selectBuildingBlock(element) {
+            if (currentlySelected === element && currentlyEditable !== element) return;
             deselectAll();
             currentlySelected = element;
             currentlySelected.classList.add('selected');
         }
 
         function editTextBox(element) {
+            if (currentlyEditable === element) return;
             deselectAll();
+
             currentlyEditable = element;
             currentlyEditable.classList.add('selected');
 
-            quill = new Quill(currentlyEditable, {
+            const newQuill = new Quill(currentlyEditable, {
                 theme: 'snow'
             });
 
-            quill.focus();
+            currentlyEditable.quillInstance = newQuill; // Store the instance on the element
+            newQuill.focus();
         }
 
         function deleteElement() {
             if (currentlySelected) {
                 if (confirm('Are you sure you want to delete this element?')) {
                     if (currentlySelected === currentlyEditable) {
-                        if (quill) {
-                            currentlyEditable.innerHTML = quill.root.innerHTML;
-                            quill.destroy();
-                            quill = null;
+                        if (currentlyEditable.quillInstance) {
+                            const quillInstance = currentlyEditable.quillInstance;
+                            currentlyEditable.innerHTML = quillInstance.root.innerHTML;
+                            quillInstance.destroy();
+                            currentlyEditable.quillInstance = null;
                         }
                         currentlyEditable = null;
                     }
