@@ -4,6 +4,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="A Simplistic HTML Weather Widget For iOS 16 &amp; 17.">
     <link rel="stylesheet" href="https://www.uv.vu/assets/global/css/globalstyles.css">
+    <style>
+        .building-container {
+            display: block;
+            position: relative;
+        }
+        .building-column-3 {
+            display: grid;
+            grid-template-rows: repeat(3, auto);
+            grid-template-columns: repeat(3, 1fr);
+            justify-items: center;
+            align-items: center;
+        }
+    </style>
 </head>
 
 <body>
@@ -26,7 +39,22 @@
                 <p>Lorem ipsum...</p>
             </div>
         </div>
+
+        <div class="building-container building-block">
+            <div class="building-column-3">
+                <div class="text-box building-block">
+                    <p>Lorem ipsum...</p>
+                </div>
+                <div class="building-block">
+                    <img class="featuredImage" src="https://www.uv.vu/assets/releases/weatherhtml/images/image3.png">
+                </div>
+                <div class="text-box building-block">
+                    <p>Lorem ipsum...</p>
+                </div>
+            </div>
+        </div>
     </div>
+
     <footer>
         <div class="footerText">Copyright © 2023 Universe Dev</div>
     </footer>
