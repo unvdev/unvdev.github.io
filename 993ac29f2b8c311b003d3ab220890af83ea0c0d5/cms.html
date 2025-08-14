@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
         :focus {
             outline: none;
         }
+
         .cms-menu-bar {
             display: block;
             position: fixed;
@@ -19,55 +21,42 @@
             z-index: 1000000;
             padding: 5px;
         }
+
         .ql-toolbar {
             position: relative;
             z-index: 1000001;
             display: block;
         }
+
         .ql-tooltip {
             z-index: 1000002 !important;
         }
+
         .text-box {
             position: relative;
             margin: 10px 0;
         }
-        .building-block {
-            cursor: pointer;
-        }
 
-        /* --- CSS CHANGES --- */
-        .selected-wrapper {
-            position: relative;
-            display: inline-block;
-            /* To prevent wrapper from adding extra space */
-            line-height: 0;
-        }
         .selected {
             box-shadow: inset 0 0 0 2px magenta;
-            cursor: default;
+            cursor: move !important;
         }
-        .move-handle {
-            position: absolute;
-            top: 50%;
-            left: -100px;
-            transform: translateY(-50%);
-            width: 36px;
-            height: 36px;
-            background-image: url('/assets/cms/move.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            cursor: move;
-            z-index: 100;
+
+        .building-block {
+            cursor: pointer;
         }
     </style>
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 </head>
+
 <body>
+
     <div class="cms-menu-bar">
         <input class="target-page" style="width: 300px; height: 20px;" type="text">
         <button class="load-page">Grab Page Code</button>
         <button class="delete-element">Delete Element</button>
     </div>
+
     <div style="margin-top: 40px;"></div>
     <div id="loaded-page"></div>
 
@@ -89,7 +78,6 @@
         let currentlyEditable = null;
 
         function deselectAll() {
-            // Handle Quill editor cleanup
             if (currentlyEditable && currentlyEditable.quillInstance) {
                 const quillInstance = currentlyEditable.quillInstance;
                 const content = quillInstance.getSemanticHTML();
@@ -103,70 +91,53 @@
             }
             currentlyEditable = null;
 
-            // --- JAVASCRIPT CHANGES: UNWRAP ELEMENT ---
-            // Find the wrapper and unwrap the selected element
-            const wrapper = document.getElementById('dynamic-wrapper');
-            if (wrapper) {
-                const selectedEl = wrapper.querySelector('.building-block');
-                if (selectedEl) {
-                    wrapper.parentNode.insertBefore(selectedEl, wrapper);
-                    selectedEl.classList.remove('selected');
-                }
-                wrapper.remove();
-            }
-
-            // Fallback for any lingering selections
             if (currentlySelected) {
                 currentlySelected.classList.remove('selected');
+                currentlySelected = null;
             }
-            currentlySelected = null;
         }
 
         function selectBuildingBlock(element) {
             deselectAll();
             currentlySelected = element;
-
-            // --- JAVASCRIPT CHANGES: WRAP ELEMENT ---
-            // Create a wrapper div
-            const wrapper = document.createElement('div');
-            wrapper.className = 'selected-wrapper';
-            wrapper.id = 'dynamic-wrapper';
-
-            // Place the wrapper where the element was, and move the element inside it
-            element.parentNode.insertBefore(wrapper, element);
-            wrapper.appendChild(element);
-
-            // Add selected class and the move handle
-            element.classList.add('selected');
-            const moveHandle = document.createElement('div');
-            moveHandle.className = 'move-handle';
-            wrapper.appendChild(moveHandle); // Add handle to the wrapper
+            currentlySelected.classList.add('selected');
         }
 
         function editTextBox(element) {
-            if (currentlyEditable === element) return;
-            deselectAll();
-            currentlyEditable = element;
-            const newQuill = new Quill(currentlyEditable, {
-                scrollingContainer: document.body,
-                bounds: loadedPage,
-                theme: 'snow'
-            });
-            currentlyEditable.quillInstance = newQuill;
-            newQuill.focus();
-        }
+    if (currentlyEditable === element) return;
+    
+    // This function already removes the .selected class.
+    deselectAll();
+
+    // The lines below that re-selected the element are now removed.
+    // currentlySelected = element; <-- REMOVE
+    // currentlySelected.classList.add('selected'); <-- REMOVE
+
+    // Set the element as editable and initialize Quill.
+    currentlyEditable = element;
+
+    const newQuill = new Quill(currentlyEditable, {
+        scrollingContainer: document.body,
+        bounds: loadedPage,
+        theme: 'snow'
+    });
+
+    currentlyEditable.quillInstance = newQuill;
+    newQuill.focus();
+}
 
         function deleteElement() {
             if (currentlySelected) {
                 if (confirm('Are you sure you want to delete this element?')) {
-                    // Check if the element is wrapped
-                    const wrapper = currentlySelected.parentElement;
-                    if (wrapper && wrapper.id === 'dynamic-wrapper') {
-                        wrapper.remove(); // Remove the wrapper and the element inside
-                    } else {
-                        currentlySelected.remove();
+                    if (currentlyEditable && currentlyEditable.quillInstance) {
+                        const toolbar = currentlyEditable.quillInstance.container.previousElementSibling;
+                        if (toolbar && toolbar.classList.contains('ql-toolbar')) {
+                            toolbar.remove();
+                        }
                     }
-                    deselectAll();
+                    currentlySelected.remove();
+                    currentlySelected = null;
+                    currentlyEditable = null;
                 }
             }
         }
@@ -174,18 +145,13 @@
         document.addEventListener('click', (e) => {
             const target = e.target;
             
-            if (target.closest('.move-handle')) { // Check if click is on handle
+            const uiElements = '.ql-container, .ql-toolbar, .ql-picker, .ql-tooltip, .ql-action, .cms-menu-bar';
+            if (target.closest(uiElements)) {
                 return;
-            }
-            
-            const uiElements = '.ql-container, .ql-toolbar, .ql-picker, .ql-tooltip, .ql-action, .cms-menu-bar, .selected-wrapper';
-            if (target.closest(uiElements) && !target.closest('.building-block')) {
-                 if(!target.classList.contains('selected-wrapper')) return;
             }
 
             const targetBlock = target.closest('.building-block');
             if (targetBlock) {
-                 if(currentlySelected === targetBlock) return;
                 selectBuildingBlock(targetBlock);
             } else {
                 deselectAll();
@@ -199,16 +165,13 @@
 
         document.addEventListener("keydown", e => {
             if (currentlySelected && !currentlyEditable) {
-                const wrapper = currentlySelected.parentElement;
-                if (!wrapper || wrapper.id !== 'dynamic-wrapper') return;
-                
                 e.preventDefault();
                 if (e.key === 'ArrowUp') {
-                    const prev = wrapper.previousElementSibling;
-                    if (prev) wrapper.parentElement.insertBefore(wrapper, prev);
+                    const prev = currentlySelected.previousElementSibling;
+                    if (prev) currentlySelected.parentElement.insertBefore(currentlySelected, prev);
                 } else if (e.key === 'ArrowDown') {
-                    const next = wrapper.nextElementSibling;
-                    if (next) wrapper.parentElement.insertBefore(wrapper, next.nextElementSibling);
+                    const next = currentlySelected.nextElementSibling;
+                    if (next) currentlySelected.parentElement.insertBefore(currentlySelected, next.nextElementSibling);
                 }
             }
         });
@@ -250,4 +213,5 @@
         });
     </script>
 </body>
+
 </html>
