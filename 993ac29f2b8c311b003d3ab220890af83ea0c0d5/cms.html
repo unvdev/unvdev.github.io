@@ -23,13 +23,17 @@
         }
         /* External Quill Toolbar styling */
         #quill-toolbar {
-            border: 1px solid #ccc;
-            background: #f8f8f8;
-            padding: 4px;
-            margin: 8px 0;
-            display: none;
-            z-index: 1000001; /* above everything else */
-        }
+    position: fixed;        /* Fix position on screen */
+    top: 40px;              /* Just below the CMS menu bar (which is 40px high) */
+    left: 0;
+    right: 0;
+    z-index: 1000002;       /* Above CMS menu bar */
+    border: 1px solid #ccc;
+    background: #f8f8f8;
+    padding: 4px;
+    display: none;
+}
+
     </style>
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 </head>
