@@ -74,6 +74,7 @@
 
         function deselectAll() {
             if (currentlyEditable) {
+                // FIXED: Only attempt to destroy Quill if the 'quill' variable is a valid object.
                 if (quill) {
                     currentlyEditable.innerHTML = quill.root.innerHTML;
                     quill.destroy();
@@ -165,7 +166,7 @@
                 deselectAll();
             }
         });
-        
+
         loadPageButton.addEventListener("click", async () => {
             const targetPage = targetPageInput.value;
             if (!targetPage) return console.error("Please enter a page path.");
