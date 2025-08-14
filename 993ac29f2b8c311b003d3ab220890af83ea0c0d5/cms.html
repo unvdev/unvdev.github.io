@@ -33,7 +33,9 @@
             margin: 10px 0;
         }
 
-        .text-box.selected {
+        /* --- THIS IS THE CORRECTED RULE --- */
+        /* It now applies the highlight to ANY selected element */
+        .selected {
             box-shadow: inset 0 0 0 2px magenta;
         }
     </style>
@@ -126,29 +128,23 @@
             }
         }
         
-        // --- REPLACED ALL CLICK LISTENERS WITH THIS SINGLE, UNIFIED HANDLER ---
         document.addEventListener('click', (e) => {
             const target = e.target;
 
-            // Priority 1: Ignore clicks inside any Quill UI element. Let Quill handle it.
             if (target.closest('.ql-container, .ql-toolbar, .ql-picker, .ql-tooltip')) {
                 return;
             }
 
-            // Priority 2: Ignore clicks on the CMS menu bar itself.
             if (target.closest('.cms-menu-bar')) {
-                // Let dedicated listeners for buttons inside the bar handle their events.
                 return;
             }
 
-            // Priority 3: Check if a selectable block was clicked.
             const selectedBlock = target.closest('#loaded-page .building-block');
             if (selectedBlock) {
                 selectBuildingBlock(selectedBlock);
-                return; // Action handled, we're done.
+                return;
             }
 
-            // Priority 4: If none of the above, the click was "outside." Deselect everything.
             deselectAll();
         });
 
@@ -171,7 +167,6 @@
             }
         });
 
-        // The button-specific listeners remain.
         deleteButton.addEventListener("click", deleteElement);
         loadPageButton.addEventListener("click", async () => {
             const targetPage = targetPageInput.value;
