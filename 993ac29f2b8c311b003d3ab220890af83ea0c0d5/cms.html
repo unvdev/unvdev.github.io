@@ -1,226 +1,240 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex">
-<title>CMS</title>
-<style>
-    :focus { outline: none; }
-    .cms-menu-bar {
-        display: block;
-        position: fixed;
-        top: 0;
-        background-color: blue;
-        height: 40px;
-        width: 100vw;
-        z-index: 1000000;
-        padding: 5px;
-    }
-    #quill-toolbar {
-        position: absolute;
-        z-index: 1000001; /* above CMS bar */
-        display: none;
-    }
-    .text-box {
-        position: relative;
-        margin: 10px 0;
-        border: 1px dashed transparent;
-    }
-    .text-box.selected {
-        box-shadow: inset 0 0 0 2px magenta;
-    }
-</style>
-<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>CMS</title>
+    <style>
+        :focus {
+            outline: none;
+        }
+
+        .cms-menu-bar {
+            display: block;
+            position: fixed;
+            top: 0;
+            background-color: blue;
+            height: 40px;
+            width: 100vw;
+            z-index: 1000000;
+            padding: 5px;
+        }
+
+        #quill-toolbar {
+            position: absolute;
+            z-index: 1000001;
+            /* above CMS bar */
+            display: none;
+        }
+
+        .text-box {
+            position: relative;
+            margin: 10px 0;
+            border: 1px dashed transparent;
+        }
+
+        .text-box.selected {
+            box-shadow: inset 0 0 0 2px magenta;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 </head>
+
 <body>
 
-<div class="cms-menu-bar">
-    <input class="target-page" style="width: 300px; height: 20px;" type="text">
-    <button class="load-page">Grab Page Code</button>
-    <button class="delete-element">Delete Element</button>
-</div>
+    <div class="cms-menu-bar">
+        <input class="target-page" style="width: 300px; height: 20px;" type="text">
+        <button class="load-page">Grab Page Code</button>
+        <button class="delete-element">Delete Element</button>
+    </div>
 
-<!-- External toolbar -->
-<div id="quill-toolbar">
-    <span class="ql-formats">
-        <select class="ql-header">
-            <option value="1"></option>
-            <option value="2"></option>
-            <option value="3"></option>
-            <option selected></option>
-        </select>
-        <button class="ql-bold"></button>
-        <button class="ql-italic"></button>
-        <button class="ql-underline"></button>
-    </span>
-    <span class="ql-formats">
-        <button class="ql-list" value="ordered"></button>
-        <button class="ql-list" value="bullet"></button>
-    </span>
-</div>
+    <!-- External toolbar -->
+    <div id="quill-toolbar">
+        <span class="ql-formats">
+            <select class="ql-header">
+                <option value="1"></option>
+                <option value="2"></option>
+                <option value="3"></option>
+                <option selected></option>
+            </select>
+            <button class="ql-bold"></button>
+            <button class="ql-italic"></button>
+            <button class="ql-underline"></button>
+        </span>
+        <span class="ql-formats">
+            <button class="ql-list" value="ordered"></button>
+            <button class="ql-list" value="bullet"></button>
+        </span>
+    </div>
 
-<div style="margin-top: 40px;"></div>
-<div id="loaded-page"></div>
+    <div style="margin-top: 40px;"></div>
+    <div id="loaded-page"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
-<script>
-let paramString = window.location.search.split('?')[1];
-let queryString = new URLSearchParams(paramString);
-let nva = parseInt(queryString.get('nva'));
-if (Number.isNaN(nva) || new Date().getTime() > nva) window.location = '/cms_login';
-</script>
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+    <script>
+        let paramString = window.location.search.split('?')[1];
+        let queryString = new URLSearchParams(paramString);
+        let nva = parseInt(queryString.get('nva'));
+        if (Number.isNaN(nva) || new Date().getTime() > nva) window.location = '/cms_login';
+    </script>
 
-<script>
-const targetPageInput = document.querySelector(".target-page");
-const loadPageButton = document.querySelector(".load-page");
-const deleteButton = document.querySelector(".delete-element");
-const loadedPage = document.querySelector("#loaded-page");
-const quillToolbar = document.querySelector("#quill-toolbar");
+    <script>
+        const targetPageInput = document.querySelector(".target-page");
+        const loadPageButton = document.querySelector(".load-page");
+        const deleteButton = document.querySelector(".delete-element");
+        const loadedPage = document.querySelector("#loaded-page");
+        const quillToolbar = document.querySelector("#quill-toolbar");
 
-let currentlySelected = null;
-let currentlyEditable = null;
-let quill = null;
+        let currentlySelected = null;
+        let currentlyEditable = null;
+        let quill = null;
 
-// Deselect all selected or editable boxes
-function deselectAll() {
-    if(quill && currentlyEditable){
-        currentlyEditable.innerHTML = quill.root.innerHTML;
-        quill.disable();
-        quill = null;
-        currentlyEditable.classList.remove('editing');
-        currentlyEditable = null;
-    }
-    if(currentlySelected){
-        currentlySelected.classList.remove('selected');
-        currentlySelected = null;
-    }
-    quillToolbar.style.display = 'none';
-}
-
-// Select a building-block element
-function selectBuildingBlock(element){
-    if(currentlySelected===element && currentlyEditable!==element) return;
-    deselectAll();
-    currentlySelected = element;
-    currentlySelected.classList.add('selected');
-}
-
-// Edit text box using external toolbar
-function editTextBox(element){
-    if(currentlyEditable === element && quill) return;
-
-    deselectAll();
-    currentlyEditable = element;
-    currentlyEditable.classList.add('editing');
-
-    // Initialize Quill on element, attach external toolbar
-    quill = new Quill(currentlyEditable, {
-        theme: 'snow',
-        modules: { toolbar: quillToolbar }
-    });
-
-    // Show and position toolbar above element
-    const rect = currentlyEditable.getBoundingClientRect();
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    quillToolbar.style.top = (rect.top + scrollTop - quillToolbar.offsetHeight - 4) + 'px';
-    quillToolbar.style.left = rect.left + 'px';
-    quillToolbar.style.display = 'block';
-
-    // Delay focus to prevent addRange errors
-    setTimeout(()=> quill.focus(), 0);
-}
-
-// Delete element
-function deleteElement(){
-    if(currentlySelected){
-        if(confirm('Are you sure you want to delete this element?')){
-            if(currentlySelected===currentlyEditable){
-                currentlyEditable.innerHTML = quill ? quill.root.innerHTML : currentlyEditable.innerHTML;
+        // Deselect all selected or editable boxes
+        function deselectAll() {
+            if (quill && currentlyEditable) {
+                currentlyEditable.innerHTML = quill.root.innerHTML;
+                quill.disable();
                 quill = null;
+                currentlyEditable.classList.remove('editing');
                 currentlyEditable = null;
             }
-            currentlySelected.remove();
-            currentlySelected = null;
+            if (currentlySelected) {
+                currentlySelected.classList.remove('selected');
+                currentlySelected = null;
+            }
+            quillToolbar.style.display = 'none';
         }
-    }
-}
 
-// Events
-loadedPage.addEventListener("click", e => {
-    const target = e.target.closest('.building-block');
-    if(target && currentlyEditable !== target){
-        selectBuildingBlock(target);
-    } else if(!target){
-        deselectAll();
-    }
-});
-
-loadedPage.addEventListener("dblclick", e => {
-    const target = e.target.closest('.text-box');
-    if(target) editTextBox(target);
-});
-
-document.addEventListener("keydown", e => {
-    if(currentlySelected && !currentlyEditable){
-        e.preventDefault();
-        if(e.key==='ArrowUp'){
-            const prev = currentlySelected.previousElementSibling;
-            if(prev) currentlySelected.parentElement.insertBefore(currentlySelected, prev);
-        } else if(e.key==='ArrowDown'){
-            const next = currentlySelected.nextElementSibling;
-            if(next) currentlySelected.parentElement.insertBefore(currentlySelected, next.nextElementSibling);
+        // Select a building-block element
+        function selectBuildingBlock(element) {
+            if (currentlySelected === element && currentlyEditable !== element) return;
+            deselectAll();
+            currentlySelected = element;
+            currentlySelected.classList.add('selected');
         }
-    }
-});
 
-deleteButton.addEventListener("click", deleteElement);
+        // Edit text box using external toolbar
+        function editTextBox(element) {
+            if (currentlyEditable === element && quill) return;
 
-document.addEventListener("click", e => {
-    const isClickInsideEditor = e.target.closest('.ql-toolbar, .ql-container');
-    const isClickInsideLoadedPage = loadedPage.contains(e.target);
-    const isClickOnDeleteButton = e.target === deleteButton;
+            deselectAll();
+            currentlyEditable = element;
+            currentlyEditable.classList.add('editing');
 
-    if(!isClickInsideEditor && !isClickInsideLoadedPage && !isClickOnDeleteButton){
-        deselectAll();
-    }
-});
-
-// Load page logic
-loadPageButton.addEventListener("click", async () => {
-    const targetPage = targetPageInput.value;
-    if(!targetPage) return console.error("Please enter a page path.");
-    try {
-        const res = await fetch(targetPage);
-        if(!res.ok) throw new Error(`HTTP error ${res.status}`);
-        const html = await res.text();
-
-        deselectAll();
-        loadedPage.innerHTML = '';
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html,'text/html');
-
-        doc.head.querySelectorAll('link[rel="stylesheet"]').forEach(l => {
-            if(!document.head.querySelector(`link[href="${l.href}"]`)) document.head.appendChild(l);
-        });
-        doc.head.querySelectorAll('style').forEach(s => document.head.appendChild(s));
-
-        const bodyNodes = Array.from(doc.body.childNodes).filter(n=>n.nodeName!=='SCRIPT');
-        bodyNodes.forEach(n=>loadedPage.appendChild(n));
-
-        setTimeout(()=>{
-            Array.from(doc.body.querySelectorAll('script')).forEach(s=>{
-                const newScript = document.createElement('script');
-                if(s.src) newScript.src = s.src;
-                else newScript.textContent = s.textContent;
-                loadedPage.appendChild(newScript);
+            // Initialize Quill on element, attach external toolbar
+            quill = new Quill(currentlyEditable, {
+                theme: 'snow',
+                modules: {
+                    toolbar: {
+                        container: quillToolbar
+                    } // <-- container wrapper
+                }
             });
-        },50);
 
-    } catch(err){
-        console.error("Error fetching page:",err);
-    }
-});
-</script>
+            // Show and position toolbar above element
+            const rect = currentlyEditable.getBoundingClientRect();
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            quillToolbar.style.top = (rect.top + scrollTop - quillToolbar.offsetHeight - 4) + 'px';
+            quillToolbar.style.left = rect.left + 'px';
+            quillToolbar.style.display = 'block';
+
+            // Delay focus to prevent addRange errors
+            setTimeout(() => quill.focus(), 0);
+        }
+
+        // Delete element
+        function deleteElement() {
+            if (currentlySelected) {
+                if (confirm('Are you sure you want to delete this element?')) {
+                    if (currentlySelected === currentlyEditable) {
+                        currentlyEditable.innerHTML = quill ? quill.root.innerHTML : currentlyEditable.innerHTML;
+                        quill = null;
+                        currentlyEditable = null;
+                    }
+                    currentlySelected.remove();
+                    currentlySelected = null;
+                }
+            }
+        }
+
+        // Events
+        loadedPage.addEventListener("click", e => {
+            const target = e.target.closest('.building-block');
+            if (target && currentlyEditable !== target) {
+                selectBuildingBlock(target);
+            } else if (!target) {
+                deselectAll();
+            }
+        });
+
+        loadedPage.addEventListener("dblclick", e => {
+            const target = e.target.closest('.text-box');
+            if (target) editTextBox(target);
+        });
+
+        document.addEventListener("keydown", e => {
+            if (currentlySelected && !currentlyEditable) {
+                e.preventDefault();
+                if (e.key === 'ArrowUp') {
+                    const prev = currentlySelected.previousElementSibling;
+                    if (prev) currentlySelected.parentElement.insertBefore(currentlySelected, prev);
+                } else if (e.key === 'ArrowDown') {
+                    const next = currentlySelected.nextElementSibling;
+                    if (next) currentlySelected.parentElement.insertBefore(currentlySelected, next.nextElementSibling);
+                }
+            }
+        });
+
+        deleteButton.addEventListener("click", deleteElement);
+
+        document.addEventListener("click", e => {
+            const isClickInsideEditor = e.target.closest('.ql-toolbar, .ql-container');
+            const isClickInsideLoadedPage = loadedPage.contains(e.target);
+            const isClickOnDeleteButton = e.target === deleteButton;
+
+            if (!isClickInsideEditor && !isClickInsideLoadedPage && !isClickOnDeleteButton) {
+                deselectAll();
+            }
+        });
+
+        // Load page logic
+        loadPageButton.addEventListener("click", async () => {
+            const targetPage = targetPageInput.value;
+            if (!targetPage) return console.error("Please enter a page path.");
+            try {
+                const res = await fetch(targetPage);
+                if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+                const html = await res.text();
+
+                deselectAll();
+                loadedPage.innerHTML = '';
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+
+                doc.head.querySelectorAll('link[rel="stylesheet"]').forEach(l => {
+                    if (!document.head.querySelector(`link[href="${l.href}"]`)) document.head.appendChild(l);
+                });
+                doc.head.querySelectorAll('style').forEach(s => document.head.appendChild(s));
+
+                const bodyNodes = Array.from(doc.body.childNodes).filter(n => n.nodeName !== 'SCRIPT');
+                bodyNodes.forEach(n => loadedPage.appendChild(n));
+
+                setTimeout(() => {
+                    Array.from(doc.body.querySelectorAll('script')).forEach(s => {
+                        const newScript = document.createElement('script');
+                        if (s.src) newScript.src = s.src;
+                        else newScript.textContent = s.textContent;
+                        loadedPage.appendChild(newScript);
+                    });
+                }, 50);
+
+            } catch (err) {
+                console.error("Error fetching page:", err);
+            }
+        });
+    </script>
 </body>
+
 </html>
