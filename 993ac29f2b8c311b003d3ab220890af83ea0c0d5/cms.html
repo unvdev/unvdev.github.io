@@ -72,16 +72,28 @@
         let currentlyEditable = null;
 
         function deselectAll() {
-            // First, destroy Quill and reset its state if it exists.
+            // First, clean up the Quill editor if it exists.
             if (currentlyEditable && currentlyEditable.quillInstance) {
                 const quillInstance = currentlyEditable.quillInstance;
-                currentlyEditable.innerHTML = quillInstance.root.innerHTML;
-                quillInstance.destroy();
-                currentlyEditable.quillInstance = null; // Clear the reference
+
+                // 1. Get the HTML content from the editor.
+                const content = quillInstance.getSemanticHTML();
+
+                // 2. Remove the Quill toolbar (it's the previous sibling element).
+                const toolbar = quillInstance.container.previousElementSibling;
+                if (toolbar && toolbar.classList.contains('ql-toolbar')) {
+                    toolbar.remove();
+                }
+
+                // 3. Restore the original element's HTML, removing the Quill editor structure.
+                currentlyEditable.innerHTML = content;
+
+                // 4. Clear the state.
+                currentlyEditable.quillInstance = null;
                 currentlyEditable.classList.remove('selected');
                 currentlyEditable = null;
             }
-            
+
             // Then, clear any lingering selection state.
             if (currentlySelected) {
                 currentlySelected.classList.remove('selected');
@@ -103,6 +115,7 @@
             currentlyEditable = element;
             currentlyEditable.classList.add('selected');
 
+            // The 'snow' theme automatically creates a toolbar *before* the container.
             const newQuill = new Quill(currentlyEditable, {
                 theme: 'snow'
             });
@@ -114,15 +127,16 @@
         function deleteElement() {
             if (currentlySelected) {
                 if (confirm('Are you sure you want to delete this element?')) {
-                    if (currentlySelected === currentlyEditable) {
-                        if (currentlyEditable.quillInstance) {
-                            const quillInstance = currentlyEditable.quillInstance;
-                            currentlyEditable.innerHTML = quillInstance.root.innerHTML;
-                            quillInstance.destroy();
-                            currentlyEditable.quillInstance = null;
+                    // If the element being deleted is also the one being edited...
+                    if (currentlySelected === currentlyEditable && currentlyEditable.quillInstance) {
+                        // ...just remove the Quill toolbar first.
+                        const toolbar = currentlyEditable.quillInstance.container.previousElementSibling;
+                        if (toolbar && toolbar.classList.contains('ql-toolbar')) {
+                            toolbar.remove();
                         }
                         currentlyEditable = null;
                     }
+                    // Now remove the element itself.
                     currentlySelected.remove();
                     currentlySelected = null;
                 }
