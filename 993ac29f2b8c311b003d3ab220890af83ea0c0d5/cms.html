@@ -7,7 +7,6 @@
 <title>CMS</title>
 <style>
     :focus { outline: none; }
-    [contenteditable="true"]:focus { outline: none; }
     .cms-menu-bar {
         display: block;
         position: fixed;
@@ -20,14 +19,15 @@
 
     #quill-toolbar {
         position: fixed;
-        top: 40px;  /* Below CMS bar */
+        top: 40px;
         left: 0;
         right: 0;
-        z-index: 1000002; /* Above CMS bar */
+        z-index: 1000002;
         border: 1px solid #ccc;
         background: #f8f8f8;
         padding: 4px;
         hidden: true;
+        inert: true;
     }
 
     .text-box {
@@ -42,6 +42,7 @@
 <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 </head>
 <body>
+
 <div class="cms-menu-bar">
     <input class="target-page" style="width: 300px; height: 20px;" type="text">
     <button class="load-page">Grab Page Code</button>
@@ -49,7 +50,6 @@
 </div>
 
 <div id="quill-toolbar"></div>
-
 <div style="margin-top: 40px;"></div>
 <div id="loaded-page"></div>
 
@@ -74,7 +74,7 @@ let currentlySelected = null;
 let currentlyEditable = null;
 let quill = null;
 
-// Populate external toolbar
+// Populate toolbar
 quillToolbar.innerHTML = `
 <span class="ql-formats">
   <button class="ql-bold"></button>
@@ -104,10 +104,14 @@ quillToolbar.inert = true;
 
 function deselectAll() {
     if (quill && currentlyEditable) {
+        // Save content
         currentlyEditable.innerHTML = quill.root.innerHTML;
+
+        // Remove editor container
+        const innerEditor = currentlyEditable.querySelector('.ql-editor-container');
+        if (innerEditor) innerEditor.remove();
+
         currentlyEditable.style.boxShadow = 'none';
-        currentlyEditable.querySelector('.ql-editor-container').remove();
-        currentlyEditable.contentEditable = 'false';
         currentlyEditable = null;
 
         quillToolbar.hidden = true;
@@ -135,9 +139,9 @@ function editTextBox(element) {
 
     currentlyEditable = element;
     currentlyEditable.style.boxShadow = 'inset 0 0 0 2px magenta';
-    currentlyEditable.contentEditable = 'true';
+    currentlyEditable.contentEditable = false; // outer container not editable
 
-    // Create inner container for Quill
+    // create inner Quill container dynamically
     const editorDiv = document.createElement('div');
     editorDiv.classList.add('ql-editor-container');
     editorDiv.innerHTML = element.innerHTML;
@@ -149,9 +153,7 @@ function editTextBox(element) {
 
     quill = new Quill(editorDiv, {
         theme: 'snow',
-        modules: {
-            toolbar: '#quill-toolbar'
-        }
+        modules: { toolbar: '#quill-toolbar' }
     });
     quill.focus();
 }
@@ -164,9 +166,9 @@ function deleteElement() {
                     currentlyEditable.innerHTML = quill.root.innerHTML;
                     quill = null;
                 }
-                currentlyEditable.contentEditable = 'false';
                 currentlyEditable.style.boxShadow = 'none';
                 currentlyEditable = null;
+
                 quillToolbar.hidden = true;
                 quillToolbar.inert = true;
             }
