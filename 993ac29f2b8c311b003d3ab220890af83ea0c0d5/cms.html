@@ -73,13 +73,12 @@
         let quill = null;
 
         function deselectAll() {
+            if (currentlyEditable && quill) {
+                currentlyEditable.innerHTML = quill.root.innerHTML;
+                quill.destroy();
+                quill = null;
+            }
             if (currentlyEditable) {
-                // FIXED: Only attempt to destroy Quill if the 'quill' variable is a valid object.
-                if (quill) {
-                    currentlyEditable.innerHTML = quill.root.innerHTML;
-                    quill.destroy();
-                    quill = null;
-                }
                 currentlyEditable.classList.remove('selected');
                 currentlyEditable = null;
             }
@@ -90,16 +89,13 @@
         }
 
         function selectBuildingBlock(element) {
-            if (currentlySelected === element && currentlyEditable !== element) return;
             deselectAll();
             currentlySelected = element;
             currentlySelected.classList.add('selected');
         }
 
         function editTextBox(element) {
-            if (currentlyEditable === element) return;
             deselectAll();
-
             currentlyEditable = element;
             currentlyEditable.classList.add('selected');
 
