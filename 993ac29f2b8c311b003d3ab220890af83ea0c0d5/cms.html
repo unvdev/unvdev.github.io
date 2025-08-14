@@ -127,11 +127,13 @@
             }
         }
         
-        // Listen for 'mousedown' instead of 'click' to avoid race conditions with Quill's UI.
-        document.addEventListener('mousedown', (e) => {
+        document.addEventListener('click', (e) => {
             const target = e.target;
-
-            if (target.closest('.ql-container, .ql-toolbar, .ql-picker, .ql-tooltip')) {
+            
+            // --- THIS IS THE FIX ---
+            // Added .ql-action to specifically ignore the link editor's "Save" button.
+            const quillUI = '.ql-container, .ql-toolbar, .ql-picker, .ql-tooltip, .ql-action';
+            if (target.closest(quillUI)) {
                 return;
             }
 
