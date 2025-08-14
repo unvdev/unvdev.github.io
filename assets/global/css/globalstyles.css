@@ -210,12 +210,6 @@ a {
 /*Media Queries*/
 
 @media screen and (max-width: 480px) {
-    .content {
-        width: 90%;
-    }
-}
-
-@media screen and (max-width: 480px) {
     .featuredImage {
         width: 500px;
     }
