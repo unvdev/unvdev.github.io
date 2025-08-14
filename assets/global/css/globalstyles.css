@@ -1,5 +1,5 @@
 body {
-    max-width: 100%;
+    width: 100%;
     height: auto;
     margin-left: auto;
     margin-right: auto;
@@ -114,7 +114,6 @@ a {
 .content {
     display: block;
     position: relative;
-    width: 95%;
     left: 50%;
     transform: translateX(-50%);
 }
