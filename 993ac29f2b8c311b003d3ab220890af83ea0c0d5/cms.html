@@ -25,14 +25,20 @@
         #quill-toolbar {
             position: absolute;
             z-index: 1000001;
-            /* above CMS bar */
             display: none;
+            background-color: white; /* Add a background color to make it visible */
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         .text-box {
             position: relative;
             margin: 10px 0;
-            border: 1px dashed transparent;
+            /* Quill creates its own container, so no need for border here */
+        }
+
+        .ql-container.ql-snow {
+            border: none; /* Remove the default border from Quill */
         }
 
         .text-box.selected {
@@ -50,7 +56,6 @@
         <button class="delete-element">Delete Element</button>
     </div>
 
-    <!-- External toolbar -->
     <div id="quill-toolbar">
         <span class="ql-formats">
             <select class="ql-header">
@@ -93,9 +98,10 @@
 
         // Deselect all selected or editable boxes
         function deselectAll() {
-            if (quill && currentlyEditable) {
+            if (quill) {
+                // Save content back to element before destroying
                 currentlyEditable.innerHTML = quill.root.innerHTML;
-                quill.disable();
+                quill.destroy();
                 quill = null;
                 currentlyEditable.classList.remove('editing');
                 currentlyEditable = null;
@@ -117,7 +123,7 @@
 
         // Edit text box using external toolbar
         function editTextBox(element) {
-            if (currentlyEditable === element && quill) return;
+            if (currentlyEditable === element) return;
 
             deselectAll();
             currentlyEditable = element;
@@ -125,11 +131,12 @@
 
             // Initialize Quill on element, attach external toolbar
             quill = new Quill(currentlyEditable, {
-                theme: 'snow',
+                // Use 'bubble' theme or remove the theme property to avoid an inline toolbar
+                theme: 'bubble', 
                 modules: {
                     toolbar: {
                         container: quillToolbar
-                    } // <-- container wrapper
+                    } 
                 }
             });
 
@@ -149,8 +156,11 @@
             if (currentlySelected) {
                 if (confirm('Are you sure you want to delete this element?')) {
                     if (currentlySelected === currentlyEditable) {
-                        currentlyEditable.innerHTML = quill ? quill.root.innerHTML : currentlyEditable.innerHTML;
-                        quill = null;
+                        if (quill) {
+                            currentlyEditable.innerHTML = quill.root.innerHTML;
+                            quill.destroy();
+                            quill = null;
+                        }
                         currentlyEditable = null;
                     }
                     currentlySelected.remove();
@@ -190,12 +200,23 @@
         deleteButton.addEventListener("click", deleteElement);
 
         document.addEventListener("click", e => {
-            const isClickInsideEditor = e.target.closest('.ql-toolbar, .ql-container');
+            const isClickInsideEditor = e.target.closest('#quill-toolbar, .ql-editor');
             const isClickInsideLoadedPage = loadedPage.contains(e.target);
             const isClickOnDeleteButton = e.target === deleteButton;
+            const isClickOnCmsBar = e.target.closest('.cms-menu-bar');
 
-            if (!isClickInsideEditor && !isClickInsideLoadedPage && !isClickOnDeleteButton) {
+            if (!isClickInsideEditor && !isClickInsideLoadedPage && !isClickOnDeleteButton && !isClickOnCmsBar) {
                 deselectAll();
+            }
+        });
+        
+        // Listen for scroll to reposition the toolbar
+        window.addEventListener('scroll', () => {
+            if (currentlyEditable) {
+                const rect = currentlyEditable.getBoundingClientRect();
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                quillToolbar.style.top = (rect.top + scrollTop - quillToolbar.offsetHeight - 4) + 'px';
+                quillToolbar.style.left = rect.left + 'px';
             }
         });
 
