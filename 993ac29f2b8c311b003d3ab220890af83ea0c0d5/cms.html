@@ -173,7 +173,8 @@
         deleteButton.addEventListener("click", deleteElement);
 
         document.addEventListener("click", e => {
-            const isClickInsideEditor = e.target.closest('.ql-toolbar, .ql-container');
+            // Check if the click is inside any part of the Quill UI, including pop-ups
+            const isClickInsideEditor = e.target.closest('.ql-toolbar, .ql-container, .ql-picker, .ql-tooltip');
             const isClickInsideLoadedPage = loadedPage.contains(e.target);
             const isClickOnDeleteButton = e.target === deleteButton;
             const isClickOnCmsBar = e.target.closest('.cms-menu-bar');
