@@ -117,24 +117,30 @@
     // Set the element as editable and initialize Quill.
     currentlyEditable = element;
 
-    const toolbarOptions = [
-  [{ 'header': 1 }, { 'header': 2 }, { 'header': 3 }, { 'header': 4 }, { 'header': 5 }],
+const toolbarOptions = [
+  // Headers
+  [{ 'header': [1, 2, 3, 4, 5, false] }], // It's common to include 'false' for normal text
 
+  // Basic text formatting
   ['bold', 'italic', 'underline', 'strike'],
 
+  // Lists
   [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }],
 
+  // Indentation
   [{ 'indent': '-1'}, { 'indent': '+1' }],
 
+  // Text direction
   [{ 'direction': 'rtl' }],
 
+  // Link
   ['link'],
 
-  [{ 'color': [] },
-  [{ 'font': [] }],
-  [{ 'align': [] }],
+  // Dropdowns for color, font, and alignment
+  [{ 'color': [] }, { 'font': [] }, { 'align': [] }],
 
-  ['clean']                                         // remove formatting button
+  // Remove formatting
+  ['clean']
 ];
 
     const newQuill = new Quill(currentlyEditable, {
