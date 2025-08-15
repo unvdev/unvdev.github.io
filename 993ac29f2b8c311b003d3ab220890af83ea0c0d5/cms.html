@@ -140,6 +140,42 @@ const toolbarOptions = [
   ['clean']
 ];
 
+const FontAttributor = Quill.import('attributors/class/font');
+
+FontAttributor.whitelist = [
+  'agatha',
+  'argesta',
+  'arial',
+  'butler',
+  'cookie',
+  'courier-new',
+  'dancing-script',
+  'georgia',
+  'goudy-stout',
+  'hamster-script',
+  'harmond-serif',
+  'helvetica',
+  'juana',
+  'lato',
+  'lemon-jelly',
+  'lovely-coffee',
+  'merriweather',
+  'montserrat',
+  'nunito',
+  'open-sans',
+  'oswald',
+  'playfair-display',
+  'poppins',
+  'quincy',
+  'raleway',
+  'retro-vibes',
+  'roboto',
+  'scribble',
+  'times-new-roman'
+];
+
+Quill.register(FontAttributor, true);
+
     const newQuill = new Quill(currentlyEditable, {
         modules: {
             toolbar: toolbarOptions
