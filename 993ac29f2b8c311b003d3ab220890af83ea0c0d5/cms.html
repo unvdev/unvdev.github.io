@@ -69,37 +69,6 @@
         if (Number.isNaN(nva) || new Date().getTime() > nva) window.location = '/cms_login';
     </script>
     <script>
-    const FontAttributor = Quill.import('attributors/class/font');
-
-FontAttributor.whitelist = [
-  'agatha',
-  'argesta',
-  'arial',
-  'butler',
-  'cookie',
-  'courier-new',
-  'dancing-script',
-  'georgia',
-  'hamster-script',
-  'helvetica',
-  'lato',
-  'lovely-coffee',
-  'merriweather',
-  'montserrat',
-  'nunito',
-  'open-sans',
-  'oswald',
-  'playfair-display',
-  'poppins',
-  'raleway',
-  'roboto',
-  'times-new-roman'
-];
-
-Quill.register(FontAttributor, true);
-    </script>
-
-    <script>
         const targetPageInput = document.querySelector(".target-page");
         const loadPageButton = document.querySelector(".load-page");
         const deleteButton = document.querySelector(".delete-element");
