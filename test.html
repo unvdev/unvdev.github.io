@@ -12,12 +12,11 @@
 .building-column-6 {
     display: flex;
     flex-wrap: wrap;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding: 1rem;
     gap: 1rem;
     justify-content: center; 
     align-items: center;
-    max-width: 100%; 
+    max-width: 100%;
 }
 
 .building-column-1 > * {
@@ -47,6 +46,16 @@
 .building-column-6 > * {
     flex-grow: 1;
     flex-basis: 160px;
+}
+
+.building-column-stretch {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
+.building-column-grow {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
 }
 
 .placeholder-block {
