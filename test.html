@@ -1,262 +1,306 @@
-<html><head>
+<html>
+
+<head>
     <title>WeatherHTML 16 &amp; 17</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="A Simplistic HTML Weather Widget For iOS 16 &amp; 17.">
     <link rel="stylesheet" href="https://www.uv.vu/assets/global/css/globalstyles.css">
     <style>
-.building-container {
-    display: block;
-    position: relative;
-    width: 100%; 
-}
+        .building-container {
+            display: block;
+            position: relative;
+            width: 100%;
+        }
 
-.building-column-span-2,
-.building-column-span-3,
-.building-column-span-4,
-.building-column-span-5,
-.building-column-span-6 {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 1rem;
-    gap: 1rem;
-    max-width: 100%;
-}
+        .building-column-span-2,
+        .building-column-span-3,
+        .building-column-span-4,
+        .building-column-span-5,
+        .building-column-span-6 {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 1rem;
+            gap: 1rem;
+            max-width: 100%;
+        }
 
-.building-column-span-1 > * {
-    width: 100%;
-}
+        .building-column-span-1>* {
+            width: 100%;
+        }
 
-.building-column-span-2 > * {
-    flex-grow: 1;
-    flex-basis: 300px;
-}
+        .building-column-span-2>* {
+            flex-grow: 1;
+            flex-basis: 300px;
+        }
 
-.building-column-span-3 > * {
-    flex-grow: 1;
-    flex-basis: 240px;
-}
+        .building-column-span-3>* {
+            flex-grow: 1;
+            flex-basis: 240px;
+        }
 
-.building-column-span-4 > * {
-    flex-grow: 1;
-    flex-basis: 220px;
-}
+        .building-column-span-4>* {
+            flex-grow: 1;
+            flex-basis: 220px;
+        }
 
-.building-column-span-5 > * {
-    flex-grow: 1;
-    flex-basis: 190px;
-}
+        .building-column-span-5>* {
+            flex-grow: 1;
+            flex-basis: 190px;
+        }
 
-.building-column-span-6 > * {
-    flex-grow: 1;
-    flex-basis: 160px;
-}
+        .building-column-span-6>* {
+            flex-grow: 1;
+            flex-basis: 160px;
+        }
 
-.building-column {
-    display: block;
-    position: relative;
-}
+        .building-column {
+            display: block;
+            position: relative;
+        }
 
-.building-column-stretch {
-    padding-left: 0px !important;
-    padding-right: 0px !important;
-}
+        .building-column-stretch {
+            padding-left: 0px !important;
+            padding-right: 0px !important;
+        }
 
-.building-column-grow {
-    padding-top: 0px !important;
-    padding-bottom: 0px !important;
-}
+        .building-column-grow {
+            padding-top: 0px !important;
+            padding-bottom: 0px !important;
+        }
 
-.building-column-content-top {
-    align-self: start;
-}
+        .building-column-content-top {
+            align-self: start;
+        }
 
-.building-column-content-center {
-    align-self: center;
-}
+        .building-column-content-center {
+            align-self: center;
+        }
 
-.building-column-content-bottom {
-    align-self: end;
-}
+        .building-column-content-bottom {
+            align-self: end;
+        }
 
-.building-block-align-left {
-    margin-right: auto;
-}
+        .building-block-align-left {
+            margin-right: auto;
+        }
 
-.building-block-align-center {
-    margin-left: auto;
-    margin-right: auto;
-}
+        .building-block-align-center {
+            margin-left: auto;
+            margin-right: auto;
+        }
 
-.building-block-align-right {
-    margin-left: auto;
-}
+        .building-block-align-right {
+            margin-left: auto;
+        }
 
-.placeholder-block {
-    display: block;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-    height: 500px;
-    max-width: calc(100% - 2rem);
-    background-color: #6e6e6e;
-    cursor: pointer;
-}
+        .placeholder-block {
+            display: block;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+            height: 60px;
+            max-width: calc(100% - 2rem);
+            background-color: silver;
+            cursor: pointer;
+        }
 
-.placeholder-block-text {
-    display: block;
-    position: absolute;
-    width: fit-content;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-family: 'Arial';
-    font-weight: bold;
-    font-size: 48px;
-    text-align: center;
-    color: #9e9e9e;
-    cursor: inherit;
-}
+        .placeholder-block:hover {
+            background-color: magenta;
+        }
 
-.placeholder-block-test {
-    display: block;
-    width: 100%;
-    max-width: 250px;
-    height: 250px;
-    background-color: yellow;
-}
+        .placeholder-block-symbol {
+            display: block;
+            position: absolute;
+            width: fit-content;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Arial';
+            font-weight: bold;
+            font-size: 48px;
+            text-align: center;
+            color: whitesmoke;
+            cursor: inherit;
+        }
 
-.text-box {
-    width: fit-content;
-}
+        .placeholder-block-test {
+            display: block;
+            width: 100%;
+            max-width: 250px;
+            height: 250px;
+            background-color: yellow;
+        }
+
+        .text-box {
+            width: fit-content;
+        }
     </style>
 </head>
 
 <body>
     <header>
         <img class="headerImage" src="https://uv.vu/assets/global/images/logo.png">
-    </header>    
+    </header>
     <div class="content">
-        <div class="building-container building-block">
-            <img class="featuredImage building-block" src="https://www.uv.vu/assets/releases/weatherhtml/images/image1.png">
-        </div>
-    </div>
-
-<hr />        
-
-        <div class="building-container building-block">
-            <div class="building-column-span-1">
-                <div class="text-box building-block">
-                    <p>Lorem ipsum...</p>
-                </div>
-            </div>
-        </div>
-
-<hr />        
 
         <div class="building-container building-block">
             <div class="building-column-span-2">
                 <div class="building-column building-block building-column-content-center">
-                    <div class="text-box building-block">
-                        <p>Lorem ipsum...</p>
-                    </div>
-                    <div class="placeholder-block-test building-block"></div>
-                </div>
-                <div class="building-column building-block building-column-content-center" >  
-                    <div class="placeholder-block building-block">
-                        <div class="placeholder-block-text">+</div>
+                    <div class="placeholder-block">
+                        <div class="placeholder-block-symbol">+</div>
                     </div>
                 </div>
             </div>
         </div>
 
-<hr />
+        <hr />
+
+        <div class="building-container building-block">
+            <div class="building-column-span-2">
+                <div class="building-column building-block building-column-content-center">
+                    <div class="placeholder-block">
+                        <div class="placeholder-block-symbol">+</div>
+                    </div>
+                </div>
+                <div class="building-column building-block building-column-content-center">
+                    <div class="placeholder-block">
+                        <div class="placeholder-block-symbol">+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr />
 
         <div class="building-container building-block">
             <div class="building-column-span-3">
-                <div class="text-box building-block">
-                    <p>Lorem ipsum...</p>
+                <div class="building-column building-block building-column-content-center">
+                    <div class="placeholder-block">
+                        <div class="placeholder-block-symbol">+</div>
+                    </div>
                 </div>
-                <div class="text-box building-block">
-                    <p>Lorem ipsum...</p>
+                <div class="building-column building-block building-column-content-center">
+                    <div class="placeholder-block">
+                        <div class="placeholder-block-symbol">+</div>
+                    </div>
                 </div>
-                <div class="text-box building-block">
-                    <p>Lorem ipsum...</p>
+                <div class="building-column building-block building-column-content-center">
+                    <div class="placeholder-block">
+                        <div class="placeholder-block-symbol">+</div>
+                    </div>
                 </div>
             </div>
         </div>
 
-<hr />
+        <hr />
 
-    <div class="building-container building-block">
+        <div class="building-container building-block">
             <div class="building-column-span-4">
-                <div class="text-box building-block">
-                    <p>Lorem ipsum...</p>
+                <div class="building-column building-block building-column-content-center">
+                    <div class="placeholder-block">
+                        <div class="placeholder-block-symbol">+</div>
+                    </div>
                 </div>
-                <div class="text-box building-block">
-                    <p>Lorem ipsum...</p>
+                <div class="building-column building-block building-column-content-center">
+                    <div class="placeholder-block">
+                        <div class="placeholder-block-symbol">+</div>
+                    </div>
                 </div>
-                <div class="text-box building-block">
-                    <p>Lorem ipsum...</p>
+                <div class="building-column building-block building-column-content-center">
+                    <div class="placeholder-block">
+                        <div class="placeholder-block-symbol">+</div>
+                    </div>
                 </div>
-                <div class="text-box building-block">
-                    <p>Lorem ipsum...</p>
+                <div class="building-column building-block building-column-content-center">
+                    <div class="placeholder-block">
+                        <div class="placeholder-block-symbol">+</div>
+                    </div>
                 </div>
             </div>
         </div>
 
-<hr />
+        <hr />
 
         <div class="building-container building-block">
             <div class="building-column-span-5">
-                <div class="text-box building-block">
-                    <p>Lorem ipsum...</p>
+                <div class="building-column building-block building-column-content-center">
+                    <div class="placeholder-block">
+                        <div class="placeholder-block-symbol">+</div>
+                    </div>
                 </div>
-                <div class="text-box building-block">
-                    <p>Lorem ipsum...</p>
+                <div class="building-column building-block building-column-content-center">
+                    <div class="placeholder-block">
+                        <div class="placeholder-block-symbol">+</div>
+                    </div>
                 </div>
-                <div class="text-box building-block">
-                    <p>Lorem ipsum...</p>
+                <div class="building-column building-block building-column-content-center">
+                    <div class="placeholder-block">
+                        <div class="placeholder-block-symbol">+</div>
+                    </div>
                 </div>
-                <div class="text-box building-block">
-                    <p>Lorem ipsum...</p>
+                <div class="building-column building-block building-column-content-center">
+                    <div class="placeholder-block">
+                        <div class="placeholder-block-symbol">+</div>
+                    </div>
                 </div>
-                <div class="text-box building-block">
-                    <p>Lorem ipsum...</p>
+                <div class="building-column building-block building-column-content-center">
+                    <div class="placeholder-block">
+                        <div class="placeholder-block-symbol">+</div>
+                    </div>
                 </div>
             </div>
         </div>
 
-<hr />
+        <hr />
 
         <div class="building-container building-block">
             <div class="building-column-span-6">
-                <div class="text-box building-block">
-                    <p>Lorem ipsum...</p>
+                <div class="building-column building-block building-column-content-center">
+                    <div class="placeholder-block">
+                        <div class="placeholder-block-symbol">+</div>
+                    </div>
                 </div>
-                <div class="text-box building-block">
-                    <p>Lorem ipsum...</p>
+                <div class="building-column building-block building-column-content-center">
+                    <div class="placeholder-block">
+                        <div class="placeholder-block-symbol">+</div>
+                    </div>
                 </div>
-                <div class="text-box building-block">
-                    <p>Lorem ipsum...</p>
+                <div class="building-column building-block building-column-content-center">
+                    <div class="placeholder-block">
+                        <div class="placeholder-block-symbol">+</div>
+                    </div>
                 </div>
-                <div class="text-box building-block">
-                    <p>Lorem ipsum...</p>
+                <div class="building-column building-block building-column-content-center">
+                    <div class="placeholder-block">
+                        <div class="placeholder-block-symbol">+</div>
+                    </div>
                 </div>
-                <div class="text-box building-block">
-                    <p>Lorem ipsum...</p>
+                <div class="building-column building-block building-column-content-center">
+                    <div class="placeholder-block">
+                        <div class="placeholder-block-symbol">+</div>
+                    </div>
                 </div>
-                <div class="text-box building-block">
-                    <p>Lorem ipsum...</p>
+                <div class="building-column building-block building-column-content-center">
+                    <div class="placeholder-block">
+                        <div class="placeholder-block-symbol">+</div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
+
+        <div class="text-box building-block">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </div>
+
+    </div>
     <footer>
         <div class="footerText">Copyright © 2023 Universe Dev</div>
     </footer>
 
-</body></html>
+</body>
+
+</html>
