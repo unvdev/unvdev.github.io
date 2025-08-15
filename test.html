@@ -11,11 +11,11 @@
     width: 100%; 
 }
 
-.building-column-2,
-.building-column-3,
-.building-column-4,
-.building-column-5,
-.building-column-6 {
+.building-column-span-2,
+.building-column-span-3,
+.building-column-span-4,
+.building-column-span-5,
+.building-column-span-6 {
     display: flex;
     flex-wrap: wrap;
     padding: 1rem;
@@ -23,33 +23,38 @@
     max-width: 100%;
 }
 
-.building-column-1 > * {
+.building-column-span-1 > * {
     width: 100%;
 }
 
-.building-column-2 > * {
+.building-column-span-2 > * {
     flex-grow: 1;
     flex-basis: 300px;
 }
 
-.building-column-3 > * {
+.building-column-span-3 > * {
     flex-grow: 1;
     flex-basis: 240px;
 }
 
-.building-column-4 > * {
+.building-column-span-4 > * {
     flex-grow: 1;
     flex-basis: 220px;
 }
 
-.building-column-5 > * {
+.building-column-span-5 > * {
     flex-grow: 1;
     flex-basis: 190px;
 }
 
-.building-column-6 > * {
+.building-column-span-6 > * {
     flex-grow: 1;
     flex-basis: 160px;
+}
+
+.building-column {
+    display: block;
+    position: relative;
 }
 
 .building-column-stretch {
@@ -93,6 +98,14 @@
     height: 500px;
     background-color: #6e6e6e;
 }
+
+.placeholder-block-test {
+    display: block;
+    width: 100%;
+    max-width: 250px;
+    height: 250px;
+    background-color: yellow;
+}
     </style>
 </head>
 
@@ -109,7 +122,7 @@
 <hr />        
 
         <div class="building-container building-block">
-            <div class="building-column-1">
+            <div class="building-column-span-1">
                 <div class="text-box building-block">
                     <p>Lorem ipsum...</p>
                 </div>
@@ -119,18 +132,23 @@
 <hr />        
 
         <div class="building-container building-block">
-            <div class="building-column-2">
-                <div class="text-box building-block">
-                    <p>Lorem ipsum...</p>
+            <div class="building-column-span-2">
+                <div class="building-column building-block">
+                    <div class="text-box building-block">
+                        <p>Lorem ipsum...</p>
+                    </div>
+                    <div class="placeholder-block-test building-block"></div>
                 </div>
-                <div class="placeholder-block building-block"></div>
+                <div class="building-column building-block">  
+                    <div class="placeholder-block building-block"></div>
+                </div>
             </div>
         </div>
 
 <hr />
 
         <div class="building-container building-block">
-            <div class="building-column-3">
+            <div class="building-column-span-3">
                 <div class="text-box building-block">
                     <p>Lorem ipsum...</p>
                 </div>
@@ -146,7 +164,7 @@
 <hr />
 
     <div class="building-container building-block">
-            <div class="building-column-4">
+            <div class="building-column-span-4">
                 <div class="text-box building-block">
                     <p>Lorem ipsum...</p>
                 </div>
@@ -165,7 +183,7 @@
 <hr />
 
         <div class="building-container building-block">
-            <div class="building-column-5">
+            <div class="building-column-span-5">
                 <div class="text-box building-block">
                     <p>Lorem ipsum...</p>
                 </div>
@@ -187,7 +205,7 @@
 <hr />
 
         <div class="building-container building-block">
-            <div class="building-column-6">
+            <div class="building-column-span-6">
                 <div class="text-box building-block">
                     <p>Lorem ipsum...</p>
                 </div>
