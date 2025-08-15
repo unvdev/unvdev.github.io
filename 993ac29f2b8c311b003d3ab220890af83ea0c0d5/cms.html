@@ -7,6 +7,266 @@
     <meta name="robots" content="noindex">
     <title>CMS</title>
     <style>
+                @font-face {
+  font-family: 'Agatha';
+  src: url('/assets/fonts/agatha.woff2') format('woff2'),
+       url('/assets/fonts/agatha.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Argesta';
+  src: url('/assets/fonts/argesta.woff2') format('woff2'),
+       url('/assets/fonts/argesta.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Arial';
+  src: url('/assets/fonts/arial.woff2') format('woff2'),
+       url('/assets/fonts/arial.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Butler';
+  src: url('/assets/fonts/butler.woff2') format('woff2'),
+       url('/assets/fonts/butler.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cookie';
+  src: url('/assets/fonts/cookie.woff2') format('woff2'),
+       url('/assets/fonts/cookie.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Courier New';
+  src: url('/assets/fonts/courier-new.woff2') format('woff2'),
+       url('/assets/fonts/courier-new.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Dancing Script';
+  src: url('/assets/fonts/dancing-script.woff2') format('woff2'),
+       url('/assets/fonts/dancing-script.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Georgia';
+  src: url('/assets/fonts/georgia.woff2') format('woff2'),
+       url('/assets/fonts/georgia.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Goudy Stout';
+  src: url('/assets/fonts/goudy-stout.woff2') format('woff2'),
+       url('/assets/fonts/goudy-stout.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Hamster Script';
+  src: url('/assets/fonts/hamster-script.woff2') format('woff2'),
+       url('/assets/fonts/hamster-script.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Harmond Serif';
+  src: url('/assets/fonts/harmond-serif.woff2') format('woff2'),
+       url('/assets/fonts/harmond-serif.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Helvetica';
+  src: url('/assets/fonts/helvetica.woff2') format('woff2'),
+       url('/assets/fonts/helvetica.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Juana';
+  src: url('/assets/fonts/juana.woff2') format('woff2'),
+       url('/assets/fonts/juana.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('/assets/fonts/lato.woff2') format('woff2'),
+       url('/assets/fonts/lato.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lemon Jelly';
+  src: url('/assets/fonts/lemon-jelly.woff2') format('woff2'),
+       url('/assets/fonts/lemon-jelly.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lovely Coffee';
+  src: url('/assets/fonts/lovely-coffee.woff2') format('woff2'),
+       url('/assets/fonts/lovely-coffee.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Merriweather';
+  src: url('/assets/fonts/merriweather.woff2') format('woff2'),
+       url('/assets/fonts/merriweather.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/assets/fonts/montserrat.woff2') format('woff2'),
+       url('/assets/fonts/montserrat.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('/assets/fonts/nunito.woff2') format('woff2'),
+       url('/assets/fonts/nunito.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url('/assets/fonts/open-sans.woff2') format('woff2'),
+       url('/assets/fonts/open-sans.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Oswald';
+  src: url('/assets/fonts/oswald.woff2') format('woff2'),
+       url('/assets/fonts/oswald.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('/assets/fonts/playfair-display.woff2') format('woff2'),
+       url('/assets/fonts/playfair-display.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/assets/fonts/poppins.woff2') format('woff2'),
+       url('/assets/fonts/poppins.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Quincy';
+  src: url('/assets/fonts/quincy.woff2') format('woff2'),
+       url('/assets/fonts/quincy.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Raleway';
+  src: url('/assets/fonts/raleway.woff2') format('woff2'),
+       url('/assets/fonts/raleway.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Retro Vibes';
+  src: url('/assets/fonts/retro-vibes.woff2') format('woff2'),
+       url('/assets/fonts/retro-vibes.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('/assets/fonts/roboto.woff2') format('woff2'),
+       url('/assets/fonts/roboto.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Scribble';
+  src: url('/assets/fonts/scribble.woff2') format('woff2'),
+       url('/assets/fonts/scribble.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Times New Roman';
+  src: url('/assets/fonts/times-new-roman.woff2') format('woff2'),
+       url('/assets/fonts/times-new-roman.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
         .ql-font-agatha {
   font-family: 'Agatha', cursive;
 }
