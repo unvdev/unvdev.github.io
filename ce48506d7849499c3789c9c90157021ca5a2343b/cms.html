@@ -104,7 +104,7 @@
             deselectAll();
             currentlySelected = element;
             if (currentlySelected.classList.contains("placeholder-block")) {
-                currentlySelected = null;
+                deselectAll();
             } else {
                 currentlySelected.classList.add('selected');
             }
