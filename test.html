@@ -142,11 +142,11 @@
         /* CMS CSS Testing */
 
         .content-show {
-            display: block;
+            display: block !important;
         }
 
         .content-hide {
-            display: none;
+            display: none !important;
         }
 
         .cms-menu-container {
@@ -183,12 +183,28 @@
             color: whitesmoke;
         }
 
+        .cms-menu-selection-item:hover .cms-menu-building-selection-symbol {
+            color: whitesmoke;
+        }
+
         .cms-menu-selection-icon {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             font-size: 65px;
+            color: silver;
+            cursor: inherit;
+        }
+
+        .cms-menu-selection-symbol {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Arial';
+            font-size: 65px;
+            text-align: center;
             color: silver;
             cursor: inherit;
         }
@@ -243,29 +259,19 @@
             </div>
             <div class="cms-menu-column-selection content-show">
                 <div class="cms-menu-selection-item">
-                    <div class="cms-menu-selection-icon">
-                        <div>|| ||</div>
-                    </div>
+                    <div class="cms-menu-selection-symbol">2</div>
                 </div>
                 <div class="cms-menu-selection-item">
-                    <div class="cms-menu-selection-icon">
-                        <div>|| || ||</div>
-                    </div>
+                    <div class="cms-menu-selection-symbol">3</div>
                 </div>
                 <div class="cms-menu-selection-item">
-                    <div class="cms-menu-selection-icon">
-                        <div>|| ||<br>|| ||</div>
-                    </div>
+                    <div class="cms-menu-selection-symbol">4</div>
                 </div>
                 <div class="cms-menu-selection-item">
-                    <div class="cms-menu-selection-icon">
-                        <div>|| || ||<br>|| ||</div>
-                    </div>
+                    <div class="cms-menu-selection-symbol">5</div>
                 </div>
                 <div class="cms-menu-selection-item">
-                    <div class="cms-menu-selection-icon">
-                        <div>|| || ||<br>|| || ||</div>
-                    </div>
+                    <div class="cms-menu-selection-symbol">6</div>
                 </div>
             </div>
         </div>
