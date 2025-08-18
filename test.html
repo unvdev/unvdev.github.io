@@ -154,13 +154,24 @@
             width: 100%;
             max-width: 600px;
             height: 100%;
-            max-height: 600px;
+            max-height: 350px;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             background-color: silver;
-            border-radius: 10%;
+            border-radius: 25px;
             z-index: 1000010;
+        }
+
+        cms-menu-title {
+            display: block;
+            width: auto;
+            font-family: 'Arial';
+            font-size: 20px;
+            text-align: center;
+            color: white;
+            white-space: pre-wrap;
+            word-break: break-word;
         }
 
         .cms-menu-building-selection {
@@ -173,10 +184,10 @@
 
         .cms-menu-building-selection-item {
             position: relative;
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
             background-color: whitesmoke;
-            border-radius: 25%;
+            border-radius: 25px;
         }
 
         .cms-menu-building-selection-icon {
@@ -184,7 +195,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 80px;
+            font-size: 65px;
             color: silver;
         } 
 
@@ -198,6 +209,7 @@
     <div class="content">
 
         <div class="cms-menu-container">
+            <div class="cms-menu-title">Please select an option:</div>
             <div class="cms-menu-building-selection content-show">
                 <div class="cms-menu-building-selection-item">
                     <div class="cms-menu-building-selection-icon">
