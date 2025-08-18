@@ -164,6 +164,10 @@
             z-index: 1000010;
         }
 
+        .cms-menu-display {
+            display: inherit;
+        }
+
         .cms-menu-selection-item {
             position: relative;
             width: 100px;
@@ -242,7 +246,8 @@
     <div class="content">
 
         <div class="cms-menu-container">
-            <div class="cms-menu-building-selection content-hide">
+            <div class="cms-menu-display content-hide">
+            <div class="cms-menu-building-selection">
                 <div class="cms-menu-selection-item">
                     <div class="cms-menu-selection-icon">
                         <i class="fa-solid fa-table-cells-large"></i>
@@ -259,7 +264,9 @@
                     </div>
                 </div>
             </div>
-            <div class="cms-menu-column-selection content-show">
+            </div>
+            <div class="cms-menu-display content-show"></div>
+            <div class="cms-menu-column-selection">
                 <div class="cms-menu-selection-item">
                     <div class="cms-menu-selection-symbol">2</div>
                 </div>
@@ -275,6 +282,7 @@
                 <div class="cms-menu-selection-item">
                     <div class="cms-menu-selection-symbol">6</div>
                 </div>
+            </div>
             </div>
         </div>
 
