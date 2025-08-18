@@ -159,12 +159,13 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background-color: silver;
+            border-radius: 25%;
             z-index: 1000010;
         }
 
         .cms-menu-building-selection {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(3, minmax(200, 1fr));
             place-items: center;
             height: 100%;
             max-height: 100%;
@@ -172,9 +173,10 @@
 
         .cms-menu-building-selection-item {
             position: relative;
-            width: 76px;
-            height: 76px;
+            width: 120px;
+            height: 120px;
             background-color: whitesmoke;
+            border-radius: 25%;
         }
 
         .cms-menu-building-selection-icon {
@@ -182,7 +184,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 56px;
+            font-size: 80px;
             color: silver;
         } 
 
