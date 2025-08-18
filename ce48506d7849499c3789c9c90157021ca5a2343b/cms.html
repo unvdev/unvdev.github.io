@@ -101,16 +101,19 @@
         }
 
 function selectBuildingBlock(element) {
-    // First, check if the element is a placeholder.
-    if (element.classList.contains("placeholder-block")) {
-        // If it is, deselect everything and exit the function immediately.
-        deselectAll();
-        return; 
+    // Stop the click from bubbling up to parent building blocks
+    element.stopPropagation();
+
+    // Check if the original clicked element is inside a placeholder
+    if (element.target.closest('.placeholder-block')) {
+        deselectAll(); // Deselect everything
+        return;        // And do nothing else
     }
 
-    // If it's not a placeholder, proceed with the normal selection logic.
+    // Otherwise, it's a valid click.
+    // Select the building block that the listener is on.
     deselectAll();
-    currentlySelected = element;
+    currentlySelected = element.currentTarget;
     currentlySelected.classList.add('selected');
 }
 
