@@ -164,15 +164,7 @@
             z-index: 1000010;
         }
 
-        .cms-menu-building-selection {
-            display: grid;
-            grid-template-columns: repeat(3, 200px);
-            place-items: center;
-            height: 100%;
-            max-height: 100%;
-        }
-
-        .cms-menu-building-selection-item {
+        .cms-menu-selection-item {
             position: relative;
             width: 100px;
             height: 100px;
@@ -187,11 +179,11 @@
             transform: scale(1.1);
         }
 
-        .cms-menu-building-selection-item:hover .cms-menu-building-selection-icon {
+        .cms-menu-selection-item:hover .cms-menu-building-selection-icon {
             color: whitesmoke;
         }
 
-        .cms-menu-building-selection-icon {
+        .cms-menu-selection-icon {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -199,6 +191,27 @@
             font-size: 65px;
             color: silver;
             cursor: inherit;
+        }
+
+        /*Building Section*/
+
+        .cms-menu-building-selection {
+            display: grid;
+            grid-template-columns: repeat(3, 200px);
+            place-items: center;
+            height: 100%;
+            max-height: 100%;
+        }
+
+        /*Column Section*/
+
+        .cms-menu-column-selection {
+            display: grid;
+            grid-template-columns: repeat(3, 200px);
+            grid-template-rows: repeat(2, 200px);
+            place-items: center;
+            height: 100%;
+            max-height: 100%;
         }
 
     </style>
@@ -211,20 +224,47 @@
     <div class="content">
 
         <div class="cms-menu-container">
-            <div class="cms-menu-building-selection content-show">
-                <div class="cms-menu-building-selection-item">
-                    <div class="cms-menu-building-selection-icon">
+            <div class="cms-menu-building-selection content-hide">
+                <div class="cms-menu-selection-item">
+                    <div class="cms-menu-selection-icon">
                         <i class="fa-solid fa-table-cells-large"></i>
                     </div>
                 </div>
-                <div class="cms-menu-building-selection-item">
-                    <div class="cms-menu-building-selection-icon">
+                <div class="cms-menu-selection-item">
+                    <div class="cms-menu-selection-icon">
                         <i class="fa-solid fa-align-left"></i>
                     </div>
                 </div>
-                <div class="cms-menu-building-selection-item">
-                    <div class="cms-menu-building-selection-icon">
+                <div class="cms-menu-selection-item">
+                    <div class="cms-menu-selection-icon">
                         <i class="fa-solid fa-image"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="cms-menu-column-selection content-show">
+                <div class="cms-menu-selection-item">
+                    <div class="cms-menu-selection-icon">
+                        <div>|| ||</div>
+                    </div>
+                </div>
+                <div class="cms-menu-selection-item">
+                    <div class="cms-menu-selection-icon">
+                        <div>|| || ||</div>
+                    </div>
+                </div>
+                <div class="cms-menu-selection-item">
+                    <div class="cms-menu-selection-icon">
+                        <div>|| ||<br>|| ||</div>
+                    </div>
+                </div>
+                <div class="cms-menu-selection-item">
+                    <div class="cms-menu-selection-icon">
+                        <div>|| || ||<br>|| ||</div>
+                    </div>
+                </div>
+                <div class="cms-menu-selection-item">
+                    <div class="cms-menu-selection-icon">
+                        <div>|| || ||<br>|| || ||</div>
                     </div>
                 </div>
             </div>
