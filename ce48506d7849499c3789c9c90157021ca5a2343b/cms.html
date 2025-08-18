@@ -100,23 +100,18 @@
             }
         }
 
-function selectBuildingBlock(element) {
-    // Stop the click from bubbling up to parent building blocks
-    element.stopPropagation();
-
-    // Check if the original clicked element is inside a placeholder
-    if (element.target.closest('.placeholder-block')) {
-        deselectAll(); // Deselect everything
-        return;        // And do nothing else
+function selectBuildingBlock(blockToSelect, originalTarget) {
+    // Check if the original click happened inside a placeholder.
+    if (originalTarget.closest('.placeholder-block')) {
+        deselectAll();
+        return; // Exit without selecting anything.
     }
 
-    // Otherwise, it's a valid click.
-    // Select the building block that the listener is on.
+    // If the click was valid, proceed with the selection.
     deselectAll();
-    currentlySelected = element.currentTarget;
+    currentlySelected = blockToSelect;
     currentlySelected.classList.add('selected');
 }
-
         function editTextBox(element) {
     if (currentlyEditable === element) return;
     
@@ -182,21 +177,23 @@ const toolbarOptions = [
             }
         }
         
-        document.addEventListener('click', (e) => {
-            const target = e.target;
-            
-            const uiElements = '.ql-container, .ql-toolbar, .ql-picker, .ql-tooltip, .ql-action, .cms-menu-bar';
-            if (target.closest(uiElements)) {
-                return;
-            }
+document.addEventListener('click', (e) => {
+    const target = e.target;
+    
+    // This part is fine, no changes needed
+    const uiElements = '.ql-container, .ql-toolbar, .ql-picker, .ql-tooltip, .ql-action, .cms-menu-bar';
+    if (target.closest(uiElements)) {
+        return;
+    }
 
-            const targetBlock = target.closest('.building-block');
-            if (targetBlock) {
-                selectBuildingBlock(targetBlock);
-            } else {
-                deselectAll();
-            }
-        });
+    const targetBlock = target.closest('.building-block');
+    if (targetBlock) {
+        // Change this line to pass 'target' as a second argument
+        selectBuildingBlock(targetBlock, target);
+    } else {
+        deselectAll();
+    }
+});
 
         loadedPage.addEventListener("dblclick", e => {
             const target = e.target.closest('.text-box');
