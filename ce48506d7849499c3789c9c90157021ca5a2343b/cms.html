@@ -103,7 +103,11 @@
         function selectBuildingBlock(element) {
             deselectAll();
             currentlySelected = element;
-            currentlySelected.classList.add('selected');
+            if (currentlySelected.classList.contains("placeholder-block")) {
+                currentlySelected = null;
+            } else {
+                currentlySelected.classList.add('selected');
+            }
         }
 
         function editTextBox(element) {
