@@ -137,6 +137,53 @@
         .text-box {
             width: fit-content;
         }
+
+        /* CMS CSS Testing */
+
+        .content-show {
+            display: block;
+        }
+
+        .content-hide {
+            display: none;
+        }
+
+        .cms-menu-container {
+            display: block;
+            position: absolute;
+            width: 100%;
+            max-width: 600px;
+            height: 100%;
+            max-height: 600px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: silver;
+            z-index: 1000010;
+        }
+
+        .cms-menu-building-selection {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            place-items: center;
+        }
+
+        .cms-menu-building-selection-item {
+            position: relative;
+            width: 76px;
+            height: 76px;
+            background-color: whitesmoke;
+        }
+
+        .cms-menu-building-selection-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 56px;
+            color: silver;
+        }
+
     </style>
 </head>
 
@@ -145,6 +192,26 @@
         <img class="headerImage" src="https://uv.vu/assets/global/images/logo.png">
     </header>
     <div class="content">
+
+        <div class="cms-menu-container">
+            <div class="cms-menu-building-selection content-show">
+                <div class="cms-menu-building-selection-item">
+                    <div class="cms-menu-building-selection-icon">
+                        <i class="fa-solid fa-table-cells-large"></i>
+                    </div>
+                </div>
+                <div class="cms-menu-building-selection-item">
+                    <div class="cms-menu-building-selection-icon">
+                        <i class="fa-solid fa-table-cells-large"></i>
+                    </div>
+                </div>
+                <div class="cms-menu-building-selection-item">
+                    <div class="cms-menu-building-selection-icon">
+                        <i class="fa-solid fa-table-cells-large"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="building-container building-block">
             <div class="building-column-span-2">
