@@ -100,15 +100,19 @@
             }
         }
 
-        function selectBuildingBlock(element) {
-            deselectAll();
-            currentlySelected = element;
-            if (currentlySelected.classList.contains("placeholder-block")) {
-                deselectAll();
-            } else {
-                currentlySelected.classList.add('selected');
-            }
-        }
+function selectBuildingBlock(element) {
+    // First, check if the element is a placeholder.
+    if (element.classList.contains("placeholder-block")) {
+        // If it is, deselect everything and exit the function immediately.
+        deselectAll();
+        return; 
+    }
+
+    // If it's not a placeholder, proceed with the normal selection logic.
+    deselectAll();
+    currentlySelected = element;
+    currentlySelected.classList.add('selected');
+}
 
         function editTextBox(element) {
     if (currentlyEditable === element) return;
