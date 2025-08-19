@@ -472,7 +472,8 @@ document.addEventListener('click', (e) => {
         deleteButton.addEventListener("click", deleteElement);
 
         loadPageButton.addEventListener("click", async () => {
-            const targetPage = targetPageInput.value;
+            // const targetPage = targetPageInput.value;
+            const targetPage = '/test';
             if (!targetPage) return console.error("Please enter a page path.");
             try {
                 const res = await fetch(targetPage);
