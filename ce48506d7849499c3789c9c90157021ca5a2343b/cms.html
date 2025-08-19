@@ -351,6 +351,7 @@ function selectBuildingBlock(blockToSelect, originalTarget) {
     // Check if the original click happened inside a placeholder.
     if (originalTarget.closest('.placeholder-block')) {
         currentlySelected = originalTarget;
+        return;
     }
 
     // If the click was valid, proceed with the selection.
