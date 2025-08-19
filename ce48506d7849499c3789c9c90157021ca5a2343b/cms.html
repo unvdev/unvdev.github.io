@@ -421,10 +421,16 @@
             if (currentlySelected) {
                 if (currentlySelected.classList.contains('placeholder-block')) {
                     cms.classList.remove('content-hide');
-                    const cmsBuildingColumns = document.querySelector("#cms-building-columns");
-                    const cmsTextBox = document.querySelector("#cms-text-box");
-                    cmsTextBox.onclick = function() {
+                    const cmsMenuBuildingSelection = document.querySelector(".cms-menu-building-selection");
+                    const cmsMenuColumnSelection = document.querySelector(".cms-menu-column-selection");
+                    const cmsMenuColumnButton = document.querySelector("#cms-building-columns");
+                    const cmsMenuTextBoxButton = document.querySelector("#cms-text-box");
+                    cmsMenuColumnSelection.onclick = function() {
+                        cmsMenuBuildingSelection.classlist.remove('cms-content-show').add('content-hide');
+                        cmsMenuColumnSelection.classlist.remove('content-hide').add('cms-content-show');
                         // currentlySelected.parentNode.insertAdjacentHTML('beforebegin', textBox);
+                    }
+                    cmsMenuTextBoxButton.onclick = function() {
                         currentlySelected.insertAdjacentHTML('beforebegin', textBox);
                         deselectAll();
                     }
