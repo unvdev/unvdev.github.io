@@ -424,8 +424,7 @@
                     const cmsBuildingColumns = document.querySelector("#cms-building-columns");
                     const cmsTextBox = document.querySelector("#cms-text-box");
                     cmsTextBox.onclick = function() {
-                        currentlySelected.insertAdjacentHTML('beforebegin', textBox + placeHolder);
-                        currentlySelected.remove();
+                        currentlySelected.parentNode.insertAdjacentHTML('beforebegin', textBox);
                         deselectAll();
                     }
                 } else {
