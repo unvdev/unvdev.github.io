@@ -425,9 +425,7 @@
                     const cmsTextBox = document.querySelector("#cms-text-box");
                     cmsTextBox.onclick = function() {
                         // currentlySelected.parentNode.insertAdjacentHTML('beforebegin', textBox);
-                        currentlySelected.insertAdjacentHTML('beforebegin', textBox);
-                        currentlySelected.insertAdjacentHTML('afterend', placeHolder);
-                        currentlySelected.remove();
+                        currentlySelected.insertAdjacentHTML('afterend', textBox);
                         deselectAll();
                     }
                 } else {
