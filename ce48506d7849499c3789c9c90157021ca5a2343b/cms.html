@@ -322,6 +322,7 @@
         const loadPageButton = document.querySelector(".load-page");
         const deleteButton = document.querySelector(".delete-element");
         const cmsMenu = document.querySelector(".cms-menu-container");
+        const placeholderBlock = document.querySelector(".placeholder-block");
         const loadedPage = document.querySelector("#loaded-page");
 
         let currentlySelected = null;
@@ -350,7 +351,8 @@
 function selectBuildingBlock(blockToSelect, originalTarget) {
     // Check if the original click happened inside a placeholder.
     if (originalTarget.closest('.placeholder-block')) {
-        currentlySelected = blockToSelect;
+        deselectAll();
+        currentlySelected = originalTarget;
         return;
     }
 
@@ -417,6 +419,8 @@ function invokeCMSMenu() {
         }
     }
 }
+
+placeholderBlock.addEventListener("click", invokeCMSMenu);
 
 
 
