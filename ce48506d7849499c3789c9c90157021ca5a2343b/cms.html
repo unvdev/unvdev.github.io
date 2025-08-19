@@ -426,6 +426,8 @@
                     cmsTextBox.onclick = function() {
                         // currentlySelected.parentNode.insertAdjacentHTML('beforebegin', textBox);
                         currentlySelected.insertAdjacentHTML('beforebegin', textBox);
+                        currentlySelected.insertAdjacentHTML('afterend', placeHolder);
+                        currentlySelected.remove();
                         deselectAll();
                     }
                 } else {
