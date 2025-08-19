@@ -234,58 +234,58 @@
     </div>
 
     <div class="cms-menu-container .content-hide">
-            <!-- <div class="cms-menu-back-button">
+        <!-- <div class="cms-menu-back-button">
                 <div class="cms-menu-back-button-icon">
                     <i class="fa-regular fa-arrow-turn-left"></i>
                 </div>
             </div>  -->
-                <div class="cms-menu-building-selection content-show">
-                    <div class="cms-menu-selection-item">
-                        <div class="cms-menu-selection-icon">
-                            <i class="fa-solid fa-table-cells-large"></i>
-                        </div>
-                    </div>
-                    <div class="cms-menu-selection-item">
-                        <div class="cms-menu-selection-icon">
-                            <i class="fa-solid fa-align-left"></i>
-                        </div>
-                    </div>
-                    <div class="cms-menu-selection-item">
-                        <div class="cms-menu-selection-icon">
-                            <i class="fa-solid fa-image"></i>
-                        </div>
-                    </div>
+        <div class="cms-menu-building-selection content-show">
+            <div class="cms-menu-selection-item">
+                <div class="cms-menu-selection-icon">
+                    <i class="fa-solid fa-table-cells-large"></i>
                 </div>
-                <div class="cms-menu-column-selection content-hide">
-                    <div class="cms-menu-selection-item">
-                        <div class="cms-menu-selection-symbol">&#9646;&#9646;</div>
-                    </div>
-                    <div class="cms-menu-selection-item">
-                        <div class="cms-menu-selection-symbol">&#9646;&#9646;&#9646;</div>
-                    </div>
-                    <div class="cms-menu-selection-item">
-                        <div class="cms-menu-selection-symbol">&#9646;&#9646;<br>&#9646;&#9646;</div>
-                    </div>
-                    <div class="cms-menu-selection-item">
-                        <div class="cms-menu-selection-symbol">&#9646;&#9646;<br>&#9646;&#9646;&#9646;</div>
-                    </div>
-                    <div class="cms-menu-selection-item">
-                        <div class="cms-menu-selection-symbol">&#9646;&#9646;&#9646;<br>&#9646;&#9646;&#9646;</div>
-                    </div>
+            </div>
+            <div class="cms-menu-selection-item">
+                <div class="cms-menu-selection-icon">
+                    <i class="fa-solid fa-align-left"></i>
                 </div>
-                <div class="cms-menu-image-selection content-hide">
-                    <div class="cms-menu-selection-item">
-                        <div class="cms-menu-selection-icon">
-                            <i class="fa-solid fa-link"></i>
-                        </div>
-                    </div>
-                    <div class="cms-menu-selection-item">
-                        <div class="cms-menu-selection-icon">
-                            <i class="fa-solid fa-upload"></i>
-                        </div>
-                    </div>
+            </div>
+            <div class="cms-menu-selection-item">
+                <div class="cms-menu-selection-icon">
+                    <i class="fa-solid fa-image"></i>
                 </div>
+            </div>
         </div>
+        <div class="cms-menu-column-selection content-hide">
+            <div class="cms-menu-selection-item">
+                <div class="cms-menu-selection-symbol">&#9646;&#9646;</div>
+            </div>
+            <div class="cms-menu-selection-item">
+                <div class="cms-menu-selection-symbol">&#9646;&#9646;&#9646;</div>
+            </div>
+            <div class="cms-menu-selection-item">
+                <div class="cms-menu-selection-symbol">&#9646;&#9646;<br>&#9646;&#9646;</div>
+            </div>
+            <div class="cms-menu-selection-item">
+                <div class="cms-menu-selection-symbol">&#9646;&#9646;<br>&#9646;&#9646;&#9646;</div>
+            </div>
+            <div class="cms-menu-selection-item">
+                <div class="cms-menu-selection-symbol">&#9646;&#9646;&#9646;<br>&#9646;&#9646;&#9646;</div>
+            </div>
+        </div>
+        <div class="cms-menu-image-selection content-hide">
+            <div class="cms-menu-selection-item">
+                <div class="cms-menu-selection-icon">
+                    <i class="fa-solid fa-link"></i>
+                </div>
+            </div>
+            <div class="cms-menu-selection-item">
+                <div class="cms-menu-selection-icon">
+                    <i class="fa-solid fa-upload"></i>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="loaded-page">
         <div style="margin-top: 40px;"></div>
@@ -328,78 +328,93 @@
             }
         }
 
-function selectBuildingBlock(blockToSelect, originalTarget) {
-    // Check if the original click happened inside a placeholder.
-    if (originalTarget.closest('.placeholder-block')) {
-        deselectAll();
-        currentlySelected = originalTarget;
-        invokeCMSMenu();
-        return;
-    }
+        function selectBuildingBlock(blockToSelect, originalTarget) {
+            // Check if the original click happened inside a placeholder.
+            if (originalTarget.closest('.placeholder-block')) {
+                deselectAll();
+                currentlySelected = originalTarget;
+                invokeCMSMenu();
+                return;
+            }
 
-    // If the click was valid, proceed with the selection.
-    deselectAll();
-    currentlySelected = blockToSelect;
-    currentlySelected.classList.add('selected');
-}
-        function editTextBox(element) {
-    if (currentlyEditable === element) return;
-    
-    // This function already removes the .selected class.
-    deselectAll();
-
-    // The lines below that re-selected the element are now removed.
-    // currentlySelected = element; <-- REMOVE
-    // currentlySelected.classList.add('selected'); <-- REMOVE
-
-    // Set the element as editable and initialize Quill.
-    currentlyEditable = element;
-
-const toolbarOptions = [
-  // Headers
-  [{ 'header': [1, 2, 3, 4, 5, false] }, { 'align': [] }], // It's common to include 'false' for normal text
-
-  // Indentation
-  [{ 'indent': '-1'}, { 'indent': '+1' }],
-
-  // Basic text formatting
-  ['bold', 'italic', 'underline', 'strike'],
-
-  // Lists
-  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-
-  // Dropdowns for color, font, and alignment
-  [{ 'color': [] }],
-
-  // Link
-  ['link'],
-
-  // Remove formatting
-  ['clean']
-];
-
-    const newQuill = new Quill(currentlyEditable, {
-        modules: {
-            toolbar: toolbarOptions
-        },
-        scrollingContainer: document.body,
-        bounds: loadedPage,
-        theme: 'snow'
-    });
-
-    currentlyEditable.quillInstance = newQuill;
-    newQuill.focus();
-}
-
-function invokeCMSMenu() {
-    if (currentlySelected) {
-        if (currentlySelected.classList.contains('placeholder-block')) {
-            cmsMenu.classList.remove('content-hide');
-        } else {
-            return;
+            // If the click was valid, proceed with the selection.
+            deselectAll();
+            currentlySelected = blockToSelect;
+            currentlySelected.classList.add('selected');
         }
-    }
-}
+
+        function editTextBox(element) {
+            if (currentlyEditable === element) return;
+
+            // This function already removes the .selected class.
+            deselectAll();
+
+            // The lines below that re-selected the element are now removed.
+            // currentlySelected = element; <-- REMOVE
+            // currentlySelected.classList.add('selected'); <-- REMOVE
+
+            // Set the element as editable and initialize Quill.
+            currentlyEditable = element;
+
+            const toolbarOptions = [
+                // Headers
+                [{
+                    'header': [1, 2, 3, 4, 5, false]
+                }, {
+                    'align': []
+                }], // It's common to include 'false' for normal text
+
+                // Indentation
+                [{
+                    'indent': '-1'
+                }, {
+                    'indent': '+1'
+                }],
+
+                // Basic text formatting
+                ['bold', 'italic', 'underline', 'strike'],
+
+                // Lists
+                [{
+                    'list': 'ordered'
+                }, {
+                    'list': 'bullet'
+                }],
+
+                // Dropdowns for color, font, and alignment
+                [{
+                    'color': []
+                }],
+
+                // Link
+                ['link'],
+
+                // Remove formatting
+                ['clean']
+            ];
+
+            const newQuill = new Quill(currentlyEditable, {
+                modules: {
+                    toolbar: toolbarOptions
+                },
+                scrollingContainer: document.body,
+                bounds: loadedPage,
+                theme: 'snow'
+            });
+
+            currentlyEditable.quillInstance = newQuill;
+            newQuill.focus();
+        }
+
+        function invokeCMSMenu() {
+            if (currentlySelected) {
+                if (currentlySelected.classList.contains('placeholder-block')) {
+                    cmsMenu.classList.remove('content-hide');
+                } else {
+                    return;
+                }
+            }
+        }
 
         function deleteElement() {
             if (currentlySelected) {
@@ -416,24 +431,24 @@ function invokeCMSMenu() {
                 }
             }
         }
-        
-document.addEventListener('click', (e) => {
-    const target = e.target;
-    
-    // This part is fine, no changes needed
-    const uiElements = '.ql-container, .ql-toolbar, .ql-picker, .ql-tooltip, .ql-action, .cms-menu-bar';
-    if (target.closest(uiElements)) {
-        return;
-    }
 
-    const targetBlock = target.closest('.building-block');
-    if (targetBlock) {
-        // Change this line to pass 'target' as a second argument
-        selectBuildingBlock(targetBlock, target);
-    } else {
-        deselectAll();
-    }
-});
+        document.addEventListener('click', (e) => {
+            const target = e.target;
+
+            // This part is fine, no changes needed
+            const uiElements = '.ql-container, .ql-toolbar, .ql-picker, .ql-tooltip, .ql-action, .cms-menu-bar';
+            if (target.closest(uiElements)) {
+                return;
+            }
+
+            const targetBlock = target.closest('.building-block');
+            if (targetBlock) {
+                // Change this line to pass 'target' as a second argument
+                selectBuildingBlock(targetBlock, target);
+            } else {
+                deselectAll();
+            }
+        });
 
         loadedPage.addEventListener("dblclick", e => {
             const target = e.target.closest('.text-box');
@@ -456,7 +471,7 @@ document.addEventListener('click', (e) => {
         deleteButton.addEventListener("click", deleteElement);
 
         document.addEventListener("DOMContentLoaded", async () => {
-        // loadPageButton.addEventListener("click", async () => {
+            // loadPageButton.addEventListener("click", async () => {
             // const targetPage = targetPageInput.value;
             const targetPage = '/test';
             if (!targetPage) return console.error("Please enter a page path.");
