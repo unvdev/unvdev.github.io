@@ -247,7 +247,7 @@
         <button class="load-page">Grab Page Code</button>
         <button class="delete-element">Delete Element</button>
     </div>
-    <div style="margin-top: 40px;"></div>
+
     <div class="cms-menu-container content-hide">
             <!-- <div class="cms-menu-back-button">
                 <div class="cms-menu-back-button-icon">
@@ -308,7 +308,9 @@
             </div>
         </div>
 
-    <div id="loaded-page"></div>
+    <div id="loaded-page">
+        <div style="margin-top: 40px;"></div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
     <script>
@@ -419,8 +421,6 @@ function invokeCMSMenu() {
         }
     }
 }
-
-
 
         function deleteElement() {
             if (currentlySelected) {
