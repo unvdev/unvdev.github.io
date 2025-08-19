@@ -425,9 +425,10 @@
                     const cmsTextBox = document.querySelector("#cms-text-box");
                     cmsTextBox.onclick = function() {
                         // currentlySelected.parentNode.insertAdjacentHTML('beforebegin', textBox);
-                        currentlySelected.insertAdjacentHTML('beforebegin', textBox);
-                        currentlySelected.insertAdjacentHTML('afterend', placeHolder);
-                        currentlySelected.remove();
+                        // currentlySelected.insertAdjacentHTML('beforebegin', textBox);
+                        // currentlySelected.insertAdjacentHTML('afterend', placeHolder);
+                        // currentlySelected.remove();
+                        currentlySelected.outerHTML = textBox + placeHolder;
                         deselectAll();
                     }
                 } else {
@@ -679,7 +680,7 @@ const textBox = `
 </div>
 `;
 
-const placeHolder = `
+const placeHolderInitial = `
 <div class="building-container building-block">
     <div class="building-column-span-1">
         <div class="building-column building-block building-column-content-center">
@@ -688,6 +689,12 @@ const placeHolder = `
             </div>
         </div>
     </div>
+</div>
+`;
+
+const placeHolder = `
+<div class="placeholder-block">
+    <div class="placeholder-block-symbol">+</div>
 </div>
 `;
     </script>
