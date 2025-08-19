@@ -321,6 +321,7 @@
         const targetPageInput = document.querySelector(".target-page");
         const loadPageButton = document.querySelector(".load-page");
         const deleteButton = document.querySelector(".delete-element");
+        const cmsMenu = document.querySelector(".cms-menu-container");
         const loadedPage = document.querySelector("#loaded-page");
 
         let currentlySelected = null;
@@ -349,8 +350,7 @@
 function selectBuildingBlock(blockToSelect, originalTarget) {
     // Check if the original click happened inside a placeholder.
     if (originalTarget.closest('.placeholder-block')) {
-        deselectAll();
-        return; // Exit without selecting anything.
+        currentlySelected = originalTarget;
     }
 
     // If the click was valid, proceed with the selection.
@@ -407,6 +407,18 @@ const toolbarOptions = [
     newQuill.focus();
 }
 
+function invokeCMSMenu() {
+    if (currentlySelected) {
+        if (currentlySelected.classList.contains('placeholder-block')) {
+            cmsMenu.classList.remove('content-hide');
+        } else {
+            return;
+        }
+    }
+}
+
+
+
         function deleteElement() {
             if (currentlySelected) {
                 if (confirm('Are you sure you want to delete this element?')) {
@@ -460,6 +472,7 @@ document.addEventListener('click', (e) => {
         });
 
         deleteButton.addEventListener("click", deleteElement);
+
         loadPageButton.addEventListener("click", async () => {
             const targetPage = targetPageInput.value;
             if (!targetPage) return console.error("Please enter a page path.");
