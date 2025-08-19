@@ -100,6 +100,10 @@
             display: none !important;
         }
 
+        .cms-environment {
+            display: block;
+        }
+
         .cms-menu-container {
             display: block;
             position: absolute;
@@ -233,55 +237,57 @@
         <button class="delete-element">Delete Element</button>
     </div>
 
-    <div class="cms-menu-container content-hide">
-        <!-- <div class="cms-menu-back-button">
+    <div class="cms-environment content-hide">
+        <div class="cms-menu-container">
+            <!-- <div class="cms-menu-back-button">
                 <div class="cms-menu-back-button-icon">
                     <i class="fa-regular fa-arrow-turn-left"></i>
                 </div>
             </div>  -->
-        <div class="cms-menu-building-selection content-show">
-            <div class="cms-menu-selection-item">
-                <div class="cms-menu-selection-icon">
-                    <i class="fa-solid fa-table-cells-large"></i>
+            <div class="cms-menu-building-selection content-show">
+                <div class="cms-menu-selection-item">
+                    <div class="cms-menu-selection-icon">
+                        <i class="fa-solid fa-table-cells-large"></i>
+                    </div>
+                </div>
+                <div class="cms-menu-selection-item">
+                    <div class="cms-menu-selection-icon">
+                        <i class="fa-solid fa-align-left"></i>
+                    </div>
+                </div>
+                <div class="cms-menu-selection-item">
+                    <div class="cms-menu-selection-icon">
+                        <i class="fa-solid fa-image"></i>
+                    </div>
                 </div>
             </div>
-            <div class="cms-menu-selection-item">
-                <div class="cms-menu-selection-icon">
-                    <i class="fa-solid fa-align-left"></i>
+            <div class="cms-menu-column-selection content-hide">
+                <div class="cms-menu-selection-item">
+                    <div class="cms-menu-selection-symbol">&#9646;&#9646;</div>
+                </div>
+                <div class="cms-menu-selection-item">
+                    <div class="cms-menu-selection-symbol">&#9646;&#9646;&#9646;</div>
+                </div>
+                <div class="cms-menu-selection-item">
+                    <div class="cms-menu-selection-symbol">&#9646;&#9646;<br>&#9646;&#9646;</div>
+                </div>
+                <div class="cms-menu-selection-item">
+                    <div class="cms-menu-selection-symbol">&#9646;&#9646;<br>&#9646;&#9646;&#9646;</div>
+                </div>
+                <div class="cms-menu-selection-item">
+                    <div class="cms-menu-selection-symbol">&#9646;&#9646;&#9646;<br>&#9646;&#9646;&#9646;</div>
                 </div>
             </div>
-            <div class="cms-menu-selection-item">
-                <div class="cms-menu-selection-icon">
-                    <i class="fa-solid fa-image"></i>
+            <div class="cms-menu-image-selection content-hide">
+                <div class="cms-menu-selection-item">
+                    <div class="cms-menu-selection-icon">
+                        <i class="fa-solid fa-link"></i>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="cms-menu-column-selection content-hide">
-            <div class="cms-menu-selection-item">
-                <div class="cms-menu-selection-symbol">&#9646;&#9646;</div>
-            </div>
-            <div class="cms-menu-selection-item">
-                <div class="cms-menu-selection-symbol">&#9646;&#9646;&#9646;</div>
-            </div>
-            <div class="cms-menu-selection-item">
-                <div class="cms-menu-selection-symbol">&#9646;&#9646;<br>&#9646;&#9646;</div>
-            </div>
-            <div class="cms-menu-selection-item">
-                <div class="cms-menu-selection-symbol">&#9646;&#9646;<br>&#9646;&#9646;&#9646;</div>
-            </div>
-            <div class="cms-menu-selection-item">
-                <div class="cms-menu-selection-symbol">&#9646;&#9646;&#9646;<br>&#9646;&#9646;&#9646;</div>
-            </div>
-        </div>
-        <div class="cms-menu-image-selection content-hide">
-            <div class="cms-menu-selection-item">
-                <div class="cms-menu-selection-icon">
-                    <i class="fa-solid fa-link"></i>
-                </div>
-            </div>
-            <div class="cms-menu-selection-item">
-                <div class="cms-menu-selection-icon">
-                    <i class="fa-solid fa-upload"></i>
+                <div class="cms-menu-selection-item">
+                    <div class="cms-menu-selection-icon">
+                        <i class="fa-solid fa-upload"></i>
+                    </div>
                 </div>
             </div>
         </div>
@@ -302,7 +308,7 @@
         const targetPageInput = document.querySelector(".target-page");
         const loadPageButton = document.querySelector(".load-page");
         const deleteButton = document.querySelector(".delete-element");
-        const cmsMenu = document.querySelector(".cms-menu-container");
+        const cms = document.querySelector(".cms-environment");
         const loadedPage = document.querySelector("#loaded-page");
 
         let currentlySelected = null;
@@ -409,7 +415,7 @@
         function invokeCMSMenu() {
             if (currentlySelected) {
                 if (currentlySelected.classList.contains('placeholder-block')) {
-                    cmsMenu.classList.remove('content-hide');
+                    cms.classList.remove('content-hide');
                 } else {
                     return;
                 }
