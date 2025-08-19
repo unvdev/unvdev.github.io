@@ -417,28 +417,44 @@
             newQuill.focus();
         }
 
-        function invokeCMSMenu() {
-            if (currentlySelected) {
-                if (currentlySelected.classList.contains('placeholder-block')) {
-                    cms.classList.remove('content-hide');
-                    const cmsMenuBuildingSelection = document.querySelector(".cms-menu-building-selection");
-                    const cmsMenuColumnSelection = document.querySelector(".cms-menu-column-selection");
-                    const cmsMenuColumnButton = document.querySelector("#cms-building-columns");
-                    const cmsMenuTextBoxButton = document.querySelector("#cms-text-box");
-                    cmsMenuColumnButton.onclick = function() {
-                        cmsMenuBuildingSelection.classlist.remove('cms-content-show').add('content-hide');
-                        cmsMenuColumnSelection.classlist.remove('content-hide').add('cms-content-show');
-                        // currentlySelected.parentNode.insertAdjacentHTML('beforebegin', textBox);
-                    }
-                    cmsMenuTextBoxButton.onclick = function() {
-                        currentlySelected.insertAdjacentHTML('beforebegin', textBox);
-                        deselectAll();
-                    }
-                } else {
-                    return;
-                }
-            }
-        }
+        // --- 1. SETUP (Run this code once when your page loads) ---
+
+// Find all the menu elements and store them in constants
+const cms = document.querySelector("#your-cms-menu-id"); // Assuming your menu has an ID
+const cmsMenuBuildingSelection = document.querySelector(".cms-menu-building-selection");
+const cmsMenuColumnSelection = document.querySelector(".cms-menu-column-selection");
+const cmsMenuColumnButton = document.querySelector("#cms-building-columns");
+const cmsMenuTextBoxButton = document.querySelector("#cms-text-box");
+
+// Add the event listeners ONCE
+cmsMenuColumnButton.onclick = function() {
+    // Note the fix from 'classlist' to 'classList'
+    cmsMenuBuildingSelection.classList.remove('cms-content-show');
+    cmsMenuBuildingSelection.classList.add('content-hide');
+    
+    cmsMenuColumnSelection.classList.remove('content-hide');
+    cmsMenuColumnSelection.classList.add('cms-content-show');
+};
+
+cmsMenuTextBoxButton.onclick = function() {
+    // This function still needs access to 'currentlySelected' when it runs
+    if (currentlySelected) {
+        currentlySelected.insertAdjacentHTML('beforebegin', textBox);
+        cms.classList.add('content-hide'); // Also hide the menu after an action
+        deselectAll();
+    }
+};
+
+
+// --- 2. RUNTIME (This function now has a much simpler job) ---
+
+function invokeCMSMenu() {
+    if (currentlySelected && currentlySelected.classList.contains('placeholder-block')) {
+        // The only job of this function is to show the menu.
+        // All the button logic is already set up and waiting.
+        cms.classList.remove('content-hide');
+    }
+}
 
         function deleteElement() {
             if (currentlySelected) {
