@@ -3,7 +3,7 @@ name: Generate Sitemap
 on:
   push:
     branches:
-      - main
+      - main  # change if your Pages branch is different
 
 jobs:
   build:
@@ -21,10 +21,20 @@ jobs:
       - name: Install sitemap generator
         run: npm install -g sitemap-generator-cli
 
+      - name: Determine site URL
+        id: siteurl
+        run: |
+          if [ -f CNAME ]; then
+            domain=$(cat CNAME | tr -d '[:space:]')
+            echo "url=https://$domain" >> $GITHUB_OUTPUT
+          else
+            echo "url=https://username.github.io" >> $GITHUB_OUTPUT
+          fi
+
       - name: Generate sitemap
         run: |
-          mkdir -p ./public
-          sitemap-generator https://unvdev.github.io -o ./sitemap.xml --strip-querystring
+          sitemap-generator ${{ steps.siteurl.outputs.url }} --strip-querystring -d ./sitemap-tmp
+          mv ./sitemap-tmp/sitemap.xml ./sitemap.xml
 
       - name: Commit and push sitemap
         run: |
