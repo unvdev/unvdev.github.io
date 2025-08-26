@@ -55,10 +55,10 @@ jobs:
       - name: Commit and push sitemap
         if: steps.siteurl.outputs.skip != 'true'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FG_PAT_TOKEN: ${{ secrets.FG_PAT_TOKEN }}
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add sitemap.xml
           git commit -m "Update sitemap.xml" || echo "No changes to commit"
-          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git HEAD:main
+          git push https://x-access-token:${FG_PAT_TOKEN}@github.com/${{ github.repository }}.git HEAD:main
