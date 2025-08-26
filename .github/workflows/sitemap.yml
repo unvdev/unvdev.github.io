@@ -3,7 +3,7 @@ name: Generate Sitemap
 on:
   push:
     branches:
-      - main  # change if your Pages branch is different
+      - main
 
 jobs:
   build:
@@ -30,16 +30,22 @@ jobs:
           else
             echo "CNAME file not found. Skipping sitemap generation."
             echo "skip=true" >> $GITHUB_OUTPUT
-          fi  
 
       - name: Generate sitemap
         if: steps.siteurl.outputs.skip != 'true'
+        env:
+          NODE_TLS_REJECT_UNAUTHORIZED: 1
         run: |
-          sitemap-generator ${{ steps.siteurl.outputs.url }} --strip-querystring -d ./sitemap-tmp
-          mv ./sitemap-tmp/sitemap.xml ./sitemap.xml
+          sitemap-generator ${{ steps.siteurl.outputs.url }} --strip-querystring -d ./sitemap-tmp --verbose
+          if [ -f ./sitemap-tmp/sitemap.xml ]; then
+            mv ./sitemap-tmp/sitemap.xml ./sitemap.xml
+          else
+            echo "sitemap.xml not found. Skipping commit."
+            exit 0
+          fi
 
       - name: Commit and push sitemap
-        if: steps.siteurl.outputs.skip != 'true'
+        if: steps.siteurl.outputs.skip != 'true' && (steps.generate-sitemap.outputs.skipped != 'true')
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
