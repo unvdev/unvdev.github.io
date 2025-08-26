@@ -3,7 +3,7 @@ name: Generate Sitemap
 on:
   push:
     branches:
-      - main
+      - main  # change if your Pages branch is different
 
 jobs:
   build:
@@ -46,10 +46,12 @@ jobs:
           fi
 
       - name: Commit and push sitemap
-        if: steps.siteurl.outputs.skip != 'true' && (steps.generate-sitemap.outputs.skipped != 'true')
+        if: steps.siteurl.outputs.skip != 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add sitemap.xml
           git commit -m "Update sitemap.xml" || echo "No changes to commit"
-          git push
+          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git HEAD:main
