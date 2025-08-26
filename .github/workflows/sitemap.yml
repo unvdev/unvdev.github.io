@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -26,7 +28,12 @@ jobs:
         run: |
           if [ -f CNAME ]; then
             domain=$(cat CNAME | tr -d '[:space:]')
-            echo "url=https://$domain" >> $GITHUB_OUTPUT
+            if [ -z "$domain" ]; then
+              echo "CNAME is empty. Skipping sitemap generation."
+              echo "skip=true" >> $GITHUB_OUTPUT
+            else
+              echo "url=https://$domain" >> $GITHUB_OUTPUT
+            fi
           else
             echo "CNAME file not found. Skipping sitemap generation."
             echo "skip=true" >> $GITHUB_OUTPUT
