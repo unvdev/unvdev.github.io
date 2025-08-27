@@ -20,8 +20,10 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install sitemap generator
-        run: npm install -g sitemap-generator-cli
+      - name: Install dependencies
+        run: |
+          npm install -g sitemap-generator-cli
+          npm install jsdom node-fetch
 
       - name: Determine site URL
         id: siteurl
@@ -51,6 +53,10 @@ jobs:
             echo "sitemap.xml not found. Skipping commit."
             exit 0
           fi
+
+      - name: Mark nav pages in sitemap
+        if: steps.siteurl.outputs.skip != 'true'
+        run: node .github/scripts/mark-nav.js
 
       - name: Commit and push sitemap
         if: steps.siteurl.outputs.skip != 'true'
