@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm install -g sitemap-generator-cli
-          npm install jsdom node-fetch
+          npm install cheerio
 
       - name: Determine site URL
         id: siteurl
@@ -43,8 +43,6 @@ jobs:
 
       - name: Generate sitemap
         if: steps.siteurl.outputs.skip != 'true'
-        env:
-          NODE_TLS_REJECT_UNAUTHORIZED: 1
         run: |
           sitemap-generator ${{ steps.siteurl.outputs.url }} --strip-querystring -d ./sitemap-tmp --verbose
           if [ -f ./sitemap-tmp/sitemap.xml ]; then
@@ -56,7 +54,45 @@ jobs:
 
       - name: Mark nav pages in sitemap
         if: steps.siteurl.outputs.skip != 'true'
-        run: node .github/scripts/mark-nav.js
+        run: |
+          node - <<'EOF'
+          const fs = require('fs');
+          const path = require('path');
+          const fetch = require('node-fetch');
+          const cheerio = require('cheerio');
+
+          const sitemapPath = path.join(process.cwd(), 'sitemap.xml');
+          let sitemap = fs.readFileSync(sitemapPath, 'utf8');
+
+          async function checkNav(url) {
+            try {
+              const res = await fetch(url);
+              const html = await res.text();
+              const $ = cheerio.load(html);
+              return $('meta[name="nav"][content="true"]').length > 0;
+            } catch (e) {
+              console.error("Failed to fetch", url, e);
+              return false;
+            }
+          }
+
+          (async () => {
+            const urls = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(m => m[1]);
+            let updated = sitemap;
+
+            for (const url of urls) {
+              if (await checkNav(url)) {
+                updated = updated.replace(
+                  new RegExp(`<loc>${url}</loc>`),
+                  `<loc>${url}</loc><nav>true</nav>`
+                );
+                console.log("Marked nav page:", url);
+              }
+            }
+
+            fs.writeFileSync(sitemapPath, updated, 'utf8');
+          })();
+          EOF
 
       - name: Commit and push sitemap
         if: steps.siteurl.outputs.skip != 'true'
