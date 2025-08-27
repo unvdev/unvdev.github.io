@@ -6,11 +6,13 @@ async function getNavPagesFromSitemap() {
         const parser = new DOMParser();
         const sitemap = parser.parseFromString(xmlText, "application/xml");
 
-        const urls = Array.from(sitemap.querySelectorAll("url"))
-            .filter(urlNode => urlNode.querySelector("nav")?.textContent === "true")
-            .map(urlNode => urlNode.querySelector("loc").textContent.trim());
+        const urls = Array.from(sitemap.querySelectorAll("url")).map(urlNode => ({
+            loc: urlNode.querySelector("loc")?.textContent,
+            title: urlNode.querySelector("title")?.textContent,
+            nav: urlNode.querySelector("nav")?.textContent === "true"
+        }));
 
-        console.log("Navigation pages:", urls);
+        console.log("Pages in sitemap:", urls);
         return urls;
     } catch (error) {
         console.error("Could not fetch or parse sitemap.xml:", error);
