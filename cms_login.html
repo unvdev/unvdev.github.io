@@ -76,50 +76,16 @@
         <button type="submit" id="loginButton">Log In</button>
     </form>
 </div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha1/0.6.0/sha1.min.js"></script>
 <script>
-  const loc = '.hidden';
-
-  const passwordInput = document.getElementById('password');
-  const loginButton = document.getElementById('loginButton');
-  const alertBox = document.querySelector('[data-id="alert"]');
-
-  function login(secret) {
-    const hash = sha1(secret);
-    const url = `${loc}/${hash}/cms.html`;
-
-    const request = new XMLHttpRequest();
-    request.open('GET', url, true);
-
-    request.onload = function () {
-      if (request.status >= 200 && request.status < 400) {
-        const nva = new Date().getTime() + 1000 * 60 * 60;
-        window.location = `${url}?nva=${nva}`;
-      } else {
-        showError();
-      }
-    };
-
-    request.onerror = function () {
-      showError();
-    };
-
-    request.send();
-  }
-
-  function showError() {
-    alertBox.style.display = 'block';
-    passwordInput.value = '';
-    passwordInput.setAttribute('placeholder', 'Incorrect password');
-  }
-
-  loginButton.addEventListener('click', function (e) {
-    e.preventDefault();
-    login(passwordInput.value);
-  });
+(function(){
+const _0xF=["LmhpZGRlbg==","L2Ntcw==","Lmd0","Y2xpY2s=","cGFzc3dvcmQ=","bG9naW5CdXR0b24=","W2RhdGEtPSJhcnJyb3ciXQ==","c3RhdHVz","ZGlzcGxheQ==","Ym9sbA==","c2V0QXR0cmlidXRl","cGxhY2Vob2xkZXI=","SW5jb3JyZWN0IHBhc3N3b3Jk"];
+function _0xB(_0x1,_0x2){return atob(_0xF[_0x1])+(_0x2||"");}
+const p=document.getElementById(_0xB(4)),b=document.getElementById(_0xB(5)),a=document.querySelector(_0xB(6)),h=_0xB(0),c=_0xB(1)+"s.html",g=_0xB(2),e=_0xB(3),s=_0xB(7),d=_0xB(8),f=_0xB(9),m=_0xB(10),l=_0xB(11),t=_0xB(12);
+function x(v){const u=sha1(v),y=h+"/"+u+c,q=new XMLHttpRequest;q.open(g,y,!0),q.onload=function(){if(q[s]>=0xc8&&q[s]<0x190){const r=new Date().getTime()+0x3e8*0x3c*0x3c;window.location=y+"?nva="+r}else z();},q.onerror=z,q.send();}
+function z(){a[d]=f;p.value='';p[m](l,t);}
+b.addEventListener(e,function(o){o.preventDefault();x(p.value);});
+})();
 </script>
-
-
 </body>
 </html>
