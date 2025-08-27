@@ -1,8 +1,51 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://www.uv.vu/404.html</loc>
+    <title>404</title>
+  </url>
+  <url>
+    <loc>https://www.uv.vu/ce48506d7849499c3789c9c90157021ca5a2343b/cms.html</loc>
+    <title>CMS</title>
+  </url>
+  <url>
+    <loc>https://www.uv.vu/cms_login.html</loc>
+    <title>Secure Login</title>
+  </url>
+  <url>
+    <loc>https://www.uv.vu/dependencies/shortcuts/weatherhtml/themes/default/</loc>
+  </url>
+  <url>
     <loc>https://www.uv.vu/</loc>
     <title>Home</title>
     <nav>true</nav>
+  </url>
+  <url>
+    <loc>https://www.uv.vu/node_modules/htmlparser2/src/__fixtures__/Documents/Attributes.html</loc>
+    <title>Attributes test</title>
+  </url>
+  <url>
+    <loc>https://www.uv.vu/node_modules/htmlparser2/src/__fixtures__/Documents/Basic.html</loc>
+    <title>The Title</title>
+  </url>
+  <url>
+    <loc>https://www.uv.vu/node_modules/htmlparser2/src/__fixtures__/Documents/Svg.html</loc>
+    <title>SVG test</title>
+  </url>
+  <url>
+    <loc>https://www.uv.vu/releases/colorpicker.html</loc>
+    <title>Shortcuts Color Picker</title>
+  </url>
+  <url>
+    <loc>https://www.uv.vu/releases/weatherhtml.html</loc>
+    <title>WeatherHTML 16 & 17</title>
+  </url>
+  <url>
+    <loc>https://www.uv.vu/releases/weatherhtmlredirect.html</loc>
+    <title>WeatherHTML 16 & 17 Redirect</title>
+  </url>
+  <url>
+    <loc>https://www.uv.vu/test.html</loc>
+    <title>Testing</title>
   </url>
 </urlset>
