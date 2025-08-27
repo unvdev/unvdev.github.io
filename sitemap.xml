@@ -17,18 +17,6 @@
     <nav>true</nav>
   </url>
   <url>
-    <loc>https://www.uv.vu/node_modules/htmlparser2/src/__fixtures__/Documents/Attributes.html</loc>
-    <title>Attributes test</title>
-  </url>
-  <url>
-    <loc>https://www.uv.vu/node_modules/htmlparser2/src/__fixtures__/Documents/Basic.html</loc>
-    <title>The Title</title>
-  </url>
-  <url>
-    <loc>https://www.uv.vu/node_modules/htmlparser2/src/__fixtures__/Documents/Svg.html</loc>
-    <title>SVG test</title>
-  </url>
-  <url>
     <loc>https://www.uv.vu/releases/colorpicker.html</loc>
     <title>Shortcuts Color Picker</title>
   </url>
