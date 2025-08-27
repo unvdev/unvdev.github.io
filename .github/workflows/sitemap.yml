@@ -60,9 +60,9 @@ jobs:
               const filePath = path.join(dir, file);
               const stat = fs.statSync(filePath);
 
-              // Skip dot-folders
+              // Skip hidden and irrelevant folders
               if (stat && stat.isDirectory()) {
-                if (!file.startsWith('.')) {
+                if (!file.startsWith('.') && !['node_modules', '.git', '.github'].includes(file)) {
                   results = results.concat(getAllHtmlFiles(filePath));
                 }
               } else if (file.endsWith('.html')) {
