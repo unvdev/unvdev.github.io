@@ -7,8 +7,8 @@ async function getNavPagesFromSitemap() {
         const sitemap = parser.parseFromString(xmlText, "application/xml");
 
         const urls = Array.from(sitemap.querySelectorAll("url"))
-            .filter(urlNode => urlNode.getAttribute("nav") === "true")
-            .map(urlNode => urlNode.querySelector("loc").textContent);
+            .filter(urlNode => urlNode.querySelector("nav")?.textContent === "true")
+            .map(urlNode => urlNode.querySelector("loc").textContent.trim());
 
         console.log("Navigation pages:", urls);
         return urls;
@@ -17,7 +17,7 @@ async function getNavPagesFromSitemap() {
     }
 }
 
-getNavPagesFromSitemap(); 
+getNavPagesFromSitemap();
 
 // <?xml version="1.0" encoding="UTF-8"?>
 // <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
