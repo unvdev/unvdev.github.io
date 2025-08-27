@@ -37,7 +37,6 @@ jobs:
           else
             echo "CNAME file not found. Skipping sitemap generation."
             echo "skip=true" >> $GITHUB_OUTPUT
-          fi
 
       - name: Generate sitemap from repo
         if: steps.siteurl.outputs.skip != 'true'
@@ -59,8 +58,12 @@ jobs:
             list.forEach(file => {
               const filePath = path.join(dir, file);
               const stat = fs.statSync(filePath);
+
+              // Skip dot-folders
               if (stat && stat.isDirectory()) {
-                results = results.concat(getAllHtmlFiles(filePath));
+                if (!file.startsWith('.')) {
+                  results = results.concat(getAllHtmlFiles(filePath));
+                }
               } else if (file.endsWith('.html')) {
                 results.push(filePath);
               }
