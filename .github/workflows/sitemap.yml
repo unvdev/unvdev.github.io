@@ -39,7 +39,6 @@ jobs:
           else
             echo "CNAME file not found. Skipping sitemap generation."
             echo "skip=true" >> $GITHUB_OUTPUT
-          fi
 
       - name: Generate sitemap
         if: steps.siteurl.outputs.skip != 'true'
@@ -77,19 +76,16 @@ jobs:
 
           (async () => {
             const urls = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(m => m[1]);
-            let updated = sitemap;
+            let newSitemap = '';
 
             for (const url of urls) {
-              if (await checkNav(url)) {
-                updated = updated.replace(
-                  new RegExp(`<loc>${url}</loc>`),
-                  `<loc>${url}</loc><nav>true</nav>`
-                );
-                console.log("Marked nav page:", url);
-              }
+              let navTag = '';
+              if (await checkNav(url)) navTag = '    <nav>true</nav>\n';
+              newSitemap += `  <url>\n    <loc>${url}</loc>\n${navTag}  </url>\n`;
             }
 
-            fs.writeFileSync(sitemapPath, updated, 'utf8');
+            const finalXml = `<?xml version="1.0" encoding="utf-8" standalone="yes"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${newSitemap}</urlset>\n`;
+            fs.writeFileSync(sitemapPath, finalXml, 'utf8');
           })();
           EOF
 
