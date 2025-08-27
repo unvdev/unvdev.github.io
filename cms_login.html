@@ -79,42 +79,47 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha1/0.6.0/sha1.min.js"></script>
 <script>
-    const password = document.getElementById('password');
-    const loginButton = document.getElementById('loginButton');
-    const alert = document.querySelector('[data-id="alert"]');
-    
-    function login(secret) {
-        var hash = sha1(secret);
-        var url = hash + '/cms.html'; 
-        
-        var request = new XMLHttpRequest();
-        request.open('GET', url, true);
-        
-        request.onload = function () {
-            if (request.status >= 200 && request.status < 400) {
-                let nva = new Date().getTime() + 1_000 * 60 * 60;
-                window.location = url + "?nva=" + nva;
-            } else {
-                alert.style.display = 'block';
-                password.setAttribute('placeholder', 'Incorrect password');
-                password.value = '';
-            }
-        };
+  const loc = '.hidden';
 
-        request.onerror = function () {
-            alert.style.display = 'block';
-            password.setAttribute('placeholder', 'Incorrect password');
-            password.value = '';
-        };
+  const passwordInput = document.getElementById('password');
+  const loginButton = document.getElementById('loginButton');
+  const alertBox = document.querySelector('[data-id="alert"]');
 
-        request.send();
-    }
+  function login(secret) {
+    const hash = sha1(secret);
+    const url = `${loc}/${hash}/cms.html`;
 
-    loginButton.addEventListener('click', function (event) {
-        event.preventDefault();
-        login(password.value);
-    });
+    const request = new XMLHttpRequest();
+    request.open('GET', url, true);
+
+    request.onload = function () {
+      if (request.status >= 200 && request.status < 400) {
+        const nva = new Date().getTime() + 1000 * 60 * 60;
+        window.location = `${url}?nva=${nva}`;
+      } else {
+        showError();
+      }
+    };
+
+    request.onerror = function () {
+      showError();
+    };
+
+    request.send();
+  }
+
+  function showError() {
+    alertBox.style.display = 'block';
+    passwordInput.value = '';
+    passwordInput.setAttribute('placeholder', 'Incorrect password');
+  }
+
+  loginButton.addEventListener('click', function (e) {
+    e.preventDefault();
+    login(passwordInput.value);
+  });
 </script>
+
 
 </body>
 </html>
