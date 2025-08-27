@@ -52,7 +52,7 @@ jobs:
             exit 0
           fi
 
-      - name: Mark nav pages in sitemap
+      - name: Mark nav pages and add titles in sitemap
         if: steps.siteurl.outputs.skip != 'true'
         run: |
           node - <<'EOF'
@@ -63,15 +63,18 @@ jobs:
           const sitemapPath = path.join(process.cwd(), 'sitemap.xml');
           let sitemap = fs.readFileSync(sitemapPath, 'utf8');
 
-          async function checkNav(url) {
+          async function fetchPageInfo(url) {
             try {
               const res = await fetch(url);
               const html = await res.text();
               const $ = cheerio.load(html);
-              return $('meta[name="nav"][content="true"]').length > 0;
+
+              const nav = $('meta[name="nav"][content="true"]').length > 0;
+              const title = $('title').first().text().trim() || '';
+              return { nav, title };
             } catch (e) {
               console.error("Failed to fetch", url, e);
-              return false;
+              return { nav: false, title: '' };
             }
           }
 
@@ -80,9 +83,10 @@ jobs:
             let newSitemap = '';
 
             for (const url of urls) {
-              let navTag = '';
-              if (await checkNav(url)) navTag = '    <nav>true</nav>\n';
-              newSitemap += `  <url>\n    <loc>${url}</loc>\n${navTag}  </url>\n`;
+              const info = await fetchPageInfo(url);
+              let navTag = info.nav ? '    <nav>true</nav>\n' : '';
+              let titleTag = info.title ? `    <title>${info.title}</title>\n` : '';
+              newSitemap += `  <url>\n    <loc>${url}</loc>\n${titleTag}${navTag}  </url>\n`;
             }
 
             const finalXml = `<?xml version="1.0" encoding="utf-8" standalone="yes"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${newSitemap}</urlset>\n`;
