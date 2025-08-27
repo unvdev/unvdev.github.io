@@ -3,7 +3,7 @@ name: Generate Sitemap
 on:
   push:
     branches:
-      - main  # change if your Pages branch is different
+      - main
 
 jobs:
   build:
@@ -21,11 +21,9 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: |
-          npm install -g sitemap-generator-cli
-          npm install cheerio
+        run: npm install cheerio
 
-      - name: Determine site URL
+      - name: Determine site URL from CNAME
         id: siteurl
         run: |
           if [ -f CNAME ]; then
@@ -41,18 +39,7 @@ jobs:
             echo "skip=true" >> $GITHUB_OUTPUT
           fi
 
-      - name: Generate sitemap
-        if: steps.siteurl.outputs.skip != 'true'
-        run: |
-          sitemap-generator ${{ steps.siteurl.outputs.url }} --strip-querystring -d ./sitemap-tmp --verbose
-          if [ -f ./sitemap-tmp/sitemap.xml ]; then
-            mv ./sitemap-tmp/sitemap.xml ./sitemap.xml
-          else
-            echo "sitemap.xml not found. Skipping commit."
-            exit 0
-          fi
-
-      - name: Mark nav pages and add titles in sitemap
+      - name: Generate sitemap from repo
         if: steps.siteurl.outputs.skip != 'true'
         run: |
           node - <<'EOF'
@@ -60,38 +47,54 @@ jobs:
           const path = require('path');
           const cheerio = require('cheerio');
 
-          const sitemapPath = path.join(process.cwd(), 'sitemap.xml');
-          let sitemap = fs.readFileSync(sitemapPath, 'utf8');
-
-          async function fetchPageInfo(url) {
-            try {
-              const res = await fetch(url);
-              const html = await res.text();
-              const $ = cheerio.load(html);
-
-              const nav = $('meta[name="nav"][content="true"]').length > 0;
-              const title = $('title').first().text().trim() || '';
-              return { nav, title };
-            } catch (e) {
-              console.error("Failed to fetch", url, e);
-              return { nav: false, title: '' };
-            }
+          const baseUrl = '${{ steps.siteurl.outputs.url }}';
+          if (!baseUrl) {
+            console.log("No base URL found, exiting.");
+            process.exit(0);
           }
 
-          (async () => {
-            const urls = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(m => m[1]);
-            let newSitemap = '';
+          function getAllHtmlFiles(dir) {
+            let results = [];
+            const list = fs.readdirSync(dir);
+            list.forEach(file => {
+              const filePath = path.join(dir, file);
+              const stat = fs.statSync(filePath);
+              if (stat && stat.isDirectory()) {
+                results = results.concat(getAllHtmlFiles(filePath));
+              } else if (file.endsWith('.html')) {
+                results.push(filePath);
+              }
+            });
+            return results;
+          }
 
-            for (const url of urls) {
-              const info = await fetchPageInfo(url);
-              let navTag = info.nav ? '    <nav>true</nav>\n' : '';
-              let titleTag = info.title ? `    <title>${info.title}</title>\n` : '';
-              newSitemap += `  <url>\n    <loc>${url}</loc>\n${titleTag}${navTag}  </url>\n`;
+          const htmlFiles = getAllHtmlFiles('./');
+          let sitemap = '<?xml version="1.0" encoding="utf-8" standalone="yes"?>\n';
+          sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+
+          htmlFiles.forEach(f => {
+            const content = fs.readFileSync(f, 'utf8');
+            const $ = cheerio.load(content);
+
+            const title = $('title').first().text().trim();
+            const nav = $('meta[name="nav"][content="true"]').length > 0;
+
+            let relative = path.relative('.', f).replace(/\\/g, '/');
+            let url = baseUrl;
+            if (relative !== 'index.html') {
+              url += '/' + relative.replace('index.html', '');
+            } else {
+              url += '/';
             }
 
-            const finalXml = `<?xml version="1.0" encoding="utf-8" standalone="yes"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${newSitemap}</urlset>\n`;
-            fs.writeFileSync(sitemapPath, finalXml, 'utf8');
-          })();
+            sitemap += `  <url>\n    <loc>${url}</loc>\n`;
+            if (title) sitemap += `    <title>${title}</title>\n`;
+            if (nav) sitemap += `    <nav>true</nav>\n`;
+            sitemap += '  </url>\n';
+          });
+
+          sitemap += '</urlset>\n';
+          fs.writeFileSync('sitemap.xml', sitemap, 'utf8');
           EOF
 
       - name: Commit and push sitemap
