@@ -1,5 +1,9 @@
 name: Generate Sitemap
 
+concurrency:
+  group: "pages-deploy"
+  cancel-in-progress: true
+
 on:
   push:
     branches:
