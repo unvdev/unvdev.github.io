@@ -6,4 +6,4 @@ fetch('/assets/images/about/gallery.json')
       img.src = `/assets/images/about/${file}`;
       document.querySelector('#gallery').appendChild(img);
     });
-  });//
+  });
