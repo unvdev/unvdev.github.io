@@ -7,6 +7,11 @@ function getFolderIdFromLink(link) {
   return match ? match[1] : null;
 }
 
+// Remove '=sXXX' size parameter from Google Drive URLs
+function stripSizeParam(url) {
+  return url.replace(/=s\d+$/, '');
+}
+
 const folderId = getFolderIdFromLink(folderLink);
 
 async function fetchImages() {
@@ -23,10 +28,11 @@ async function fetchImages() {
 
     if (data.files && data.files.length > 0) {
       const galleryImages = data.files.map(file => ({
-        src: file.thumbnailLink || `https://drive.google.com/uc?id=${file.id}`,
+        src: stripSizeParam(file.thumbnailLink || `https://drive.google.com/uc?id=${file.id}`),
         alt: file.name
       }));
       console.log("Gallery images:", galleryImages);
+      // You can use galleryImages array to render your gallery later
     } else {
       console.log("No images found in this folder.");
     }
