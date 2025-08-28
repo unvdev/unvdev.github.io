@@ -1,23 +1,22 @@
-name: Generate gallery.json
+name: Generate Gallery JSONs
 
 on:
   push:
-    branches:
-      - main
     paths:
       - "assets/images/**"
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "18"
+          node-version: 18
 
       - name: Generate gallery.json files
         run: |
@@ -25,35 +24,35 @@ jobs:
           const fs = require('fs');
           const path = require('path');
 
-          const baseDir = './assets/images';
-
-          function generateGallery(dir) {
-            const files = fs.readdirSync(dir);
-            const images = files
-              .filter(f => /\.(png|jpe?g|gif|webp|svg)$/i.test(f))
-              .map(f => path.join(dir, f).replace(/^\.\/?/, '')); // keep relative path
-
-            if (images.length > 0) {
-              const jsonPath = path.join(dir, 'gallery.json');
-              fs.writeFileSync(jsonPath, JSON.stringify(images, null, 2));
-              console.log(`Generated ${jsonPath}`);
-            }
-
+          function generateGallery(dir, root) {
+            const files = fs.readdirSync(dir, { withFileTypes: true });
+            let images = [];
             files.forEach(file => {
-              const subdir = path.join(dir, file);
-              if (fs.statSync(subdir).isDirectory()) {
-                generateGallery(subdir);
+              const fullPath = path.join(dir, file.name);
+              if (file.isDirectory()) {
+                generateGallery(fullPath, root); // recurse
+              } else if (/\.(jpg|jpeg|png|gif|webp)$/i.test(file.name)) {
+                const relPath = '/' + path.relative(root, fullPath).replace(/\\/g, '/');
+                images.push(relPath);
               }
             });
+
+            if (images.length > 0) {
+              const outPath = path.join(dir, 'gallery.json');
+              fs.writeFileSync(outPath, JSON.stringify(images, null, 2));
+              console.log(`Generated ${outPath}`);
+            }
           }
 
-          generateGallery(baseDir);
+          generateGallery('assets/images', 'assets/images');
           EOF
 
-      - name: Commit and push changes
+      - name: Commit and push gallery.json
+        env:
+          FG_PAT_TOKEN: ${{ secrets.FG_PAT_TOKEN }}
         run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-          git add assets/images/**/gallery.json
-          git commit -m "chore: update gallery.json files" || echo "No changes to commit"
-          git push
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add assets/images/**/*.json
+          git commit -m "Update gallery.json files" || echo "No changes to commit"
+          git push https://x-access-token:${FG_PAT_TOKEN}@github.com/${{ github.repository }}.git HEAD:main
