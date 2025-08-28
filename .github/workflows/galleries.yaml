@@ -1,0 +1,59 @@
+name: Generate gallery.json
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "assets/images/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Generate gallery.json files
+        run: |
+          node - <<'EOF'
+          const fs = require('fs');
+          const path = require('path');
+
+          const baseDir = './assets/images';
+
+          function generateGallery(dir) {
+            const files = fs.readdirSync(dir);
+            const images = files
+              .filter(f => /\.(png|jpe?g|gif|webp|svg)$/i.test(f))
+              .map(f => path.join(dir, f).replace(/^\.\/?/, '')); // keep relative path
+
+            if (images.length > 0) {
+              const jsonPath = path.join(dir, 'gallery.json');
+              fs.writeFileSync(jsonPath, JSON.stringify(images, null, 2));
+              console.log(`Generated ${jsonPath}`);
+            }
+
+            files.forEach(file => {
+              const subdir = path.join(dir, file);
+              if (fs.statSync(subdir).isDirectory()) {
+                generateGallery(subdir);
+              }
+            });
+          }
+
+          generateGallery(baseDir);
+          EOF
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add assets/images/**/gallery.json
+          git commit -m "chore: update gallery.json files" || echo "No changes to commit"
+          git push
