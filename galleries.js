@@ -1,7 +1,7 @@
-const folderLink = "https://drive.google.com/drive/u/1/folders/1kMu_zOXXGcL9dHAfIBFY5kn_AOqayJnW";
+const folderLink = "https://drive.google.com/drive/folders/1kMu_zOXXGcL9dHAfIBFY5kn_AOqayJnW?usp=sharing";
 const apiKey = "AIzaSyCdwuZY5qZgtPKNrtJvXDGdWsnP_IxgmKk";
 
-// Function to extract folder ID from Google Drive link
+// Extract folder ID from a Google Drive folder link
 function getFolderIdFromLink(link) {
   const match = link.match(/\/folders\/([a-zA-Z0-9_-]+)/);
   return match ? match[1] : null;
@@ -18,16 +18,15 @@ async function fetchImages() {
   const url = `https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents+and+mimeType+contains+'image/'&key=${apiKey}&fields=files(id,name,mimeType,webContentLink,thumbnailLink)`;
 
   try {
-    const res = await fetch(url);
-    const data = await res.json();
+    const response = await fetch(url);
+    const data = await response.json();
 
     if (data.files && data.files.length > 0) {
       const galleryImages = data.files.map(file => ({
-        src: file.thumbnailLink || file.webContentLink,
+        src: file.thumbnailLink || `https://drive.google.com/uc?id=${file.id}`,
         alt: file.name
       }));
       console.log("Gallery images:", galleryImages);
-      // You can now use galleryImages array to populate your gallery
     } else {
       console.log("No images found in this folder.");
     }
@@ -36,5 +35,4 @@ async function fetchImages() {
   }
 }
 
-// Load images on page load
 document.addEventListener("DOMContentLoaded", fetchImages);
