@@ -9,67 +9,95 @@
     <link rel="stylesheet" href="https://www.uv.vu/assets/global/css/globalstyles.css">
     <style>
         .building-container {
-            display: block;
+            display: grid;
             position: relative;
             width: 100%;
+            gap: 1rem;
         }
 
-        .building-column-span-2,
-        .building-column-span-3,
-        .building-column-span-4,
-        .building-column-span-5,
-        .building-column-span-6 {
-            display: flex;
-            flex-wrap: wrap;
+        /* 1 column */
+        .building-column-span-1 {
+            display: grid;
+            grid-template-columns: 1fr;
             padding: 1rem;
             gap: 1rem;
-            max-width: 100%;
         }
 
-        .building-column-span-1>* {
+        /* 2 columns */
+        .building-column-span-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             padding: 1rem;
+            gap: 1rem;
         }
 
-        .building-column-span-2>* {
-            flex-grow: 1;
-            flex-basis: 300px;
+        /* 3 columns */
+        .building-column-span-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            padding: 1rem;
+            gap: 1rem;
         }
 
-        .building-column-span-3>* {
-            flex-grow: 1;
-            flex-basis: 240px;
+        /* 4 columns */
+        .building-column-span-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            padding: 1rem;
+            gap: 1rem;
         }
 
-        .building-column-span-4>* {
-            flex-grow: 1;
-            flex-basis: 220px;
+        /* 5 columns */
+        .building-column-span-5 {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            padding: 1rem;
+            gap: 1rem;
         }
 
-        .building-column-span-5>* {
-            flex-grow: 1;
-            flex-basis: 190px;
+        /* 6 columns */
+        .building-column-span-6 {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            padding: 1rem;
+            gap: 1rem;
         }
 
-        .building-column-span-6>* {
-            flex-grow: 1;
-            flex-basis: 160px;
+        /* Responsive media queries for all spans */
+        @media (max-width: 1200px) {
+            .building-column-span-6 {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .building-column-span-5 {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .building-column-span-4 {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .building-column-span-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .building-column-span-2 {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
-        .building-column {
-            display: block;
-            position: relative;
+        @media (max-width: 900px) {
+
+            .building-column-span-6,
+            .building-column-span-5,
+            .building-column-span-4,
+            .building-column-span-3,
+            .building-column-span-2 {
+                grid-template-columns: 1fr;
+            }
         }
 
-        .building-column-stretch {
-            padding-left: 0px !important;
-            padding-right: 0px !important;
-        }
-
-        .building-column-grow {
-            padding-top: 0px !important;
-            padding-bottom: 0px !important;
-        }
-
+        /* Column content alignment */
         .building-column-content-top {
             align-self: start;
         }
@@ -82,93 +110,34 @@
             align-self: end;
         }
 
+        /* Block alignment */
         .building-block-align-left {
-            margin-right: auto;
+            justify-self: start;
         }
 
         .building-block-align-center {
-            margin-left: auto;
-            margin-right: auto;
+            justify-self: center;
         }
 
         .building-block-align-right {
-            margin-left: auto;
+            justify-self: end;
         }
 
-        /* CMS */
-
-        .cms-menu-container {
-            display: block;
-            position: fixed;
-            width: 280px;
-            height: 700px;
-            left: 0%;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: whitesmoke;
-            box-sizing: border-box;
-            z-index: 9999999999;
+        /* Stretch / grow adjustments */
+        .building-column-stretch {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
         }
 
-        .cms-menu-item-container {
+        .building-column-grow {
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+        }
+
+        .building-column {
             display: block;
             position: relative;
         }
-
-        .cms-menu-item {
-            display: block;
-            position: relative;
-            width: 100%;
-            height: 50px;
-            font-family: 'Arial';
-            font-size: 20px;
-            text-align: center;
-            color: DarkGray;
-            box-shadow: 0 1px 0 0 silver inset, 0 -1px 0 0 silver inset;
-            box-sizing: border-box;
-            align-content: center;
-        }
-
-        .cms-menu-item:nth-child(1){
-            box-shadow: 0 -1px 0 0 silver inset !important;
-        }
-
-        .cms-menu-item:last-child {
-            box-shadow: 0 1px 0 0 silver inset !important;
-        }
-
-         .cms-menu-item:hover {
-            color: whitesmoke;
-            background-color: magenta;
-         }
-
-         .cms-menu-secondary-container {
-            display: none;
-            position: fixed;
-            width: 280px;
-            height: 700px;
-            left: 280px;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: whitesmoke;
-            box-shadow: 2px 0 0 0 silver inset;
-            box-sizing: border-box;
-            z-index: 9999999999;
-         }
-
-         .cms-menu-item:hover .cms-menu-secondary-container {
-            display: block;
-         }
-
-         .cms-menu-secondary-container:hover {
-            display: block;
-         }
-
-         .cms-menu-secondary-item-container {
-            display: block;
-            position: relative;
-        }
-
     </style>
 </head>
 
