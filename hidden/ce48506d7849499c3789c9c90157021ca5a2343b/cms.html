@@ -404,29 +404,7 @@
         // --- 1. SETUP (Run this code once when your page loads) ---
 
 // Find all the menu elements and store them in constants
-const cmsMenuBuildingSelection = document.querySelector(".cms-menu-building-selection");
-const cmsMenuColumnSelection = document.querySelector(".cms-menu-column-selection");
-const cmsMenuColumnButton = document.querySelector("#cms-building-columns");
-const cmsMenuTextBoxButton = document.querySelector("#cms-text-box");
-
-// Add the event listeners ONCE
-cmsMenuColumnButton.onclick = function() {
-    // Note the fix from 'classlist' to 'classList'
-    cmsMenuBuildingSelection.classList.remove('cms-content-show');
-    cmsMenuBuildingSelection.classList.add('content-hide');
-    
-    cmsMenuColumnSelection.classList.remove('content-hide');
-    cmsMenuColumnSelection.classList.add('cms-content-show');
-};
-
-cmsMenuTextBoxButton.onclick = function() {
-    // This function still needs access to 'currentlySelected' when it runs
-    if (currentlySelected) {
-        currentlySelected.insertAdjacentHTML('beforebegin', textBox);
-        cms.classList.add('content-hide'); // Also hide the menu after an action
-        deselectAll();
-    }
-};
+//Will build the clicks here.
 
 
 // --- 2. RUNTIME (This function now has a much simpler job) ---
