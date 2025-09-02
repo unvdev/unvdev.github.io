@@ -145,9 +145,39 @@ const sixColumnLayout = `
 </div>
 `;
 
-const textBox = `
-<div class="text-box building-block">
+const paragraph = `
+<div class="text-element building-block">
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+</div>
+`;
+
+const headingOne = `
+<div class="text-element building-block">
+    <h1>Lorem ipsum</h1>
+</div>
+`;
+
+const headingTwo = `
+<div class="text-element building-block">
+    <h2>Lorem ipsum</h2>
+</div>
+`;
+
+const headingThree = `
+<div class="text-element building-block">
+    <h3>Lorem ipsum</h3>
+</div>
+`;
+
+const headingFour = `
+<div class="text-element building-block">
+    <h4>Lorem ipsum</h4>
+</div>
+`;
+
+const headingFive = `
+<div class="text-element building-block">
+    <h5>Lorem ipsum</h5>
 </div>
 `;
 

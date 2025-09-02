@@ -22,20 +22,6 @@
             padding: 5px;
         }
 
-        .ql-toolbar {
-            position: absolute;
-            width: 100%;
-            max-width: 600px;
-            margin-top: -40px;
-            z-index: 1000001;
-            display: block;
-            background-color: white;
-        }
-
-        .ql-tooltip {
-            z-index: 1000002 !important;
-        }
-
         .selected {
             box-shadow: inset 0 0 0 2px magenta;
             cursor: move !important;
@@ -75,10 +61,6 @@
             text-align: center;
             color: whitesmoke;
             cursor: inherit;
-        }
-
-        .text-box {
-            width: fit-content;
         }
 
         /* CMS CSS Testing */
@@ -171,6 +153,42 @@
          .cms-menu-secondary-item-container {
             display: block;
             position: relative;
+        }
+
+        /*Text Editor*/
+
+        .ql-toolbar {
+            position: absolute;
+            width: 100%;
+            max-width: 600px;
+            margin-top: -40px;
+            z-index: 1000001;
+            display: block;
+            background-color: white;
+        }
+
+        .ql-tooltip {
+            z-index: 1000002 !important;
+        }
+
+        .text-editor-pop {
+            display: none;
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background-color: whitesmoke;
+        }
+
+        .text-editor {
+            display: block;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            color: black;
         }
     </style>
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
@@ -279,6 +297,10 @@
             </div>
         </div>
     </div>
+    </div>
+    <div class="text-editor-pop">
+        <div class="text-editor">
+        </div>
     </div>
 
     <div id="loaded-page">
