@@ -22,10 +22,11 @@ function openTextEditor(target) {
   activeTextElement = target;
   editorPop.style.display = "block";
 
-  // Load target content into Quill
   const content = target.innerHTML.trim();
-  quillEditor.root.innerHTML = content || ""; // don't force <p><br></p> yet
-  quillEditor.focus();
+  quillEditor.root.innerHTML = content || "";
+
+  // Delay focus slightly to ensure editor is ready
+  setTimeout(() => quillEditor.focus(), 50);
 }
 
 // Utility: clean up extra empty <p> tags
