@@ -50,7 +50,7 @@ function initializeQuill() {
     });
 
     // Style the custom button to give it an icon or text
-    document.querySelector('.ql-custom-color').innerHTML = '🎨';
+    document.querySelector('.ql-custom-color').innerHTML = '<i class="fa-solid fa-palette"></i>';
 }
 
 // Open editor
