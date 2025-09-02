@@ -1,5 +1,5 @@
 const editorPop = document.querySelector(".text-editor-pop");
-const editorContainer = document.querySelector("#quill-editor"); // stays empty, Quill manages inside
+const editorContainer = document.querySelector("#quill-editor"); // Quill manages inside
 let activeTextElement = null;
 
 // Initialize Quill ONCE
@@ -23,17 +23,22 @@ function openTextEditor(target) {
   editorPop.style.display = "block";
 
   // Load target content into Quill
-  quillEditor.root.innerHTML = target.innerHTML.trim() || "<p><br></p>";
+  const content = target.innerHTML.trim();
+  quillEditor.root.innerHTML = content || ""; // don't force <p><br></p> yet
   quillEditor.focus();
 }
 
 // Utility: clean up extra empty <p> tags
 function cleanHtml(html) {
-  // Remove multiple empty <p> blocks, keep only one
-  html = html.replace(/(<p>(\s|<br>)*<\/p>)+/g, "<p><br></p>");
+  const trimmed = html.trim();
 
-  // Trim spaces
-  return html.trim();
+  // If fully empty or only empty <p> blocks, return empty string
+  if (!trimmed || /^(\s*<p>(\s|<br>)*<\/p>\s*)+$/.test(trimmed)) {
+    return "";
+  }
+
+  // Collapse multiple empty <p> into a single <p><br></p>
+  return trimmed.replace(/(<p>(\s|<br>)*<\/p>)+/g, "<p><br></p>");
 }
 
 // Close editor
