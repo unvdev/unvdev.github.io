@@ -21,8 +21,8 @@ const quillEditor = new Quill(editorContainer, {
 function openTextEditor(target) {
   activeTextElement = target;
 
-  // Show popup first
-  editorPop.style.display = "block";
+  // Bring popup on top
+  editorPop.style.zIndex = "999999999";
 
   // Load content safely into Quill
   const content = target.innerHTML.trim();
