@@ -17,26 +17,41 @@ function customColorPicker() {
   }
 }
 
-// Your updated initialization function
-function initializeQuill() {
-  quillEditor = new Quill(editorContainer, {
-    theme: "snow",
-    modules: {
-      toolbar: {
-        container: [
-          [{ header: [1, 2, 3, 4, 5, false] }, { align: [] }],
-          ["bold", "italic", "underline", "strike"],
-          [{ list: "ordered" }, { list: "bullet" }],
-          ['custom-color'], // Our new custom button
-          ["link"],
-          ["clean"]
-        ],
-        handlers: {
-          'custom-color': customColorPicker // Link the button to our function
-        }
-      }
+// A handler function that prompts the user for a color
+function customColorPicker() {
+    const color = prompt("Enter a hex color code (e.g., #ff00ff):");
+    if (color && /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color)) {
+        this.quill.format('color', color);
+    } else if (color) {
+        alert("Invalid hex code.");
     }
-  });
+}
+
+// Your updated and fixed initialization function
+function initializeQuill() {
+    quillEditor = new Quill(editorContainer, {
+        theme: "snow",
+        modules: {
+            toolbar: {
+                container: [
+                    [{ header: [1, 2, 3, 4, 5, false] }, { align: [] }],
+                    ["bold", "italic", "underline", "strike"],
+                    [{ list: "ordered" }, { list: "bullet" }],
+                    // ✅ Corrected Line: 'custom-color' is now a string
+                    [{ color: [] }, 'custom-color'],
+                    ["link"],
+                    ["clean"]
+                ],
+                handlers: {
+                    'custom-color': customColorPicker // Link the button to our function
+                }
+            }
+        }
+    });
+
+    // Style the custom button to give it an icon or text
+    document.querySelector('.ql-custom-color').innerHTML = '🎨';
+}
 
   // Style the custom button to look like a color picker
   // You can use a Font Awesome icon or an SVG for this
