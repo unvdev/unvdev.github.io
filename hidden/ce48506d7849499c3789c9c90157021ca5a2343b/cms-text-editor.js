@@ -23,22 +23,20 @@ function openTextEditor(target) {
 
   // Bring popup on top
   editorPop.style.zIndex = "999999999";
+  editorPop.style.opacity = "1.0";
 
-  // Load content safely into Quill
-  const content = target.innerHTML.trim();
-  quillEditor.clipboard.dangerouslyPasteHTML(content || "");
-
-  // Tiny delay to focus, ensures toolbar appears
-  setTimeout(() => quillEditor.focus(), 5);
+  // Wait until the popup is painted so Quill can attach properly
+  requestAnimationFrame(() => {
+    const content = target.innerHTML.trim();
+    quillEditor.clipboard.dangerouslyPasteHTML(content || "");
+    quillEditor.focus();
+  });
 }
 
 // Utility: remove all empty tags, including <p><br></p>
 function cleanHtml(html) {
   const trimmed = html.trim();
-
-  // Remove any tag that is empty or contains only whitespace or <br>
   const noEmptyTags = trimmed.replace(/<(\w+)(?:\s[^>]*)?>\s*(<br\s*\/?>)?\s*<\/\1>/gi, "");
-
   return noEmptyTags.trim();
 }
 
@@ -47,17 +45,19 @@ function closeTextEditor(save = true) {
   if (!activeTextElement) return;
 
   if (save) {
-    let newContent = quillEditor.root.innerHTML;
+    const newContent = quillEditor.root.innerHTML;
     const cleaned = cleanHtml(newContent);
 
-    // Only save if there is actual content, else revert
+    // Only save if there's real content; otherwise revert
     if (cleaned) {
       activeTextElement.innerHTML = cleaned;
     }
-    // If cleaned is empty, do nothing — keeps original content
+    // else: keep original content
   }
 
+  // Hide popup and reset
   editorPop.style.display = "none";
+  editorPop.style.zIndex = "-1";
   activeTextElement = null;
 }
 
