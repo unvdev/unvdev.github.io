@@ -1,5 +1,5 @@
 const editorPop = document.querySelector(".text-editor-pop");
-const editorContainer = document.querySelector("#quill-editor"); // Quill manages inside
+const editorContainer = document.querySelector("#quill-editor");
 let activeTextElement = null;
 
 // Initialize Quill ONCE
@@ -21,27 +21,28 @@ const quillEditor = new Quill(editorContainer, {
 function openTextEditor(target) {
   activeTextElement = target;
 
-  // Show the popup
   editorPop.classList.remove("content-hide");
   editorPop.classList.add("content-show");
 
-  // Wait until the browser has painted the popup
   requestAnimationFrame(() => {
     const content = target.innerHTML.trim();
 
-    // 1. ✅ Convert the raw HTML into Quill's native Delta format.
-    const delta = quillEditor.clipboard.convert(content);
+    // 1. Clear the editor to start fresh.
+    quillEditor.setContents([], 'silent');
     
-    // 2. ✅ Set the editor's contents directly using the Delta.
-    // This is the most reliable method and ensures the editor is ready to be used.
-    quillEditor.setContents(delta, 'silent');
+    // 2. Paste the HTML at the beginning of the editor.
+    quillEditor.clipboard.dangerouslyPasteHTML(0, content, 'silent');
     
-    // 3. Focus the editor.
+    // 3. CRITICAL STEP: Manually place the cursor at the end of the new content.
+    const length = quillEditor.getLength();
+    quillEditor.setSelection(length, 0, 'silent');
+    
+    // 4. Now, focus the editor. It has a cursor and is ready for input.
     quillEditor.focus();
   });
 }
 
-// Utility: remove all empty tags, including <p><br></p>
+// Utility: remove all empty tags
 function cleanHtml(html) {
   const trimmed = html.trim();
   const noEmptyTags = trimmed.replace(/<(\w+)(?:\s[^>]*)?>\s*(<br\s*\/?>)?\s*<\/\1>/gi, "");
@@ -61,30 +62,26 @@ function closeTextEditor(save = true) {
     }
   }
 
-  // Hide popup and reset (assuming you use a class like .content-hide)
   editorPop.classList.remove("content-show");
   editorPop.classList.add("content-hide");
   activeTextElement = null;
 }
 
-// ✅ Double-click feature to open editor
+// Double-click feature to open editor
 document.addEventListener("dblclick", e => {
   const target = e.target.closest(".text-element");
   if (target) openTextEditor(target);
 });
 
-// ✅ Click outside to save & close editor
+// Click outside to save & close editor
 document.addEventListener("click", e => {
-  // This reliably checks the visibility set by your .content-show/.content-hide classes
   const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
 
   if (isEditorVisible) {
     const isClickInsideEditor = e.target.closest(".text-editor-pop");
     const isClickInsideQuillUI = e.target.closest(".ql-picker, .ql-tooltip");
 
-    // If the click was NOT inside your popup or any of Quill's floating menus...
     if (!isClickInsideEditor && !isClickInsideQuillUI) {
-      // ...then close the editor.
       closeTextEditor(true);
     }
   }
