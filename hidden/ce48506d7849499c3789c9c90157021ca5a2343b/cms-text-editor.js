@@ -20,13 +20,16 @@ const quillEditor = new Quill(editorContainer, {
 // Open editor
 function openTextEditor(target) {
   activeTextElement = target;
+
+  // 1️⃣ Show popup first
   editorPop.style.display = "block";
 
+  // 2️⃣ Load content safely into Quill
   const content = target.innerHTML.trim();
-  quillEditor.root.innerHTML = content || "";
+  quillEditor.clipboard.dangerouslyPasteHTML(content || "");
 
-  // Delay focus slightly to ensure editor is ready
-  setTimeout(() => quillEditor.focus(), 50);
+  // 3️⃣ Tiny delay to focus, ensures toolbar appears
+  setTimeout(() => quillEditor.focus(), 5);
 }
 
 // Utility: clean up extra empty <p> tags
