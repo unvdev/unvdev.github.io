@@ -172,19 +172,17 @@
 
 /* Quill Toolbar */
 .ql-toolbar {
-    position: absolute;
-    top: 0; /* align to top of popup */
+    position: relative;
+    top: 0;
     left: 0;
-    width: 100%;
-    max-width: 600px;
+    width: inherit;
     z-index: 1000001;
     background-color: white;
 }
 
 /* Quill Editor */
 .ql-editor {
-    height: calc(100% - 50px); /* leave space for toolbar */
-    outline: none;
+    height: inherit;
     overflow-y: auto;
     padding: 10px; /* optional, so text isn’t flush against edges */
 }
