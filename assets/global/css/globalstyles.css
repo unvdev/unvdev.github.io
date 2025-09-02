@@ -32,10 +32,9 @@ h1, h2, h3, h4, h5 {
   margin-bottom: 0.75rem;
   line-height: 1.2;
   font-weight: 700;
-  /* Prevents long words from breaking out of the container */
   overflow-wrap: break-word;
-  width: fit-content; /* Constrains width to the content itself */
-  max-width: 100%; /* Ensures it doesn't overflow its parent */
+  width: 100%;
+  max-width: 100%;
 }
 
 h1 {
@@ -63,8 +62,8 @@ p {
   margin-bottom: 1rem;
   font-size: 1rem; /* 16px */
   font-weight: 400;
-  /* Prevents long words from breaking out of the container */
   overflow-wrap: break-word;
+  width: 100%;
 }
 
 /* Lists */
