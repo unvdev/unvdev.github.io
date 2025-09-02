@@ -1,21 +1,24 @@
 const editorPop = document.querySelector(".text-editor-pop");
 const editorContainer = document.querySelector("#quill-editor");
 let activeTextElement = null;
+let quillEditor = null; // 1. Don't initialize Quill yet, just declare the variable.
 
-// Initialize Quill ONCE
-const quillEditor = new Quill(editorContainer, {
-  theme: "snow",
-  modules: {
-    toolbar: [
-      [{ header: [1, 2, 3, 4, 5, false] }, { align: [] }],
-      ["bold", "italic", "underline", "strike"],
-      [{ list: "ordered" }, { list: "bullet" }],
-      [{ color: [] }],
-      ["link"],
-      ["clean"]
-    ]
-  }
-});
+// Initialize Quill the first time the editor is opened
+function initializeQuill() {
+  quillEditor = new Quill(editorContainer, {
+    theme: "snow",
+    modules: {
+      toolbar: [
+        [{ header: [1, 2, 3, 4, 5, false] }, { align: [] }],
+        ["bold", "italic", "underline", "strike"],
+        [{ list: "ordered" }, { list: "bullet" }],
+        [{ color: [] }],
+        ["link"],
+        ["clean"]
+      ]
+    }
+  });
+}
 
 // Open editor
 function openTextEditor(target) {
@@ -24,20 +27,20 @@ function openTextEditor(target) {
   editorPop.classList.remove("content-hide");
   editorPop.classList.add("content-show");
 
+  // 2. If this is the first time, initialize Quill now that the container is visible.
+  if (!quillEditor) {
+    initializeQuill();
+  }
+
   requestAnimationFrame(() => {
     const content = target.innerHTML.trim();
-
-    // 1. Clear the editor to start fresh.
     quillEditor.setContents([], 'silent');
-    
-    // 2. Paste the HTML at the beginning of the editor.
     quillEditor.clipboard.dangerouslyPasteHTML(0, content, 'silent');
     
-    // 3. CRITICAL STEP: Manually place the cursor at the end of the new content.
+    // Explicitly enable the editor and set the cursor
+    quillEditor.enable(true);
     const length = quillEditor.getLength();
     quillEditor.setSelection(length, 0, 'silent');
-    
-    // 4. Now, focus the editor. It has a cursor and is ready for input.
     quillEditor.focus();
   });
 }
@@ -51,7 +54,7 @@ function cleanHtml(html) {
 
 // Close editor
 function closeTextEditor(save = true) {
-  if (!activeTextElement) return;
+  if (!activeTextElement || !quillEditor) return;
 
   if (save) {
     const newContent = quillEditor.root.innerHTML;
