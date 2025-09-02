@@ -21,15 +21,22 @@ const quillEditor = new Quill(editorContainer, {
 function openTextEditor(target) {
   activeTextElement = target;
 
-  // Show the popup (assuming you use a class like .content-show)
+  // Show the popup
   editorPop.classList.remove("content-hide");
   editorPop.classList.add("content-show");
 
   // Wait until the browser has painted the popup
   requestAnimationFrame(() => {
     const content = target.innerHTML.trim();
-    quillEditor.setContents([], 'silent');
-    quillEditor.clipboard.dangerouslyPasteHTML(content || "");
+
+    // 1. ✅ Convert the raw HTML into Quill's native Delta format.
+    const delta = quillEditor.clipboard.convert(content);
+    
+    // 2. ✅ Set the editor's contents directly using the Delta.
+    // This is the most reliable method and ensures the editor is ready to be used.
+    quillEditor.setContents(delta, 'silent');
+    
+    // 3. Focus the editor.
     quillEditor.focus();
   });
 }
