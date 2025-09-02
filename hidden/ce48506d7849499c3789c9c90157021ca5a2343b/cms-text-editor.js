@@ -58,11 +58,3 @@ document.addEventListener("click", e => {
         }
     }
 });
-
-// ✅ Enter (Return) closes editor
-document.addEventListener("keydown", e => {
-    if (editorPop.style.display === "block" && e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault();
-        closeTextEditor(true);
-    }
-});
