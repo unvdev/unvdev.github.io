@@ -21,11 +21,10 @@ const quillEditor = new Quill(editorContainer, {
 function openTextEditor(target) {
   activeTextElement = target;
 
-  // Bring popup on top
-  editorPop.style.zIndex = "999999999";
-  editorPop.style.opacity = "1.0";
+  // Show the popup
+  editorPop.style.display = "block";
 
-  // Wait until the popup is painted so Quill can attach properly
+  // Wait until the browser has painted the popup
   requestAnimationFrame(() => {
     const content = target.innerHTML.trim();
     quillEditor.clipboard.dangerouslyPasteHTML(content || "");
@@ -36,7 +35,10 @@ function openTextEditor(target) {
 // Utility: remove all empty tags, including <p><br></p>
 function cleanHtml(html) {
   const trimmed = html.trim();
+
+  // Remove any tag that is empty or contains only whitespace or <br>
   const noEmptyTags = trimmed.replace(/<(\w+)(?:\s[^>]*)?>\s*(<br\s*\/?>)?\s*<\/\1>/gi, "");
+
   return noEmptyTags.trim();
 }
 
@@ -48,11 +50,11 @@ function closeTextEditor(save = true) {
     const newContent = quillEditor.root.innerHTML;
     const cleaned = cleanHtml(newContent);
 
-    // Only save if there's real content; otherwise revert
+    // Only save if there's real content
     if (cleaned) {
       activeTextElement.innerHTML = cleaned;
     }
-    // else: keep original content
+    // If cleaned is empty, keep original content
   }
 
   // Hide popup and reset
@@ -61,15 +63,16 @@ function closeTextEditor(save = true) {
   activeTextElement = null;
 }
 
-// ✅ Double-click feature
-loadedPage.addEventListener("dblclick", e => {
+// ✅ Double-click feature to open editor
+document.addEventListener("dblclick", e => {
   const target = e.target.closest(".text-element");
   if (target) openTextEditor(target);
 });
 
-// ✅ Click outside to save & close
+// ✅ Click outside to save & close editor
 document.addEventListener("click", e => {
-  if (editorPop.style.display === "block") {
+  // Check if editor is actually visible
+  if (editorPop.offsetParent !== null) {
     if (!e.target.closest(".text-editor-pop") && !e.target.closest(".ql-toolbar")) {
       closeTextEditor(true);
     }
