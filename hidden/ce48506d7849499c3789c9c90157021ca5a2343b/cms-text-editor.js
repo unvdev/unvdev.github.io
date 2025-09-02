@@ -1,56 +1,66 @@
 const editorPop = document.querySelector(".text-editor-pop");
-const editorContainer = document.querySelector("#quill-editor");
+const editorContainer = document.querySelector("#quill-editor"); // stays empty, Quill manages inside
 let activeTextElement = null;
 
-// ✅ Create Quill once, on page load
+// Initialize Quill ONCE
 const quillEditor = new Quill(editorContainer, {
-    theme: "snow",
-    modules: {
-        toolbar: [
-            [{ header: [1, 2, 3, 4, 5, false] }, { align: [] }],
-            ["bold", "italic", "underline", "strike"],
-            [{ list: "ordered" }, { list: "bullet" }],
-            [{ color: [] }],
-            ["link"],
-            ["clean"]
-        ]
-    }
+  theme: "snow",
+  modules: {
+    toolbar: [
+      [{ header: [1, 2, 3, 4, 5, false] }, { align: [] }],
+      ["bold", "italic", "underline", "strike"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      [{ color: [] }],
+      ["link"],
+      ["clean"]
+    ]
+  }
 });
-editorPop.style.display = "none"; // start hidden
 
+// Open editor
 function openTextEditor(target) {
-    activeTextElement = target;
+  activeTextElement = target;
+  editorPop.style.display = "block";
 
-    // Load the target’s HTML into Quill
-    quillEditor.root.innerHTML = target.innerHTML;
-
-    editorPop.style.display = "block";
-    quillEditor.focus();
+  // Load target content into Quill
+  quillEditor.root.innerHTML = target.innerHTML.trim() || "<p><br></p>";
+  quillEditor.focus();
 }
 
+// Utility: clean up extra empty <p> tags
+function cleanHtml(html) {
+  // Remove multiple empty <p> blocks, keep only one
+  html = html.replace(/(<p>(\s|<br>)*<\/p>)+/g, "<p><br></p>");
+
+  // Trim spaces
+  return html.trim();
+}
+
+// Close editor
 function closeTextEditor(save = true) {
-    if (!activeTextElement) return;
+  if (!activeTextElement) return;
 
-    if (save) {
-        // Save back to target element
-        activeTextElement.innerHTML = quillEditor.root.innerHTML;
-    }
+  if (save) {
+    let newContent = quillEditor.root.innerHTML;
+    newContent = cleanHtml(newContent);
+    activeTextElement.innerHTML = newContent;
+  }
 
-    editorPop.style.display = "none";
-    activeTextElement = null;
+  editorPop.style.display = "none";
+  activeTextElement = null;
 }
 
 // ✅ Double-click feature
 loadedPage.addEventListener("dblclick", e => {
-    const target = e.target.closest(".text-element");
-    if (target) openTextEditor(target);
+  const target = e.target.closest(".text-element");
+  if (target) openTextEditor(target);
 });
 
 // ✅ Click outside to save & close
 document.addEventListener("click", e => {
-    if (editorPop.style.display === "block") {
-        if (!e.target.closest(".text-editor-pop") && !e.target.closest(".ql-toolbar")) {
-            closeTextEditor(true);
-        }
+  if (editorPop.style.display === "block") {
+    if (!e.target.closest(".text-editor-pop") && !e.target.closest(".ql-toolbar")) {
+      closeTextEditor(true);
     }
+  }
 });
