@@ -225,7 +225,7 @@
                             <div><i class="fa-solid fa-heading"></i>&nbsp;&nbsp;Heading 5</div>
                         </div>
                         <div class="cms-menu-item">
-                            <div id="cms-menu-text-box-button"><i class="fa-solid fa-paragraph"></i>&nbsp;&nbsp;Paragraph</div>
+                            <div id="cms-menu-text-paragraph-button"><i class="fa-solid fa-paragraph"></i>&nbsp;&nbsp;Paragraph</div>
                         </div>
                         <div class="cms-menu-item">
                             <div><i class="fa-solid fa-list-ul"></i>&nbsp;&nbsp;Bulleted List</div>
@@ -427,11 +427,11 @@
         // --- 1. SETUP (Run this code once when your page loads) ---
 
 // Find all the menu elements and store them in constants
-cmsMenuTextBoxButton = document.getElementById("cms-menu-text-box-button");
+cmsMenuTextBoxButton = document.getElementById("cms-menu-text-paragraph-button");
 
 cmsMenuTextBoxButton.onclick = function() {
     if (currentlySelected) {
-        currentlySelected.insertAdjacentHTML('beforebegin', textBox);
+        currentlySelected.insertAdjacentHTML('beforebegin', paragraph);
         cms.classList.add('content-hide');
         deselectAll();
     }
@@ -481,7 +481,7 @@ function invokeCMSMenu() {
         });
 
         loadedPage.addEventListener("dblclick", e => {
-            const target = e.target.closest('.text-box');
+            const target = e.target.closest('.text-element');
             if (target) editTextBox(target);
         });
 
