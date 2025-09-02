@@ -70,9 +70,14 @@ document.addEventListener("dblclick", e => {
 
 // ✅ Click outside to save & close editor
 document.addEventListener("click", e => {
-  // Check if editor is actually visible
-  if (editorPop.offsetParent !== null) {
-    if (!e.target.closest(".text-editor-pop") && !e.target.closest(".ql-toolbar")) {
+  // A more reliable way to check if the popup is actually visible
+  const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
+
+  if (isEditorVisible) {
+    const isClickInsideEditor = e.target.closest(".text-editor-pop");
+    const isClickInsideQuillUI = e.target.closest(".ql-picker, .ql-tooltip");
+
+    if (!isClickInsideEditor && !isClickInsideQuillUI) {
       closeTextEditor(true);
     }
   }
