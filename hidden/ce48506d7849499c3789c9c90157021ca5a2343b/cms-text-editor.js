@@ -59,7 +59,6 @@ function closeTextEditor(save = true) {
 
   // Hide popup and reset
   editorPop.style.display = "none";
-  editorPop.style.zIndex = "-1";
   activeTextElement = null;
 }
 
