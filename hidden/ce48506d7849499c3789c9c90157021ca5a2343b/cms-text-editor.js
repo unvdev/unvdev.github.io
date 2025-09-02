@@ -53,11 +53,6 @@ function initializeQuill() {
     document.querySelector('.ql-custom-color').innerHTML = '🎨';
 }
 
-  // Style the custom button to look like a color picker
-  // You can use a Font Awesome icon or an SVG for this
-  document.querySelector('.ql-custom-color').innerHTML = '🎨'; 
-}
-
 // Open editor
 function openTextEditor(target) {
   activeTextElement = target;
