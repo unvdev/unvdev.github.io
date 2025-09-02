@@ -1,13 +1,17 @@
 const editorPop = document.querySelector(".text-editor-pop");
-const editorContainer = document.querySelector(".text-editor");
+const editorContainer = document.querySelector("#quill-editor"); // inner div for Quill
 let activeTextElement = null;
 let quillEditor = null;
 
 function openTextEditor(target) {
     activeTextElement = target;
-    editorContainer.innerHTML = target.innerHTML;
+
     editorPop.style.display = "block";
 
+    // Put the target’s HTML inside the Quill container
+    editorContainer.innerHTML = target.innerHTML;
+
+    // Initialize Quill
     quillEditor = new Quill(editorContainer, {
         theme: "snow",
         modules: {
@@ -33,17 +37,20 @@ function closeTextEditor(save = true) {
         activeTextElement.innerHTML = newContent;
     }
 
+    // Cleanup
     editorContainer.innerHTML = "";
     editorPop.style.display = "none";
     activeTextElement = null;
     quillEditor = null;
 }
 
+// ✅ Double-click feature
 loadedPage.addEventListener("dblclick", e => {
     const target = e.target.closest(".text-element");
     if (target) openTextEditor(target);
 });
 
+// ✅ Click outside to save & close
 document.addEventListener("click", e => {
     if (editorPop.style.display === "block") {
         if (!e.target.closest(".text-editor-pop") && !e.target.closest(".ql-toolbar")) {
@@ -52,6 +59,7 @@ document.addEventListener("click", e => {
     }
 });
 
+// ✅ Enter (Return) closes editor
 document.addEventListener("keydown", e => {
     if (editorPop.style.display === "block" && e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
