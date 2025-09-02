@@ -21,14 +21,14 @@ const quillEditor = new Quill(editorContainer, {
 function openTextEditor(target) {
   activeTextElement = target;
 
-  // 1️⃣ Show popup first
+  // Show popup first
   editorPop.style.display = "block";
 
-  // 2️⃣ Load content safely into Quill
+  // Load content safely into Quill
   const content = target.innerHTML.trim();
   quillEditor.clipboard.dangerouslyPasteHTML(content || "");
 
-  // 3️⃣ Tiny delay to focus, ensures toolbar appears
+  // Tiny delay to focus, ensures toolbar appears
   setTimeout(() => quillEditor.focus(), 5);
 }
 
@@ -51,8 +51,13 @@ function closeTextEditor(save = true) {
 
   if (save) {
     let newContent = quillEditor.root.innerHTML;
-    newContent = cleanHtml(newContent);
-    activeTextElement.innerHTML = newContent;
+    const cleaned = cleanHtml(newContent);
+
+    // Only save if there is actual content, else revert
+    if (cleaned) {
+      activeTextElement.innerHTML = cleaned;
+    }
+    // If cleaned is empty, do nothing — keeps original content
   }
 
   editorPop.style.display = "none";
