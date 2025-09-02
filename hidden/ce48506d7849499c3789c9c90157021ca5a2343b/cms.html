@@ -207,7 +207,7 @@
                             <div><i class="fa-solid fa-heading"></i>&nbsp;&nbsp;Heading 5</div>
                         </div>
                         <div class="cms-menu-item">
-                            <div><i class="fa-solid fa-paragraph"></i>&nbsp;&nbsp;Paragraph</div>
+                            <div id="cms-menu-text-box-button"><i class="fa-solid fa-paragraph"></i>&nbsp;&nbsp;Paragraph</div>
                         </div>
                         <div class="cms-menu-item">
                             <div><i class="fa-solid fa-list-ul"></i>&nbsp;&nbsp;Bulleted List</div>
@@ -405,14 +405,15 @@
         // --- 1. SETUP (Run this code once when your page loads) ---
 
 // Find all the menu elements and store them in constants
-// cmsMenuTextBoxButton.onclick = function() {
-//     // This function still needs access to 'currentlySelected' when it runs
-//     if (currentlySelected) {
-//         currentlySelected.insertAdjacentHTML('beforebegin', textBox);
-//         cms.classList.add('content-hide'); // Also hide the menu after an action
-//         deselectAll();
-//     }
-// };
+cmsMenuTextBoxButton = document.getElementById("cms-menu-text-box-button");
+
+cmsMenuTextBoxButton.onclick = function() {
+    if (currentlySelected) {
+        currentlySelected.insertAdjacentHTML('beforebegin', textBox);
+        cms.classList.add('content-hide');
+        deselectAll();
+    }
+};
 
 
 // --- 2. RUNTIME (This function now has a much simpler job) ---
