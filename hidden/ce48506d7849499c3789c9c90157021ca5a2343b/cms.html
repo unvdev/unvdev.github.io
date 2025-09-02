@@ -155,49 +155,44 @@
             position: relative;
         }
 
-        /*Text Editor*/
+  /* Text Editor Popup */
+.text-editor-pop {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background-color: whitesmoke;
+    z-index: 1000100;
+    padding-top: 50px; /* Add padding so toolbar doesn’t overlap content */
+    box-sizing: border-box;
+}
 
-        .ql-toolbar {
-            position: absolute;
-            width: 100%;
-            max-width: 600px;
-            margin-top: -40px;
-            z-index: 1000001;
-            display: block;
-            background-color: white;
-        }
+/* Quill Toolbar */
+.ql-toolbar {
+    position: absolute;
+    top: 0; /* align to top of popup */
+    left: 0;
+    width: 100%;
+    max-width: 600px;
+    z-index: 1000001;
+    background-color: white;
+}
 
-        .ql-tooltip {
-            z-index: 1000002 !important;
-        }
+/* Quill Editor */
+.ql-editor {
+    height: calc(100% - 50px); /* leave space for toolbar */
+    outline: none;
+    overflow-y: auto;
+    padding: 10px; /* optional, so text isn’t flush against edges */
+}
 
-        .ql-editor {
-            height: 100%;
-            outline: none;
-            overflow-y: auto;
-        }
-
-        .text-editor-pop {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 600px;
-            height: 600px;
-            background-color: whitesmoke;
-            z-index: 1000100;
-        }
-
-        .text-editor {
-            display: block;
-            position: relative;
-            width: inherit;
-            height: inherit;
-            background-color: white;
-            color: black;
-            overflow: auto;
-        }
+/* Tooltip stays on top */
+.ql-tooltip {
+    z-index: 1000002 !important;
+}
     </style>
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 </head>
