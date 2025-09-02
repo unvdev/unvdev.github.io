@@ -27,7 +27,21 @@ function customColorPicker() {
     }
 }
 
-// Your updated and fixed initialization function
+// Handler for the "Day Mode" button ☀️
+function setDayMode() {
+    // editorPop is the variable for your '.text-editor-pop' div
+    editorPop.style.backgroundColor = 'whitesmoke';
+    // quillEditor.root is the actual typing area (.ql-editor)
+    quillEditor.root.style.color = '#000000'; // Black text
+}
+
+// Handler for the "Night Mode" button 🌙
+function setNightMode() {
+    editorPop.style.backgroundColor = '#222222'; // Dark gray background
+    quillEditor.root.style.color = '#FFFFFF'; // White text
+}
+
+// Your updated and final initialization function
 function initializeQuill() {
     quillEditor = new Quill(editorContainer, {
         theme: "snow",
@@ -37,20 +51,26 @@ function initializeQuill() {
                     [{ header: [1, 2, 3, 4, 5, false] }, { align: [] }],
                     ["bold", "italic", "underline", "strike"],
                     [{ list: "ordered" }, { list: "bullet" }],
-                    // ✅ Corrected Line: 'custom-color' is now a string
                     [{ color: [] }, 'custom-color'],
                     ["link"],
+                    // ✅ Added a new group for the day/night buttons
+                    ['day-mode', 'night-mode'],
                     ["clean"]
                 ],
                 handlers: {
-                    'custom-color': customColorPicker // Link the button to our function
+                    'custom-color': customColorPicker, // Your existing handler
+                    // ✅ Linked the new buttons to their handler functions
+                    'day-mode': setDayMode,
+                    'night-mode': setNightMode
                 }
             }
         }
     });
 
-    // Style the custom button to give it an icon or text
+    // Style all your custom buttons with their icons
     document.querySelector('.ql-custom-color').innerHTML = '<i class="fa-solid fa-palette"></i>';
+    document.querySelector('.ql-day-mode').innerHTML = '<i class="fa-solid fa-sun"></i>';
+    document.querySelector('.ql-night-mode').innerHTML = '<i class="fa-solid fa-moon"></i>';
 }
 
 // Open editor
