@@ -21,12 +21,14 @@ const quillEditor = new Quill(editorContainer, {
 function openTextEditor(target) {
   activeTextElement = target;
 
-  // Show the popup
-  editorPop.style.display = "block";
+  // Show the popup (assuming you use a class like .content-show)
+  editorPop.classList.remove("content-hide");
+  editorPop.classList.add("content-show");
 
   // Wait until the browser has painted the popup
   requestAnimationFrame(() => {
     const content = target.innerHTML.trim();
+    quillEditor.setContents([], 'silent');
     quillEditor.clipboard.dangerouslyPasteHTML(content || "");
     quillEditor.focus();
   });
@@ -35,10 +37,7 @@ function openTextEditor(target) {
 // Utility: remove all empty tags, including <p><br></p>
 function cleanHtml(html) {
   const trimmed = html.trim();
-
-  // Remove any tag that is empty or contains only whitespace or <br>
   const noEmptyTags = trimmed.replace(/<(\w+)(?:\s[^>]*)?>\s*(<br\s*\/?>)?\s*<\/\1>/gi, "");
-
   return noEmptyTags.trim();
 }
 
@@ -50,15 +49,14 @@ function closeTextEditor(save = true) {
     const newContent = quillEditor.root.innerHTML;
     const cleaned = cleanHtml(newContent);
 
-    // Only save if there's real content
     if (cleaned) {
       activeTextElement.innerHTML = cleaned;
     }
-    // If cleaned is empty, keep original content
   }
 
-  // Hide popup and reset
-  editorPop.style.display = "none";
+  // Hide popup and reset (assuming you use a class like .content-hide)
+  editorPop.classList.remove("content-show");
+  editorPop.classList.add("content-hide");
   activeTextElement = null;
 }
 
@@ -70,14 +68,16 @@ document.addEventListener("dblclick", e => {
 
 // ✅ Click outside to save & close editor
 document.addEventListener("click", e => {
-  // A more reliable way to check if the popup is actually visible
+  // This reliably checks the visibility set by your .content-show/.content-hide classes
   const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
 
   if (isEditorVisible) {
     const isClickInsideEditor = e.target.closest(".text-editor-pop");
     const isClickInsideQuillUI = e.target.closest(".ql-picker, .ql-tooltip");
 
+    // If the click was NOT inside your popup or any of Quill's floating menus...
     if (!isClickInsideEditor && !isClickInsideQuillUI) {
+      // ...then close the editor.
       closeTextEditor(true);
     }
   }
