@@ -31,14 +31,11 @@ function customColorPicker() {
 function setDayMode() {
     // editorPop is the variable for your '.text-editor-pop' div
     editorPop.style.backgroundColor = 'whitesmoke';
-    // quillEditor.root is the actual typing area (.ql-editor)
-    quillEditor.root.style.color = '#000000'; // Black text
 }
 
 // Handler for the "Night Mode" button 🌙
 function setNightMode() {
     editorPop.style.backgroundColor = '#222222'; // Dark gray background
-    quillEditor.root.style.color = '#FFFFFF'; // White text
 }
 
 // Your updated and final initialization function
