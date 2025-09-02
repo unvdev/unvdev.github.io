@@ -32,14 +32,13 @@ function openTextEditor(target) {
   setTimeout(() => quillEditor.focus(), 5);
 }
 
-// Utility: remove all empty tags
+// Utility: remove all empty tags, including <p><br></p>
 function cleanHtml(html) {
   const trimmed = html.trim();
 
-  // Remove all completely empty tags like <p></p>, <div></div>, <span></span>, etc.
-  const noEmptyTags = trimmed.replace(/<(\w+)(?:\s[^>]*)?>\s*<\/\1>/g, "");
+  // Remove any tag that is empty or contains only whitespace or <br>
+  const noEmptyTags = trimmed.replace(/<(\w+)(?:\s[^>]*)?>\s*(<br\s*\/?>)?\s*<\/\1>/gi, "");
 
-  // Return cleaned content, trimmed
   return noEmptyTags.trim();
 }
 
