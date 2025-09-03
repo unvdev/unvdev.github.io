@@ -17,7 +17,7 @@
         }
 
         /* 1 column */
-        .building-column-span-1 {
+        .building-column-span-one {
             display: grid;
             grid-template-columns: 1fr;
             padding: 1rem;
@@ -25,7 +25,7 @@
         }
 
         /* 2 columns */
-        .building-column-span-2 {
+        .building-column-span-two {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             padding: 1rem;
@@ -33,7 +33,7 @@
         }
 
         /* 3 columns */
-        .building-column-span-3 {
+        .building-column-span-three {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             padding: 1rem;
@@ -41,7 +41,7 @@
         }
 
         /* 4 columns */
-        .building-column-span-4 {
+        .building-column-span-four {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             padding: 1rem;
@@ -49,7 +49,7 @@
         }
 
         /* 5 columns */
-        .building-column-span-5 {
+        .building-column-span-five {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             padding: 1rem;
@@ -57,11 +57,27 @@
         }
 
         /* 6 columns */
-        .building-column-span-6 {
+        .building-column-span-six {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
             padding: 1rem;
             gap: 1rem;
+        }
+
+        /* Asymm left column */
+        .building-column-span-asymm-left {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        padding: 1rem;
+        gap: 1rem;
+        }
+
+        /* Asymm right column */
+        .building-column-span-asymm-right {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        padding: 1rem;
+        gap: 1rem;
         }
 
         /* Responsive media queries for all spans */
@@ -93,7 +109,9 @@
             .building-column-span-5,
             .building-column-span-4,
             .building-column-span-3,
-            .building-column-span-2 {
+            .building-column-span-2
+            .building-column-span-asymm-left
+            .building-column-span-asymm-right {
                 grid-template-columns: 1fr;
             }
         }

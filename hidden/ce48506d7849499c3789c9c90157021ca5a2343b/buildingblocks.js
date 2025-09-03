@@ -1,6 +1,6 @@
 const oneColumnLayout = `
 <div class="building-container building-block">
-    <div class="building-column-span-1">
+    <div class="building-column-span-one">
         <div class="building-column building-block building-column-content-center">
             <div class="placeholder-block">
                 <div class="placeholder-block-symbol">+</div>
@@ -12,7 +12,7 @@ const oneColumnLayout = `
 
 const twoColumnLayout = `
 <div class="building-container building-block">
-    <div class="building-column-span-2">
+    <div class="building-column-span-two">
         <div class="building-column building-block building-column-content-center">
             <div class="placeholder-block">
                 <div class="placeholder-block-symbol">+</div>
@@ -29,7 +29,7 @@ const twoColumnLayout = `
 
 const threeColumnLayout = `
 <div class="building-container building-block">
-    <div class="building-column-span-3">
+    <div class="building-column-span-three">
         <div class="building-column building-block building-column-content-center">
             <div class="placeholder-block">
                 <div class="placeholder-block-symbol">+</div>
@@ -51,7 +51,7 @@ const threeColumnLayout = `
 
 const fourColumnLayout = `
 <div class="building-container building-block">
-    <div class="building-column-span-4">
+    <div class="building-column-span-four">
         <div class="building-column building-block building-column-content-center">
             <div class="placeholder-block">
                 <div class="placeholder-block-symbol">+</div>
@@ -78,7 +78,7 @@ const fourColumnLayout = `
 
 const fiveColumnLayout = `
 <div class="building-container building-block">
-    <div class="building-column-span-5">
+    <div class="building-column-span-five">
         <div class="building-column building-block building-column-content-center">
             <div class="placeholder-block">
                 <div class="placeholder-block-symbol">+</div>
@@ -110,7 +110,7 @@ const fiveColumnLayout = `
 
 const sixColumnLayout = `
 <div class="building-container building-block">
-    <div class="building-column-span-6">
+    <div class="building-column-span-six">
         <div class="building-column building-block building-column-content-center">
             <div class="placeholder-block">
                 <div class="placeholder-block-symbol">+</div>
@@ -131,6 +131,40 @@ const sixColumnLayout = `
                 <div class="placeholder-block-symbol">+</div>
             </div>
         </div>
+        <div class="building-column building-block building-column-content-center">
+            <div class="placeholder-block">
+                <div class="placeholder-block-symbol">+</div>
+            </div>
+        </div>
+        <div class="building-column building-block building-column-content-center">
+            <div class="placeholder-block">
+                <div class="placeholder-block-symbol">+</div>
+            </div>
+        </div>
+    </div>
+</div>
+`;
+
+const asymmLeftColumnLayout = `
+<div class="building-container building-block">
+    <div class="building-column-span-asymm-right">
+        <div class="building-column building-block building-column-content-center">
+            <div class="placeholder-block">
+                <div class="placeholder-block-symbol">+</div>
+            </div>
+        </div>
+        <div class="building-column building-block building-column-content-center">
+            <div class="placeholder-block">
+                <div class="placeholder-block-symbol">+</div>
+            </div>
+        </div>
+    </div>
+</div>
+`;
+
+const asymmRightColumnLayout = `
+<div class="building-container building-block">
+    <div class="building-column-span-asymm-right">
         <div class="building-column building-block building-column-content-center">
             <div class="placeholder-block">
                 <div class="placeholder-block-symbol">+</div>
