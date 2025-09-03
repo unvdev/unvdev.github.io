@@ -1,4 +1,4 @@
-const oneColumnLayout = `
+const oneColumn = `
 <div class="building-container building-block">
     <div class="building-column-span-one">
         <div class="building-column building-block building-column-content-center">
@@ -10,7 +10,7 @@ const oneColumnLayout = `
 </div>
 `;
 
-const twoColumnLayout = `
+const twoColumns = `
 <div class="building-container building-block">
     <div class="building-column-span-two">
         <div class="building-column building-block building-column-content-center">
@@ -27,7 +27,7 @@ const twoColumnLayout = `
 </div>
 `;
 
-const threeColumnLayout = `
+const threeColumns = `
 <div class="building-container building-block">
     <div class="building-column-span-three">
         <div class="building-column building-block building-column-content-center">
@@ -49,7 +49,7 @@ const threeColumnLayout = `
 </div>
 `;
 
-const fourColumnLayout = `
+const fourColumns = `
 <div class="building-container building-block">
     <div class="building-column-span-four">
         <div class="building-column building-block building-column-content-center">
@@ -76,7 +76,7 @@ const fourColumnLayout = `
 </div>
 `;
 
-const fiveColumnLayout = `
+const fiveColumns = `
 <div class="building-container building-block">
     <div class="building-column-span-five">
         <div class="building-column building-block building-column-content-center">
@@ -108,7 +108,7 @@ const fiveColumnLayout = `
 </div>
 `;
 
-const sixColumnLayout = `
+const sixColumns = `
 <div class="building-container building-block">
     <div class="building-column-span-six">
         <div class="building-column building-block building-column-content-center">
@@ -145,7 +145,7 @@ const sixColumnLayout = `
 </div>
 `;
 
-const asymmLeftColumnLayout = `
+const asymmLeftColumn = `
 <div class="building-container building-block">
     <div class="building-column-span-asymm-right">
         <div class="building-column building-block building-column-content-center">
@@ -162,7 +162,7 @@ const asymmLeftColumnLayout = `
 </div>
 `;
 
-const asymmRightColumnLayout = `
+const asymmRightColumn = `
 <div class="building-container building-block">
     <div class="building-column-span-asymm-right">
         <div class="building-column building-block building-column-content-center">

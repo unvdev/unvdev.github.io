@@ -8,12 +8,36 @@ const textElementParagraphButton = document.getElementById("text-element-paragra
 const textElementUnorderedButton = document.getElementById("text-element-unordered-button");
 const textElementOrderedButton = document.getElementById("text-element-ordered-button");
 //Layout Element Buttons
-const textElementHeadingOneButton = document.getElementById("text-element-heading-one-button");
+const layoutElementOneColumnButton = document.getElementById("layout-element-one-column-button");
+const layoutElementTwoColumnButton = document.getElementById("layout-element-two-column-button");
+const layoutElementThreeColumnButton = document.getElementById("layout-element-three-column-button");
+const layoutElementFourColumnButton = document.getElementById("layout-element-four-column-button");
+const layoutElementFiveColumnButton = document.getElementById("layout-element-five-column-button");
+const layoutElementSixColumnButton = document.getElementById("layout-element-six-column-button");
+const layoutElementAsymmLeftColumnButton = document.getElementById("layout-element-asymm-left-column-button");
+const layoutElementAsymmRightColumnButton = document.getElementById("layout-element-asymm-right-column-button");
 
 //Element Spawning Functions
 function insertElement(htmlContent) {
     if (currentlySelected) {
         currentlySelected.insertAdjacentHTML('beforebegin', htmlContent);
+        cms.classList.add('content-hide');
+        deselectAll();
+    }
+}
+
+function insertLayoutElement(htmlContent) {
+    if (currentlySelected) {
+        const allBuildingContainers = document.querySelectorAll(".building-container");
+
+        if (allBuildingContainers.length > 0) {
+            const lastBuildingContainer = allBuildingContainers[allBuildingContainers.length - 1];
+            lastBuildingContainer.insertAdjacentHTML('afterend', htmlContent);
+        } else {
+            console.warn("No '.building-container' found.");
+            return;
+        }
+
         cms.classList.add('content-hide');
         deselectAll();
     }
@@ -28,6 +52,15 @@ textElementHeadingFiveButton.addEventListener('click', () => insertElement(headi
 textElementParagraphButton.addEventListener('click', () => insertElement(paragraph));
 textElementUnorderedButton.addEventListener('click', () => insertElement(unorderedList));
 textElementOrderedButton.addEventListener('click', () => insertElement(orderedList));
+//Layout Element Event Listeners
+layoutElementOneColumnButton.addEventListener('click', () => insertLayoutElement(oneColumn));
+layoutElementTwoColumnButton.addEventListener('click', () => insertLayoutElement(twoColumns));
+layoutElementThreeColumnButton.addEventListener('click', () => insertLayoutElement(threeColumns));
+layoutElementFourColumnButton.addEventListener('click', () => insertLayoutElement(fourColumns));
+layoutElementFiveColumnButton.addEventListener('click', () => insertLayoutElement(fiveColumns));
+layoutElementSixColumnButton.addEventListener('click', () => insertLayoutElement(sixColumns));
+layoutElementAsymmLeftColumnButton.addEventListener('click', () => insertLayoutElement(asymmLeftColumn));
+layoutElementAsymmRightColumnButton.addEventListener('click', () => insertLayoutElement(asymmRightColumn));
 
 
 //Open The CMS Menu
