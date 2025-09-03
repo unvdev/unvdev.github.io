@@ -147,7 +147,7 @@ const sixColumns = `
 
 const asymmLeftColumn = `
 <div class="building-container building-block">
-    <div class="building-column-span-asymm-right">
+    <div class="building-column-span-asymm-left">
         <div class="building-column building-block building-column-content-center">
             <div class="placeholder-block">
                 <div class="placeholder-block-symbol">+</div>
