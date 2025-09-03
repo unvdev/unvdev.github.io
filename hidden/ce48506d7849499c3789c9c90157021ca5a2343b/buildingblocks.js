@@ -189,16 +189,12 @@ const placeHolderInitial = `
 <div class="building-container building-block">
     <div class="building-column-span-1">
         <div class="building-column building-block building-column-content-center">
-            <div class="placeholder-block">
-                <div class="placeholder-block-symbol">+</div>
-            </div>
+            <div class="placeholder-block"></div>
         </div>
     </div>
 </div>
 `;
 
 const placeHolder = `
-<div class="placeholder-block">
-    <div class="placeholder-block-symbol">+</div>
-</div>
+<div class="placeholder-block"></div>
 `;
