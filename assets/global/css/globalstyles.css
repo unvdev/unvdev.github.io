@@ -87,7 +87,7 @@ a:hover, a:focus {
   text-decoration: underline;
 }
 
-.ql-align-left {
+/* .ql-align-left {
   text-align: left;
 }
 
@@ -98,6 +98,10 @@ a:hover, a:focus {
 .ql-align-center {
   text-align: center;
 }
+
+.ql-align-justify {
+  text-align: justify;
+} */
 
 header {
     display: block;
