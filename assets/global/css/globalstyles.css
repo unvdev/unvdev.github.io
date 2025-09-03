@@ -30,7 +30,7 @@ body {
 /* Headings */
 h1, h2, h3, h4, h5 {
   margin-bottom: 0.75rem;
-  width: fit-content;
+  width: auto;
   max-width: 100%;
   line-height: 1.2;
   font-weight: 700;
@@ -60,8 +60,8 @@ h5 {
 /* Paragraph */
 p {
   margin-bottom: 1rem;
-  width: fit-content;
-   max-width: 100%;
+  width: auto;
+  max-width: 100%;
   font-size: 1rem; /* 16px */
   font-weight: 400;
   overflow-wrap: break-word;
