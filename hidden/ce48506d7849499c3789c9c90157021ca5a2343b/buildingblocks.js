@@ -2,9 +2,7 @@ const oneColumn = `
 <div class="building-container building-block">
     <div class="building-column-span-one">
         <div class="building-column building-block building-column-content-center">
-            <div class="placeholder-block">
-                <div class="placeholder-block-symbol">+</div>
-            </div>
+            <div class="placeholder-block"></div>
         </div>
     </div>
 </div>
@@ -14,14 +12,10 @@ const twoColumns = `
 <div class="building-container building-block">
     <div class="building-column-span-two">
         <div class="building-column building-block building-column-content-center">
-            <div class="placeholder-block">
-                <div class="placeholder-block-symbol">+</div>
-            </div>
+            <div class="placeholder-block"></div>
         </div>
         <div class="building-column building-block building-column-content-center">
-            <div class="placeholder-block">
-                <div class="placeholder-block-symbol">+</div>
-            </div>
+            <div class="placeholder-block"></div>
         </div>
     </div>
 </div>
@@ -31,19 +25,13 @@ const threeColumns = `
 <div class="building-container building-block">
     <div class="building-column-span-three">
         <div class="building-column building-block building-column-content-center">
-            <div class="placeholder-block">
-                <div class="placeholder-block-symbol">+</div>
-            </div>
+            <div class="placeholder-block"></div>
         </div>
         <div class="building-column building-block building-column-content-center">
-            <div class="placeholder-block">
-                <div class="placeholder-block-symbol">+</div>
-            </div>
+            <div class="placeholder-block"></div>
         </div>
         <div class="building-column building-block building-column-content-center">
-            <div class="placeholder-block">
-                <div class="placeholder-block-symbol">+</div>
-            </div>
+            <div class="placeholder-block"></div>
         </div>
     </div>
 </div>
@@ -53,24 +41,16 @@ const fourColumns = `
 <div class="building-container building-block">
     <div class="building-column-span-four">
         <div class="building-column building-block building-column-content-center">
-            <div class="placeholder-block">
-                <div class="placeholder-block-symbol">+</div>
-            </div>
+            <div class="placeholder-block"></div>
         </div>
         <div class="building-column building-block building-column-content-center">
-            <div class="placeholder-block">
-                <div class="placeholder-block-symbol">+</div>
-            </div>
+            <div class="placeholder-block"></div>
         </div>
         <div class="building-column building-block building-column-content-center">
-            <div class="placeholder-block">
-                <div class="placeholder-block-symbol">+</div>
-            </div>
+            <div class="placeholder-block"></div>
         </div>
         <div class="building-column building-block building-column-content-center">
-            <div class="placeholder-block">
-                <div class="placeholder-block-symbol">+</div>
-            </div>
+            <div class="placeholder-block"></div>
         </div>
     </div>
 </div>
@@ -80,29 +60,19 @@ const fiveColumns = `
 <div class="building-container building-block">
     <div class="building-column-span-five">
         <div class="building-column building-block building-column-content-center">
-            <div class="placeholder-block">
-                <div class="placeholder-block-symbol">+</div>
-            </div>
+            <div class="placeholder-block"></div>
         </div>
         <div class="building-column building-block building-column-content-center">
-            <div class="placeholder-block">
-                <div class="placeholder-block-symbol">+</div>
-            </div>
+            <div class="placeholder-block"></div>
         </div>
         <div class="building-column building-block building-column-content-center">
-            <div class="placeholder-block">
-                <div class="placeholder-block-symbol">+</div>
-            </div>
+            <div class="placeholder-block"></div>
         </div>
         <div class="building-column building-block building-column-content-center">
-            <div class="placeholder-block">
-                <div class="placeholder-block-symbol">+</div>
-            </div>
+            <div class="placeholder-block"></div>
         </div>
         <div class="building-column building-block building-column-content-center">
-            <div class="placeholder-block">
-                <div class="placeholder-block-symbol">+</div>
-            </div>
+            <div class="placeholder-block"></div>
         </div>
     </div>
 </div>
@@ -112,34 +82,22 @@ const sixColumns = `
 <div class="building-container building-block">
     <div class="building-column-span-six">
         <div class="building-column building-block building-column-content-center">
-            <div class="placeholder-block">
-                <div class="placeholder-block-symbol">+</div>
-            </div>
+            <div class="placeholder-block"></div>
         </div>
         <div class="building-column building-block building-column-content-center">
-            <div class="placeholder-block">
-                <div class="placeholder-block-symbol">+</div>
-            </div>
+            <div class="placeholder-block"></div>
         </div>
         <div class="building-column building-block building-column-content-center">
-            <div class="placeholder-block">
-                <div class="placeholder-block-symbol">+</div>
-            </div>
+            <div class="placeholder-block"></div>
         </div>
         <div class="building-column building-block building-column-content-center">
-            <div class="placeholder-block">
-                <div class="placeholder-block-symbol">+</div>
-            </div>
+            <div class="placeholder-block"></div>
         </div>
         <div class="building-column building-block building-column-content-center">
-            <div class="placeholder-block">
-                <div class="placeholder-block-symbol">+</div>
-            </div>
+            <div class="placeholder-block"></div>
         </div>
         <div class="building-column building-block building-column-content-center">
-            <div class="placeholder-block">
-                <div class="placeholder-block-symbol">+</div>
-            </div>
+            <div class="placeholder-block"></div>
         </div>
     </div>
 </div>
@@ -149,14 +107,10 @@ const asymmLeftColumn = `
 <div class="building-container building-block">
     <div class="building-column-span-asymm-left">
         <div class="building-column building-block building-column-content-center">
-            <div class="placeholder-block">
-                <div class="placeholder-block-symbol">+</div>
-            </div>
+            <div class="placeholder-block"></div>
         </div>
         <div class="building-column building-block building-column-content-center">
-            <div class="placeholder-block">
-                <div class="placeholder-block-symbol">+</div>
-            </div>
+            <div class="placeholder-block"></div>
         </div>
     </div>
 </div>
@@ -166,14 +120,10 @@ const asymmRightColumn = `
 <div class="building-container building-block">
     <div class="building-column-span-asymm-right">
         <div class="building-column building-block building-column-content-center">
-            <div class="placeholder-block">
-                <div class="placeholder-block-symbol">+</div>
-            </div>
+            <div class="placeholder-block"></div>
         </div>
         <div class="building-column building-block building-column-content-center">
-            <div class="placeholder-block">
-                <div class="placeholder-block-symbol">+</div>
-            </div>
+            <div class="placeholder-block"></div>
         </div>
     </div>
 </div>

@@ -33,6 +33,7 @@
 
         .placeholder-block {
             display: block;
+            position: relative;
             margin-top: 1rem;
             margin-bottom: 1rem;
             margin-left: auto;
@@ -44,23 +45,21 @@
             cursor: pointer;
         }
 
-        .placeholder-block:hover {
-            background-color: magenta;
-        }
-
-        .placeholder-block-symbol {
-            display: block;
-            position: relative;
-            width: fit-content;
+        .placeholder-block::before {
+            content: '+';
+            position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             font-family: 'Arial';
             font-weight: bold;
             font-size: 36px;
-            text-align: center;
             color: whitesmoke;
             cursor: inherit;
+            }
+
+        .placeholder-block:hover {
+            background-color: magenta;
         }
 
         /* CMS CSS Testing */
