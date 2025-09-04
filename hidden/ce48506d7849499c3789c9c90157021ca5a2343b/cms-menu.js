@@ -198,8 +198,18 @@ function invokeCMSMenu() {
 
 //Testing
 function getElementAttributes() {
-  const computedStyle = window.getComputedStyle(currentlySelected);
-  const backgroundColor = computedStyle.backgroundColor;
-  const fontSize = computedStyle.fontSize;
-  console.log(`Background color: ${backgroundColor}, Font size: ${fontSize}`);
+    if (currentlySelected) {
+
+    const computedStyle = window.getComputedStyle(currentlySelected);
+
+    const backgroundColor = computedStyle.backgroundColor;
+    const width = computedStyle.width;
+    const height = computedStyle.height;
+    const padding = computedStyle.padding;
+
+    console.log(`Background Color: ${backgroundColor}`);
+    console.log(`Width: ${width}`);
+    console.log(`Height: ${height}`);
+    console.log(`Padding: ${padding}`);
+  }
 }
