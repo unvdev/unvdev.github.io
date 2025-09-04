@@ -166,22 +166,6 @@ function grabImageUpload() {
   });
 }
 
-async function insertImageUpload(htmlContent) {
-  if (currentlySelected) {
-    currentlySelected.insertAdjacentHTML("beforebegin", htmlContent);
-
-    const insertedImage = currentlySelected.previousElementSibling.querySelector("img");
-    const photoBase64 = await grabPhotoUpload();
-
-    if (photoBase64 && insertedImage) {
-      insertedImage.src = photoBase64;
-    }
-
-    cms.classList.add("content-hide");
-    deselectAll();
-  }
-}
-
 //Text Element Event Listeners
 textElementHeadingOneButton.addEventListener('click', () => insertElement(headingOne));
 textElementHeadingTwoButton.addEventListener('click', () => insertElement(headingTwo));
