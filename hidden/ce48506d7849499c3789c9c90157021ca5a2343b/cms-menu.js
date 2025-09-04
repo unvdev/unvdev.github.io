@@ -112,6 +112,14 @@ function grabPhotoUpload() {
         return;
       }
 
+      // If SVG, just return as Base64 without resizing
+      if (file.type === "image/svg+xml") {
+        const reader = new FileReader();
+        reader.onload = (e) => resolve(e.target.result);
+        reader.readAsDataURL(file);
+        return;
+      }
+
       const reader = new FileReader();
       reader.onload = (e) => {
         const img = new Image();
@@ -119,7 +127,7 @@ function grabPhotoUpload() {
           const canvas = document.createElement("canvas");
           const ctx = canvas.getContext("2d");
 
-          const maxSize = 1200;
+          const maxSize = 1200; // ✅ max width/height
           let { width, height } = img;
 
           // Resize if needed
@@ -137,8 +145,9 @@ function grabPhotoUpload() {
           canvas.height = height;
           ctx.drawImage(img, 0, 0, width, height);
 
-          // Export to Base64 (JPEG with quality 0.85 for balance)
-          const base64 = canvas.toDataURL("image/jpeg", 0.85);
+          // Keep original format
+          let mimeType = file.type;
+          const base64 = canvas.toDataURL(mimeType);
 
           resolve(base64);
         };
