@@ -105,14 +105,7 @@ function grabImageUpload() {
         return;
       }
 
-      // 2 MB limit check
-      if (file.size > 2 * 1024 * 1024) {
-        alert("Please upload a photo no larger than 2 MB.");
-        resolve(null);
-        return;
-      }
-
-      // Handle SVG directly
+      // Handle SVG directly (no resizing needed)
       if (file.type === "image/svg+xml") {
         const reader = new FileReader();
         reader.onload = (e) => resolve(e.target.result);
@@ -127,17 +120,17 @@ function grabImageUpload() {
           const canvas = document.createElement("canvas");
           const ctx = canvas.getContext("2d");
 
-          const maxSize = 1200; // max width/height
           let { width, height } = img;
 
-          // Resize if needed
-          if (width > maxSize || height > maxSize) {
+          // Scale image down if it exceeds maxSize or target file size
+          const maxDimension = 1200; // max width/height
+          if (width > maxDimension || height > maxDimension) {
             if (width > height) {
-              height *= maxSize / width;
-              width = maxSize;
+              height *= maxDimension / width;
+              width = maxDimension;
             } else {
-              width *= maxSize / height;
-              height = maxSize;
+              width *= maxDimension / height;
+              height = maxDimension;
             }
           }
 
@@ -145,15 +138,19 @@ function grabImageUpload() {
           canvas.height = height;
           ctx.drawImage(img, 0, 0, width, height);
 
-          // Determine output quality
           let mimeType = file.type;
-          let quality = 1.0; // default lossless
+          let quality = 0.85; // default compression for JPEG/WebP
 
-          if (mimeType === "image/jpeg" || mimeType === "image/webp") {
-            quality = 0.85; // compress JPEG/WebP
+          // Generate base64 and check size
+          let base64 = canvas.toDataURL(mimeType, quality);
+
+          // Reduce quality iteratively if >2MB
+          const maxSizeBytes = 2 * 1024 * 1024;
+          while (base64.length * 0.75 > maxSizeBytes && quality > 0.4) { 
+            quality -= 0.05;
+            base64 = canvas.toDataURL(mimeType, quality);
           }
 
-          const base64 = canvas.toDataURL(mimeType, quality);
           resolve(base64);
         };
         img.src = e.target.result;
