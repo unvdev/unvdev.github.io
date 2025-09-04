@@ -185,16 +185,22 @@ const orderedList = `
 </div>
 `;
 
-const placeHolderInitial = `
-<div class="building-container building-block">
-    <div class="building-column-span-1">
-        <div class="building-column building-block building-column-content-center">
-            <div class="placeholder-block"></div>
-        </div>
-    </div>
+const image = `
+<div class="image-element building-block">
+    <img class="default-image"></img>
 </div>
 `;
 
-const placeHolder = `
-<div class="placeholder-block"></div>
-`;
+// const placeHolderInitial = `
+// <div class="building-container building-block">
+//     <div class="building-column-span-1">
+//         <div class="building-column building-block building-column-content-center">
+//             <div class="placeholder-block"></div>
+//         </div>
+//     </div>
+// </div>
+// `;
+
+// const placeHolder = `
+// <div class="placeholder-block"></div>
+// `;
