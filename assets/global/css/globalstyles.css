@@ -123,15 +123,11 @@ a:hover, a:focus {
 hr {
   display: block;
   position: relative;
-  margin: auto;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  margin: 10px auto;
   width: 75%;
   height: 2px;
-  left: 50%;
-  transform: translateX(-50%);
   background-color: silver;
-  border:none;
+  border: none;
 }
 
 header {
