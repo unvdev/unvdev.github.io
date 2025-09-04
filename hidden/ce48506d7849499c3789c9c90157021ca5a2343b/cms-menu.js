@@ -34,10 +34,10 @@ function insertImageLink(htmlContent) {
     currentlySelected.insertAdjacentHTML('beforebegin', htmlContent);
 
     const insertedImage = currentlySelected.previousElementSibling.querySelector("img");
-    const photoLink = grabPhotoLink();
+    const imageLink = grabImageLink();
 
-    if (photoLink && insertedImage) {
-      insertedImage.src = photoLink;
+    if (imageLink && insertedImage) {
+      insertedImage.src = imageLink;
     }
 
     cms.classList.add("content-hide");
@@ -50,10 +50,10 @@ async function insertImageUpload(htmlContent) {
     currentlySelected.insertAdjacentHTML("beforebegin", htmlContent);
 
     const insertedImage = currentlySelected.previousElementSibling.querySelector("img");
-    const photoUrl = await grabPhotoUpload();
+    const imageUpload = await grabImageUpload();
 
-    if (photoUrl && insertedImage) {
-      insertedImage.src = photoUrl;
+    if (imageUpload && insertedImage) {
+      insertedImage.src = imageUpload;
     }
 
     cms.classList.add("content-hide");
@@ -79,7 +79,7 @@ function insertLayoutElement(htmlContent) {
 }
 
 // Utilities
-function grabPhotoLink() {
+function grabImageLink() {
   const link = prompt("Enter a photo link:");
   const imageRegex = /\.(jpe?g|png|gif|webp|svg)(\?.*)?(#.*)?$/i;
 
@@ -92,7 +92,7 @@ function grabPhotoLink() {
   return null;
 }
 
-function grabPhotoUpload() {
+function grabImageUpload() {
   return new Promise((resolve) => {
     const input = document.createElement("input");
     input.type = "file";
@@ -112,7 +112,7 @@ function grabPhotoUpload() {
         return;
       }
 
-      // If SVG, just return as Base64 without resizing
+      // Handle SVG directly
       if (file.type === "image/svg+xml") {
         const reader = new FileReader();
         reader.onload = (e) => resolve(e.target.result);
@@ -127,7 +127,7 @@ function grabPhotoUpload() {
           const canvas = document.createElement("canvas");
           const ctx = canvas.getContext("2d");
 
-          const maxSize = 1200; // ✅ max width/height
+          const maxSize = 1200; // max width/height
           let { width, height } = img;
 
           // Resize if needed
@@ -145,10 +145,15 @@ function grabPhotoUpload() {
           canvas.height = height;
           ctx.drawImage(img, 0, 0, width, height);
 
-          // Keep original format
+          // Determine output quality
           let mimeType = file.type;
-          const base64 = canvas.toDataURL(mimeType);
+          let quality = 1.0; // default lossless
 
+          if (mimeType === "image/jpeg" || mimeType === "image/webp") {
+            quality = 0.85; // compress JPEG/WebP
+          }
+
+          const base64 = canvas.toDataURL(mimeType, quality);
           resolve(base64);
         };
         img.src = e.target.result;
@@ -159,6 +164,22 @@ function grabPhotoUpload() {
 
     input.click();
   });
+}
+
+async function insertImageUpload(htmlContent) {
+  if (currentlySelected) {
+    currentlySelected.insertAdjacentHTML("beforebegin", htmlContent);
+
+    const insertedImage = currentlySelected.previousElementSibling.querySelector("img");
+    const photoBase64 = await grabPhotoUpload();
+
+    if (photoBase64 && insertedImage) {
+      insertedImage.src = photoBase64;
+    }
+
+    cms.classList.add("content-hide");
+    deselectAll();
+  }
 }
 
 //Text Element Event Listeners
