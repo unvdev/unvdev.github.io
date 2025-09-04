@@ -195,3 +195,11 @@ function invokeCMSMenu() {
         cms.classList.remove('content-hide');
     }
 }
+
+//Testing
+function getElementAttributes() {
+  const computedStyle = window.getComputedStyle(currentlySelected);
+  const backgroundColor = computedStyle.backgroundColor;
+  const fontSize = computedStyle.fontSize;
+  console.log(`Background color: ${backgroundColor}, Font size: ${fontSize}`);
+}
