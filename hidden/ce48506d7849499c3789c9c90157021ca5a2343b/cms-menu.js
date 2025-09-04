@@ -17,16 +17,32 @@ const layoutElementSixColumnButton = document.getElementById("layout-element-six
 const layoutElementAsymmLeftColumnButton = document.getElementById("layout-element-asymm-left-column-button");
 const layoutElementAsymmRightColumnButton = document.getElementById("layout-element-asymm-right-column-button");
 //Image Element Buttons
-const layoutElementAsymmRightColumnButton = document.getElementById("layout-element-asymm-right-column-button");
-const layoutElementAsymmRightColumnButton = document.getElementById("layout-element-asymm-right-column-button");
+const imageElementLinkButton = document.getElementById("image-element-link-button");
+const imageElementUploadButton = document.getElementById("image-element-upload-button");
 
-//Element Spawning Functions
+//Element Functions
 function insertElement(htmlContent) {
     if (currentlySelected) {
         currentlySelected.insertAdjacentHTML('beforebegin', htmlContent);
         cms.classList.add('content-hide');
         deselectAll();
     }
+}
+
+function insertImageLink(htmlContent) {
+  if (currentlySelected) {
+    currentlySelected.insertAdjacentHTML('beforebegin', htmlContent);
+
+    const insertedImage = currentlySelected.previousElementSibling.querySelector("img");
+
+    const photoLink = grabPhotoLink();
+    if (photoLink && insertedImage) {
+      insertedImage.src = photoLink;
+    }
+
+    cms.classList.add("content-hide");
+    deselectAll();
+  }
 }
 
 function insertLayoutElement(htmlContent) {
@@ -44,6 +60,20 @@ function insertLayoutElement(htmlContent) {
         cms.classList.add('content-hide');
         deselectAll();
     }
+}
+
+// Utilities
+function grabPhotoLink() {
+  const link = prompt("Enter a photo link:");
+  const imageRegex = /\.(jpe?g|png|gif|webp|svg)(\?.*)?(#.*)?$/i;
+
+  if (link && imageRegex.test(link)) {
+    return link;
+  } else if (link) {
+    alert("Please enter a valid image URL (jpg, png, gif, webp, svg).");
+  }
+
+  return null;
 }
 
 //Text Element Event Listeners
@@ -64,7 +94,8 @@ layoutElementFiveColumnButton.addEventListener('click', () => insertLayoutElemen
 layoutElementSixColumnButton.addEventListener('click', () => insertLayoutElement(sixColumns));
 layoutElementAsymmLeftColumnButton.addEventListener('click', () => insertLayoutElement(asymmLeftColumn));
 layoutElementAsymmRightColumnButton.addEventListener('click', () => insertLayoutElement(asymmRightColumn));
-
+//Image Element Event Listeners
+imageElementLinkButton.addEventListener('click', () => insertImageLink(image));
 
 //Open The CMS Menu
 function invokeCMSMenu() {
