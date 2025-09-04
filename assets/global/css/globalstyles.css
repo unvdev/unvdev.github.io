@@ -103,6 +103,13 @@ a:hover, a:focus {
   text-align: justify;
 }
 
+.default-image {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
 header {
     display: block;
     position: relative;
