@@ -120,6 +120,7 @@ a:hover, a:focus {
 hr {
   display: block;
   position: relative;
+  width: 75%;
   height: 2px; 
   background-color: silver;
   border:none;
