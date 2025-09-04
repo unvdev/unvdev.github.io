@@ -16,6 +16,9 @@ const layoutElementFiveColumnButton = document.getElementById("layout-element-fi
 const layoutElementSixColumnButton = document.getElementById("layout-element-six-column-button");
 const layoutElementAsymmLeftColumnButton = document.getElementById("layout-element-asymm-left-column-button");
 const layoutElementAsymmRightColumnButton = document.getElementById("layout-element-asymm-right-column-button");
+//Image Element Buttons
+const layoutElementAsymmRightColumnButton = document.getElementById("layout-element-asymm-right-column-button");
+const layoutElementAsymmRightColumnButton = document.getElementById("layout-element-asymm-right-column-button");
 
 //Element Spawning Functions
 function insertElement(htmlContent) {
