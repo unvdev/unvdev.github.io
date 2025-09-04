@@ -105,20 +105,46 @@ function grabPhotoUpload() {
         return;
       }
 
-      // 2 MB limit
+      // 2 MB limit check
       if (file.size > 2 * 1024 * 1024) {
         alert("Please upload a photo no larger than 2 MB.");
         resolve(null);
         return;
       }
 
-      // Convert file → Base64
       const reader = new FileReader();
-      reader.onload = () => resolve(reader.result); // reader.result is a base64 data URL
-      reader.onerror = () => {
-        alert("Error reading file.");
-        resolve(null);
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+
+          const maxSize = 1200;
+          let { width, height } = img;
+
+          // Resize if needed
+          if (width > maxSize || height > maxSize) {
+            if (width > height) {
+              height *= maxSize / width;
+              width = maxSize;
+            } else {
+              width *= maxSize / height;
+              height = maxSize;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Export to Base64 (JPEG with quality 0.85 for balance)
+          const base64 = canvas.toDataURL("image/jpeg", 0.85);
+
+          resolve(base64);
+        };
+        img.src = e.target.result;
       };
+
       reader.readAsDataURL(file);
     };
 
