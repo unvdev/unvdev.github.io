@@ -110,6 +110,21 @@ a:hover, a:focus {
   height: auto;
 }
 
+.spacer {
+  display: block;
+  position: relative;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+hr {
+  display: block;
+  position: relative;
+  height: 2px; 
+  background-color: silver;
+  border:none;
+}
+
 header {
     display: block;
     position: relative;

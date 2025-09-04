@@ -129,6 +129,18 @@ const asymmRightColumn = `
 </div>
 `;
 
+const spacer = `
+<div class="building-block">
+    <div class="spacer"></div>
+</div>
+`;
+
+const divider = `
+<div class="building-block">
+    <hr />
+</div>
+`;
+
 const headingOne = `
 <div class="text-element building-block">
     <h1>Lorem ipsum</h1>
