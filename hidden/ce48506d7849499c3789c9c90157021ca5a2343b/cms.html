@@ -189,7 +189,7 @@
 }
 
   /* Attribute Editor Popup */
-.text-editor-pop {
+.style-editor-pop {
     display: block;
     position: fixed;
     top: 50%;
@@ -197,30 +197,20 @@
     transform: translate(-50%, -50%);
     width: 600px;
     height: 600px;
-    background-color: whitesmoke;
+    background-color: silver;
     z-index: 99999999999999;
     box-sizing: border-box;
 }
 
-/* Quill Toolbar */
-.ql-toolbar {
-    position: relative;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: white;
+.style-editor-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    padding: 1rem;
+    gap: 1rem;
 }
 
-/* Quill Editor */
-.ql-editor {
-    max-height: 550px !important;
-    overflow-y: auto;
-    padding: 10px;
-}
 
-.ql-container.ql-snow {
-    border: none !important;
-}
     </style>
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 </head>
@@ -356,6 +346,26 @@
     <div class="text-editor-pop content-hide">
         <div class="text-editor">
             <div id="quill-editor"></div>
+        </div>
+    </div>
+    <div class="style-editor-pop content-show">
+        <div class="style-editor-container">
+            <div class="style-editor-item">
+                <div class="style-title">Background Color</div>
+                <input class="style-input" type="text"></input>
+            </div>
+            <div class="style-editor-item">
+                <div class="style-title">Width</div>
+                <input class="style-input" type="text"></input>
+            </div>
+            <div class="style-editor-item">
+                <div class="style-title">Height</div>
+                <input class="style-input" type="text"></input>
+            </div>
+            <div class="style-editor-item">
+                <div class="style-title">Padding</div>
+                <input class="style-input" type="text"></input>
+            </div>
         </div>
     </div>
 
