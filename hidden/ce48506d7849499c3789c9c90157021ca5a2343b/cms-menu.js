@@ -47,7 +47,7 @@ function insertImageLink(htmlContent) {
 
 async function insertImageUpload(htmlContent) {
   if (currentlySelected) {
-    currentlySelected.insertAdjacentHTML('beforebegin', htmlContent);
+    currentlySelected.insertAdjacentHTML("beforebegin", htmlContent);
 
     const insertedImage = currentlySelected.previousElementSibling.querySelector("img");
     const photoUrl = await grabPhotoUpload();
@@ -60,7 +60,6 @@ async function insertImageUpload(htmlContent) {
     deselectAll();
   }
 }
-
 
 function insertLayoutElement(htmlContent) {
     if (currentlySelected) {
@@ -113,9 +112,14 @@ function grabPhotoUpload() {
         return;
       }
 
-      // Return a temporary object URL
-      const url = URL.createObjectURL(file);
-      resolve(url);
+      // Convert file → Base64
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result); // reader.result is a base64 data URL
+      reader.onerror = () => {
+        alert("Error reading file.");
+        resolve(null);
+      };
+      reader.readAsDataURL(file);
     };
 
     input.click();
