@@ -34,8 +34,8 @@ function insertImageLink(htmlContent) {
     currentlySelected.insertAdjacentHTML('beforebegin', htmlContent);
 
     const insertedImage = currentlySelected.previousElementSibling.querySelector("img");
-
     const photoLink = grabPhotoLink();
+
     if (photoLink && insertedImage) {
       insertedImage.src = photoLink;
     }
@@ -44,6 +44,23 @@ function insertImageLink(htmlContent) {
     deselectAll();
   }
 }
+
+async function insertImageUpload(htmlContent) {
+  if (currentlySelected) {
+    currentlySelected.insertAdjacentHTML('beforebegin', htmlContent);
+
+    const insertedImage = currentlySelected.previousElementSibling.querySelector("img");
+    const photoUrl = await grabPhotoUpload();
+
+    if (photoUrl && insertedImage) {
+      insertedImage.src = photoUrl;
+    }
+
+    cms.classList.add("content-hide");
+    deselectAll();
+  }
+}
+
 
 function insertLayoutElement(htmlContent) {
     if (currentlySelected) {
@@ -76,6 +93,35 @@ function grabPhotoLink() {
   return null;
 }
 
+function grabPhotoUpload() {
+  return new Promise((resolve) => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/jpeg,image/png,image/gif,image/webp,image/svg+xml";
+
+    input.onchange = () => {
+      const file = input.files[0];
+      if (!file) {
+        resolve(null);
+        return;
+      }
+
+      // 2 MB limit
+      if (file.size > 2 * 1024 * 1024) {
+        alert("Please upload a photo no larger than 2 MB.");
+        resolve(null);
+        return;
+      }
+
+      // Return a temporary object URL
+      const url = URL.createObjectURL(file);
+      resolve(url);
+    };
+
+    input.click();
+  });
+}
+
 //Text Element Event Listeners
 textElementHeadingOneButton.addEventListener('click', () => insertElement(headingOne));
 textElementHeadingTwoButton.addEventListener('click', () => insertElement(headingTwo));
@@ -96,6 +142,7 @@ layoutElementAsymmLeftColumnButton.addEventListener('click', () => insertLayoutE
 layoutElementAsymmRightColumnButton.addEventListener('click', () => insertLayoutElement(asymmRightColumn));
 //Image Element Event Listeners
 imageElementLinkButton.addEventListener('click', () => insertImageLink(image));
+imageElementUploadButton.addEventListener('click', () => insertImageUpload(image));
 
 //Open The CMS Menu
 function invokeCMSMenu() {
