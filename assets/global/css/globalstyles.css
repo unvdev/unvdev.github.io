@@ -111,21 +111,25 @@ a:hover, a:focus {
 }
 
 .spacer {
-  margin: 0 auto;
   display: block;
-  width: 100%;
-  height: auto;
   position: relative;
+  margin: auto;
   padding-top: 10px;
   padding-bottom: 10px;
+  width: 100%;
+  height: auto;
 }
 
 hr {
-  margin: 0 auto;
   display: block;
   position: relative;
+  margin: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
   width: 75%;
-  height: 2px; 
+  height: 2px;
+  left: 50%;
+  transform: translateX(-50%);
   background-color: silver;
   border:none;
 }
