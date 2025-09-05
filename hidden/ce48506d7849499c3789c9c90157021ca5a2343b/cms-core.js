@@ -6,18 +6,8 @@ let currentlySelected = null;
 let currentlyEditable = null;
 
 function deselectAll() {
-    if (currentlyEditable && currentlyEditable.quillInstance) {
-        const quillInstance = currentlyEditable.quillInstance;
-        const content = quillInstance.getSemanticHTML();
-        const toolbar = quillInstance.container.previousElementSibling;
-        if (toolbar && toolbar.classList.contains('ql-toolbar')) {
-            toolbar.remove();
-        }
         currentlyEditable.innerHTML = content;
-        currentlyEditable.quillInstance = null;
-        currentlyEditable.classList.remove('ql-container', 'ql-snow');
-    }
-    currentlyEditable = null;
+        currentlyEditable = null;
 
     if (currentlySelected) {
         currentlySelected.classList.remove('selected');
@@ -41,12 +31,6 @@ function selectBuildingBlock(blockToSelect, originalTarget) {
 function deleteElement() {
     if (currentlySelected) {
         if (confirm('Are you sure you want to delete this element?')) {
-            if (currentlyEditable && currentlyEditable.quillInstance) {
-                const toolbar = currentlyEditable.quillInstance.container.previousElementSibling;
-                if (toolbar && toolbar.classList.contains('ql-toolbar')) {
-                    toolbar.remove();
-                }
-            }
             currentlySelected.remove();
             currentlySelected = null;
             currentlyEditable = null;
