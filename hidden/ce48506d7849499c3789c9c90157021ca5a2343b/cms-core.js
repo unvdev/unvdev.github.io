@@ -52,7 +52,7 @@ document.addEventListener("click", (e) => {
 
 document.addEventListener("keydown", e => {
     // If the key press is inside the text editor popup, exit immediately.
-    if (e.target.closest('.text-editor-pop')) {
+    if (e.target.closest('.text-editor-pop') || e.target.closest('.style-editor-pop')) {
         return;
     }
 
