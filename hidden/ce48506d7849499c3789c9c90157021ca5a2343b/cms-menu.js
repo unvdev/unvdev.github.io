@@ -216,7 +216,10 @@ const heightInput = document.getElementById('style-editor-height');
 const heightButton = document.getElementById('style-editor-height-button');
 
 // Get the input and button for Padding
-const paddingInput = document.getElementById('style-editor-padding');
+const paddingTopInput = document.getElementById('style-editor-padding-top');
+const paddingBtottom = document.getElementById('style-editor-padding-top');
+const paddingTopInput = document.getElementById('style-editor-padding-top');
+const paddingTopInput = document.getElementById('style-editor-padding-top');
 const paddingButton = document.getElementById('style-editor-padding-button');
 
 function getElementAttributes() {
