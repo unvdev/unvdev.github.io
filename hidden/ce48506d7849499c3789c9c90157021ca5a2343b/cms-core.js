@@ -39,7 +39,7 @@ function deleteElement() {
 
 document.addEventListener("click", (e) => {
     const target = e.target;
-    const uiElements = '.ql-container, .ql-toolbar, .ql-picker, .ql-tooltip, .ql-action, .text-editor-pop, .text-editor, .cms-menu-bar, .cms-menu, .cms-menu-container, .style-editor-pop';
+    const uiElements = '.ql-container, .ql-toolbar, .ql-picker, .ql-tooltip, .ql-action, .text-editor-pop, .text-editor, .cms-menu-bar, .cms-menu, .cms-menu-container, .style-editor-pop, .style-editor-container, .style-editor-item, .style-editor-title, .style-editor-input';
     if (target.closest(uiElements)) return;
 
     const targetBlock = target.closest('.building-block');
