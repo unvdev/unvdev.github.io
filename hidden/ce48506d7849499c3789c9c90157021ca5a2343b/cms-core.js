@@ -23,6 +23,9 @@ function selectBuildingBlock(blockToSelect, originalTarget) {
         invokeCMSMenu();
         return;
     }
+    if (originalTarget.closest('.style-editor-pop')) {
+        return;
+    }
     deselectAll();
     currentlySelected = blockToSelect;
     currentlySelected.classList.add('selected');
