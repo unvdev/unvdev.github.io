@@ -132,8 +132,8 @@ hr {
 
 @media screen and (max-width: 900px) {
   .custom-styles {
-    padding: auto !important;
-    width: auto !important;
+    padding: 0px !important;
+    width: 100% !important;
   }
 }
 
