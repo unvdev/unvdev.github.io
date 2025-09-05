@@ -208,6 +208,35 @@
     grid-template-rows: repeat(2, 1fr);
     padding: 1rem;
     gap: 1rem;
+    justify-items: center;
+    align-items: center;
+}
+
+.style-editor-item {
+    display: block;
+    position: relative;
+    width: 150px;
+    height: 150px;
+}
+
+.style-editor-title {
+    display: block;
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    font-family: 'Arial';
+    font-size: 20px;
+    text-align: center;
+}
+
+.style-editor-input {
+    display: block;
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    height: 40px;
+    font-family: 'monospace';
+    font-size: 20px;
 }
 
 
@@ -351,20 +380,20 @@
     <div class="style-editor-pop content-show">
         <div class="style-editor-container">
             <div class="style-editor-item">
-                <div class="style-title">Background Color</div>
-                <input class="style-input" type="text"></input>
+                <div class="style-editor-title">Background Color</div>
+                <input class="style-editor-input" type="text"></input>
             </div>
             <div class="style-editor-item">
-                <div class="style-title">Width</div>
-                <input class="style-input" type="text"></input>
+                <div class="style-editor-title">Width</div>
+                <input class="style-editor-input" type="text"></input>
             </div>
             <div class="style-editor-item">
-                <div class="style-title">Height</div>
-                <input class="style-input" type="text"></input>
+                <div class="style-editor-title">Height</div>
+                <input class="style-editor-input" type="text"></input>
             </div>
             <div class="style-editor-item">
-                <div class="style-title">Padding</div>
-                <input class="style-input" type="text"></input>
+                <div class="style-editor-title">Padding</div>
+                <input class="style-editor-input" type="text"></input>
             </div>
         </div>
     </div>
