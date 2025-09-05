@@ -39,7 +39,7 @@ function deleteElement() {
 
 document.addEventListener("click", (e) => {
     const target = e.target;
-    const uiElements = '.ql-container, .ql-toolbar, .ql-picker, .ql-tooltip, .ql-action, .text-editor-pop, .text-editor, .cms-menu-bar, .cms-menu, .cms-menu-container, .style-editor-pop, .style-editor-container, .style-editor-item, .style-editor-title, .style-editor-input';
+    const uiElements = '.ql-container, .ql-toolbar, .ql-picker, .ql-tooltip, .ql-action, .text-editor-pop, .text-editor, .cms-menu-bar, .cms-menu, .cms-menu-container, .style-editor-pop, .style-editor-container, .style-editor-item, .style-editor-title';
     if (target.closest(uiElements)) return;
 
     const targetBlock = target.closest('.building-block');
@@ -51,12 +51,8 @@ document.addEventListener("click", (e) => {
 });
 
 document.addEventListener("keydown", e => {
-    // If the key press is inside the text editor popup, exit immediately.
-    if (e.target.closest('.text-editor-pop')) {
-        return;
-    }
-
-    if (e.target.closest('.style-editor-pop')) {
+    // Ignore keystrokes inside editors
+    if (e.target.closest('.text-editor-pop') || e.target.closest('.style-editor-pop')) {
         return;
     }
 
