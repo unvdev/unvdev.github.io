@@ -247,6 +247,9 @@ function getElementAttributes() {
 // Listen for a standard 'click' event on the entire document
 document.addEventListener("click", (e) => {
     // Check if the Shift key was held down during the click
+    if (e.target.closest('.style-editor-pop')) {
+        return;
+    }
     if (e.shiftKey) {
         if (currentlySelected) {
             invokeStyleMenu();
