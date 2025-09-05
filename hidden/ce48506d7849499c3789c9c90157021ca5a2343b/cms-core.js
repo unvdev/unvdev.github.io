@@ -1,4 +1,5 @@
 const cms = document.querySelector(".cms-menu");
+const styles = document.querySelector(".style-editor-pop");
 const deleteButton = document.querySelector(".delete-element");
 const loadedPage = document.querySelector("#loaded-page");
 
@@ -12,6 +13,8 @@ function deselectAll() {
         currentlySelected.classList.remove('selected');
         currentlySelected = null;
         cms.classList.add("content-hide");
+        styles.classList.add("content-hide");
+
     }
 }
 
