@@ -130,6 +130,13 @@ hr {
   border: none;
 }
 
+@media screen and (max-width: 900px) {
+  .custom-styles {
+    padding: auto;
+    width: auto;
+  }
+}
+
 header {
     display: block;
     position: relative;

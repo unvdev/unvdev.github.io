@@ -225,6 +225,9 @@ const paddingButton = document.getElementById('style-editor-padding-button');
 function getElementAttributes() {
     // Make sure an element has been selected
     if (currentlySelected) {
+      if (!currentlySelected.classList.contains("custom-styles")) {
+            currentlySelected.classList.add("custom-styles");
+      }
         // Get the collection of all computed styles for the element
         const computedStyle = window.getComputedStyle(currentlySelected);
 
