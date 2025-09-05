@@ -22,7 +22,7 @@ function selectBuildingBlock(blockToSelect, originalTarget) {
         invokeCMSMenu();
         return;
     }
-    if (originalTarget.closest('.style-editor-pop')) {
+    if (document.querySelector(".style-editor-pop").classList.contains('content-show')) {
         return;
     }
     deselectAll();
