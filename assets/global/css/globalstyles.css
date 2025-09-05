@@ -123,12 +123,11 @@ a:hover, a:focus {
 hr {
   display: block;
   position: relative;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  margin: 20px auto;
   width: 75%;
-  height: auto;
+  height: 2px;
+  background-color: silver;
   border: none;
-  border-top: 5px solid silver;
 }
 
 @media screen and (max-width: 900px) {
