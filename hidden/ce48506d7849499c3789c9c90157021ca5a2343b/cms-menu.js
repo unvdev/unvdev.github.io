@@ -285,6 +285,6 @@ heightButton.addEventListener('click', () => {
 // Add a click event listener to the padding button
 paddingButton.addEventListener('click', () => {
     if (currentlySelected) {
-        currentlySelected.style.margin = `${paddingTopInput.value} ${paddingRightInput.value} ${paddingBottomInput.value} ${paddingLeftInput.value}`;
+        currentlySelected.style.padding = `${paddingTopInput.value} ${paddingRightInput.value} ${paddingBottomInput.value} ${paddingLeftInput.value}`;
     }
 });
