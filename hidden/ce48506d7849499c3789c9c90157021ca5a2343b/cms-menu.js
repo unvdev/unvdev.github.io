@@ -196,20 +196,88 @@ function invokeCMSMenu() {
     }
 }
 
-//Testing
-function getElementAttributes() {
+//Open The Styles Menu
+function invokeStyleMenu() {
     if (currentlySelected) {
-
-    const computedStyle = window.getComputedStyle(currentlySelected);
-
-    const backgroundColor = computedStyle.backgroundColor;
-    const width = computedStyle.width;
-    const height = computedStyle.height;
-    const padding = computedStyle.padding;
-
-    console.log(`Background Color: ${backgroundColor}`);
-    console.log(`Width: ${width}`);
-    console.log(`Height: ${height}`);
-    console.log(`Padding: ${padding}`);
-  }
+        document.querySelector(".style-editor-pop").classList.remove('content-hide');
+    }
 }
+
+//Testing
+const backgroundColorInput = document.getElementById('style-editor-background-color');
+const backgroundColorButton = document.getElementById('style-editor-background-color-button');
+
+// Get the input and button for Width
+const widthInput = document.getElementById('style-editor-width');
+const widthButton = document.getElementById('style-editor-width-button');
+
+// Get the input and button for Height
+const heightInput = document.getElementById('style-editor-height');
+const heightButton = document.getElementById('style-editor-height-button');
+
+// Get the input and button for Padding
+const paddingInput = document.getElementById('style-editor-padding');
+const paddingButton = document.getElementById('style-editor-padding-button');
+
+function getElementAttributes() {
+    // Make sure an element has been selected
+    if (currentlySelected) {
+        // Get the collection of all computed styles for the element
+        const computedStyle = window.getComputedStyle(currentlySelected);
+
+        // Extract the specific styles we care about
+        const backgroundColor = computedStyle.backgroundColor;
+        const width = computedStyle.width;
+        const height = computedStyle.height;
+        const padding = computedStyle.padding;
+
+        // Set the value of the input fields to match the element's styles
+        backgroundColorInput.value = backgroundColor;
+        widthInput.value = width;
+        heightInput.value = height;
+        paddingInput.value = padding;
+
+        // Log to the console for verification
+        console.log("Updated input fields with computed styles:", { backgroundColor, width, height, padding });
+    } else {
+        console.log("No element is currently selected.");
+    }
+}
+
+// Listen for a standard 'click' event on the entire document
+document.addEventListener("click", (e) => {
+    // Check if the Shift key was held down during the click
+    if (e.shiftKey) {
+        if (currentlySelected) {
+            invokeStyleMenu();
+            getElementAttributes();
+        }
+    }
+});
+
+backgroundColorButton.addEventListener('click', () => {
+    if (currentlySelected) {
+        currentlySelected.style.backgroundColor = backgroundColorInput.value;
+    }
+});
+
+// Add a click event listener to the width button
+widthButton.addEventListener('click', () => {
+    if (currentlySelected) {
+        currentlySelected.style.width = widthInput.value;
+    }
+});
+
+// Add a click event listener to the height button
+heightButton.addEventListener('click', () => {
+    if (currentlySelected) {
+        currentlySelected.style.height = heightInput.value;
+    }
+});
+
+// Add a click event listener to the padding button
+paddingButton.addEventListener('click', () => {
+    if (currentlySelected) {
+        currentlySelected.style.padding = paddingInput.value;
+    }
+});
