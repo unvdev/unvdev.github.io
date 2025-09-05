@@ -245,11 +245,6 @@ function getElementAttributes() {
         paddingBottomInput.value = paddingBottom;
         paddingLeftInput.value = paddingLeft;
         paddingRightInput.value = paddingRight;
-
-        // Log to the console for verification
-        console.log("Updated input fields with computed styles:", { backgroundColor, width, height, padding });
-    } else {
-        console.log("No element is currently selected.");
     }
 }
 
