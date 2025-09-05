@@ -217,9 +217,9 @@ const heightButton = document.getElementById('style-editor-height-button');
 
 // Get the input and button for Padding
 const paddingTopInput = document.getElementById('style-editor-padding-top');
-const paddingBtottom = document.getElementById('style-editor-padding-top');
-const paddingTopInput = document.getElementById('style-editor-padding-top');
-const paddingTopInput = document.getElementById('style-editor-padding-top');
+const paddingBottomInput = document.getElementById('style-editor-padding-bottom');
+const paddingLeftInput = document.getElementById('style-editor-padding-left');
+const paddingRightInput = document.getElementById('style-editor-padding-right');
 const paddingButton = document.getElementById('style-editor-padding-button');
 
 function getElementAttributes() {
@@ -232,13 +232,19 @@ function getElementAttributes() {
         const backgroundColor = computedStyle.backgroundColor;
         const width = computedStyle.width;
         const height = computedStyle.height;
-        const padding = computedStyle.padding;
+        const paddingTop = computedStyle.paddingTop;
+        const paddingBottom = computedStyle.paddingBottom;
+        const paddingLeft = computedStyle.paddingLeft;
+        const paddingRight = computedStyle.paddingRight;
 
         // Set the value of the input fields to match the element's styles
         backgroundColorInput.value = backgroundColor;
         widthInput.value = width;
         heightInput.value = height;
-        paddingInput.value = padding;
+        paddingTopInput.value = paddingTop;
+        paddingBottomInput.value = paddingBottom;
+        paddingLeftInput.value = paddingLeft;
+        paddingRightInput.value = paddingRight;
 
         // Log to the console for verification
         console.log("Updated input fields with computed styles:", { backgroundColor, width, height, padding });
@@ -281,6 +287,6 @@ heightButton.addEventListener('click', () => {
 // Add a click event listener to the padding button
 paddingButton.addEventListener('click', () => {
     if (currentlySelected) {
-        currentlySelected.style.padding = paddingInput.value;
+        currentlySelected.style.padding = `${paddingTopInput.value} ${paddingRightInput.value} ${paddingBottomInput.value} ${paddingLeftInput.value}`;
     }
 });
