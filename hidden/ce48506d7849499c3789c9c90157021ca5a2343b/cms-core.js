@@ -6,7 +6,6 @@ let currentlySelected = null;
 let currentlyEditable = null;
 
 function deselectAll() {
-        currentlyEditable.innerHTML = content;
         currentlyEditable = null;
 
     if (currentlySelected) {
