@@ -22,9 +22,6 @@ function selectBuildingBlock(blockToSelect, originalTarget) {
         invokeCMSMenu();
         return;
     }
-    if (document.querySelector(".style-editor-pop").classList.contains('content-show')) {
-        return;
-    }
     deselectAll();
     currentlySelected = blockToSelect;
     currentlySelected.classList.add('selected');
@@ -42,7 +39,7 @@ function deleteElement() {
 
 document.addEventListener("click", (e) => {
     const target = e.target;
-    const uiElements = '.ql-container, .ql-toolbar, .ql-picker, .ql-tooltip, .ql-action, .text-editor-pop, .text-editor, .cms-menu-bar, .cms-menu, .cms-menu-container';
+    const uiElements = '.ql-container, .ql-toolbar, .ql-picker, .ql-tooltip, .ql-action, .text-editor-pop, .text-editor, .cms-menu-bar, .cms-menu, .cms-menu-container .style-editor-pop';
     if (target.closest(uiElements)) return;
 
     const targetBlock = target.closest('.building-block');
