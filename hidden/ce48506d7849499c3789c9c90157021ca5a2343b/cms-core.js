@@ -48,6 +48,7 @@ function copyElement() {
 function pasteElement() {
     if (currentlySelected && clipboardHTML) {
         currentlySelected.insertAdjacentHTML('afterend', clipboardHTML);
+        deselectAll();
     }
 }
 
