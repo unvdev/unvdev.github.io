@@ -47,8 +47,17 @@ function copyElement() {
 
 function pasteElement() {
     if (currentlySelected && clipboardHTML) {
-        currentlySelected.insertAdjacentHTML('afterend', clipboardHTML);
-        deselectAll();
+
+        if (currentlySelected.classList.contains('building-column', 'building-container')) {
+            return;
+        } else {
+            const parentColumn = currentlySelected.closest('.building-column');
+            if (parentColumn) {
+                currentlySelected.insertAdjacentHTML('afterend', clipboardHTML);
+            } else {
+                alert('Cannot paste here. The selected element must be within a "building-column".');
+            }
+        }
     }
 }
 
