@@ -38,7 +38,10 @@ function deleteElement() {
 
 function copyElement() {
     if (currentlySelected) {
+        currentlySelected.classList.remove('selected');
         clipboardHTML = currentlySelected.outerHTML;
+        currentlySelected.classList.add('selected');
+        console.log('Element HTML copied.');
     }
 }
 
