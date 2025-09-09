@@ -48,8 +48,7 @@ function copyElement() {
 function pasteElement() {
     if (currentlySelected && clipboardHTML) {
 
-        if (
-            currentlySelected.classList.contains('building-column')) {
+        if (currentlySelected.classList.contains('building-column')) {
             alert('Cannot paste a building column. The copied element must be within a building column.');
             return;
         }
@@ -63,7 +62,21 @@ function pasteElement() {
         }
 
         if (whereToPaste) {
+            const temp = document.createElement('div');
+            temp.innerHTML = clipboardHTML.trim();
+            const firstEl = temp.firstElementChild;
+
+            if (
+                firstEl &&
+                firstEl.classList.contains('building-container') &&
+                whereToPaste.classList.contains('building-column')
+            ) {
+                alert('Cannot paste a building container inside a building column.');
+                return;
+            }
+
             currentlySelected.insertAdjacentHTML('afterend', clipboardHTML);
+
         } else {
             alert('Cannot paste here. The pasted element must be within a building column or a building layout.');
         }
