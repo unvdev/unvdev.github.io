@@ -48,15 +48,24 @@ function copyElement() {
 function pasteElement() {
     if (currentlySelected && clipboardHTML) {
 
-        if (currentlySelected.classList.contains('building-column', 'building-container')) {
+        if (
+            currentlySelected.classList.contains('building-column')) {
+            alert('Cannot paste a building column. The copied element must be within a building column.');
             return;
+        }
+
+        let whereToPaste = null;
+
+        if (currentlySelected.classList.contains('building-container')) {
+            whereToPaste = currentlySelected.closest('.building-container');
+        } else if (currentlySelected.classList.contains('building-block')) {
+            whereToPaste = currentlySelected.closest('.building-column');
+        }
+
+        if (whereToPaste) {
+            currentlySelected.insertAdjacentHTML('afterend', clipboardHTML);
         } else {
-            const parentColumn = currentlySelected.closest('.building-column');
-            if (parentColumn) {
-                currentlySelected.insertAdjacentHTML('afterend', clipboardHTML);
-            } else {
-                alert('Cannot paste here. The selected element must be within a "building-column".');
-            }
+            alert('Cannot paste here. The pasted element must be within a building column or a building layout.');
         }
     }
 }
