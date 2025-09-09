@@ -4,12 +4,9 @@ const deleteButton = document.querySelector(".delete-element");
 const loadedPage = document.querySelector("#loaded-page");
 
 let currentlySelected = null;
-let currentlyEditable = null;
 let clipboardHTML = null; // Holds the copied element's HTML
 
 function deselectAll() {
-    currentlyEditable = null;
-
     if (currentlySelected) {
         currentlySelected.classList.remove('selected');
         currentlySelected = null;
@@ -35,32 +32,23 @@ function deleteElement() {
         if (confirm('Are you sure you want to delete this element?')) {
             currentlySelected.remove();
             currentlySelected = null;
-            currentlyEditable = null;
         }
     }
 }
 
-/**
- * Copies the outer HTML of the selected element to the clipboard string.
- */
 function copyElement() {
     if (currentlySelected) {
         clipboardHTML = currentlySelected.outerHTML;
-        console.log('Element HTML copied.');
     }
 }
 
-/**
- * Pastes the copied HTML right after the currently selected element.
- */
 function pasteElement() {
     if (currentlySelected && clipboardHTML) {
-        // 'afterend' inserts the new element immediately following the currentlySelected one.
         currentlySelected.insertAdjacentHTML('afterend', clipboardHTML);
-        console.log('Element pasted after selected element.');
+        currentlySelected.remove();
+        currentlySelected = null;
     }
 }
-
 
 document.addEventListener("click", (e) => {
     const target = e.target;
@@ -97,7 +85,7 @@ document.addEventListener("keydown", e => {
         return; // Stop further execution
     }
 
-    if (currentlySelected && !currentlyEditable) {
+    if (currentlySelected) {
         e.preventDefault();
         if (e.key === 'ArrowUp') {
             const prev = currentlySelected.previousElementSibling;
