@@ -50,58 +50,67 @@ function copyElement() {
 
 function pasteElement() {
     if (!currentlySelected || !clipboard.html) {
-        return;
-    }
-
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = clipboard.html;
-    const copiedElement = tempDiv.firstElementChild;
-
-    if (copiedElement.classList.contains('building-column')) {
-        if (!currentlySelected.classList.contains('building-column')) {
-            alert('A column can only be pasted to overwrite another column. Please select a column.');
-            return;
-        }
-        if (currentlySelected === clipboard.sourceElement) {
-            alert('Cannot overwrite the same column. Please select a different column to replace.');
-            return;
-        }
-
-        currentlySelected.insertAdjacentHTML('afterend', clipboard.html);
-        const newElement = currentlySelected.nextElementSibling;
-        currentlySelected.remove();
         deselectAll();
-        selectBuildingBlock(newElement, newElement);
         return;
     }
 
-    if (copiedElement.classList.contains('building-container')) {
-        if (currentlySelected.classList.contains('building-container')) {
-            currentlySelected.insertAdjacentHTML('afterend', clipboard.html);
-        } else {
-            alert('A building container can only be pasted after another container.');
-        }
-        return;
-    }
+    try {
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = clipboard.html;
+        const copiedElement = tempDiv.firstElementChild;
 
-    if (currentlySelected.classList.contains('building-column')) {
-        const placeholder = currentlySelected.querySelector('.placeholder-block');
-        if (placeholder) {
-            placeholder.insertAdjacentHTML('beforebegin', clipboard.html);
-        } else {
-            currentlySelected.insertAdjacentHTML('beforeend', clipboard.html);
-        }
-    } else {
-        const parentColumn = currentlySelected.closest('.building-column');
-        if (parentColumn) {
-            if (currentlySelected.classList.contains('placeholder-block')) {
-                alert('Cannot paste an element here. Please select the column to paste into, not the placeholder.');
+        if (copiedElement.classList.contains('building-column')) {
+            if (!currentlySelected.classList.contains('building-column')) {
+                alert('A column can only be pasted to overwrite another column. Please select a column.');
                 return;
             }
+            if (currentlySelected === clipboard.sourceElement) {
+                alert('Cannot overwrite the same column. Please select a different column to replace.');
+                return;
+            }
+
             currentlySelected.insertAdjacentHTML('afterend', clipboard.html);
-        } else {
-            alert('Content blocks can only be pasted inside a "building-column".');
+            const newElement = currentlySelected.nextElementSibling;
+            currentlySelected.remove();
+            selectBuildingBlock(newElement, newElement);
+            return;
         }
+
+        if (copiedElement.classList.contains('building-container')) {
+            if (currentlySelected.classList.contains('building-container')) {
+                currentlySelected.insertAdjacentHTML('afterend', clipboard.html);
+                return;
+            } else {
+                alert('A building container can only be pasted after another container.');
+                return;
+            }
+        }
+
+        if (currentlySelected.classList.contains('building-column')) {
+            const placeholder = currentlySelected.querySelector('.placeholder-block');
+            if (placeholder) {
+                placeholder.insertAdjacentHTML('beforebegin', clipboard.html);
+                return;
+            } else {
+                currentlySelected.insertAdjacentHTML('beforeend', clipboard.html);
+                return;
+            }
+        } else {
+            const parentColumn = currentlySelected.closest('.building-column');
+            if (parentColumn) {
+                if (currentlySelected.classList.contains('placeholder-block')) {
+                    alert('Cannot paste an element here. Please select the column to paste into, not the placeholder.');
+                    return;
+                }
+                currentlySelected.insertAdjacentHTML('afterend', clipboard.html);
+                return;
+            } else {
+                alert('Content blocks can only be pasted inside a "building-column".');
+                return;
+            }
+        }
+    } finally {
+        deselectAll();
     }
 }
 
