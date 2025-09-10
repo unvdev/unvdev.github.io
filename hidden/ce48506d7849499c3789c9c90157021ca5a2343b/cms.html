@@ -188,37 +188,43 @@
             border: none !important;
         }
 
-        /* Style Editor Popup */
-        .style-editor-pop {
-            display: block;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 600px;
-            height: 60px;
-            background-color: silver;
-            z-index: 99999999999999;
-            box-sizing: border-box;
-        }
+/* Style Editor Popup */
+.style-editor-pop {
+    display: block;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;       /* fixed width */
+    height: auto;       /* auto height based on content */
+    max-height: 90vh;   /* optional: prevent it from exceeding viewport */
+    background-color: silver;
+    z-index: 99999999999999;
+    box-sizing: border-box;
+    padding: 1rem;
+    overflow-y: auto;   /* scroll if it grows too tall */
+}
 
-        .style-editor-container {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            padding: 1rem;
-            gap: 1rem;
-            justify-items: center;
-            align-items: center;
-        }
+/* Grid container */
+.style-editor-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: 1rem;
+    justify-items: center;
+    align-items: center;
+}
 
-        .style-editor-item {
-            display: block;
-            position: relative;
-            width: 60px;
-            height: 60px;
-            background-color: silver;
-            color: whitesmoke;
-        }
+/* Individual items */
+.style-editor-item {
+    width: 60px;
+    height: 60px;
+    background-color: silver;
+    color: whitesmoke;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
     </style>
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 </head>
