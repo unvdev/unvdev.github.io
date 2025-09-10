@@ -233,7 +233,7 @@ function getElementAttributes() {
 
         // Extract the specific styles we care about
         const backgroundColor = computedStyle.backgroundColor;
-        const width = computedStyle.width;
+        const width = computedStyle.maxWidth;
         const height = computedStyle.height;
         const paddingTop = computedStyle.paddingTop;
         const paddingBottom = computedStyle.paddingBottom;
@@ -283,7 +283,7 @@ backgroundColorButton.addEventListener('click', () => {
 // Add a click event listener to the width button
 widthButton.addEventListener('click', () => {
     if (currentlySelected) {
-        currentlySelected.style.width = widthInput.value;
+        currentlySelected.style.maxWidth = widthInput.value;
     }
 });
 
