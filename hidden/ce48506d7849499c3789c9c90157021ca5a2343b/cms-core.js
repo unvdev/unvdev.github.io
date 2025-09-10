@@ -46,39 +46,38 @@ function copyElement() {
 }
 
 function pasteElement() {
-    if (currentlySelected && clipboardHTML) {
+    if (!currentlySelected || !clipboardHTML) {
+        return;
+    }
 
-        if (currentlySelected.classList.contains('building-column')) {
-            alert('Cannot paste a building column. The copied element must be within a building column.');
-            return;
-        }
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = clipboardHTML;
+    const copiedElement = tempDiv.firstElementChild;
 
-        let whereToPaste = null;
+    if (copiedElement.classList.contains('building-column')) {
+        alert('Pasting column elements is not allowed.');
+        return;
+    }
 
+    if (copiedElement.classList.contains('building-container')) {
         if (currentlySelected.classList.contains('building-container')) {
-            whereToPaste = currentlySelected.closest('.building-container');
-        } else if (currentlySelected.classList.contains('building-block')) {
-            whereToPaste = currentlySelected.closest('.building-column');
-        }
-
-        if (whereToPaste) {
-            const temp = document.createElement('div');
-            temp.innerHTML = clipboardHTML.trim();
-            const firstEl = temp.firstElementChild;
-
-            if (
-                firstEl &&
-                firstEl.classList.contains('building-container') &&
-                whereToPaste.classList.contains('building-column')
-            ) {
-                alert('Cannot paste a building container inside a building column.');
-                return;
-            }
-
             currentlySelected.insertAdjacentHTML('afterend', clipboardHTML);
-
         } else {
-            alert('Cannot paste here. The pasted element must be within a building column or a building layout.');
+            alert('A building container can only be pasted after another container.');
+        }
+        return;
+    }
+
+    if (currentlySelected.classList.contains('building-column')) {
+        currentlySelected.insertAdjacentHTML('beforeend', clipboardHTML);
+        console.log('Element pasted inside the selected column.');
+    } else {
+        const parentColumn = currentlySelected.closest('.building-column');
+        if (parentColumn) {
+            currentlySelected.insertAdjacentHTML('afterend', clipboardHTML);
+            console.log('Element pasted after selected item inside a column.');
+        } else {
+            alert('Content blocks can only be pasted inside a "building-column".');
         }
     }
 }
