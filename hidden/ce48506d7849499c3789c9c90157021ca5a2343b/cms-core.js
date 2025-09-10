@@ -50,12 +50,12 @@ function copyElement() {
 }
 
 function pasteElement() {
-    if (!currentlySelected || !clipboardHTML) {
+    if (!currentlySelected || !clipboard.html) {
         return;
     }
 
     const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = clipboardHTML;
+    tempDiv.innerHTML = clipboard.html;
     const copiedElement = tempDiv.firstElementChild;
 
     if (copiedElement.classList.contains('building-column')) {
@@ -63,12 +63,12 @@ function pasteElement() {
             alert('A column can only be pasted to overwrite another column. Please select a column.');
             return;
         }
-        if (currentlySelected === copiedElementSource) {
+        if (currentlySelected === clipboard.sourceElement) {
             alert('Cannot overwrite the same column. Please select a different column to replace.');
             return;
         }
 
-        currentlySelected.insertAdjacentHTML('afterend', clipboardHTML);
+        currentlySelected.insertAdjacentHTML('afterend', clipboard.html);
         const newElement = currentlySelected.nextElementSibling;
         currentlySelected.remove();
         deselectAll();
@@ -79,7 +79,7 @@ function pasteElement() {
 
     if (copiedElement.classList.contains('building-container')) {
         if (currentlySelected.classList.contains('building-container')) {
-            currentlySelected.insertAdjacentHTML('afterend', clipboardHTML);
+            currentlySelected.insertAdjacentHTML('afterend', clipboard.html);
             console.log('Container pasted after the selected container.');
         } else {
             alert('A building container can only be pasted after another container.');
@@ -88,12 +88,12 @@ function pasteElement() {
     }
 
     if (currentlySelected.classList.contains('building-column')) {
-        currentlySelected.insertAdjacentHTML('beforeend', clipboardHTML);
+        currentlySelected.insertAdjacentHTML('beforeend', clipboard.html);
         console.log('Element pasted inside the selected column.');
     } else {
         const parentColumn = currentlySelected.closest('.building-column');
         if (parentColumn) {
-            currentlySelected.insertAdjacentHTML('afterend', clipboardHTML);
+            currentlySelected.insertAdjacentHTML('afterend', clipboard.html);
             console.log('Element pasted after selected item inside a column.');
         } else {
             alert('Content blocks can only be pasted inside a "building-column".');
