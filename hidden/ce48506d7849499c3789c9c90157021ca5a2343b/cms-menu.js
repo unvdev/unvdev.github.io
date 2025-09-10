@@ -252,9 +252,21 @@ function getElementAttributes() {
 }
 
 // Listen for a standard 'click' event on the entire document
+let shiftHeld = false;
+let aHeld = false;
+
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Shift") shiftHeld = true;
+    if (e.key.toLowerCase() === "a") aHeld = true;
+});
+
+document.addEventListener("keyup", (e) => {
+    if (e.key === "Shift") shiftHeld = false;
+    if (e.key.toLowerCase() === "a") aHeld = false;
+});
+
 document.addEventListener("click", (e) => {
-    // Check if the Shift key was held down during the click
-    if (e.shiftKey) {
+    if (shiftHeld && aHeld) {
         if (currentlySelected) {
             invokeStyleMenu();
             getElementAttributes();
