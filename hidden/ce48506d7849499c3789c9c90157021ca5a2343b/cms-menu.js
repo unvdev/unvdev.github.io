@@ -255,7 +255,7 @@ backgroundColorButton.addEventListener("click", () => {
         const color = prompt("Enter a hex color code (e.g., #ff00ff):");
         if (!color) {
             // If user entered nothing or cancelled, remove background color
-            currentlySelected.style.backgroundColor = "";
+            currentlySelected.style.backgroundColor = "transparent";
         } else if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color)) {
             currentlySelected.style.backgroundColor = color;
         } else {
