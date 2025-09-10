@@ -44,8 +44,7 @@ function copyElement() {
         currentlySelected.classList.remove('selected');
         clipboard.html = currentlySelected.outerHTML;
         currentlySelected.classList.add('selected');
-        clipboard.sourceElement = currentlySelected; // Keep a direct reference to the copied element
-        console.log('Element HTML copied.');
+        clipboard.sourceElement = currentlySelected;
     }
 }
 
@@ -73,14 +72,12 @@ function pasteElement() {
         currentlySelected.remove();
         deselectAll();
         selectBuildingBlock(newElement, newElement);
-        console.log('Column overwritten.');
         return;
     }
 
     if (copiedElement.classList.contains('building-container')) {
         if (currentlySelected.classList.contains('building-container')) {
             currentlySelected.insertAdjacentHTML('afterend', clipboard.html);
-            console.log('Container pasted after the selected container.');
         } else {
             alert('A building container can only be pasted after another container.');
         }
@@ -88,13 +85,20 @@ function pasteElement() {
     }
 
     if (currentlySelected.classList.contains('building-column')) {
-        currentlySelected.insertAdjacentHTML('beforeend', clipboard.html);
-        console.log('Element pasted inside the selected column.');
+        const placeholder = currentlySelected.querySelector('.placeholder-block');
+        if (placeholder) {
+            placeholder.insertAdjacentHTML('beforebegin', clipboard.html);
+        } else {
+            currentlySelected.insertAdjacentHTML('beforeend', clipboard.html);
+        }
     } else {
         const parentColumn = currentlySelected.closest('.building-column');
         if (parentColumn) {
+            if (currentlySelected.classList.contains('placeholder-block')) {
+                alert('Cannot paste an element here. Please select the column to paste into, not the placeholder.');
+                return;
+            }
             currentlySelected.insertAdjacentHTML('afterend', clipboard.html);
-            console.log('Element pasted after selected item inside a column.');
         } else {
             alert('Content blocks can only be pasted inside a "building-column".');
         }
