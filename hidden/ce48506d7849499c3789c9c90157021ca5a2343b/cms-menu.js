@@ -203,55 +203,111 @@ function invokeStyleMenu() {
     }
 }
 
-//Testing
-const backgroundColorInput = document.getElementById('style-editor-background-color');
-const backgroundColorButton = document.getElementById('style-editor-background-color-button');
+// === STYLE EDITOR LOGIC ===
 
-// Get the input and button for Width
-const widthInput = document.getElementById('style-editor-width');
-const widthButton = document.getElementById('style-editor-width-button');
+// Background color button
+const backgroundColorButton = document.getElementById("style-editor-background-color-button");
 
-// Get the input and button for Height
-const heightInput = document.getElementById('style-editor-height');
-const heightButton = document.getElementById('style-editor-height-button');
+// Width buttons
+const widthDecreaseBtn = document.getElementById("style-editor-width-decrease-button");
+const widthIncreaseBtn = document.getElementById("style-editor-width-increase-button");
 
-// Get the input and button for Padding
-const paddingTopInput = document.getElementById('style-editor-padding-top');
-const paddingBottomInput = document.getElementById('style-editor-padding-bottom');
-const paddingLeftInput = document.getElementById('style-editor-padding-left');
-const paddingRightInput = document.getElementById('style-editor-padding-right');
-const paddingButton = document.getElementById('style-editor-padding-button');
+// Alignment buttons
+const alignLeft = document.getElementById("style-editor-align-left-button");
+const alignCenter = document.getElementById("style-editor-align-center-button");
+const alignRight = document.getElementById("style-editor-align-right-button");
 
-function getElementAttributes() {
-    // Make sure an element has been selected
-    if (currentlySelected) {
-      if (!currentlySelected.classList.contains("custom-styles")) {
-            currentlySelected.classList.add("custom-styles");
-      }
-        // Get the collection of all computed styles for the element
-        const computedStyle = window.getComputedStyle(currentlySelected);
+// Padding buttons (increase/decrease)
+const paddingLeftIncreaseBtn = document.getElementById("style-editor-padding-left-increase-button");
+const paddingLeftDecreaseBtn = document.getElementById("style-editor-padding-left-decrease-button");
+const paddingRightIncreaseBtn = document.getElementById("style-editor-padding-right-increase-button");
+const paddingRightDecreaseBtn = document.getElementById("style-editor-padding-right-decrease-button");
+const paddingTopIncreaseBtn = document.getElementById("style-editor-padding-top-increase-button");
+const paddingTopDecreaseBtn = document.getElementById("style-editor-padding-top-decrease-button");
+const paddingBottomIncreaseBtn = document.getElementById("style-editor-padding-bottom-increase-button");
+const paddingBottomDecreaseBtn = document.getElementById("style-editor-padding-bottom-decrease-button");
 
-        // Extract the specific styles we care about
-        const backgroundColor = computedStyle.backgroundColor;
-        const width = computedStyle.maxWidth;
-        const height = computedStyle.height;
-        const paddingTop = computedStyle.paddingTop;
-        const paddingBottom = computedStyle.paddingBottom;
-        const paddingLeft = computedStyle.paddingLeft;
-        const paddingRight = computedStyle.paddingRight;
-
-        // Set the value of the input fields to match the element's styles
-        backgroundColorInput.value = backgroundColor;
-        widthInput.value = width;
-        heightInput.value = height;
-        paddingTopInput.value = paddingTop;
-        paddingBottomInput.value = paddingBottom;
-        paddingLeftInput.value = paddingLeft;
-        paddingRightInput.value = paddingRight;
-    }
+// ===============================
+// HELPERS
+// ===============================
+function parsePercent(value, fallback = 100) {
+    const match = value.match(/([\d.]+)%/);
+    return match ? parseFloat(match[1]) : fallback;
 }
 
-// Listen for a standard 'click' event on the entire document
+function parsePx(value, fallback = 0) {
+    const match = value.match(/([\d.]+)px/);
+    return match ? parseFloat(match[1]) : fallback;
+}
+
+function updatePadding(side, delta) {
+    if (!currentlySelected) return;
+    const computed = window.getComputedStyle(currentlySelected);
+    let current = parsePx(computed[`padding${side}`]);
+    currentlySelected.style[`padding${side}`] = Math.max(0, current + delta) + "px"; // prevent negative padding
+}
+
+// ===============================
+// BACKGROUND COLOR
+// ===============================
+backgroundColorButton.addEventListener("click", () => {
+    if (currentlySelected) {
+        const color = prompt("Enter a hex color code (e.g., #ff00ff):");
+        if (color && /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color)) {
+            currentlySelected.style.backgroundColor = color;
+        } else if (color) {
+            alert("Invalid hex code.");
+        }
+    }
+});
+
+// ===============================
+// WIDTH CONTROL (percentage)
+// ===============================
+widthDecreaseBtn.addEventListener("click", () => {
+    if (currentlySelected) {
+        let currentWidth = parsePercent(currentlySelected.style.maxWidth || "100%");
+        currentWidth = Math.max(5, currentWidth - 5); 
+        currentlySelected.style.maxWidth = currentWidth + "%";
+    }
+});
+
+widthIncreaseBtn.addEventListener("click", () => {
+    if (currentlySelected) {
+        let currentWidth = parsePercent(currentlySelected.style.maxWidth || "100%");
+        currentWidth = Math.min(100, currentWidth + 5); 
+        currentlySelected.style.maxWidth = currentWidth + "%";
+    }
+});
+
+// ===============================
+// ALIGNMENT
+// ===============================
+alignLeft.addEventListener("click", () => {
+    if (currentlySelected) currentlySelected.style.margin = "0 auto 0 0";
+});
+alignCenter.addEventListener("click", () => {
+    if (currentlySelected) currentlySelected.style.margin = "0 auto";
+});
+alignRight.addEventListener("click", () => {
+    if (currentlySelected) currentlySelected.style.margin = "0 0 0 auto";
+});
+
+// ===============================
+// PADDING CONTROL (increase/decrease by 10px)
+// ===============================
+paddingLeftIncreaseBtn.addEventListener("click", () => updatePadding("Left", 10));
+paddingLeftDecreaseBtn.addEventListener("click", () => updatePadding("Left", -10));
+paddingRightIncreaseBtn.addEventListener("click", () => updatePadding("Right", 10));
+paddingRightDecreaseBtn.addEventListener("click", () => updatePadding("Right", -10));
+paddingTopIncreaseBtn.addEventListener("click", () => updatePadding("Top", 10));
+paddingTopDecreaseBtn.addEventListener("click", () => updatePadding("Top", -10));
+paddingBottomIncreaseBtn.addEventListener("click", () => updatePadding("Bottom", 10));
+paddingBottomDecreaseBtn.addEventListener("click", () => updatePadding("Bottom", -10));
+
+// ===============================
+// SHIFT + A + CLICK trigger
+// ===============================
 let shiftHeld = false;
 let aHeld = false;
 
@@ -271,32 +327,5 @@ document.addEventListener("click", (e) => {
             invokeStyleMenu();
             getElementAttributes();
         }
-    }
-});
-
-backgroundColorButton.addEventListener('click', () => {
-    if (currentlySelected) {
-        currentlySelected.style.backgroundColor = backgroundColorInput.value;
-    }
-});
-
-// Add a click event listener to the width button
-widthButton.addEventListener('click', () => {
-    if (currentlySelected) {
-        currentlySelected.style.maxWidth = widthInput.value;
-    }
-});
-
-// Add a click event listener to the height button
-heightButton.addEventListener('click', () => {
-    if (currentlySelected) {
-        currentlySelected.style.height = heightInput.value;
-    }
-});
-
-// Add a click event listener to the padding button
-paddingButton.addEventListener('click', () => {
-    if (currentlySelected) {
-        currentlySelected.style.padding = `${paddingTopInput.value} ${paddingRightInput.value} ${paddingBottomInput.value} ${paddingLeftInput.value}`;
     }
 });

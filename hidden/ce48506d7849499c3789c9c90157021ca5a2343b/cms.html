@@ -56,7 +56,7 @@
             font-size: 36px;
             color: whitesmoke;
             cursor: inherit;
-            }
+        }
 
         .placeholder-block:hover {
             background-color: magenta;
@@ -73,14 +73,14 @@
         }
 
         .cms-content-show {
-             display: grid;
+            display: grid;
         }
 
         .cms-menu {
             display: block;
         }
 
-/* CMS */
+        /* CMS */
 
         .cms-menu-container {
             display: block;
@@ -114,7 +114,7 @@
             align-content: center;
         }
 
-        .cms-menu-item:nth-child(1){
+        .cms-menu-item:nth-child(1) {
             box-shadow: 0 -1px 0 0 silver inset !important;
         }
 
@@ -122,12 +122,12 @@
             box-shadow: 0 1px 0 0 silver inset !important;
         }
 
-         .cms-menu-item:hover {
+        .cms-menu-item:hover {
             color: whitesmoke;
             background-color: magenta;
-         }
+        }
 
-         .cms-menu-secondary-container {
+        .cms-menu-secondary-container {
             display: none;
             position: fixed;
             width: 280px;
@@ -139,107 +139,86 @@
             box-shadow: 2px 0 0 0 silver inset;
             box-sizing: border-box;
             z-index: 9999999999;
-         }
+        }
 
-         .cms-menu-item:hover .cms-menu-secondary-container {
+        .cms-menu-item:hover .cms-menu-secondary-container {
             display: block;
-         }
+        }
 
-         .cms-menu-secondary-container:hover {
+        .cms-menu-secondary-container:hover {
             display: block;
-         }
+        }
 
-         .cms-menu-secondary-item-container {
+        .cms-menu-secondary-item-container {
             display: block;
             position: relative;
         }
 
-  /* Text Editor Popup */
-.text-editor-pop {
-    display: block;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 600px;
-    height: 600px;
-    background-color: whitesmoke;
-    z-index: 99999999999999;
-    box-sizing: border-box;
-}
+        /* Text Editor Popup */
+        .text-editor-pop {
+            display: block;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background-color: whitesmoke;
+            z-index: 99999999999999;
+            box-sizing: border-box;
+        }
 
-/* Quill Toolbar */
-.ql-toolbar {
-    position: relative;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: white;
-}
+        /* Quill Toolbar */
+        .ql-toolbar {
+            position: relative;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+        }
 
-/* Quill Editor */
-.ql-editor {
-    max-height: 550px !important;
-    overflow-y: auto;
-    padding: 10px;
-}
+        /* Quill Editor */
+        .ql-editor {
+            max-height: 550px !important;
+            overflow-y: auto;
+            padding: 10px;
+        }
 
-.ql-container.ql-snow {
-    border: none !important;
-}
+        .ql-container.ql-snow {
+            border: none !important;
+        }
 
-  /* Attribute Editor Popup */
-.style-editor-pop {
-    display: block;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 600px;
-    height: 600px;
-    background-color: silver;
-    z-index: 99999999999999;
-    box-sizing: border-box;
-}
+        /* Style Editor Popup */
+        .style-editor-pop {
+            display: block;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 60px;
+            background-color: silver;
+            z-index: 99999999999999;
+            box-sizing: border-box;
+        }
 
-.style-editor-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    padding: 1rem;
-    gap: 1rem;
-    justify-items: center;
-    align-items: center;
-}
+        .style-editor-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            padding: 1rem;
+            gap: 1rem;
+            justify-items: center;
+            align-items: center;
+        }
 
-.style-editor-item {
-    display: block;
-    position: relative;
-    width: 150px;
-    height: 150px;
-}
-
-.style-editor-title {
-    display: block;
-    position: relative;
-    margin: 0 auto;
-    width: 100%;
-    font-family: 'Arial';
-    font-size: 20px;
-    text-align: center;
-}
-
-.style-editor-input {
-    display: block;
-    position: relative;
-    margin: 0 auto;
-    width: 100%;
-    height: 30px;
-    font-family: 'monospace';
-    font-size: 20px;
-}
-
-
+        .style-editor-item {
+            display: block;
+            position: relative;
+            width: 60px;
+            height: 60px;
+            background-color: silver;
+            color: whitesmoke;
+        }
     </style>
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 </head>
@@ -254,154 +233,216 @@
 
     <div class="cms-menu content-hide">
         <div class="cms-menu-container">
-        <div class="cms-menu-item-container">
-            <div class="cms-menu-item">
-                <div><i class="fa-solid fa-align-left"></i>&nbsp;&nbsp;Text Element</div>
-                <div class="cms-menu-secondary-container">
-                    <div class="cms-menu-secondary-item-container">
-                        <div class="cms-menu-item">
-                            <div id="text-element-heading-one-button"><i class="fa-solid fa-heading"></i>&nbsp;&nbsp;Heading 1</div>
-                        </div>
-                        <div class="cms-menu-item">
-                            <div id="text-element-heading-two-button"><i class="fa-solid fa-heading"></i>&nbsp;&nbsp;Heading 2</div>
-                        </div>
-                        <div class="cms-menu-item">
-                            <div id="text-element-heading-three-button"><i class="fa-solid fa-heading"></i>&nbsp;&nbsp;Heading 3</div>
-                        </div>
-                        <div class="cms-menu-item">
-                            <div id="text-element-heading-four-button"><i class="fa-solid fa-heading"></i>&nbsp;&nbsp;Heading 4</div>
-                        </div>
-                        <div class="cms-menu-item">
-                            <div id="text-element-heading-five-button"><i class="fa-solid fa-heading"></i>&nbsp;&nbsp;Heading 5</div>
-                        </div>
-                        <div class="cms-menu-item">
-                            <div id="text-element-paragraph-button"><i class="fa-solid fa-paragraph"></i>&nbsp;&nbsp;Paragraph</div>
-                        </div>
-                        <div class="cms-menu-item">
-                            <div id="text-element-unordered-button"><i class="fa-solid fa-list-ul"></i>&nbsp;&nbsp;Bulleted List</div>
-                        </div>
-                        <div class="cms-menu-item">
-                            <div id="text-element-ordered-button"><i class="fa-solid fa-list-ol"></i>&nbsp;&nbsp;Numbered List</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="cms-menu-item">
-                <div><i class="fa-solid fa-text"></i>&nbsp;&nbsp;Title Element</div>
-                <div class="cms-menu-secondary-container">
-                    <div class="cms-menu-secondary-item-container">
-                        <div class="cms-menu-item">Test 6</div>
-                        <div class="cms-menu-item">Test</div>
-                        <div class="cms-menu-item">Test</div>
-                        <div class="cms-menu-item">Test</div>
-                    </div>
-                </div>
-            </div>
-            <div class="cms-menu-item">
-                <div><i class="fa-solid fa-image"></i>&nbsp;&nbsp;Image Element</div>
-                <div class="cms-menu-secondary-container">
-                    <div class="cms-menu-secondary-item-container">
-                        <div class="cms-menu-item">
-                            <div id="image-element-link-button"><i class="fa-solid fa-link"></i>&nbsp;&nbsp;Link</div>
-                        </div>
-                        <div class="cms-menu-item">
-                            <div id="image-element-upload-button"><i class="fa-solid fa-upload"></i>&nbsp;&nbsp;Upload</div>
+            <div class="cms-menu-item-container">
+                <div class="cms-menu-item">
+                    <div><i class="fa-solid fa-align-left"></i>&nbsp;&nbsp;Text Element</div>
+                    <div class="cms-menu-secondary-container">
+                        <div class="cms-menu-secondary-item-container">
+                            <div class="cms-menu-item">
+                                <div id="text-element-heading-one-button"><i class="fa-solid fa-heading"></i>&nbsp;&nbsp;Heading 1</div>
+                            </div>
+                            <div class="cms-menu-item">
+                                <div id="text-element-heading-two-button"><i class="fa-solid fa-heading"></i>&nbsp;&nbsp;Heading 2</div>
+                            </div>
+                            <div class="cms-menu-item">
+                                <div id="text-element-heading-three-button"><i class="fa-solid fa-heading"></i>&nbsp;&nbsp;Heading 3</div>
+                            </div>
+                            <div class="cms-menu-item">
+                                <div id="text-element-heading-four-button"><i class="fa-solid fa-heading"></i>&nbsp;&nbsp;Heading 4</div>
+                            </div>
+                            <div class="cms-menu-item">
+                                <div id="text-element-heading-five-button"><i class="fa-solid fa-heading"></i>&nbsp;&nbsp;Heading 5</div>
+                            </div>
+                            <div class="cms-menu-item">
+                                <div id="text-element-paragraph-button"><i class="fa-solid fa-paragraph"></i>&nbsp;&nbsp;Paragraph</div>
+                            </div>
+                            <div class="cms-menu-item">
+                                <div id="text-element-unordered-button"><i class="fa-solid fa-list-ul"></i>&nbsp;&nbsp;Bulleted List</div>
+                            </div>
+                            <div class="cms-menu-item">
+                                <div id="text-element-ordered-button"><i class="fa-solid fa-list-ol"></i>&nbsp;&nbsp;Numbered List</div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="cms-menu-item">
-                <div><i class="fa-solid fa-images"></i>&nbsp;&nbsp;Gallery Element</div>
-                <div class="cms-menu-secondary-container">
-                    <div class="cms-menu-secondary-item-container">
-                        <div class="cms-menu-item">Test 3</div>
-                        <div class="cms-menu-item">Test</div>
-                        <div class="cms-menu-item">Test</div>
-                        <div class="cms-menu-item">Test</div>
+                <div class="cms-menu-item">
+                    <div><i class="fa-solid fa-text"></i>&nbsp;&nbsp;Title Element</div>
+                    <div class="cms-menu-secondary-container">
+                        <div class="cms-menu-secondary-item-container">
+                            <div class="cms-menu-item">Test 6</div>
+                            <div class="cms-menu-item">Test</div>
+                            <div class="cms-menu-item">Test</div>
+                            <div class="cms-menu-item">Test</div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="cms-menu-item">
-                <div><i class="fa-solid fa-code"></i>&nbsp;&nbsp;Embed Element</div>
-                <div class="cms-menu-secondary-container">
-                    <div class="cms-menu-secondary-item-container">
-                        <div class="cms-menu-item">Test 4</div>
-                        <div class="cms-menu-item">Test</div>
-                        <div class="cms-menu-item">Test</div>
-                        <div class="cms-menu-item">Test</div>
+                <div class="cms-menu-item">
+                    <div><i class="fa-solid fa-image"></i>&nbsp;&nbsp;Image Element</div>
+                    <div class="cms-menu-secondary-container">
+                        <div class="cms-menu-secondary-item-container">
+                            <div class="cms-menu-item">
+                                <div id="image-element-link-button"><i class="fa-solid fa-link"></i>&nbsp;&nbsp;Link</div>
+                            </div>
+                            <div class="cms-menu-item">
+                                <div id="image-element-upload-button"><i class="fa-solid fa-upload"></i>&nbsp;&nbsp;Upload</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="cms-menu-item">
-                <div><i class="fa-solid fa-table-layout"></i>&nbsp;&nbsp;Layout Element</div>
-                <div class="cms-menu-secondary-container">
-                    <div class="cms-menu-secondary-item-container">
-                        <div class="cms-menu-item">
-                            <div id="layout-element-one-column-button"><span style="display: inline-block !important;">&#9609;</span>&nbsp;One</div>
+                <div class="cms-menu-item">
+                    <div><i class="fa-solid fa-images"></i>&nbsp;&nbsp;Gallery Element</div>
+                    <div class="cms-menu-secondary-container">
+                        <div class="cms-menu-secondary-item-container">
+                            <div class="cms-menu-item">Test 3</div>
+                            <div class="cms-menu-item">Test</div>
+                            <div class="cms-menu-item">Test</div>
+                            <div class="cms-menu-item">Test</div>
                         </div>
-                        <div class="cms-menu-item">  
-                            <div id="layout-element-two-column-button"><span style="display: inline-block !important;">&#9609;&#9609;</span>&nbsp;Two</div>
+                    </div>
+                </div>
+                <div class="cms-menu-item">
+                    <div><i class="fa-solid fa-code"></i>&nbsp;&nbsp;Embed Element</div>
+                    <div class="cms-menu-secondary-container">
+                        <div class="cms-menu-secondary-item-container">
+                            <div class="cms-menu-item">Test 4</div>
+                            <div class="cms-menu-item">Test</div>
+                            <div class="cms-menu-item">Test</div>
+                            <div class="cms-menu-item">Test</div>
                         </div>
-                        <div class="cms-menu-item">
-                            <div id="layout-element-three-column-button"><span style="display: inline-block !important;">&#9609;&#9609;&#9609;</span>&nbsp;Three</div>
+                    </div>
+                </div>
+                <div class="cms-menu-item">
+                    <div><i class="fa-solid fa-table-layout"></i>&nbsp;&nbsp;Layout Element</div>
+                    <div class="cms-menu-secondary-container">
+                        <div class="cms-menu-secondary-item-container">
+                            <div class="cms-menu-item">
+                                <div id="layout-element-one-column-button"><span style="display: inline-block !important;">&#9609;</span>&nbsp;One</div>
+                            </div>
+                            <div class="cms-menu-item">
+                                <div id="layout-element-two-column-button"><span style="display: inline-block !important;">&#9609;&#9609;</span>&nbsp;Two</div>
+                            </div>
+                            <div class="cms-menu-item">
+                                <div id="layout-element-three-column-button"><span style="display: inline-block !important;">&#9609;&#9609;&#9609;</span>&nbsp;Three</div>
+                            </div>
+                            <div class="cms-menu-item">
+                                <div id="layout-element-four-column-button"><span style="display: inline-block !important;">&#9609;&#9609;&#9609;&#9609;</span>&nbsp;Four</div>
+                            </div>
+                            <div class="cms-menu-item">
+                                <div id="layout-element-five-column-button"><span style="display: inline-block !important;">&#9609;&#9609;&#9609;&#9609;&#9609;</span>&nbsp;Five</div>
+                            </div>
+                            <div class="cms-menu-item">
+                                <div id="layout-element-six-column-button"><span style="display: inline-block !important;">&#9609;&#9609;&#9609;&#9609;&#9609;&#9609;</span>&nbsp;Six</div>
+                            </div>
+                            <div class="cms-menu-item">
+                                <div id="layout-element-asymm-left-column-button"><span style="display: inline-block !important; transform: scaleX(0.58) !important; transform-origin: center; letter-spacing: -4px;">&#9609;</span><span style="display: inline-block !important; letter-spacing: 0.25px;">&#9609;</span>&nbsp;Asymm. Left</div>
+                            </div>
+                            <div class="cms-menu-item">
+                                <div id="layout-element-asymm-right-column-button"><span style="display: inline-block !important; letter-spacing: -4px;">&#9609;</span><span style="display: inline-block !important; transform: scaleX(0.58) !important; transform-origin: center;">&#9609;</span>&nbsp;Asymm. Right</div>
+                            </div>
+                            <div class="cms-menu-item">
+                                <div id="layout-element-spacer-button"><i class="fa-solid fa-arrows-up-down"></i>&nbsp;&nbsp;Spacer</div>
+                            </div>
+                            <div class="cms-menu-item">
+                                <div id="layout-element-divider-button"><i class="fa-solid fa-minus"></i>&nbsp;&nbsp;Divider</div>
+                            </div>
                         </div>
-                        <div class="cms-menu-item">
-                            <div id="layout-element-four-column-button"><span style="display: inline-block !important;">&#9609;&#9609;&#9609;&#9609;</span>&nbsp;Four</div>
-                        </div>
-                        <div class="cms-menu-item">
-                            <div id="layout-element-five-column-button"><span style="display: inline-block !important;">&#9609;&#9609;&#9609;&#9609;&#9609;</span>&nbsp;Five</div>
-                        </div>
-                        <div class="cms-menu-item">
-                            <div id="layout-element-six-column-button"><span style="display: inline-block !important;">&#9609;&#9609;&#9609;&#9609;&#9609;&#9609;</span>&nbsp;Six</div>
-                        </div>
-                        <div class="cms-menu-item">
-                            <div id="layout-element-asymm-left-column-button"><span style="display: inline-block !important; transform: scaleX(0.58) !important; transform-origin: center; letter-spacing: -4px;">&#9609;</span><span style="display: inline-block !important; letter-spacing: 0.25px;">&#9609;</span>&nbsp;Asymm. Left</div>
-                        </div>
-                        <div class="cms-menu-item">
-                            <div id="layout-element-asymm-right-column-button"><span style="display: inline-block !important; letter-spacing: -4px;">&#9609;</span><span style="display: inline-block !important; transform: scaleX(0.58) !important; transform-origin: center;">&#9609;</span>&nbsp;Asymm. Right</div>
-                        </div>
-                        <div class="cms-menu-item">
-                            <div id="layout-element-spacer-button"><i class="fa-solid fa-arrows-up-down"></i>&nbsp;&nbsp;Spacer</div>
-                        </div>
-                        <div class="cms-menu-item">
-                            <div id="layout-element-divider-button"><i class="fa-solid fa-minus"></i>&nbsp;&nbsp;Divider</div>
-                        </div>                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
-    <div class="text-editor-pop content-hide">
+    <div class="text-editor-pop content-show">
         <div class="text-editor">
             <div id="quill-editor"></div>
         </div>
     </div>
-    <div class="style-editor-pop content-hide">
+    <div class="style-editor-pop content-show">
         <div class="style-editor-container">
+
+            <!-- Background Color -->
             <div class="style-editor-item">
-                <div class="style-editor-title">Background Color</div>
-                <input id="style-editor-background-color" class="style-editor-input" type="text"></input>
-                <button id="style-editor-background-color-button" class="default-button">Update</button>
+                <div id="style-editor-background-color-button" class="default-button">
+                    <i class="fa-solid fa-palette"></i>
+                </div>
+            </div>
+
+            <!-- Width -->
+            <div class="style-editor-item">
+                <div id="style-editor-width-decrease-button" class="default-button">
+                    <i class="fa-solid fa-compress"></i>
+                </div>
             </div>
             <div class="style-editor-item">
-                <div class="style-editor-title">Width</div>
-                <input id="style-editor-width" class="style-editor-input" type="text"></input>
-                <button id="style-editor-width-button" class="default-button">Update</button>
+                <div id="style-editor-width-increase-button" class="default-button">
+                    <i class="fa-solid fa-expand"></i>
+                </div>
+            </div>
+
+            <!-- Alignment -->
+            <div class="style-editor-item">
+                <div id="style-editor-align-left-button" class="default-button">
+                    <i class="fa-solid fa-align-left"></i>
+                </div>
             </div>
             <div class="style-editor-item">
-                <div class="style-editor-title">Height</div>
-                <input id="style-editor-height" class="style-editor-input" type="text"></input>
-                <button id="style-editor-height-button" class="default-button">Update</button>
+                <div id="style-editor-align-center-button" class="default-button">
+                    <i class="fa-solid fa-align-center"></i>
+                </div>
             </div>
             <div class="style-editor-item">
-                <div class="style-editor-title">Padding</div>
-                <input id="style-editor-padding-top" class="style-editor-input" type="text"></input>
-                <input id="style-editor-padding-bottom" class="style-editor-input" type="text"></input>
-                <input id="style-editor-padding-left" class="style-editor-input" type="text"></input>
-                <input id="style-editor-padding-right" class="style-editor-input" type="text"></input>
-                <button id="style-editor-padding-button" class="default-button">Update</button>
+                <div id="style-editor-align-right-button" class="default-button">
+                    <i class="fa-solid fa-align-right"></i>
+                </div>
             </div>
+
+            <!-- Padding LEFT -->
+            <div class="style-editor-item">
+                <div id="style-editor-padding-left-decrease-button" class="default-button">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </div>
+            </div>
+            <div class="style-editor-item">
+                <div id="style-editor-padding-left-increase-button" class="default-button">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </div>
+            </div>
+
+            <!-- Padding TOP -->
+            <div class="style-editor-item">
+                <div id="style-editor-padding-top-decrease-button" class="default-button">
+                    <i class="fa-solid fa-arrow-up"></i>
+                </div>
+            </div>
+            <div class="style-editor-item">
+                <div id="style-editor-padding-top-increase-button" class="default-button">
+                    <i class="fa-solid fa-arrow-up"></i>
+                </div>
+            </div>
+
+            <!-- Padding RIGHT -->
+            <div class="style-editor-item">
+                <div id="style-editor-padding-right-decrease-button" class="default-button">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+            </div>
+            <div class="style-editor-item">
+                <div id="style-editor-padding-right-increase-button" class="default-button">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+            </div>
+
+            <!-- Padding BOTTOM -->
+            <div class="style-editor-item">
+                <div id="style-editor-padding-bottom-decrease-button" class="default-button">
+                    <i class="fa-solid fa-arrow-down"></i>
+                </div>
+            </div>
+            <div class="style-editor-item">
+                <div id="style-editor-padding-bottom-increase-button" class="default-button">
+                    <i class="fa-solid fa-arrow-down"></i>
+                </div>
+            </div>
+
         </div>
     </div>
 
