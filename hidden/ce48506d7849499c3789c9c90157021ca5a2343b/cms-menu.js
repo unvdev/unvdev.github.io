@@ -338,7 +338,6 @@ document.addEventListener("click", (e) => {
     if (shiftHeld && aHeld) {
         if (currentlySelected) {
             invokeStyleMenu();
-            getElementAttributes();
         }
     }
 });
