@@ -253,14 +253,16 @@ function updatePadding(side, delta) {
 backgroundColorButton.addEventListener("click", () => {
     if (currentlySelected) {
         const color = prompt("Enter a hex color code (e.g., #ff00ff):");
-        if (color && /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color)) {
+        if (!color) {
+            // If user entered nothing or cancelled, remove background color
+            currentlySelected.style.backgroundColor = "";
+        } else if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color)) {
             currentlySelected.style.backgroundColor = color;
-        } else if (color) {
+        } else {
             alert("Invalid hex code.");
         }
     }
 });
-
 // ===============================
 // WIDTH CONTROL (percentage)
 // ===============================
