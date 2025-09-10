@@ -284,13 +284,24 @@ widthIncreaseBtn.addEventListener("click", () => {
 // ALIGNMENT
 // ===============================
 alignLeft.addEventListener("click", () => {
-    if (currentlySelected) currentlySelected.style.margin = "0 auto 0 0";
+    if (currentlySelected) {
+        currentlySelected.classList.remove("building-block-align-center", "building-block-align-right");
+        currentlySelected.classList.add("building-block-align-left");
+    }
 });
+
 alignCenter.addEventListener("click", () => {
-    if (currentlySelected) currentlySelected.style.margin = "0 auto";
+    if (currentlySelected) {
+        currentlySelected.classList.remove("building-block-align-left", "building-block-align-right");
+        currentlySelected.classList.add("building-block-align-center");
+    }
 });
+
 alignRight.addEventListener("click", () => {
-    if (currentlySelected) currentlySelected.style.margin = "0 0 0 auto";
+    if (currentlySelected) {
+        currentlySelected.classList.remove("building-block-align-left", "building-block-align-center");
+        currentlySelected.classList.add("building-block-align-right");
+    }
 });
 
 // ===============================
