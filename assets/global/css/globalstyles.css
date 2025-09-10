@@ -179,12 +179,6 @@ footer {
     text-align: center;
 }
 
-.content {
-    width: 100%;
-    max-width: 95%;
-    margin: 0 auto;
-}
-
 .featuredImage {
     position: relative;
     left: 50%;
@@ -206,3 +200,160 @@ footer {
         line-height: 30px;
     }
 }
+
+/*New Styles*/
+
+.building-environment {
+    width: 100%;
+    max-width: 95%;
+    margin: 0 auto;
+}
+
+        .building-container {
+            display: grid;
+            position: relative;
+            width: 100%;
+            gap: 1rem;
+        }
+
+        /* 1 column */
+        .building-column-span-one {
+            display: grid;
+            grid-template-columns: 1fr;
+            padding: 1rem;
+            gap: 1rem;
+        }
+
+        /* 2 columns */
+        .building-column-span-two {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            padding: 1rem;
+            gap: 1rem;
+        }
+
+        /* 3 columns */
+        .building-column-span-three {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            padding: 1rem;
+            gap: 1rem;
+        }
+
+        /* 4 columns */
+        .building-column-span-four {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            padding: 1rem;
+            gap: 1rem;
+        }
+
+        /* 5 columns */
+        .building-column-span-five {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            padding: 1rem;
+            gap: 1rem;
+        }
+
+        /* 6 columns */
+        .building-column-span-six {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            padding: 1rem;
+            gap: 1rem;
+        }
+
+        /* Asymm left column */
+        .building-column-span-asymm-left {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        padding: 1rem;
+        gap: 1rem;
+        }
+
+        /* Asymm right column */
+        .building-column-span-asymm-right {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        padding: 1rem;
+        gap: 1rem;
+        }
+
+        /* Responsive media queries for all spans */
+        @media (max-width: 1200px) {
+            .building-column-span-six {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .building-column-span-five {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .building-column-span-four {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .building-column-span-three {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .building-column-span-two {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+
+            .building-column-span-six,
+            .building-column-span-five,
+            .building-column-span-four,
+            .building-column-span-three,
+            .building-column-span-two,
+            .building-column-span-asymm-left,
+            .building-column-span-asymm-right {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Column content alignment */
+        .building-column-content-top {
+            align-self: start;
+        }
+
+        .building-column-content-center {
+            align-self: center;
+        }
+
+        .building-column-content-bottom {
+            align-self: end;
+        }
+
+        /* Block alignment */
+        .building-block-align-left {
+            justify-self: start;
+        }
+
+        .building-block-align-center {
+            justify-self: center;
+        }
+
+        .building-block-align-right {
+            justify-self: end;
+        }
+
+        /* Stretch / grow adjustments */
+        .building-column-stretch {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+
+        .building-column-grow {
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+        }
+
+        .building-column {
+            display: block;
+            position: relative;
+        }
