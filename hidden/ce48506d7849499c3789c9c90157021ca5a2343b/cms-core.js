@@ -55,13 +55,28 @@ function pasteElement() {
     const copiedElement = tempDiv.firstElementChild;
 
     if (copiedElement.classList.contains('building-column')) {
-        alert('Pasting column elements is not allowed.');
+        if (!currentlySelected.classList.contains('building-column')) {
+            alert('A column can only be pasted to overwrite another column. Please select a column.');
+            return;
+        }
+        if (currentlySelected === copiedElementSource) {
+            alert('Cannot overwrite the same column. Please select a different column to replace.');
+            return;
+        }
+
+        currentlySelected.insertAdjacentHTML('afterend', clipboardHTML);
+        const newElement = currentlySelected.nextElementSibling;
+        currentlySelected.remove();
+        deselectAll();
+        selectBuildingBlock(newElement, newElement);
+        console.log('Column overwritten.');
         return;
     }
 
     if (copiedElement.classList.contains('building-container')) {
         if (currentlySelected.classList.contains('building-container')) {
             currentlySelected.insertAdjacentHTML('afterend', clipboardHTML);
+            console.log('Container pasted after the selected container.');
         } else {
             alert('A building container can only be pasted after another container.');
         }
