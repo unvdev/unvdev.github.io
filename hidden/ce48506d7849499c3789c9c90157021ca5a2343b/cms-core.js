@@ -4,7 +4,10 @@ const deleteButton = document.querySelector(".delete-element");
 const loadedPage = document.querySelector("#loaded-page");
 
 let currentlySelected = null;
-let clipboardHTML = null; // Holds the copied element's HTML
+let clipboard = {
+    html: null,
+    sourceElement: null
+};
 
 function deselectAll() {
     if (currentlySelected) {
@@ -39,8 +42,9 @@ function deleteElement() {
 function copyElement() {
     if (currentlySelected) {
         currentlySelected.classList.remove('selected');
-        clipboardHTML = currentlySelected.outerHTML;
+        clipboard.html = currentlySelected.outerHTML;
         currentlySelected.classList.add('selected');
+        clipboard.sourceElement = currentlySelected; // Keep a direct reference to the copied element
         console.log('Element HTML copied.');
     }
 }
