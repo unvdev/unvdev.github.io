@@ -242,6 +242,7 @@ function parsePx(value, fallback = 0) {
 
 function updatePadding(side, delta) {
     if (!currentlySelected) return;
+    currentlySelected.classList.add("custom-styles"); // mark element as styled
     const computed = window.getComputedStyle(currentlySelected);
     let current = parsePx(computed[`padding${side}`]);
     currentlySelected.style[`padding${side}`] = Math.max(0, current + delta) + "px"; // prevent negative padding
@@ -252,9 +253,10 @@ function updatePadding(side, delta) {
 // ===============================
 backgroundColorButton.addEventListener("click", () => {
     if (currentlySelected) {
+        currentlySelected.classList.add("custom-styles");
         const color = prompt("Enter a hex color code (e.g., #ff00ff):");
         if (!color) {
-            // If user entered nothing or cancelled, remove background color
+            // Remove background if user entered nothing
             currentlySelected.style.backgroundColor = "";
         } else if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color)) {
             currentlySelected.style.backgroundColor = color;
@@ -263,11 +265,13 @@ backgroundColorButton.addEventListener("click", () => {
         }
     }
 });
+
 // ===============================
 // WIDTH CONTROL (percentage)
 // ===============================
 widthDecreaseBtn.addEventListener("click", () => {
     if (currentlySelected) {
+        currentlySelected.classList.add("custom-styles");
         let currentWidth = parsePercent(currentlySelected.style.maxWidth || "100%");
         currentWidth = Math.max(5, currentWidth - 5); 
         currentlySelected.style.maxWidth = currentWidth + "%";
@@ -276,6 +280,7 @@ widthDecreaseBtn.addEventListener("click", () => {
 
 widthIncreaseBtn.addEventListener("click", () => {
     if (currentlySelected) {
+        currentlySelected.classList.add("custom-styles");
         let currentWidth = parsePercent(currentlySelected.style.maxWidth || "100%");
         currentWidth = Math.min(100, currentWidth + 5); 
         currentlySelected.style.maxWidth = currentWidth + "%";
@@ -287,6 +292,7 @@ widthIncreaseBtn.addEventListener("click", () => {
 // ===============================
 alignLeft.addEventListener("click", () => {
     if (currentlySelected) {
+        currentlySelected.classList.add("custom-styles");
         currentlySelected.classList.remove("building-block-align-center", "building-block-align-right");
         currentlySelected.classList.add("building-block-align-left");
     }
@@ -294,6 +300,7 @@ alignLeft.addEventListener("click", () => {
 
 alignCenter.addEventListener("click", () => {
     if (currentlySelected) {
+        currentlySelected.classList.add("custom-styles");
         currentlySelected.classList.remove("building-block-align-left", "building-block-align-right");
         currentlySelected.classList.add("building-block-align-center");
     }
@@ -301,6 +308,7 @@ alignCenter.addEventListener("click", () => {
 
 alignRight.addEventListener("click", () => {
     if (currentlySelected) {
+        currentlySelected.classList.add("custom-styles");
         currentlySelected.classList.remove("building-block-align-left", "building-block-align-center");
         currentlySelected.classList.add("building-block-align-right");
     }
@@ -337,6 +345,7 @@ document.addEventListener("keyup", (e) => {
 document.addEventListener("click", (e) => {
     if (shiftHeld && aHeld) {
         if (currentlySelected) {
+            currentlySelected.classList.add("custom-styles"); // mark element when opening style menu
             invokeStyleMenu();
         }
     }
