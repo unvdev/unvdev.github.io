@@ -3,7 +3,6 @@ const editorContainer = document.querySelector("#quill-editor");
 let activeTextElement = null;
 let quillEditor = null; // Don't initialize Quill yet
 
-// Register fonts with Quill
 const Font = Quill.import("formats/font");
 Font.whitelist = [
   "roboto",
