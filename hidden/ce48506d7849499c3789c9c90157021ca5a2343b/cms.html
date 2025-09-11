@@ -202,6 +202,18 @@
   border-radius: 4px;
 }
 
+.ql-snow .ql-picker.ql-font .ql-picker-item::before,
+.ql-snow .ql-picker.ql-font .ql-picker-label::before {
+  display: inline-block;
+  max-width: 160px;     /* adjust to fit your dropdown width */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis; /* adds … when text is too long */
+  vertical-align: middle;
+  line-height: 1.2em;   /* keeps text centered */
+}
+
+
 /* Style Editor Popup */
 .style-editor-pop {
     display: block;
