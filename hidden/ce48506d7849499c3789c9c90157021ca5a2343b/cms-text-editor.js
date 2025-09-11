@@ -7,13 +7,15 @@ const Font = Quill.import("formats/font");
 Font.whitelist = [
   "agbalumo",
   "alumni-sans-pinstripe",
-  "bebas-neue",
   "baskervville",
   "baskervville-sc",
+  "bebas-neue",
   "borel",
   "cal-sans",
+  "caveat-brush",
   "chewy",
   "cinzel",
+  "comfortaa",
   "coming-soon",
   "delius",
   "dynapuff",
@@ -21,8 +23,10 @@ Font.whitelist = [
   "funnel-display",
   "germania-one",
   "google-sans-code",
+  "host-grotesk",
   "lato",
   "lexend",
+  "libre-bodoni",
   "lobster",
   "lora",
   "marck-script",
@@ -30,6 +34,7 @@ Font.whitelist = [
   "merriweather-sans",
   "michroma",
   "montecarlo",
+  "newsreader",
   "noto-sans",
   "pacifico",
   "pixelify-sans",
@@ -40,11 +45,9 @@ Font.whitelist = [
   "short-stack",
   "sono",
   "suse",
+  "twinkle-star",
   "ultra",
   "unifrakturmaguntia",
-  "host-grotesk",
-  "newsreader",
-  "libre-bodoni"
 ];
 Quill.register(Font, true);
 
