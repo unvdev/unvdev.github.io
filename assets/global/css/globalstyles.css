@@ -224,9 +224,15 @@
 
 
 
-.ql-snow .ql-editor .ql-font-caveat-brush { font-family: 'Caveat Brush', cursive !important; }
+/* Add this simple rule for your static HTML test */
+.ql-font-caveat-brush {
+  font-family: 'Caveat Brush', cursive !important;
+}
 
-.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="caveat-brush"]::before { content: "Caveat Brush"; font-family: 'Caveat Brush', cursive; }
+/* Keep your original rule for the actual editor */
+.ql-snow .ql-editor .ql-font-caveat-brush {
+  font-family: 'Caveat Brush', cursive !important;
+}
 
 
 
