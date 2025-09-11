@@ -176,6 +176,7 @@
 
 .ql-snow .ql-editor .ql-font-baskervville { font-family: 'Baskervville', serif !important; }
 .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="baskervville"]::before { content: "Baskervville"; font-family: 'Baskervville', serif; }
+
 /* 2. CSS RESET & DEFAULTS */
 *,
 *::before,
