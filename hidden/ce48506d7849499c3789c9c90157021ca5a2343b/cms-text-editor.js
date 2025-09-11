@@ -52,6 +52,42 @@ Font.whitelist = [
 ];
 Quill.register(Font, true);
 
+const Font = Quill.import("formats/font");
+
+const fontStyleMap = {
+  'alumni-sans-pinstripe': 'Alumni Sans Pinstripe',
+  'baskervville-sc': 'Baskervville SC',
+  'bebas-neue': 'Bebas Neue',
+  'cal-sans': 'Cal Sans',
+  'caveat-brush': 'Caveat Brush',
+  'coming-soon': 'Coming Soon',
+  'funnel-display': 'Funnel Display',
+  'google-sans-code': 'Google Sans Code',
+  'libre-bodoni': 'Libre Bodoni',
+  'marck-script': 'Marck Script',
+  'meow-script': 'Meow Script',
+  'merriweather-sans': 'Merriweather Sans',
+  'pixelify-sans': 'Pixelify Sans',
+  'playwrite-za': 'Playwrite ZA',
+  'poller-one': 'Poller One',
+  'short-stack': 'Short Stack',
+  'twinkle-star': 'Twinkle Star',
+};
+
+const FontStyle = Quill.import('attributors/style/font');
+FontStyle.whitelist = Font.whitelist;
+
+const originalAttributor = FontStyle.prototype.value;
+FontStyle.prototype.value = function(node) {
+  const value = originalAttributor.call(this, node);
+  if (fontStyleMap[value]) {
+    return fontStyleMap[value];
+  }
+  return value;
+};
+
+Quill.register(FontStyle, true);
+
 // Custom color picker
 function customColorPicker() {
   const color = prompt("Enter a hex color code (e.g., #ff00ff):");
