@@ -4,55 +4,17 @@ let activeTextElement = null;
 let quillEditor = null; // Don't initialize Quill yet
 let isEditorLoading = false; // 👈 Add this line
 
-const Font = Quill.import("formats/font");
-Font.whitelist = [
-  "agbalumo",
-  "alumni-sans-pinstripe",
-  "baskervville",
-  "baskervville-sc",
-  "bebas-neue",
-  "borel",
-  "cal-sans",
-  "caveat-brush",
-  "chewy",
-  "cinzel",
-  "comfortaa",
-  "coming-soon",
-  "delius",
-  "dynapuff",
-  "fugaz-one",
-  "funnel-display",
-  "germania-one",
-  "google-sans-code",
-  "host-grotesk",
-  "lato",
-  "lexend",
-  "libre-bodoni",
-  "lobster",
-  "lora",
-  "marck-script",
-  "meow-script",
-  "merriweather-sans",
-  "michroma",
-  "montecarlo",
-  "newsreader",
-  "noto-sans",
-  "pacifico",
-  "pixelify-sans",
-  "playwrite-za",
-  "poller-one",
-  "quintessential",
-  "roboto",
-  "short-stack",
-  "sono",
-  "suse",
-  "twinkle-star",
-  "ultra",
-  "unifrakturmaguntia",
+const fontWhitelist = [
+  "agbalumo", "alumni-sans-pinstripe", "baskervville", "baskervville-sc", 
+  "bebas-neue", "borel", "cal-sans", "caveat-brush", "chewy", "cinzel", 
+  "comfortaa", "coming-soon", "delius", "dynapuff", "fugaz-one", 
+  "funnel-display", "germania-one", "google-sans-code", "host-grotesk", 
+  "lato", "lexend", "libre-bodoni", "lobster", "lora", "marck-script", 
+  "meow-script", "merriweather-sans", "michroma", "montecarlo", 
+  "newsreader", "noto-sans", "pacifico", "pixelify-sans", "playwrite-za", 
+  "poller-one", "quintessential", "roboto", "short-stack", "sono", "suse", 
+  "twinkle-star", "ultra", "unifrakturmaguntia",
 ];
-Quill.register(Font, true);
-
-const Font = Quill.import("formats/font");
 
 const fontStyleMap = {
   'alumni-sans-pinstripe': 'Alumni Sans Pinstripe',
@@ -75,11 +37,11 @@ const fontStyleMap = {
 };
 
 const FontStyle = Quill.import('attributors/style/font');
-FontStyle.whitelist = Font.whitelist;
+FontStyle.whitelist = fontWhitelist;
 
-const originalAttributor = FontStyle.prototype.value;
+const originalAttributorValue = FontStyle.prototype.value;
 FontStyle.prototype.value = function(node) {
-  const value = originalAttributor.call(this, node);
+  const value = originalAttributorValue.call(this, node);
   if (fontStyleMap[value]) {
     return fontStyleMap[value];
   }
