@@ -178,10 +178,9 @@ document.addEventListener("dblclick", (e) => {
 
 // Click outside to save & close
 document.addEventListener("click", (e) => {
-  const isEditorVisible =
-    window.getComputedStyle(editorPop).display !== "none";
+  const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
 
-  // 👇 Add the check here
+  // Only proceed if the editor is visible AND not busy loading
   if (isEditorVisible && !isEditorLoading) {
     const isClickInsideEditor = e.target.closest(".text-editor-pop");
     const isClickInsideQuillUI = e.target.closest(".ql-picker, .ql-tooltip");
