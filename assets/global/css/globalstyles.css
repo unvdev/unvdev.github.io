@@ -1,4 +1,4 @@
-/* 1. FONT IMPORT */
+/* Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700');
 @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
@@ -42,6 +42,50 @@
 @import url('https://fonts.googleapis.com/css2?family=Libre+Bodoni:ital,wght@0,400..700;1,400..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Baskervville+SC:wght@400..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Baskervville:ital,wght@0,400..700;1,400..700&display=swap');
+/*Google-To-Quill Fonts*/
+.ql-font-roboto { font-family: 'Roboto', sans-serif; }
+.ql-font-comfortaa { font-family: 'Comfortaa', cursive; }
+.ql-font-lora { font-family: 'Lora', serif; }
+.ql-font-bebas-neue { font-family: 'Bebas Neue', sans-serif; }
+.ql-font-google-sans-code { font-family: 'Google Sans Code', monospace; }
+.ql-font-funnel-display { font-family: 'Funnel Display', sans-serif; }
+.ql-font-alumni-sans-pinstripe { font-family: 'Alumni Sans Pinstripe', sans-serif; }
+.ql-font-lexend { font-family: 'Lexend', sans-serif; }
+.ql-font-cal-sans { font-family: 'Cal Sans', sans-serif; }
+.ql-font-sono { font-family: 'Sono', sans-serif; }
+.ql-font-pacifico { font-family: 'Pacifico', cursive; }
+.ql-font-delius { font-family: 'Delius', cursive; }
+.ql-font-meow-script { font-family: 'Meow Script', cursive; }
+.ql-font-borel { font-family: 'Borel', cursive; }
+.ql-font-dynapuff { font-family: 'DynaPuff', cursive; }
+.ql-font-chewy { font-family: 'Chewy', cursive; }
+.ql-font-twinkle-star { font-family: 'Twinkle Star', cursive; }
+.ql-font-agbalumo { font-family: 'Agbalumo', serif; }
+.ql-font-playwrite-za { font-family: 'Playwrite ZA', serif; }
+.ql-font-lobster { font-family: 'Lobster', cursive; }
+.ql-font-quintessential { font-family: 'Quintessential', cursive; }
+.ql-font-poller-one { font-family: 'Poller One', cursive; }
+.ql-font-cinzel { font-family: 'Cinzel', serif; }
+.ql-font-germania-one { font-family: 'Germania One', cursive; }
+.ql-font-ultra { font-family: 'Ultra', serif; }
+.ql-font-pixelify-sans { font-family: 'Pixelify Sans', sans-serif; }
+.ql-font-unifrakturmaguntia { font-family: 'UnifrakturMaguntia', cursive; }
+.ql-font-montecarlo { font-family: 'MonteCarlo', cursive; }
+.ql-font-marck-script { font-family: 'Marck Script', cursive; }
+.ql-font-fugaz-one { font-family: 'Fugaz One', cursive; }
+.ql-font-caveat-brush { font-family: 'Caveat Brush', cursive; }
+.ql-font-coming-soon { font-family: 'Coming Soon', cursive; }
+.ql-font-short-stack { font-family: 'Short Stack', cursive; }
+.ql-font-michroma { font-family: 'Michroma', sans-serif; }
+.ql-font-suse { font-family: 'SUSE', sans-serif; }
+.ql-font-noto-sans { font-family: 'Noto Sans', sans-serif; }
+.ql-font-merriweather-sans { font-family: 'Merriweather Sans', sans-serif; }
+.ql-font-host-grotesk { font-family: 'Host Grotesk', sans-serif; }
+.ql-font-lato { font-family: 'Lato', sans-serif; }
+.ql-font-newsreader { font-family: 'Newsreader', serif; }
+.ql-font-libre-bodoni { font-family: 'Libre Bodoni', serif; }
+.ql-font-baskervville-sc { font-family: 'Baskervville SC', serif; }
+.ql-font-baskervville { font-family: 'Baskervville', serif; }
 
 /* 2. CSS RESET & DEFAULTS */
 *,

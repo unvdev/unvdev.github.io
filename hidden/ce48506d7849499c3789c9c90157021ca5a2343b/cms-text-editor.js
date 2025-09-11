@@ -3,6 +3,55 @@ const editorContainer = document.querySelector("#quill-editor");
 let activeTextElement = null;
 let quillEditor = null; // Don't initialize Quill yet
 
+// Register fonts with Quill
+const Font = Quill.import("formats/font");
+Font.whitelist = [
+  "roboto",
+  "comfortaa",
+  "lora",
+  "bebas-neue",
+  "google-sans-code",
+  "funnel-display",
+  "alumni-sans-pinstripe",
+  "lexend",
+  "cal-sans",
+  "sono",
+  "pacifico",
+  "delius",
+  "meow-script",
+  "borel",
+  "dynapuff",
+  "chewy",
+  "twinkle-star",
+  "agbalumo",
+  "playwrite-za",
+  "lobster",
+  "quintessential",
+  "poller-one",
+  "cinzel",
+  "germania-one",
+  "ultra",
+  "pixelify-sans",
+  "unifrakturmaguntia",
+  "montecarlo",
+  "marck-script",
+  "fugaz-one",
+  "caveat-brush",
+  "coming-soon",
+  "short-stack",
+  "michroma",
+  "suse",
+  "noto-sans",
+  "merriweather-sans",
+  "host-grotesk",
+  "lato",
+  "newsreader",
+  "libre-bodoni",
+  "baskervville-sc",
+  "baskervville"
+];
+Quill.register(Font, true);
+
 // Custom color picker
 function customColorPicker() {
   const color = prompt("Enter a hex color code (e.g., #ff00ff):");
@@ -28,6 +77,7 @@ function initializeQuill() {
     modules: {
       toolbar: {
         container: [
+          [{ font: Font.whitelist }],   // 👈 add this line
           [{ header: [1, 2, 3, 4, 5, false] }, { align: [] }],
           ["bold", "italic", "underline", "strike"],
           [{ list: "ordered" }, { list: "bullet" }],
