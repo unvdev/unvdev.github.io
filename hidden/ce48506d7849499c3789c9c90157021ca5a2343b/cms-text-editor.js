@@ -56,7 +56,7 @@ Quill.register(Font, true);
 function customColorPicker() {
   const color = prompt("Enter a hex color code (e.g., #ff00ff):");
   if (color && /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color)) {
-    this.quill.format("color", color);
+    quillEditor.format("color", color);
   } else if (color) {
     alert("Invalid hex code.");
   }
