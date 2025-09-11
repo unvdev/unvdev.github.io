@@ -109,10 +109,10 @@ function openTextEditor(target) {
   editorPop.classList.remove("content-hide");
   editorPop.classList.add("content-show");
 
-  if (!quillEditor) {
-    initializeQuill();
-  }
-
+if (!quillEditor) {
+  initializeQuill();
+  quillEditor.format('font', 'roboto', 'user'); 
+}
   requestAnimationFrame(() => {
     const content = target.innerHTML.trim();
     quillEditor.setContents([], "silent");
