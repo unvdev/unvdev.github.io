@@ -68,14 +68,13 @@ function setNightMode() {
   editorPop.style.backgroundColor = "#222222";
 }
 
-// Initialize Quill
 function initializeQuill() {
   quillEditor = new Quill(editorContainer, {
     theme: "snow",
     modules: {
       toolbar: {
         container: [
-          [{ font: Font.whitelist }],   // 👈 add this line
+          [{ font: fontWhitelist }],
           [{ header: [1, 2, 3, 4, 5, false] }, { align: [] }],
           ["bold", "italic", "underline", "strike"],
           [{ list: "ordered" }, { list: "bullet" }],
