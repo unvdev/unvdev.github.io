@@ -38,23 +38,23 @@ h1, h2, h3, h4, h5 {
 }
 
 h1 {
-  font-size: 2.5rem; /* 40px */
+  font-size: 4.5rem; /* 40px */
 }
 
 h2 {
-  font-size: 2rem; /* 32px */
+  font-size: 3.5rem; /* 32px */
 }
 
 h3 {
-  font-size: 1.75rem; /* 28px */
+  font-size: 2.5rem; /* 28px */
 }
 
 h4 {
-  font-size: 1.5rem; /* 24px */
+  font-size: 2rem; /* 24px */
 }
 
 h5 {
-  font-size: 1.25rem; /* 20px */
+  font-size: 1.5rem; /* 20px */
 }
 
 /* Paragraph */
