@@ -4,51 +4,53 @@ let activeTextElement = null;
 let quillEditor = null; // Don't initialize Quill yet
 let isEditorLoading = false; // 👈 Add this line
 
-const fontWhitelist = [
-  "agbalumo", "alumni-sans-pinstripe", "baskervville", "baskervville-sc", 
-  "bebas-neue", "borel", "cal-sans", "caveat-brush", "chewy", "cinzel", 
-  "comfortaa", "coming-soon", "delius", "dynapuff", "fugaz-one", 
-  "funnel-display", "germania-one", "google-sans-code", "host-grotesk", 
-  "lato", "lexend", "libre-bodoni", "lobster", "lora", "marck-script", 
-  "meow-script", "merriweather-sans", "michroma", "montecarlo", 
-  "newsreader", "noto-sans", "pacifico", "pixelify-sans", "playwrite-za", 
-  "poller-one", "quintessential", "roboto", "short-stack", "sono", "suse", 
-  "twinkle-star", "ultra", "unifrakturmaguntia",
+const Font = Quill.import("formats/font");
+Font.whitelist = [
+  "agbalumo",
+  "alumni-sans-pinstripe",
+  "baskervville",
+  "baskervville-sc",
+  "bebas-neue",
+  "borel",
+  "cal-sans",
+  "caveat-brush",
+  "chewy",
+  "cinzel",
+  "comfortaa",
+  "coming-soon",
+  "delius",
+  "dynapuff",
+  "fugaz-one",
+  "funnel-display",
+  "germania-one",
+  "google-sans-code",
+  "host-grotesk",
+  "lato",
+  "lexend",
+  "libre-bodoni",
+  "lobster",
+  "lora",
+  "marck-script",
+  "meow-script",
+  "merriweather-sans",
+  "michroma",
+  "montecarlo",
+  "newsreader",
+  "noto-sans",
+  "pacifico",
+  "pixelify-sans",
+  "playwrite-za",
+  "poller-one",
+  "quintessential",
+  "roboto",
+  "short-stack",
+  "sono",
+  "suse",
+  "twinkle-star",
+  "ultra",
+  "unifrakturmaguntia",
 ];
-
-const fontStyleMap = {
-  'alumni-sans-pinstripe': 'Alumni Sans Pinstripe',
-  'baskervville-sc': 'Baskervville SC',
-  'bebas-neue': 'Bebas Neue',
-  'cal-sans': 'Cal Sans',
-  'caveat-brush': 'Caveat Brush',
-  'coming-soon': 'Coming Soon',
-  'funnel-display': 'Funnel Display',
-  'google-sans-code': 'Google Sans Code',
-  'libre-bodoni': 'Libre Bodoni',
-  'marck-script': 'Marck Script',
-  'meow-script': 'Meow Script',
-  'merriweather-sans': 'Merriweather Sans',
-  'pixelify-sans': 'Pixelify Sans',
-  'playwrite-za': 'Playwrite ZA',
-  'poller-one': 'Poller One',
-  'short-stack': 'Short Stack',
-  'twinkle-star': 'Twinkle Star',
-};
-
-const FontStyle = Quill.import('attributors/style/font');
-FontStyle.whitelist = fontWhitelist;
-
-const originalAttributorValue = FontStyle.prototype.value;
-FontStyle.prototype.value = function(node) {
-  const value = originalAttributorValue.call(this, node);
-  if (fontStyleMap[value]) {
-    return fontStyleMap[value];
-  }
-  return value;
-};
-
-Quill.register(FontStyle, true);
+Quill.register(Font, true);
 
 // Custom color picker
 function customColorPicker() {
@@ -68,25 +70,28 @@ function setNightMode() {
   editorPop.style.backgroundColor = "#222222";
 }
 
+// Initialize Quill
 function initializeQuill() {
   quillEditor = new Quill(editorContainer, {
     theme: "snow",
     modules: {
       toolbar: {
         container: [
-          [{ font: fontWhitelist }],
+          [{ font: Font.whitelist }],   // 👈 add this line
           [{ header: [1, 2, 3, 4, 5, false] }, { align: [] }],
           ["bold", "italic", "underline", "strike"],
           [{ list: "ordered" }, { list: "bullet" }],
           [{ color: [] }, "custom-color"],
           ["link"],
           ["clean"],
-          ["day-mode", "night-mode"]
+          ["day-mode", "night-mode"],
+          ["close"]
         ],
         handlers: {
           "custom-color": customColorPicker,
           "day-mode": setDayMode,
           "night-mode": setNightMode,
+          "close": closeTextEditor,
         },
       },
     },
@@ -99,6 +104,8 @@ function initializeQuill() {
     '<i class="fa-solid fa-sun"></i>';
   document.querySelector(".ql-night-mode").innerHTML =
     '<i class="fa-solid fa-moon"></i>';
+    document.querySelector(".ql-close").innerHTML =
+    '<i class="fa-solid fa-xmark"></i>';
 }
 
 // Open editor
@@ -173,17 +180,17 @@ document.addEventListener("dblclick", (e) => {
   if (target) openTextEditor(target);
 });
 
-// Click outside to save & close
-document.addEventListener("click", (e) => {
-  const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
+// // Click outside to save & close
+// document.addEventListener("click", (e) => {
+//   const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
 
-  // Only proceed if the editor is visible AND not busy loading
-  if (isEditorVisible && !isEditorLoading) {
-    const isClickInsideEditor = e.target.closest(".text-editor-pop");
-    const isClickInsideQuillUI = e.target.closest(".ql-picker, .ql-tooltip");
+//   // Only proceed if the editor is visible AND not busy loading
+//   if (isEditorVisible && !isEditorLoading) {
+//     const isClickInsideEditor = e.target.closest(".text-editor-pop");
+//     const isClickInsideQuillUI = e.target.closest(".ql-picker, .ql-tooltip");
 
-    if (!isClickInsideEditor && !isClickInsideQuillUI) {
-      closeTextEditor(true);
-    }
-  }
-});
+//     if (!isClickInsideEditor && !isClickInsideQuillUI) {
+//       closeTextEditor(true);
+//     }
+//   }
+// });
