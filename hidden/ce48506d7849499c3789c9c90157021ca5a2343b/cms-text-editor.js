@@ -2,6 +2,7 @@ const editorPop = document.querySelector(".text-editor-pop");
 const editorContainer = document.querySelector("#quill-editor");
 let activeTextElement = null;
 let quillEditor = null; // Don't initialize Quill yet
+let isEditorLoading = false; // 👈 Add this line
 
 const Font = Quill.import("formats/font");
 Font.whitelist = [
@@ -105,6 +106,7 @@ function initializeQuill() {
 
 // Open editor
 function openTextEditor(target) {
+  isEditorLoading = true; // 👈 Set the busy flag
   activeTextElement = target;
   editorPop.classList.remove("content-hide");
   editorPop.classList.add("content-show");
@@ -122,6 +124,8 @@ if (!quillEditor) {
     const length = quillEditor.getLength();
     quillEditor.setSelection(length, 0, "silent");
     quillEditor.focus();
+    
+    isEditorLoading = false; // 👈 Release the flag when done
   });
 }
 
@@ -177,7 +181,8 @@ document.addEventListener("click", (e) => {
   const isEditorVisible =
     window.getComputedStyle(editorPop).display !== "none";
 
-  if (isEditorVisible) {
+  // 👇 Add the check here
+  if (isEditorVisible && !isEditorLoading) {
     const isClickInsideEditor = e.target.closest(".text-editor-pop");
     const isClickInsideQuillUI = e.target.closest(".ql-picker, .ql-tooltip");
 
