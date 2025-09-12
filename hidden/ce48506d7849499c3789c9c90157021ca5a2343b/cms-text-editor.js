@@ -41,6 +41,21 @@ class CustomFont extends Inline {
     const match = className.match(new RegExp(this.classPrefix + "([a-z0-9-]+)"));
     return match ? match[1] : null;
   }
+
+  format(name, value) {
+    if (name === CustomFont.blotName) {
+      if (value) {
+        const normalized = CustomFont.sanitize(value);
+        if (CustomFont.whitelist.includes(normalized)) {
+          this.domNode.setAttribute("class", CustomFont.classPrefix + normalized);
+        }
+      } else {
+        this.domNode.removeAttribute("class");
+      }
+    } else {
+      super.format(name, value);
+    }
+  }
 }
 
 Quill.register(CustomFont, true);
