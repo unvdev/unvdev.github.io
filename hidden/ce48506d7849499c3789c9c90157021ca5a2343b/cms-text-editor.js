@@ -11,42 +11,37 @@ class CustomFont extends Inline {
   static tagName = "SPAN";
   static classPrefix = "ql-font-";
 
+  static whitelist = [
+    "agbalumo", "alumni-sans-pinstripe", "baskervville", "baskervville-sc",
+    "bebas-neue", "borel", "cal-sans", "caveat-brush", "chewy", "cinzel",
+    "comfortaa", "coming-soon", "delius", "dynapuff", "fugaz-one",
+    "funnel-display", "germania-one", "google-sans-code", "host-grotesk",
+    "lato", "lexend", "libre-bodoni", "lobster", "lora", "marck-script",
+    "meow-script", "merriweather-sans", "michroma", "montecarlo",
+    "newsreader", "noto-sans", "pacifico", "pixelify-sans", "playwrite-za",
+    "poller-one", "quintessential", "roboto", "short-stack", "sono", "suse",
+    "twinkle-star", "ultra", "unifrakturmaguntia",
+  ];
+
+  static sanitize(value) {
+    if (!value) return value;
+    return value.replace(/['"]/g, "").replace(/\s+/g, "-").toLowerCase();
+  }
+
   static create(value) {
-    let node = super.create();
+    const node = super.create();
     const normalized = this.sanitize(value);
-    if (this.whitelist && !this.whitelist.includes(normalized)) {
-      return node; // ignore invalid fonts
-    }
+    if (this.whitelist && !this.whitelist.includes(normalized)) return node;
     node.setAttribute("class", this.classPrefix + normalized);
     return node;
   }
 
   static formats(node) {
-    let className = node.getAttribute("class") || "";
-    let match = className.match(new RegExp(this.classPrefix + "([a-z0-9-]+)"));
+    const className = node.getAttribute("class") || "";
+    const match = className.match(new RegExp(this.classPrefix + "([a-z0-9-]+)"));
     return match ? match[1] : null;
   }
-
-  static sanitize(value) {
-    if (!value) return value;
-    return value
-      .replace(/['"]/g, "")   // strip quotes
-      .replace(/\s+/g, "-")   // replace spaces with dashes
-      .toLowerCase();
-  }
 }
-
-CustomFont.whitelist = [
-  "agbalumo", "alumni-sans-pinstripe", "baskervville", "baskervville-sc",
-  "bebas-neue", "borel", "cal-sans", "caveat-brush", "chewy", "cinzel",
-  "comfortaa", "coming-soon", "delius", "dynapuff", "fugaz-one",
-  "funnel-display", "germania-one", "google-sans-code", "host-grotesk",
-  "lato", "lexend", "libre-bodoni", "lobster", "lora", "marck-script",
-  "meow-script", "merriweather-sans", "michroma", "montecarlo",
-  "newsreader", "noto-sans", "pacifico", "pixelify-sans", "playwrite-za",
-  "poller-one", "quintessential", "roboto", "short-stack", "sono", "suse",
-  "twinkle-star", "ultra", "unifrakturmaguntia",
-];
 
 Quill.register(CustomFont, true);
 
