@@ -4,7 +4,8 @@ let activeTextElement = null;
 let quillEditor = null; // Don't initialize Quill yet
 let isEditorLoading = false; // 👈 Add this line
 
-// 1. Define your master list of fonts
+const Font = Quill.import('formats/font');
+
 const fontWhitelist = [
   "agbalumo", "alumni-sans-pinstripe", "baskervville", "baskervville-sc",
   "bebas-neue", "borel", "cal-sans", "caveat-brush", "chewy", "cinzel",
@@ -17,55 +18,9 @@ const fontWhitelist = [
   "twinkle-star", "ultra", "unifrakturmaguntia",
 ];
 
-// 2. Define the map for multi-word font names to help Quill's detection
-const fontStyleMap = {
-  'Alumni Sans Pinstripe': 'alumni-sans-pinstripe',
-  'Baskervville SC': 'baskervville-sc',
-  'Bebas Neue': 'bebas-neue',
-  'Cal Sans': 'cal-sans',
-  'Caveat Brush': 'caveat-brush',
-  'Coming Soon': 'coming-soon',
-  'Funnel Display': 'funnel-display',
-  'Google Sans Code': 'google-sans-code',
-  'Libre Bodoni': 'libre-bodoni',
-  'Marck Script': 'marck-script',
-  'Meow Script': 'meow-script',
-  'Merriweather Sans': 'merriweather-sans',
-  'Pixelify Sans': 'pixelify-sans',
-  'Playwrite ZA': 'playwrite-za',
-  'Poller One': 'poller-one',
-  'Short Stack': 'short-stack',
-  'Twinkle Star': 'twinkle-star',
-};
+Font.whitelist = fontWhitelist;
 
-// 3. Get Quill's default Font class
-const Font = Quill.import('formats/font');
-
-// 4. Create a custom Font class that overrides the faulty detection logic
-class CustomFont extends Font {
-  static formats(domNode) {
-    // Ask the browser for the real font name
-    const fontName = window.getComputedStyle(domNode).getPropertyValue('font-family').split(',')[0].replace(/['"]/g, '').trim();
-
-    // Look up the real name in our map
-    if (fontStyleMap[fontName]) {
-      return fontStyleMap[fontName];
-    }
-    
-    // For simple, single-word fonts, try a direct lowercase match
-    const simpleMatch = fontName.toLowerCase();
-    if (fontWhitelist.includes(simpleMatch)) {
-      return simpleMatch;
-    }
-
-    // Fallback to Quill's original method if our lookup fails
-    return super.formats(domNode);
-  }
-}
-CustomFont.whitelist = fontWhitelist;
-
-// 5. Register our custom class, overriding Quill's default 'font' handler
-Quill.register(CustomFont, true);
+Quill.register(Font, true);
 
 // Custom color picker
 function customColorPicker() {
@@ -93,7 +48,7 @@ function initializeQuill() {
       toolbar: {
         container: [
           // This is the line to fix 👇
-          [{ font: fontWhitelist }],
+          [{ font: Font.whitelist }],
           [{ header: [1, 2, 3, 4, 5, false] }, { align: [] }],
           ["bold", "italic", "underline", "strike"],
           [{ list: "ordered" }, { list: "bullet" }],
