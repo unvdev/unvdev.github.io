@@ -76,16 +76,18 @@ function updateFontPickerLabel(quill) {
   if (!pickerLabel) return;
 
   const format = quill.getFormat();
-  const currentFont = format.font || 'sans-serif';
+  const currentFont = format.font || ''; // empty if no font applied
 
   const displayName = currentFont
-    .split('-')
-    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(' ');
+    ? currentFont
+        .split('-')
+        .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(' ')
+    : "Font Family"; // default label if no font applied
 
   pickerLabel.setAttribute("data-value", currentFont);
   pickerLabel.textContent = displayName;
-  pickerLabel.style.fontFamily = currentFont;
+  pickerLabel.style.fontFamily = currentFont || 'inherit';
 }
 
 // Initialize Quill
