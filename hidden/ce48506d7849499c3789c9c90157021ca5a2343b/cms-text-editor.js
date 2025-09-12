@@ -60,7 +60,6 @@ class CustomFont extends Inline {
 
 Quill.register(CustomFont, true);
 
-// Custom color picker
 function customColorPicker() {
   const color = prompt("Enter a hex color code (e.g., #ff00ff):");
   if (color && /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color)) {
@@ -70,7 +69,6 @@ function customColorPicker() {
   }
 }
 
-// Initialize Quill
 function initializeQuill() {
   quillEditor = new Quill(editorContainer, {
     theme: "snow",
@@ -95,12 +93,35 @@ function initializeQuill() {
     },
   });
 
-  document.querySelector(".ql-custom-color").innerHTML =
-    '<i class="fa-solid fa-palette"></i>';
-  document.querySelector(".ql-day-mode").innerHTML =
-    '<i class="fa-solid fa-sun"></i>';
-  document.querySelector(".ql-night-mode").innerHTML =
-    '<i class="fa-solid fa-moon"></i>';
+  // Update toolbar icons
+  document.querySelector(".ql-custom-color").innerHTML = '<i class="fa-solid fa-palette"></i>';
+  document.querySelector(".ql-day-mode").innerHTML = '<i class="fa-solid fa-sun"></i>';
+  document.querySelector(".ql-night-mode").innerHTML = '<i class="fa-solid fa-moon"></i>';
+
+  // Update the font picker label dynamically
+  const fontPicker = editorContainer.querySelector(".ql-font");
+  const label = fontPicker.querySelector(".ql-picker-label");
+
+  fontPicker.addEventListener("click", () => {
+    requestAnimationFrame(() => {
+      const selectedFont = quillEditor.getFormat()[CustomFont.blotName];
+      if (selectedFont) {
+        const displayName = selectedFont.replace(/-/g, " ");
+        label.textContent = displayName.charAt(0).toUpperCase() + displayName.slice(1);
+        label.style.fontFamily = selectedFont;
+      }
+    });
+  });
+
+  // Also update label when font changes via toolbar
+  quillEditor.on("selection-change", () => {
+    const selectedFont = quillEditor.getFormat()[CustomFont.blotName];
+    if (selectedFont) {
+      const displayName = selectedFont.replace(/-/g, " ");
+      label.textContent = displayName.charAt(0).toUpperCase() + displayName.slice(1);
+      label.style.fontFamily = selectedFont;
+    }
+  });
 }
 
 // Open editor
@@ -126,22 +147,14 @@ function openTextEditor(target) {
   });
 }
 
-// Utility: remove empty tags
+// Utilities: clean HTML & normalize lists
 function cleanHtml(html) {
   const trimmed = html.trim();
-  const noEmptyTags = trimmed.replace(
-    /<(\w+)(?:\s[^>]*)?>\s*(<br\s*\/?>)?\s*<\/\1>/gi,
-    ""
-  );
-  return noEmptyTags.trim();
+  return trimmed.replace(/<(\w+)(?:\s[^>]*)?>\s*(<br\s*\/?>)?\s*<\/\1>/gi, "").trim();
 }
-
-// Utility: normalize Quill lists into proper ul/ol
 function normalizeLists(html) {
   return html.replace(/<ol[^>]*>([\s\S]*?)<\/ol>/gi, (match, inner) => {
-    if (/data-list="bullet"/.test(match)) {
-      return `<ul>${inner.replace(/ data-list="bullet"/g, "")}</ul>`;
-    }
+    if (/data-list="bullet"/.test(match)) return `<ul>${inner.replace(/ data-list="bullet"/g, "")}</ul>`;
     return `<ol>${inner.replace(/ data-list="ordered"/g, "")}</ol>`;
   });
 }
@@ -149,15 +162,11 @@ function normalizeLists(html) {
 // Close editor
 function closeTextEditor(save = true) {
   if (!activeTextElement || !quillEditor) return;
-
   if (save) {
-    let newContent = quillEditor.root.innerHTML;
-    newContent = normalizeLists(newContent);
+    let newContent = normalizeLists(quillEditor.root.innerHTML);
     const cleaned = cleanHtml(newContent);
-
     if (cleaned) activeTextElement.innerHTML = cleaned;
   }
-
   editorPop.classList.remove("content-show");
   editorPop.classList.add("content-hide");
   activeTextElement = null;
@@ -172,13 +181,9 @@ document.addEventListener("dblclick", (e) => {
 // Click outside to save & close
 document.addEventListener("click", (e) => {
   const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
-
   if (isEditorVisible && !isEditorLoading) {
     const isClickInsideEditor = e.target.closest(".text-editor-pop");
     const isClickInsideQuillUI = e.target.closest(".ql-picker, .ql-tooltip");
-
-    if (!isClickInsideEditor && !isClickInsideQuillUI) {
-      closeTextEditor(true);
-    }
+    if (!isClickInsideEditor && !isClickInsideQuillUI) closeTextEditor(true);
   }
 });
