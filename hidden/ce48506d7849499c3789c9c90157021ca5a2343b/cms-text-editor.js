@@ -75,7 +75,7 @@ function initializeQuill() {
     modules: {
       toolbar: {
         container: [
-          [{ font: CustomFont }],
+          [{ font: CustomFont.whitelist }],
           [{ header: [1, 2, 3, 4, 5, false] }, { align: [] }],
           ["bold", "italic", "underline", "strike"],
           [{ list: "ordered" }, { list: "bullet" }],
