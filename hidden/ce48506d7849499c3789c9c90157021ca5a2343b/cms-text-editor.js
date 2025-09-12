@@ -71,6 +71,14 @@ function customColorPicker() {
 }
 
 // Initialize Quill
+function setDayMode() {
+  editorPop.style.backgroundColor = "whitesmoke";
+}
+
+function setNightMode() {
+  editorPop.style.backgroundColor = "#222222";
+}
+
 function initializeQuill() {
   quillEditor = new Quill(editorContainer, {
     theme: "snow",
@@ -83,66 +91,24 @@ function initializeQuill() {
           [{ list: "ordered" }, { list: "bullet" }],
           [{ color: [] }, "custom-color"],
           ["link"],
-          ["clean"]
+          ["clean"],
+          ["day-mode", "night-mode"]
         ],
         handlers: {
-          "custom-color": customColorPicker
-        }
-      }
-    }
+          "custom-color": customColorPicker,
+          "day-mode": setDayMode,
+          "night-mode": setNightMode,
+        },
+      },
+    },
   });
 
   document.querySelector(".ql-custom-color").innerHTML =
     '<i class="fa-solid fa-palette"></i>';
-
-  const editorPop = document.querySelector(".text-editor-pop");
-
-  function isColorLight(hex) {
-    if (!hex) return false;
-    hex = hex.replace("#", "");
-    const r = parseInt(hex.substr(0, 2), 16);
-    const g = parseInt(hex.substr(2, 2), 16);
-    const b = parseInt(hex.substr(4, 2), 16);
-    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-    return luminance > 0.8;
-  }
-
-  function updateEditorBackground() {
-    let hexColor = null;
-
-    const selection = quillEditor.getSelection();
-    if (selection && selection.length > 0) {
-      const formats = quillEditor.getFormat(selection.index, selection.length);
-      hexColor = formats.color || null;
-    }
-
-    if (!hexColor) {
-      const editorSpans = quillEditor.root.querySelectorAll("span[style*='color']");
-      if (editorSpans.length > 0) {
-        const colorStyle = editorSpans[0].style.color;
-        if (colorStyle.startsWith("rgb")) {
-          const rgb = colorStyle.match(/\d+/g);
-          hexColor =
-            "#" +
-            ((1 << 24) + (parseInt(rgb[0]) << 16) + (parseInt(rgb[1]) << 8) + parseInt(rgb[2]))
-              .toString(16)
-              .slice(1);
-        } else {
-          hexColor = colorStyle;
-        }
-      }
-    }
-
-    if (!hexColor) hexColor = "#000000";
-
-    editorPop.style.backgroundColor = isColorLight(hexColor) ? "#222" : "whitesmoke";
-  }
-
-  quillEditor.on("text-change", updateEditorBackground);
-  quillEditor.on("selection-change", updateEditorBackground);
-
-  // Also run once on open to set initial background
-  updateEditorBackground();
+  document.querySelector(".ql-day-mode").innerHTML =
+    '<i class="fa-solid fa-sun"></i>';
+  document.querySelector(".ql-night-mode").innerHTML =
+    '<i class="fa-solid fa-moon"></i>';
 }
 
 // Open editor
