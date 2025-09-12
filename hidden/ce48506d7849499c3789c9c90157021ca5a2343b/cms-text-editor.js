@@ -55,14 +55,12 @@ function initializeQuill() {
           [{ color: [] }, "custom-color"],
           ["link"],
           ["clean"],
-          ["day-mode", "night-mode"],
-          ["close"]
+          ["day-mode", "night-mode"]
         ],
         handlers: {
           "custom-color": customColorPicker,
           "day-mode": setDayMode,
           "night-mode": setNightMode,
-          "close": closeTextEditor,
         },
       },
     },
@@ -75,8 +73,6 @@ function initializeQuill() {
     '<i class="fa-solid fa-sun"></i>';
   document.querySelector(".ql-night-mode").innerHTML =
     '<i class="fa-solid fa-moon"></i>';
-  document.querySelector(".ql-close").innerHTML =
-    '<i class="fa-solid fa-xmark"></i>';
 }
 
 // Open editor
@@ -150,17 +146,17 @@ document.addEventListener("dblclick", (e) => {
   if (target) openTextEditor(target);
 });
 
-// // Click outside to save & close
-// document.addEventListener("click", (e) => {
-//   const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
+// Click outside to save & close
+document.addEventListener("click", (e) => {
+  const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
 
-//   // Only proceed if the editor is visible AND not busy loading
-//   if (isEditorVisible && !isEditorLoading) {
-//     const isClickInsideEditor = e.target.closest(".text-editor-pop");
-//     const isClickInsideQuillUI = e.target.closest(".ql-picker, .ql-tooltip");
+  // Only proceed if the editor is visible AND not busy loading
+  if (isEditorVisible && !isEditorLoading) {
+    const isClickInsideEditor = e.target.closest(".text-editor-pop");
+    const isClickInsideQuillUI = e.target.closest(".ql-picker, .ql-tooltip");
 
-//     if (!isClickInsideEditor && !isClickInsideQuillUI) {
-//       closeTextEditor(true);
-//     }
-//   }
-// });
+    if (!isClickInsideEditor && !isClickInsideQuillUI) {
+      closeTextEditor(true);
+    }
+  }
+});
