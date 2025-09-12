@@ -1,10 +1,21 @@
 const editorPop = document.querySelector(".text-editor-pop");
 const editorContainer = document.querySelector("#quill-editor");
 let activeTextElement = null;
-let quillEditor = null; // Don't initialize Quill yet
-let isEditorLoading = false; // 👈 Add this line
+let quillEditor = null; 
+let isEditorLoading = false;
 
-const Font = Quill.import('formats/font');
+// === FONT FIX ===
+const BaseFont = Quill.import("formats/font");
+
+class CustomFont extends BaseFont {
+  static sanitize(value) {
+    if (!value) return value;
+    return value
+      .replace(/['"]/g, "")     // strip quotes
+      .replace(/\s+/g, "-")     // replace spaces with dashes
+      .toLowerCase();           // normalize case
+  }
+}
 
 const fontWhitelist = [
   "agbalumo", "alumni-sans-pinstripe", "baskervville", "baskervville-sc",
@@ -18,9 +29,10 @@ const fontWhitelist = [
   "twinkle-star", "ultra", "unifrakturmaguntia",
 ];
 
-Font.whitelist = fontWhitelist;
+CustomFont.whitelist = fontWhitelist;
+Quill.register(CustomFont, true);
+// === END FONT FIX ===
 
-Quill.register(Font, true);
 
 // Custom color picker
 function customColorPicker() {
@@ -47,8 +59,7 @@ function initializeQuill() {
     modules: {
       toolbar: {
         container: [
-          // This is the line to fix 👇
-          [{ font: Font.whitelist }],
+          [{ font: fontWhitelist }],
           [{ header: [1, 2, 3, 4, 5, false] }, { align: [] }],
           ["bold", "italic", "underline", "strike"],
           [{ list: "ordered" }, { list: "bullet" }],
