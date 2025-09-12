@@ -6,53 +6,66 @@ let isEditorLoading = false; // 👈 Add this line
 
 // 1. Define your master list of fonts
 const fontWhitelist = [
-  "agbalumo", "alumni-sans-pinstripe", "baskervville", "baskervville-sc", 
-  "bebas-neue", "borel", "cal-sans", "caveat-brush", "chewy", "cinzel", 
-  "comfortaa", "coming-soon", "delius", "dynapuff", "fugaz-one", 
-  "funnel-display", "germania-one", "google-sans-code", "host-grotesk", 
-  "lato", "lexend", "libre-bodoni", "lobster", "lora", "marck-script", 
-  "meow-script", "merriweather-sans", "michroma", "montecarlo", 
-  "newsreader", "noto-sans", "pacifico", "pixelify-sans", "playwrite-za", 
-  "poller-one", "quintessential", "roboto", "short-stack", "sono", "suse", 
+  "agbalumo", "alumni-sans-pinstripe", "baskervville", "baskervville-sc",
+  "bebas-neue", "borel", "cal-sans", "caveat-brush", "chewy", "cinzel",
+  "comfortaa", "coming-soon", "delius", "dynapuff", "fugaz-one",
+  "funnel-display", "germania-one", "google-sans-code", "host-grotesk",
+  "lato", "lexend", "libre-bodoni", "lobster", "lora", "marck-script",
+  "meow-script", "merriweather-sans", "michroma", "montecarlo",
+  "newsreader", "noto-sans", "pacifico", "pixelify-sans", "playwrite-za",
+  "poller-one", "quintessential", "roboto", "short-stack", "sono", "suse",
   "twinkle-star", "ultra", "unifrakturmaguntia",
 ];
 
-// 2. Define the map for multi-word font names
+// 2. Define the map for multi-word font names to help Quill's detection
 const fontStyleMap = {
-  'alumni-sans-pinstripe': 'Alumni Sans Pinstripe',
-  'baskervville-sc': 'Baskervville SC',
-  'bebas-neue': 'Bebas Neue',
-  'cal-sans': 'Cal Sans',
-  'caveat-brush': 'Caveat Brush',
-  'coming-soon': 'Coming Soon',
-  'funnel-display': 'Funnel Display',
-  'google-sans-code': 'Google Sans Code',
-  'libre-bodoni': 'Libre Bodoni',
-  'marck-script': 'Marck Script',
-  'meow-script': 'Meow Script',
-  'merriweather-sans': 'Merriweather Sans',
-  'pixelify-sans': 'Pixelify Sans',
-  'playwrite-za': 'Playwrite ZA',
-  'poller-one': 'Poller One',
-  'short-stack': 'Short Stack',
-  'twinkle-star': 'Twinkle Star',
+  'Alumni Sans Pinstripe': 'alumni-sans-pinstripe',
+  'Baskervville SC': 'baskervville-sc',
+  'Bebas Neue': 'bebas-neue',
+  'Cal Sans': 'cal-sans',
+  'Caveat Brush': 'caveat-brush',
+  'Coming Soon': 'coming-soon',
+  'Funnel Display': 'funnel-display',
+  'Google Sans Code': 'google-sans-code',
+  'Libre Bodoni': 'libre-bodoni',
+  'Marck Script': 'marck-script',
+  'Meow Script': 'meow-script',
+  'Merriweather Sans': 'merriweather-sans',
+  'Pixelify Sans': 'pixelify-sans',
+  'Playwrite ZA': 'playwrite-za',
+  'Poller One': 'poller-one',
+  'Short Stack': 'short-stack',
+  'Twinkle Star': 'twinkle-star',
 };
 
-// 3. Get Quill's font-handling module and apply the fix
-const FontStyle = Quill.import('attributors/style/font');
-FontStyle.whitelist = fontWhitelist;
+// 3. Get Quill's default Font class
+const Font = Quill.import('formats/font');
 
-const originalAttributorValue = FontStyle.prototype.value;
-FontStyle.prototype.value = function(node) {
-  const value = originalAttributorValue.call(this, node);
-  if (fontStyleMap[value]) {
-    return fontStyleMap[value];
+// 4. Create a custom Font class that overrides the faulty detection logic
+class CustomFont extends Font {
+  static formats(domNode) {
+    // Ask the browser for the real font name
+    const fontName = window.getComputedStyle(domNode).getPropertyValue('font-family').split(',')[0].replace(/['"]/g, '').trim();
+
+    // Look up the real name in our map
+    if (fontStyleMap[fontName]) {
+      return fontStyleMap[fontName];
+    }
+    
+    // For simple, single-word fonts, try a direct lowercase match
+    const simpleMatch = fontName.toLowerCase();
+    if (fontWhitelist.includes(simpleMatch)) {
+      return simpleMatch;
+    }
+
+    // Fallback to Quill's original method if our lookup fails
+    return super.formats(domNode);
   }
-  return value;
-};
+}
+CustomFont.whitelist = fontWhitelist;
 
-// 4. Register the modified module
-Quill.register(FontStyle, true);
+// 5. Register our custom class, overriding Quill's default 'font' handler
+Quill.register(CustomFont, true);
 
 // Custom color picker
 function customColorPicker() {
