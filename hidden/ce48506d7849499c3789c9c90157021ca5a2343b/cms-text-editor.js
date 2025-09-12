@@ -108,20 +108,32 @@ function initializeQuill() {
   }
 
 function updateEditorBackground() {
-  let hexColor = "#000000";
+  let hexColor = null;
 
-  // Try to get the color from the selection first
   const selection = quillEditor.getSelection();
   if (selection && selection.length > 0) {
     const formats = quillEditor.getFormat(selection.index, selection.length);
-    if (formats.color) hexColor = formats.color;
-  } else {
-    // No selection, get the first character's color or default to black
-    const firstChar = quillEditor.getContents(0, 1);
-    if (firstChar && firstChar.ops && firstChar.ops[0].attributes?.color) {
-      hexColor = firstChar.ops[0].attributes.color;
+    hexColor = formats.color || null;
+  }
+
+  if (!hexColor) {
+    const editorSpans = quillEditor.root.querySelectorAll("span[style*='color']");
+    if (editorSpans.length > 0) {
+      const colorStyle = editorSpans[0].style.color;
+      if (colorStyle.startsWith("rgb")) {
+        const rgb = colorStyle.match(/\d+/g);
+        hexColor =
+          "#" +
+          ((1 << 24) + (parseInt(rgb[0]) << 16) + (parseInt(rgb[1]) << 8) + parseInt(rgb[2]))
+            .toString(16)
+            .slice(1);
+      } else {
+        hexColor = colorStyle;
+      }
     }
   }
+
+  if (!hexColor) hexColor = "#000000";
 
   if (isColorLight(hexColor)) {
     editorPop.style.backgroundColor = "#222";
