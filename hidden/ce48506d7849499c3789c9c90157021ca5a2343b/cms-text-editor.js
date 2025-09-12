@@ -4,20 +4,39 @@ let activeTextElement = null;
 let quillEditor = null; 
 let isEditorLoading = false;
 
-// === FONT FIX ===
-const BaseFont = Quill.import("formats/font");
+const Inline = Quill.import("blots/inline");
 
-class CustomFont extends BaseFont {
+class CustomFont extends Inline {
+  static blotName = "font";
+  static tagName = "SPAN";
+  static classPrefix = "ql-font-";
+
+  static create(value) {
+    let node = super.create();
+    const normalized = this.sanitize(value);
+    if (this.whitelist && !this.whitelist.includes(normalized)) {
+      return node; // ignore invalid fonts
+    }
+    node.setAttribute("class", this.classPrefix + normalized);
+    return node;
+  }
+
+  static formats(node) {
+    let className = node.getAttribute("class") || "";
+    let match = className.match(new RegExp(this.classPrefix + "([a-z0-9-]+)"));
+    return match ? match[1] : null;
+  }
+
   static sanitize(value) {
     if (!value) return value;
     return value
-      .replace(/['"]/g, "")     // strip quotes
-      .replace(/\s+/g, "-")     // replace spaces with dashes
-      .toLowerCase();           // normalize case
+      .replace(/['"]/g, "")   // strip quotes
+      .replace(/\s+/g, "-")   // replace spaces with dashes
+      .toLowerCase();
   }
 }
 
-const fontWhitelist = [
+CustomFont.whitelist = [
   "agbalumo", "alumni-sans-pinstripe", "baskervville", "baskervville-sc",
   "bebas-neue", "borel", "cal-sans", "caveat-brush", "chewy", "cinzel",
   "comfortaa", "coming-soon", "delius", "dynapuff", "fugaz-one",
@@ -29,10 +48,7 @@ const fontWhitelist = [
   "twinkle-star", "ultra", "unifrakturmaguntia",
 ];
 
-CustomFont.whitelist = fontWhitelist;
 Quill.register(CustomFont, true);
-// === END FONT FIX ===
-
 
 // Custom color picker
 function customColorPicker() {
