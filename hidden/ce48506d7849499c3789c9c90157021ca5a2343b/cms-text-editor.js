@@ -71,42 +71,6 @@ function customColorPicker() {
 }
 
 // Initialize Quill
-function initializeQuill() {
-  quillEditor = new Quill(editorContainer, {
-    theme: "snow",
-    modules: {
-      toolbar: {
-        container: [
-          [{ font: CustomFont.whitelist }],
-          [{ header: [1, 2, 3, 4, 5, false] }, { align: [] }],
-          ["bold", "italic", "underline", "strike"],
-          [{ list: "ordered" }, { list: "bullet" }],
-          [{ color: [] }, "custom-color"],
-          ["link"],
-          ["clean"]
-        ],
-        handlers: {
-          "custom-color": customColorPicker
-        }
-      }
-    }
-  });
-
-  document.querySelector(".ql-custom-color").innerHTML =
-    '<i class="fa-solid fa-palette"></i>';
-
-  const editorPop = document.querySelector(".text-editor-pop");
-
-  function isColorLight(hex) {
-    if (!hex) return false;
-    hex = hex.replace("#", "");
-    const r = parseInt(hex.substr(0, 2), 16);
-    const g = parseInt(hex.substr(2, 2), 16);
-    const b = parseInt(hex.substr(4, 2), 16);
-    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-    return luminance > 0.8;
-  }
-
 function updateEditorBackground() {
   let hexColor = null;
 
@@ -140,7 +104,6 @@ function updateEditorBackground() {
   } else {
     editorPop.style.backgroundColor = "#fff";
   }
-}
 }
 
 // Open editor
