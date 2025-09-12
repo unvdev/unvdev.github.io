@@ -1,4 +1,3 @@
-document.addEventListener('DOMContentLoaded', () => {
 const editorPop = document.querySelector(".text-editor-pop");
 const editorContainer = document.querySelector("#quill-editor");
 let activeTextElement = null;
@@ -210,4 +209,3 @@ document.addEventListener("dblclick", (e) => {
 //     }
 //   }
 // });
-});
