@@ -117,7 +117,6 @@ function openTextEditor(target) {
 
 if (!quillEditor) {
   initializeQuill();
-  quillEditor.format('font', 'roboto', 'user'); 
 }
   requestAnimationFrame(() => {
     const content = target.innerHTML.trim();
