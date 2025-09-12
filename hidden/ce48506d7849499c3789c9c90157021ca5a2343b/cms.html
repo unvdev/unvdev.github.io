@@ -206,6 +206,10 @@
   font-family: inherit;
 }
 
+.ql-font .ql-picker-label::before {
+  content: none !important;  /* remove Quill's default pseudo-element */
+}
+
 /* Style Editor Popup */
 .style-editor-pop {
     display: block;
