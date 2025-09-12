@@ -60,7 +60,6 @@ class CustomFont extends Inline {
 
 Quill.register(CustomFont, true);
 
-// Custom color picker
 function customColorPicker() {
   const color = prompt("Enter a hex color code (e.g., #ff00ff):");
   if (color && /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color)) {
@@ -70,7 +69,6 @@ function customColorPicker() {
   }
 }
 
-// Initialize Quill
 function setDayMode() {
   editorPop.style.backgroundColor = "whitesmoke";
 }
@@ -109,18 +107,29 @@ function initializeQuill() {
     '<i class="fa-solid fa-sun"></i>';
   document.querySelector(".ql-night-mode").innerHTML =
     '<i class="fa-solid fa-moon"></i>';
+
+  // Update toolbar label to match selected font
+  quillEditor.on("selection-change", () => {
+    const format = quillEditor.getFormat();
+    const font = format.font || 'sans-serif';
+    const pickerLabel = editorContainer.querySelector('.ql-font .ql-picker-label');
+    if (pickerLabel) {
+      // Replace dashes with spaces for nicer display
+      pickerLabel.textContent = font.replace(/-/g, ' ');
+    }
+  });
 }
 
-// Open editor
 function openTextEditor(target) {
-  isEditorLoading = true; // 👈 Set the busy flag
+  isEditorLoading = true;
   activeTextElement = target;
   editorPop.classList.remove("content-hide");
   editorPop.classList.add("content-show");
 
-if (!quillEditor) {
-  initializeQuill();
-}
+  if (!quillEditor) {
+    initializeQuill();
+  }
+
   requestAnimationFrame(() => {
     const content = target.innerHTML.trim();
     quillEditor.setContents([], "silent");
@@ -130,22 +139,22 @@ if (!quillEditor) {
     const length = quillEditor.getLength();
     quillEditor.setSelection(length, 0, "silent");
     quillEditor.focus();
-    
-    isEditorLoading = false; // 👈 Release the flag when done
+
+    // Update font label immediately
+    const format = quillEditor.getFormat();
+    const font = format.font || 'sans-serif';
+    const pickerLabel = editorContainer.querySelector('.ql-font .ql-picker-label');
+    if (pickerLabel) pickerLabel.textContent = font.replace(/-/g, ' ');
+
+    isEditorLoading = false;
   });
 }
 
-// Utility: remove empty tags
 function cleanHtml(html) {
   const trimmed = html.trim();
-  const noEmptyTags = trimmed.replace(
-    /<(\w+)(?:\s[^>]*)?>\s*(<br\s*\/?>)?\s*<\/\1>/gi,
-    ""
-  );
-  return noEmptyTags.trim();
+  return trimmed.replace(/<(\w+)(?:\s[^>]*)?>\s*(<br\s*\/?>)?\s*<\/\1>/gi, "").trim();
 }
 
-// Utility: normalize Quill lists into proper ul/ol
 function normalizeLists(html) {
   return html.replace(/<ol[^>]*>([\s\S]*?)<\/ol>/gi, (match, inner) => {
     if (/data-list="bullet"/.test(match)) {
@@ -155,20 +164,14 @@ function normalizeLists(html) {
   });
 }
 
-// Close editor
 function closeTextEditor(save = true) {
   if (!activeTextElement || !quillEditor) return;
 
   if (save) {
     let newContent = quillEditor.root.innerHTML;
-
-    // Normalize lists + clean empty tags
     newContent = normalizeLists(newContent);
     const cleaned = cleanHtml(newContent);
-
-    if (cleaned) {
-      activeTextElement.innerHTML = cleaned;
-    }
+    if (cleaned) activeTextElement.innerHTML = cleaned;
   }
 
   editorPop.classList.remove("content-show");
@@ -176,23 +179,16 @@ function closeTextEditor(save = true) {
   activeTextElement = null;
 }
 
-// Double-click to open editor
 document.addEventListener("dblclick", (e) => {
   const target = e.target.closest(".text-element");
   if (target) openTextEditor(target);
 });
 
-// Click outside to save & close
 document.addEventListener("click", (e) => {
   const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
-
-  // Only proceed if the editor is visible AND not busy loading
   if (isEditorVisible && !isEditorLoading) {
     const isClickInsideEditor = e.target.closest(".text-editor-pop");
     const isClickInsideQuillUI = e.target.closest(".ql-picker, .ql-tooltip");
-
-    if (!isClickInsideEditor && !isClickInsideQuillUI) {
-      closeTextEditor(true);
-    }
+    if (!isClickInsideEditor && !isClickInsideQuillUI) closeTextEditor(true);
   }
 });
