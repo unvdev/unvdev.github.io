@@ -76,18 +76,28 @@ function updateFontPickerLabel(quill) {
   if (!pickerLabel) return;
 
   const format = quill.getFormat();
-  const currentFont = format.font || ''; // empty if no font applied
+  let currentFont = format.font || ''; // Empty string if none
+  let displayName = 'Font Family';
 
-  const displayName = currentFont
-    ? currentFont
-        .split('-')
-        .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-        .join(' ')
-    : "Font Family"; // default label if no font applied
+  if (currentFont) {
+    // Convert hyphenated names back to readable words
+    displayName = currentFont
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
 
-  pickerLabel.setAttribute("data-value", currentFont);
+    // Wrap multi-word names in quotes for CSS
+    if (currentFont.includes('-') || currentFont.includes(' ')) {
+      pickerLabel.style.fontFamily = `"${displayName}"`;
+    } else {
+      pickerLabel.style.fontFamily = displayName;
+    }
+  } else {
+    pickerLabel.style.fontFamily = 'inherit';
+  }
+
+  pickerLabel.setAttribute('data-value', currentFont);
   pickerLabel.textContent = displayName;
-  pickerLabel.style.fontFamily = currentFont || 'inherit';
 }
 
 // Initialize Quill
