@@ -70,14 +70,6 @@ function customColorPicker() {
   }
 }
 
-// Day/Night mode handlers
-function setDayMode() {
-  editorPop.style.backgroundColor = "whitesmoke";
-}
-function setNightMode() {
-  editorPop.style.backgroundColor = "#222222";
-}
-
 // Initialize Quill
 function initializeQuill() {
   quillEditor = new Quill(editorContainer, {
@@ -91,25 +83,49 @@ function initializeQuill() {
           [{ list: "ordered" }, { list: "bullet" }],
           [{ color: [] }, "custom-color"],
           ["link"],
-          ["clean"],
-          ["day-mode", "night-mode"]
+          ["clean"]
         ],
         handlers: {
-          "custom-color": customColorPicker,
-          "day-mode": setDayMode,
-          "night-mode": setNightMode,
-        },
-      },
-    },
+          "custom-color": customColorPicker
+        }
+      }
+    }
   });
 
-  // Style custom buttons
   document.querySelector(".ql-custom-color").innerHTML =
     '<i class="fa-solid fa-palette"></i>';
-  document.querySelector(".ql-day-mode").innerHTML =
-    '<i class="fa-solid fa-sun"></i>';
-  document.querySelector(".ql-night-mode").innerHTML =
-    '<i class="fa-solid fa-moon"></i>';
+
+  // Helper: check if a hex color is light
+  function isColorLight(hex) {
+    if (!hex) return false;
+    hex = hex.replace("#", "");
+    const r = parseInt(hex.substr(0, 2), 16);
+    const g = parseInt(hex.substr(2, 2), 16);
+    const b = parseInt(hex.substr(4, 2), 16);
+    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+    return luminance > 0.8;
+  }
+
+  // Update editor background based on selected text color
+  function updateEditorBackground() {
+    const selection = quillEditor.getSelection();
+    let hexColor = "#000000";
+    if (selection && selection.length > 0) {
+      const formats = quillEditor.getFormat(selection.index, selection.length);
+      if (formats.color) hexColor = formats.color;
+    }
+
+    if (isColorLight(hexColor)) {
+      quillEditor.root.style.backgroundColor = "#222";
+      quillEditor.root.style.color = "#fff";
+    } else {
+      quillEditor.root.style.backgroundColor = "white";
+      quillEditor.root.style.color = "";
+    }
+  }
+
+  quillEditor.on("text-change", updateEditorBackground);
+  quillEditor.on("selection-change", updateEditorBackground);
 }
 
 // Open editor
