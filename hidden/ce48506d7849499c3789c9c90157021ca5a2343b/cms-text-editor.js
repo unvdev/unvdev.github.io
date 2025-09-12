@@ -60,50 +60,51 @@ class CustomFont extends Inline {
 
 Quill.register(CustomFont, true);
 
+// Mapping for display names (so your picker label shows proper font names)
 const FONT_DISPLAY_NAMES = {
-  "roboto": "Roboto",
-  "comfortaa": "Comfortaa",
-  "lora": "Lora",
-  "bebas-neue": "Bebas Neue",
-  "google-sans-code": "Google Sans Code",
-  "funnel-display": "Funnel Display",
-  "alumni-sans-pinstripe": "Alumni Sans Pinstripe",
-  "lexend": "Lexend",
-  "cal-sans": "Cal Sans",
-  "sono": "Sono",
-  "pacifico": "Pacifico",
-  "delius": "Delius",
-  "meow-script": "Meow Script",
-  "borel": "Borel",
-  "dynapuff": "DynaPuff",
-  "chewy": "Chewy",
-  "twinkle-star": "Twinkle Star",
   "agbalumo": "Agbalumo",
-  "playwrite-za": "Playwrite ZA",
-  "lobster": "Lobster",
-  "quintessential": "Quintessential",
-  "poller-one": "Poller One",
-  "cinzel": "Cinzel",
-  "germania-one": "Germania One",
-  "ultra": "Ultra",
-  "pixelify-sans": "Pixelify Sans",
-  "unifrakturmaguntia": "UnifrakturMaguntia",
-  "montecarlo": "MonteCarlo",
-  "marck-script": "Marck Script",
-  "fugaz-one": "Fugaz One",
+  "alumni-sans-pinstripe": "Alumni Sans Pinstripe",
+  "baskervville": "Baskervville",
+  "baskervville-sc": "Baskervville SC",
+  "bebas-neue": "Bebas Neue",
+  "borel": "Borel",
+  "cal-sans": "Cal Sans",
   "caveat-brush": "Caveat Brush",
+  "chewy": "Chewy",
+  "cinzel": "Cinzel",
+  "comfortaa": "Comfortaa",
   "coming-soon": "Coming Soon",
-  "short-stack": "Short Stack",
-  "michroma": "Michroma",
-  "suse": "SUSE",
-  "noto-sans": "Noto Sans",
-  "merriweather-sans": "Merriweather Sans",
+  "delius": "Delius",
+  "dynapuff": "DynaPuff",
+  "fugaz-one": "Fugaz One",
+  "funnel-display": "Funnel Display",
+  "germania-one": "Germania One",
+  "google-sans-code": "Google Sans Code",
   "host-grotesk": "Host Grotesk",
   "lato": "Lato",
-  "newsreader": "Newsreader",
+  "lexend": "Lexend",
   "libre-bodoni": "Libre Bodoni",
-  "baskervville-sc": "Baskervville SC",
-  "baskervville": "Baskervville"
+  "lobster": "Lobster",
+  "lora": "Lora",
+  "marck-script": "Marck Script",
+  "meow-script": "Meow Script",
+  "merriweather-sans": "Merriweather Sans",
+  "michroma": "Michroma",
+  "montecarlo": "MonteCarlo",
+  "newsreader": "Newsreader",
+  "noto-sans": "Noto Sans",
+  "pacifico": "Pacifico",
+  "pixelify-sans": "Pixelify Sans",
+  "playwrite-za": "Playwrite ZA",
+  "poller-one": "Poller One",
+  "quintessential": "Quintessential",
+  "roboto": "Roboto",
+  "short-stack": "Short Stack",
+  "sono": "Sono",
+  "suse": "SUSE",
+  "twinkle-star": "Twinkle Star",
+  "ultra": "Ultra",
+  "unifrakturmaguntia": "UnifrakturMaguntia"
 };
 
 // Custom color picker
@@ -116,10 +117,10 @@ function customColorPicker() {
   }
 }
 
+// Day/Night mode
 function setDayMode() {
   editorPop.style.backgroundColor = "whitesmoke";
 }
-
 function setNightMode() {
   editorPop.style.backgroundColor = "#222222";
 }
@@ -142,10 +143,10 @@ function initializeQuill() {
         handlers: {
           "custom-color": customColorPicker,
           "day-mode": setDayMode,
-          "night-mode": setNightMode,
-        },
-      },
-    },
+          "night-mode": setNightMode
+        }
+      }
+    }
   });
 
   document.querySelector(".ql-custom-color").innerHTML =
@@ -155,21 +156,19 @@ function initializeQuill() {
   document.querySelector(".ql-night-mode").innerHTML =
     '<i class="fa-solid fa-moon"></i>';
 
-  const fontPicker = document.querySelector(".ql-font");
-  if (fontPicker) {
-    quillEditor.on("editor-change", () => {
-      const format = quillEditor.getFormat();
-      if (format.font) {
-        const displayName = FONT_DISPLAY_NAMES[format.font] || "Sans Serif";
-        fontPicker.querySelector(".ql-picker-label").textContent = displayName;
-      } else {
-        fontPicker.querySelector(".ql-picker-label").textContent = "Sans Serif";
-      }
-    });
-  }
+  quillEditor.on("editor-change", updateFontLabel);
 }
 
-// Open editor
+function updateFontLabel() {
+  const fontPicker = document.querySelector(".ql-font");
+  if (!fontPicker || !quillEditor) return;
+
+  const format = quillEditor.getFormat();
+  const displayName = FONT_DISPLAY_NAMES[format.font] || "Sans Serif";
+  const label = fontPicker.querySelector(".ql-picker-label");
+  if (label) label.textContent = displayName;
+}
+
 function openTextEditor(target) {
   isEditorLoading = true;
   activeTextElement = target;
@@ -184,26 +183,22 @@ function openTextEditor(target) {
     const content = target.innerHTML.trim();
     quillEditor.setContents([], "silent");
     quillEditor.clipboard.dangerouslyPasteHTML(0, content, "silent");
-
     quillEditor.enable(true);
     const length = quillEditor.getLength();
     quillEditor.setSelection(length, 0, "silent");
     quillEditor.focus();
-
+    updateFontLabel();
     isEditorLoading = false;
   });
 }
 
-// Utilities
+// Utility: remove empty tags
 function cleanHtml(html) {
   const trimmed = html.trim();
-  const noEmptyTags = trimmed.replace(
-    /<(\w+)(?:\s[^>]*)?>\s*(<br\s*\/?>)?\s*<\/\1>/gi,
-    ""
-  );
-  return noEmptyTags.trim();
+  return trimmed.replace(/<(\w+)(?:\s[^>]*)?>\s*(<br\s*\/?>)?\s*<\/\1>/gi, "").trim();
 }
 
+// Normalize lists
 function normalizeLists(html) {
   return html.replace(/<ol[^>]*>([\s\S]*?)<\/ol>/gi, (match, inner) => {
     if (/data-list="bullet"/.test(match)) {
@@ -220,10 +215,7 @@ function closeTextEditor(save = true) {
     let newContent = quillEditor.root.innerHTML;
     newContent = normalizeLists(newContent);
     const cleaned = cleanHtml(newContent);
-
-    if (cleaned) {
-      activeTextElement.innerHTML = cleaned;
-    }
+    if (cleaned) activeTextElement.innerHTML = cleaned;
   }
 
   editorPop.classList.remove("content-show");
@@ -231,7 +223,6 @@ function closeTextEditor(save = true) {
   activeTextElement = null;
 }
 
-// Event listeners
 document.addEventListener("dblclick", (e) => {
   const target = e.target.closest(".text-element");
   if (target) openTextEditor(target);
@@ -239,9 +230,11 @@ document.addEventListener("dblclick", (e) => {
 
 document.addEventListener("click", (e) => {
   const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
+
   if (isEditorVisible && !isEditorLoading) {
     const isClickInsideEditor = e.target.closest(".text-editor-pop");
     const isClickInsideQuillUI = e.target.closest(".ql-picker, .ql-tooltip");
+
     if (!isClickInsideEditor && !isClickInsideQuillUI) {
       closeTextEditor(true);
     }
