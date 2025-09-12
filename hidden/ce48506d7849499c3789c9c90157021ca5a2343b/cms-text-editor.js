@@ -95,7 +95,8 @@ function initializeQuill() {
   document.querySelector(".ql-custom-color").innerHTML =
     '<i class="fa-solid fa-palette"></i>';
 
-  // Helper: check if a hex color is light
+  const editorPop = document.querySelector(".text-editor-pop");
+
   function isColorLight(hex) {
     if (!hex) return false;
     hex = hex.replace("#", "");
@@ -106,7 +107,6 @@ function initializeQuill() {
     return luminance > 0.8;
   }
 
-  // Update editor background based on selected text color
   function updateEditorBackground() {
     const selection = quillEditor.getSelection();
     let hexColor = "#000000";
@@ -116,11 +116,9 @@ function initializeQuill() {
     }
 
     if (isColorLight(hexColor)) {
-      quillEditor.root.style.backgroundColor = "#222";
-      quillEditor.root.style.color = "#fff";
+      editorPop.style.backgroundColor = "#222";
     } else {
-      quillEditor.root.style.backgroundColor = "white";
-      quillEditor.root.style.color = "";
+      editorPop.style.backgroundColor = "whitesmoke";
     }
   }
 
