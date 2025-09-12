@@ -164,9 +164,14 @@ function updateFontLabel() {
   if (!fontPicker || !quillEditor) return;
 
   const format = quillEditor.getFormat();
-  const displayName = FONT_DISPLAY_NAMES[format.font] || "Sans Serif";
+  const currentFont = format.font || "sans-serif";
+  const displayName = FONT_DISPLAY_NAMES[currentFont] || "Sans Serif";
+
   const label = fontPicker.querySelector(".ql-picker-label");
-  if (label) label.textContent = displayName;
+  if (label) {
+    label.textContent = displayName;
+    label.setAttribute("data-value", currentFont); // <- important
+  }
 }
 
 function openTextEditor(target) {
