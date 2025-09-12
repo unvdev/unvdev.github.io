@@ -118,7 +118,7 @@ function initializeQuill() {
     if (isColorLight(hexColor)) {
       editorPop.style.backgroundColor = "#222222";
     } else {
-      editorPop.style.backgroundColor = "silver";
+      editorPop.style.backgroundColor = "whitesmoke";
     }
   }
 
