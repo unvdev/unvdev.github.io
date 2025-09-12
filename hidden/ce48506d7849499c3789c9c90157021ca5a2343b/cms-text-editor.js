@@ -107,23 +107,28 @@ function initializeQuill() {
     return luminance > 0.8;
   }
 
-  function updateEditorBackground() {
-    const selection = quillEditor.getSelection();
-    let hexColor = "#000000";
-    if (selection && selection.length > 0) {
-      const formats = quillEditor.getFormat(selection.index, selection.length);
-      if (formats.color) hexColor = formats.color;
-    }
+function updateEditorBackground() {
+  let hexColor = "#000000";
 
-    if (isColorLight(hexColor)) {
-      editorPop.style.backgroundColor = "#222222";
-    } else {
-      editorPop.style.backgroundColor = "whitesmoke";
+  // Try to get the color from the selection first
+  const selection = quillEditor.getSelection();
+  if (selection && selection.length > 0) {
+    const formats = quillEditor.getFormat(selection.index, selection.length);
+    if (formats.color) hexColor = formats.color;
+  } else {
+    // No selection, get the first character's color or default to black
+    const firstChar = quillEditor.getContents(0, 1);
+    if (firstChar && firstChar.ops && firstChar.ops[0].attributes?.color) {
+      hexColor = firstChar.ops[0].attributes.color;
     }
   }
 
-  quillEditor.on("text-change", updateEditorBackground);
-  quillEditor.on("selection-change", updateEditorBackground);
+  if (isColorLight(hexColor)) {
+    editorPop.style.backgroundColor = "#222";
+  } else {
+    editorPop.style.backgroundColor = "#fff";
+  }
+}
 }
 
 // Open editor
