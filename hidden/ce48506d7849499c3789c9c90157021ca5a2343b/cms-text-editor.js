@@ -60,53 +60,6 @@ class CustomFont extends Inline {
 
 Quill.register(CustomFont, true);
 
-// Mapping for display names (so your picker label shows proper font names)
-const FONT_DISPLAY_NAMES = {
-  "agbalumo": "Agbalumo",
-  "alumni-sans-pinstripe": "Alumni Sans Pinstripe",
-  "baskervville": "Baskervville",
-  "baskervville-sc": "Baskervville SC",
-  "bebas-neue": "Bebas Neue",
-  "borel": "Borel",
-  "cal-sans": "Cal Sans",
-  "caveat-brush": "Caveat Brush",
-  "chewy": "Chewy",
-  "cinzel": "Cinzel",
-  "comfortaa": "Comfortaa",
-  "coming-soon": "Coming Soon",
-  "delius": "Delius",
-  "dynapuff": "DynaPuff",
-  "fugaz-one": "Fugaz One",
-  "funnel-display": "Funnel Display",
-  "germania-one": "Germania One",
-  "google-sans-code": "Google Sans Code",
-  "host-grotesk": "Host Grotesk",
-  "lato": "Lato",
-  "lexend": "Lexend",
-  "libre-bodoni": "Libre Bodoni",
-  "lobster": "Lobster",
-  "lora": "Lora",
-  "marck-script": "Marck Script",
-  "meow-script": "Meow Script",
-  "merriweather-sans": "Merriweather Sans",
-  "michroma": "Michroma",
-  "montecarlo": "MonteCarlo",
-  "newsreader": "Newsreader",
-  "noto-sans": "Noto Sans",
-  "pacifico": "Pacifico",
-  "pixelify-sans": "Pixelify Sans",
-  "playwrite-za": "Playwrite ZA",
-  "poller-one": "Poller One",
-  "quintessential": "Quintessential",
-  "roboto": "Roboto",
-  "short-stack": "Short Stack",
-  "sono": "Sono",
-  "suse": "SUSE",
-  "twinkle-star": "Twinkle Star",
-  "ultra": "Ultra",
-  "unifrakturmaguntia": "UnifrakturMaguntia"
-};
-
 // Custom color picker
 function customColorPicker() {
   const color = prompt("Enter a hex color code (e.g., #ff00ff):");
@@ -117,14 +70,7 @@ function customColorPicker() {
   }
 }
 
-// Day/Night mode
-function setDayMode() {
-  editorPop.style.backgroundColor = "whitesmoke";
-}
-function setNightMode() {
-  editorPop.style.backgroundColor = "#222222";
-}
-
+// Initialize Quill
 function initializeQuill() {
   quillEditor = new Quill(editorContainer, {
     theme: "snow",
@@ -142,11 +88,11 @@ function initializeQuill() {
         ],
         handlers: {
           "custom-color": customColorPicker,
-          "day-mode": setDayMode,
-          "night-mode": setNightMode
-        }
-      }
-    }
+          "day-mode": () => editorPop.style.backgroundColor = "whitesmoke",
+          "night-mode": () => editorPop.style.backgroundColor = "#222222",
+        },
+      },
+    },
   });
 
   document.querySelector(".ql-custom-color").innerHTML =
@@ -155,44 +101,27 @@ function initializeQuill() {
     '<i class="fa-solid fa-sun"></i>';
   document.querySelector(".ql-night-mode").innerHTML =
     '<i class="fa-solid fa-moon"></i>';
-
-  quillEditor.on("editor-change", updateFontLabel);
 }
 
-function updateFontLabel() {
-  const fontPicker = document.querySelector(".ql-font");
-  if (!fontPicker || !quillEditor) return;
-
-  const format = quillEditor.getFormat();
-  const currentFont = format.font || "sans-serif";
-  const displayName = FONT_DISPLAY_NAMES[currentFont] || "Sans Serif";
-
-  const label = fontPicker.querySelector(".ql-picker-label");
-  if (label) {
-    label.textContent = displayName;
-    label.setAttribute("data-value", currentFont); // <- important
-  }
-}
-
+// Open editor
 function openTextEditor(target) {
   isEditorLoading = true;
   activeTextElement = target;
   editorPop.classList.remove("content-hide");
   editorPop.classList.add("content-show");
 
-  if (!quillEditor) {
-    initializeQuill();
-  }
+  if (!quillEditor) initializeQuill();
 
   requestAnimationFrame(() => {
     const content = target.innerHTML.trim();
     quillEditor.setContents([], "silent");
     quillEditor.clipboard.dangerouslyPasteHTML(0, content, "silent");
+
     quillEditor.enable(true);
     const length = quillEditor.getLength();
     quillEditor.setSelection(length, 0, "silent");
     quillEditor.focus();
-    updateFontLabel();
+    
     isEditorLoading = false;
   });
 }
@@ -200,10 +129,14 @@ function openTextEditor(target) {
 // Utility: remove empty tags
 function cleanHtml(html) {
   const trimmed = html.trim();
-  return trimmed.replace(/<(\w+)(?:\s[^>]*)?>\s*(<br\s*\/?>)?\s*<\/\1>/gi, "").trim();
+  const noEmptyTags = trimmed.replace(
+    /<(\w+)(?:\s[^>]*)?>\s*(<br\s*\/?>)?\s*<\/\1>/gi,
+    ""
+  );
+  return noEmptyTags.trim();
 }
 
-// Normalize lists
+// Utility: normalize Quill lists into proper ul/ol
 function normalizeLists(html) {
   return html.replace(/<ol[^>]*>([\s\S]*?)<\/ol>/gi, (match, inner) => {
     if (/data-list="bullet"/.test(match)) {
@@ -213,6 +146,7 @@ function normalizeLists(html) {
   });
 }
 
+// Close editor
 function closeTextEditor(save = true) {
   if (!activeTextElement || !quillEditor) return;
 
@@ -220,6 +154,7 @@ function closeTextEditor(save = true) {
     let newContent = quillEditor.root.innerHTML;
     newContent = normalizeLists(newContent);
     const cleaned = cleanHtml(newContent);
+
     if (cleaned) activeTextElement.innerHTML = cleaned;
   }
 
@@ -228,11 +163,13 @@ function closeTextEditor(save = true) {
   activeTextElement = null;
 }
 
+// Double-click to open editor
 document.addEventListener("dblclick", (e) => {
   const target = e.target.closest(".text-element");
   if (target) openTextEditor(target);
 });
 
+// Click outside to save & close
 document.addEventListener("click", (e) => {
   const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
 
