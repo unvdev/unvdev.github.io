@@ -4,53 +4,55 @@ let activeTextElement = null;
 let quillEditor = null; // Don't initialize Quill yet
 let isEditorLoading = false; // 👈 Add this line
 
-const Font = Quill.import("formats/font");
-Font.whitelist = [
-  "agbalumo",
-  "alumni-sans-pinstripe",
-  "baskervville",
-  "baskervville-sc",
-  "bebas-neue",
-  "borel",
-  "cal-sans",
-  "caveat-brush",
-  "chewy",
-  "cinzel",
-  "comfortaa",
-  "coming-soon",
-  "delius",
-  "dynapuff",
-  "fugaz-one",
-  "funnel-display",
-  "germania-one",
-  "google-sans-code",
-  "host-grotesk",
-  "lato",
-  "lexend",
-  "libre-bodoni",
-  "lobster",
-  "lora",
-  "marck-script",
-  "meow-script",
-  "merriweather-sans",
-  "michroma",
-  "montecarlo",
-  "newsreader",
-  "noto-sans",
-  "pacifico",
-  "pixelify-sans",
-  "playwrite-za",
-  "poller-one",
-  "quintessential",
-  "roboto",
-  "short-stack",
-  "sono",
-  "suse",
-  "twinkle-star",
-  "ultra",
-  "unifrakturmaguntia",
+// 1. Define your master list of fonts
+const fontWhitelist = [
+  "agbalumo", "alumni-sans-pinstripe", "baskervville", "baskervville-sc", 
+  "bebas-neue", "borel", "cal-sans", "caveat-brush", "chewy", "cinzel", 
+  "comfortaa", "coming-soon", "delius", "dynapuff", "fugaz-one", 
+  "funnel-display", "germania-one", "google-sans-code", "host-grotesk", 
+  "lato", "lexend", "libre-bodoni", "lobster", "lora", "marck-script", 
+  "meow-script", "merriweather-sans", "michroma", "montecarlo", 
+  "newsreader", "noto-sans", "pacifico", "pixelify-sans", "playwrite-za", 
+  "poller-one", "quintessential", "roboto", "short-stack", "sono", "suse", 
+  "twinkle-star", "ultra", "unifrakturmaguntia",
 ];
-Quill.register(Font, true);
+
+// 2. Define the map for multi-word font names
+const fontStyleMap = {
+  'alumni-sans-pinstripe': 'Alumni Sans Pinstripe',
+  'baskervville-sc': 'Baskervville SC',
+  'bebas-neue': 'Bebas Neue',
+  'cal-sans': 'Cal Sans',
+  'caveat-brush': 'Caveat Brush',
+  'coming-soon': 'Coming Soon',
+  'funnel-display': 'Funnel Display',
+  'google-sans-code': 'Google Sans Code',
+  'libre-bodoni': 'Libre Bodoni',
+  'marck-script': 'Marck Script',
+  'meow-script': 'Meow Script',
+  'merriweather-sans': 'Merriweather Sans',
+  'pixelify-sans': 'Pixelify Sans',
+  'playwrite-za': 'Playwrite ZA',
+  'poller-one': 'Poller One',
+  'short-stack': 'Short Stack',
+  'twinkle-star': 'Twinkle Star',
+};
+
+// 3. Get Quill's font-handling module and apply the fix
+const FontStyle = Quill.import('attributors/style/font');
+FontStyle.whitelist = fontWhitelist;
+
+const originalAttributorValue = FontStyle.prototype.value;
+FontStyle.prototype.value = function(node) {
+  const value = originalAttributorValue.call(this, node);
+  if (fontStyleMap[value]) {
+    return fontStyleMap[value];
+  }
+  return value;
+};
+
+// 4. Register the modified module
+Quill.register(FontStyle, true);
 
 // Custom color picker
 function customColorPicker() {
@@ -77,7 +79,8 @@ function initializeQuill() {
     modules: {
       toolbar: {
         container: [
-          [{ font: Font.whitelist }],   // 👈 add this line
+          // This is the line to fix 👇
+          [{ font: fontWhitelist }],
           [{ header: [1, 2, 3, 4, 5, false] }, { align: [] }],
           ["bold", "italic", "underline", "strike"],
           [{ list: "ordered" }, { list: "bullet" }],
@@ -104,7 +107,7 @@ function initializeQuill() {
     '<i class="fa-solid fa-sun"></i>';
   document.querySelector(".ql-night-mode").innerHTML =
     '<i class="fa-solid fa-moon"></i>';
-    document.querySelector(".ql-close").innerHTML =
+  document.querySelector(".ql-close").innerHTML =
     '<i class="fa-solid fa-xmark"></i>';
 }
 
