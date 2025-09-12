@@ -60,6 +60,53 @@ class CustomFont extends Inline {
 
 Quill.register(CustomFont, true);
 
+const FONT_DISPLAY_NAMES = {
+  "roboto": "Roboto",
+  "comfortaa": "Comfortaa",
+  "lora": "Lora",
+  "bebas-neue": "Bebas Neue",
+  "google-sans-code": "Google Sans Code",
+  "funnel-display": "Funnel Display",
+  "alumni-sans-pinstripe": "Alumni Sans Pinstripe",
+  "lexend": "Lexend",
+  "cal-sans": "Cal Sans",
+  "sono": "Sono",
+  "pacifico": "Pacifico",
+  "delius": "Delius",
+  "meow-script": "Meow Script",
+  "borel": "Borel",
+  "dynapuff": "DynaPuff",
+  "chewy": "Chewy",
+  "twinkle-star": "Twinkle Star",
+  "agbalumo": "Agbalumo",
+  "playwrite-za": "Playwrite ZA",
+  "lobster": "Lobster",
+  "quintessential": "Quintessential",
+  "poller-one": "Poller One",
+  "cinzel": "Cinzel",
+  "germania-one": "Germania One",
+  "ultra": "Ultra",
+  "pixelify-sans": "Pixelify Sans",
+  "unifrakturmaguntia": "UnifrakturMaguntia",
+  "montecarlo": "MonteCarlo",
+  "marck-script": "Marck Script",
+  "fugaz-one": "Fugaz One",
+  "caveat-brush": "Caveat Brush",
+  "coming-soon": "Coming Soon",
+  "short-stack": "Short Stack",
+  "michroma": "Michroma",
+  "suse": "SUSE",
+  "noto-sans": "Noto Sans",
+  "merriweather-sans": "Merriweather Sans",
+  "host-grotesk": "Host Grotesk",
+  "lato": "Lato",
+  "newsreader": "Newsreader",
+  "libre-bodoni": "Libre Bodoni",
+  "baskervville-sc": "Baskervville SC",
+  "baskervville": "Baskervville"
+};
+
+// Custom color picker
 function customColorPicker() {
   const color = prompt("Enter a hex color code (e.g., #ff00ff):");
   if (color && /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color)) {
@@ -108,18 +155,21 @@ function initializeQuill() {
   document.querySelector(".ql-night-mode").innerHTML =
     '<i class="fa-solid fa-moon"></i>';
 
-  // Update toolbar label to match selected font
-  quillEditor.on("selection-change", () => {
-    const format = quillEditor.getFormat();
-    const font = format.font || 'sans-serif';
-    const pickerLabel = editorContainer.querySelector('.ql-font .ql-picker-label');
-    if (pickerLabel) {
-      // Replace dashes with spaces for nicer display
-      pickerLabel.textContent = font.replace(/-/g, ' ');
-    }
-  });
+  const fontPicker = document.querySelector(".ql-font");
+  if (fontPicker) {
+    quillEditor.on("editor-change", () => {
+      const format = quillEditor.getFormat();
+      if (format.font) {
+        const displayName = FONT_DISPLAY_NAMES[format.font] || "Sans Serif";
+        fontPicker.querySelector(".ql-picker-label").textContent = displayName;
+      } else {
+        fontPicker.querySelector(".ql-picker-label").textContent = "Sans Serif";
+      }
+    });
+  }
 }
 
+// Open editor
 function openTextEditor(target) {
   isEditorLoading = true;
   activeTextElement = target;
@@ -140,19 +190,18 @@ function openTextEditor(target) {
     quillEditor.setSelection(length, 0, "silent");
     quillEditor.focus();
 
-    // Update font label immediately
-    const format = quillEditor.getFormat();
-    const font = format.font || 'sans-serif';
-    const pickerLabel = editorContainer.querySelector('.ql-font .ql-picker-label');
-    if (pickerLabel) pickerLabel.textContent = font.replace(/-/g, ' ');
-
     isEditorLoading = false;
   });
 }
 
+// Utilities
 function cleanHtml(html) {
   const trimmed = html.trim();
-  return trimmed.replace(/<(\w+)(?:\s[^>]*)?>\s*(<br\s*\/?>)?\s*<\/\1>/gi, "").trim();
+  const noEmptyTags = trimmed.replace(
+    /<(\w+)(?:\s[^>]*)?>\s*(<br\s*\/?>)?\s*<\/\1>/gi,
+    ""
+  );
+  return noEmptyTags.trim();
 }
 
 function normalizeLists(html) {
@@ -171,7 +220,10 @@ function closeTextEditor(save = true) {
     let newContent = quillEditor.root.innerHTML;
     newContent = normalizeLists(newContent);
     const cleaned = cleanHtml(newContent);
-    if (cleaned) activeTextElement.innerHTML = cleaned;
+
+    if (cleaned) {
+      activeTextElement.innerHTML = cleaned;
+    }
   }
 
   editorPop.classList.remove("content-show");
@@ -179,6 +231,7 @@ function closeTextEditor(save = true) {
   activeTextElement = null;
 }
 
+// Event listeners
 document.addEventListener("dblclick", (e) => {
   const target = e.target.closest(".text-element");
   if (target) openTextEditor(target);
@@ -189,6 +242,8 @@ document.addEventListener("click", (e) => {
   if (isEditorVisible && !isEditorLoading) {
     const isClickInsideEditor = e.target.closest(".text-editor-pop");
     const isClickInsideQuillUI = e.target.closest(".ql-picker, .ql-tooltip");
-    if (!isClickInsideEditor && !isClickInsideQuillUI) closeTextEditor(true);
+    if (!isClickInsideEditor && !isClickInsideQuillUI) {
+      closeTextEditor(true);
+    }
   }
 });
