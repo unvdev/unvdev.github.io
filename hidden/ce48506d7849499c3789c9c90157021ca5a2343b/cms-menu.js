@@ -208,6 +208,11 @@ function invokeStyleMenu() {
 // Background color input
 const backgroundColorInput = document.getElementById("style-editor-bg-color-input");
 
+// Border inputs
+const borderColorInput = document.getElementById("style-editor-border-color-input");
+const borderWidthInput = document.getElementById("style-editor-border-width-input");
+const borderRadiusInput = document.getElementById("style-editor-border-radius-input");
+
 // Width input
 const widthInput = document.getElementById("style-editor-width-input");
 
@@ -251,6 +256,37 @@ backgroundColorInput.addEventListener("input", () => {
   if (currentlySelected) {
     currentlySelected.classList.add("custom-styles");
     currentlySelected.style.backgroundColor = backgroundColorInput.value;
+  }
+});
+
+// ===============================
+// BORDER INPUTS
+// ===============================
+
+// Border color
+borderColorInput?.addEventListener("input", () => {
+  if (currentlySelected) {
+    currentlySelected.classList.add("custom-styles");
+    currentlySelected.style.borderColor = borderColorInput.value;
+  }
+});
+
+// Border width
+borderWidthInput?.addEventListener("input", () => {
+  if (currentlySelected) {
+    currentlySelected.classList.add("custom-styles");
+    let value = parseInt(borderWidthInput.value) || 0;
+    currentlySelected.style.borderWidth = value + "px";
+    currentlySelected.style.borderStyle = value > 0 ? "solid" : "none"; // ensure visible border
+  }
+});
+
+// Border radius
+borderRadiusInput?.addEventListener("input", () => {
+  if (currentlySelected) {
+    currentlySelected.classList.add("custom-styles");
+    let value = parseInt(borderRadiusInput.value) || 0;
+    currentlySelected.style.borderRadius = value + "px";
   }
 });
 
@@ -369,13 +405,12 @@ function rgbToHex(rgb) {
 
 function loadStylesFromSelected() {
   if (!currentlySelected) return;
-
   const computed = window.getComputedStyle(currentlySelected);
 
-  // === Background ===
+  // Background
   backgroundColorInput.value = rgbToHex(computed.backgroundColor);
 
-  // === Width (in %) ===
+  // Width
   if (currentlySelected.style.maxWidth && currentlySelected.style.maxWidth.includes("%")) {
     widthInput.value = parseFloat(currentlySelected.style.maxWidth);
   } else {
@@ -384,30 +419,22 @@ function loadStylesFromSelected() {
     widthInput.value = Math.round((actualWidth / parentWidth) * 100);
   }
 
-  // === Padding ===
+  // Padding
   paddingTopInput.value = parseInt(computed.paddingTop) || 0;
   paddingLeftInput.value = parseInt(computed.paddingLeft) || 0;
   paddingRightInput.value = parseInt(computed.paddingRight) || 0;
   paddingBottomInput.value = parseInt(computed.paddingBottom) || 0;
 
-  // === Margin ===
+  // Margin
   marginTopInput.value = parseInt(computed.marginTop) || 0;
   marginLeftInput.value = parseInt(computed.marginLeft) || 0;
   marginRightInput.value = parseInt(computed.marginRight) || 0;
   marginBottomInput.value = parseInt(computed.marginBottom) || 0;
 
-  // === Border ===
-  if (typeof borderColorInput !== "undefined") {
-    borderColorInput.value = rgbToHex(computed.borderColor);
-  }
-
-  if (typeof borderWidthInput !== "undefined") {
-    borderWidthInput.value = parseInt(computed.borderWidth) || 0;
-  }
-
-  if (typeof borderRadiusInput !== "undefined") {
-    borderRadiusInput.value = parseInt(computed.borderRadius) || 0;
-  }
+  // Border
+  if (borderColorInput) borderColorInput.value = rgbToHex(computed.borderColor);
+  if (borderWidthInput) borderWidthInput.value = parseInt(computed.borderWidth) || 0;
+  if (borderRadiusInput) borderRadiusInput.value = parseInt(computed.borderRadius) || 0;
 }
 
 // ===============================
