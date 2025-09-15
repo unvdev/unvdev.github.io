@@ -569,12 +569,12 @@
 
       <label for="style-editor-border-input">Border Width</label>
       <div class="style-editor-input-with-unit">
-        <input type="number" id="style-editor-border-width-input" value="0">
+        <input type="number" id="style-editor-border-width-input" value="0" min="0">
       </div>
 
       <label for="style-editor-radius-input">Border Radius</label>
       <div class="style-editor-input-with-unit">
-        <input type="number" id="style-editor-border-radius-input" value="0">
+        <input type="number" id="style-editor-border-radius-input" value="0" min="0">
       </div>
     </div>
   </div>
@@ -585,7 +585,7 @@
     <div class="style-editor-control-group">
       <label for="style-editor-width-input">Width</label>
       <div class="style-editor-input-with-unit">
-        <input type="number" id="style-editor-width-input" value="100">
+        <input type="number" id="style-editor-width-input" value="100" min="0" max="100">
       </div>
     </div>
 
@@ -631,13 +631,13 @@
       <label for="style-editor-padding-top-input">Padding</label>
     </div>
     <div class="style-editor-quad-control">
-      <input type="number" id="style-editor-padding-top-input" class="style-editor-quad-top" value="0" title="Top Padding">
-      <input type="number" id="style-editor-padding-left-input" class="style-editor-quad-left" value="0" title="Left Padding">
+      <input type="number" id="style-editor-padding-top-input" class="style-editor-quad-top" value="0" min="0" title="Top Padding">
+      <input type="number" id="style-editor-padding-left-input" class="style-editor-quad-left" value="0" min="0" title="Left Padding">
       <div class="quad-center-label">
         <i class="fa-solid fa-vector-square"></i>
       </div>
-      <input type="number" id="style-editor-padding-right-input" class="style-editor-quad-right" value="0" title="Right Padding">
-      <input type="number" id="style-editor-padding-bottom-input" class="style-editor-quad-bottom" value="0" title="Bottom Padding">
+      <input type="number" id="style-editor-padding-right-input" class="style-editor-quad-right" value="0" min="0" title="Right Padding">
+      <input type="number" id="style-editor-padding-bottom-input" class="style-editor-quad-bottom" value="0" min="0" title="Bottom Padding">
     </div>
 
     <!-- Margin -->
@@ -645,13 +645,13 @@
       <label for="style-editor-margin-top-input">Margin</label>
     </div>
     <div class="style-editor-quad-control">
-      <input type="number" id="style-editor-margin-top-input" class="style-editor-quad-top" value="0" title="Top Margin">
-      <input type="number" id="style-editor-margin-left-input" class="style-editor-quad-left" value="0" title="Left Margin">
+      <input type="number" id="style-editor-margin-top-input" class="style-editor-quad-top" value="0" min="0" title="Top Margin">
+      <input type="number" id="style-editor-margin-left-input" class="style-editor-quad-left" value="0" min="0" title="Left Margin">
       <div class="quad-center-label">
         <i class="fa-solid fa-vector-square"></i>
       </div>
-      <input type="number" id="style-editor-margin-right-input" class="style-editor-quad-right" value="0" title="Right Margin">
-      <input type="number" id="style-editor-margin-bottom-input" class="style-editor-quad-bottom" value="0" title="Bottom Margin">
+      <input type="number" id="style-editor-margin-right-input" class="style-editor-quad-right" value="0" min="0" title="Right Margin">
+      <input type="number" id="style-editor-margin-bottom-input" class="style-editor-quad-bottom" value="0" min="0" title="Bottom Margin">
     </div>
   </div>
 </div>
