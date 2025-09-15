@@ -243,26 +243,26 @@
             border-right: 1px solid #34495e;
         }
 
-        .sidebar-header {
+        .style-editor-sidebar-header {
             padding-bottom: 1rem;
             margin-bottom: 1rem;
             border-bottom: 1px solid #34495e;
             text-align: center;
         }
 
-        .sidebar-header h3 {
+        .style-editor-sidebar-header h3 {
             margin: 0;
             font-size: 1.2rem;
             color: #ffffff;
         }
 
         /* Section Styling */
-        .sidebar-section {
+        .style-editor-sidebar-section {
             margin-bottom: 1.5rem;
         }
 
-        .section-title,
-        .section-title-wrapper {
+        .style-editor-section-title,
+        .style-editor-section-title-wrapper {
             font-size: 0.9rem;
             font-weight: bold;
             color: #95a5a6;
@@ -274,11 +274,11 @@
         }
 
         /* General Control Group Styling */
-        .control-group {
+        .style-editor-control-group {
             margin-bottom: 1rem;
         }
 
-        .control-group label {
+        .style-editor-control-group label {
             display: block;
             font-size: 0.85rem;
             margin-bottom: 0.5rem;
@@ -306,12 +306,12 @@
         }
 
         /* Input + Unit */
-        .style-editor-sidebar .input-with-unit {
+        .style-editor-sidebar .style-editor-input-with-unit {
             display: flex;
         }
 
         /* Color Picker */
-        .style-editor-sidebar .color-input-wrapper {
+        .style-editor-sidebar .style-editor-color-input-wrapper {
             display: flex;
             align-items: center;
             background: #34495e;
@@ -328,18 +328,13 @@
             cursor: pointer;
         }
 
-        .style-editor-sidebar #style-editor-bg-color-hex {
-            padding-left: 10px;
-            font-family: monospace;
-        }
-
         /* Segmented Control */
-        .style-editor-sidebar .segmented-control {
+        .style-editor-sidebar .style-editor-segmented-control {
             display: flex;
             width: 100%;
         }
 
-        .style-editor-sidebar .segmented-control button {
+        .style-editor-sidebar .style-editor-segmented-control button {
             flex: 1;
             padding: 8px;
             background: #34495e;
@@ -349,45 +344,45 @@
             transition: background .2s ease;
         }
 
-        .style-editor-sidebar .segmented-control button:first-child {
+        .style-editor-sidebar .style-editor-segmented-control button:first-child {
             border-radius: 4px 0 0 4px;
         }
 
-        .style-editor-sidebar .segmented-control button:last-child {
+        .style-editor-sidebar .style-editor-segmented-control button:last-child {
             border-radius: 0 4px 4px 0;
             border-left: none;
         }
 
-        .style-editor-sidebar .segmented-control button:not(:first-child):not(:last-child) {
+        .style-editor-sidebar .style-editor-segmented-control button:not(:first-child):not(:last-child) {
             border-left: none;
         }
 
-        .style-editor-sidebar .segmented-control button:hover {
+        .style-editor-sidebar .style-editor-segmented-control button:hover {
             background: magenta;
             border-color: magenta;
             color: #fff;
         }
 
         /* Padding Control */
-        .style-editor-sidebar .quad-control {
+        .style-editor-sidebar .style-editor-quad-control {
             display: grid;
             grid-template: auto auto auto / auto auto auto;
             gap: 5px;
             place-items: center;
         }
 
-        .style-editor-sidebar .quad-control input {
+        .style-editor-sidebar .style-editor-quad-control input {
             width: 65px;
             text-align: center;
             box-sizing: border-box;
         }
 
-        .style-editor-sidebar .quad-top {
+        .style-editor-sidebar .style-editor-quad-top {
             grid-column: 2;
             grid-row: 1;
         }
 
-        .style-editor-sidebar .quad-left {
+        .style-editor-sidebar .style-editor-quad-left {
             grid-column: 1;
             grid-row: 2;
         }
@@ -405,12 +400,12 @@
             border: 1px dashed #7f8c8d;
         }
 
-        .style-editor-sidebar .quad-right {
+        .style-editor-sidebar .style-editor-quad-right {
             grid-column: 3;
             grid-row: 2;
         }
 
-        .style-editor-sidebar .quad-bottom {
+        .style-editor-sidebar .style-editor-quad-bottom {
             grid-column: 2;
             grid-row: 3;
         }
@@ -553,51 +548,51 @@
     </div>
 
     <div class="style-editor-sidebar content-show">
-        <div class="sidebar-header">
+        <div class="style-editor-sidebar-header">
             <h3>Style Editor</h3>
         </div>
 
         <!-- Appearance Section -->
-        <div class="sidebar-section">
-            <h4 class="section-title">Appearance</h4>
-            <div class="control-group">
+        <div class="style-editor-sidebar-section">
+            <h4 class="style-editor-section-title">Appearance</h4>
+            <div class="style-editor-control-group">
                 <label for="style-editor-bg-color">Background Color</label>
-                <div class="color-input-wrapper">
+                <div class="style-editor-color-input-wrapper">
                     <input type="color" id="style-editor-bg-color" value="#FFFFFF">
                     <span class="color-hex">#FFFFFF</span>
                 </div>
 
                 <label for="style-editor-border-color">Border Color</label>
-                <div class="color-input-wrapper">
+                <div class="style-editor-color-input-wrapper">
                     <input type="color" id="style-editor-border-color" value="#FFFFFF">
                     <span class="color-hex">#FFFFFF</span>
                 </div>
 
                 <label for="style-editor-border">Border Size</label>
-                <div class="input-with-unit">
+                <div class="style-editor-input-with-unit">
                     <input type="number" id="style-editor-border" value="0">
                 </div>
 
                 <label for="style-editor-radius">Border Radius</label>
-                <div class="input-with-unit">
+                <div class="style-editor-input-with-unit">
                     <input type="number" id="style-editor-radius" value="0">
                 </div>
             </div>
         </div>
 
         <!-- Sizing & Alignment Section -->
-        <div class="sidebar-section">
-            <h4 class="section-title">Sizing & Alignment</h4>
-            <div class="control-group">
+        <div class="style-editor-sidebar-section">
+            <h4 class="style-editor-section-title">Sizing & Alignment</h4>
+            <div class="style-editor-control-group">
                 <label for="style-editor-width">Width</label>
-                <div class="input-with-unit">
+                <div class="style-editor-input-with-unit">
                     <input type="number" id="style-editor-width" value="100">
                 </div>
             </div>
 
-            <div class="control-group">
+            <div class="style-editor-control-group">
                 <label>Horizontal Alignment</label>
-                <div class="segmented-control">
+                <div class="style-editor-segmented-control">
                     <button id="style-editor-align-left-button" class="active" title="Align Left">
                         <i class="fa-solid fa-align-left"></i>
                     </button>
@@ -610,7 +605,7 @@
                 </div>
 
                 <label>Vertical Alignment</label>
-                <div class="segmented-control">
+                <div class="style-editor-segmented-control">
                     <button id="style-editor-align-top-button" class="active" title="Align Top">
                         <i class="fa-solid fa-arrow-up"></i>
                     </button>
@@ -625,37 +620,37 @@
         </div>
 
         <!-- Spacing Section -->
-        <div class="sidebar-section">
-            <div class="section-title-wrapper">
-                <h4 class="section-title">Spacing</h4>
+        <div class="style-editor-sidebar-section">
+            <div class="style-editor-section-title-wrapper">
+                <h4 class="style-editor-section-title">Spacing</h4>
             </div>
 
             <!-- Padding -->
-            <div class="control-group">
+            <div class="style-editor-control-group">
                 <label for="style-editor-padding-top">Padding</label>
             </div>
-            <div class="quad-control">
-                <input type="number" id="style-editor-padding-top" class="quad-top" value="0" title="Top Padding">
-                <input type="number" id="style-editor-padding-left" class="quad-left" value="0" title="Left Padding">
+            <div class="style-editor-quad-control">
+                <input type="number" id="style-editor-padding-top" class="style-editor-quad-top" value="0" title="Top Padding">
+                <input type="number" id="style-editor-padding-left" class="style-editor-quad-left" value="0" title="Left Padding">
                 <div class="quad-center-label">
                     <i class="fa-solid fa-vector-square"></i>
                 </div>
-                <input type="number" id="style-editor-padding-right" class="quad-right" value="0" title="Right Padding">
-                <input type="number" id="style-editor-padding-bottom" class="quad-bottom" value="0" title="Bottom Padding">
+                <input type="number" id="style-editor-padding-right" class="style-editor-quad-right" value="0" title="Right Padding">
+                <input type="number" id="style-editor-padding-bottom" class="style-editor-quad-bottom" value="0" title="Bottom Padding">
             </div>
 
             <!-- Margin -->
-            <div class="control-group">
+            <div class="style-editor-control-group">
                 <label for="style-editor-margin-top">Margin</label>
             </div>
-            <div class="quad-control">
-                <input type="number" id="style-editor-margin-top" class="quad-top" value="0" title="Top Margin">
-                <input type="number" id="style-editor-margin-left" class="quad-left" value="0" title="Left Margin">
+            <div class="style-editor-quad-control">
+                <input type="number" id="style-editor-margin-top" class="style-editor-quad-top" value="0" title="Top Margin">
+                <input type="number" id="style-editor-margin-left" class="style-editor-quad-left" value="0" title="Left Margin">
                 <div class="quad-center-label">
                     <i class="fa-solid fa-vector-square"></i>
                 </div>
-                <input type="number" id="style-editor-margin-right" class="quad-right" value="0" title="Right Margin">
-                <input type="number" id="style-editor-margin-bottom" class="quad-bottom" value="0" title="Bottom Margin">
+                <input type="number" id="style-editor-margin-right" class="style-editor-quad-right" value="0" title="Right Margin">
+                <input type="number" id="style-editor-margin-bottom" class="style-editor-quad-bottom" value="0" title="Bottom Margin">
             </div>
         </div>
     </div>
