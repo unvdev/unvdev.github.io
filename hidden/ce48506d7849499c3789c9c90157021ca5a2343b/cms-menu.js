@@ -199,7 +199,7 @@ function invokeCMSMenu() {
 //Open The Styles Menu
 function invokeStyleMenu() {
     if (currentlySelected) {
-        document.querySelector(".style-editor-pop").classList.remove('content-hide');
+        document.querySelector(".style-editor-sidebar").classList.remove('content-hide');
     }
 }
 
