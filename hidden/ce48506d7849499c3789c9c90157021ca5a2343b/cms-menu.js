@@ -204,127 +204,153 @@ function invokeStyleMenu() {
 }
 
 // === STYLE EDITOR LOGIC ===
+// Background color input
+const backgroundColorInput = document.getElementById("style-editor-bg-color-input");
 
-// Background color button
-const backgroundColorButton = document.getElementById("style-editor-background-color-button");
-
-// Width buttons
-const widthDecreaseBtn = document.getElementById("style-editor-width-decrease-button");
-const widthIncreaseBtn = document.getElementById("style-editor-width-increase-button");
+// Width input
+const widthInput = document.getElementById("style-editor-width-input");
 
 // Alignment buttons
 const alignLeft = document.getElementById("style-editor-align-left-button");
 const alignCenter = document.getElementById("style-editor-align-center-button");
 const alignRight = document.getElementById("style-editor-align-right-button");
+const alignTop = document.getElementById("style-editor-align-top-button");
+const alignMiddle = document.getElementById("style-editor-align-middle-button");
+const alignBottom = document.getElementById("style-editor-align-bottom-button");
 
-// Padding buttons (increase/decrease)
-const paddingLeftIncreaseBtn = document.getElementById("style-editor-padding-left-increase-button");
-const paddingLeftDecreaseBtn = document.getElementById("style-editor-padding-left-decrease-button");
-const paddingRightIncreaseBtn = document.getElementById("style-editor-padding-right-increase-button");
-const paddingRightDecreaseBtn = document.getElementById("style-editor-padding-right-decrease-button");
-const paddingTopIncreaseBtn = document.getElementById("style-editor-padding-top-increase-button");
-const paddingTopDecreaseBtn = document.getElementById("style-editor-padding-top-decrease-button");
-const paddingBottomIncreaseBtn = document.getElementById("style-editor-padding-bottom-increase-button");
-const paddingBottomDecreaseBtn = document.getElementById("style-editor-padding-bottom-decrease-button");
+// Padding inputs
+const paddingTopInput = document.getElementById("style-editor-padding-top-input");
+const paddingLeftInput = document.getElementById("style-editor-padding-left-input");
+const paddingRightInput = document.getElementById("style-editor-padding-right-input");
+const paddingBottomInput = document.getElementById("style-editor-padding-bottom-input");
+
+// Margin inputs
+const marginTopInput = document.getElementById("style-editor-margin-top-input");
+const marginLeftInput = document.getElementById("style-editor-margin-left-input");
+const marginRightInput = document.getElementById("style-editor-margin-right-input");
+const marginBottomInput = document.getElementById("style-editor-margin-bottom-input");
 
 // ===============================
 // HELPERS
 // ===============================
 function parsePercent(value, fallback = 100) {
-    const match = value.match(/([\d.]+)%/);
-    return match ? parseFloat(match[1]) : fallback;
+  const match = value.match(/([\d.]+)%/);
+  return match ? parseFloat(match[1]) : fallback;
 }
 
 function parsePx(value, fallback = 0) {
-    const match = value.match(/([\d.]+)px/);
-    return match ? parseFloat(match[1]) : fallback;
-}
-
-function updatePadding(side, delta) {
-    if (!currentlySelected) return;
-    currentlySelected.classList.add("custom-styles"); // mark element as styled
-    const computed = window.getComputedStyle(currentlySelected);
-    let current = parsePx(computed[`padding${side}`]);
-    currentlySelected.style[`padding${side}`] = Math.max(0, current + delta) + "px"; // prevent negative padding
+  const match = value.match(/([\d.]+)px/);
+  return match ? parseFloat(match[1]) : fallback;
 }
 
 // ===============================
 // BACKGROUND COLOR
 // ===============================
-backgroundColorButton.addEventListener("click", () => {
-    if (currentlySelected) {
-        currentlySelected.classList.add("custom-styles");
-        const color = prompt("Enter a hex color code (e.g., #ff00ff):");
-        if (!color) {
-            // Remove background if user entered nothing
-            currentlySelected.style.backgroundColor = "";
-        } else if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color)) {
-            currentlySelected.style.backgroundColor = color;
-        } else {
-            alert("Invalid hex code.");
-        }
-    }
+backgroundColorInput.addEventListener("input", () => {
+  if (currentlySelected) {
+    currentlySelected.classList.add("custom-styles");
+    currentlySelected.style.backgroundColor = backgroundColorInput.value;
+  }
 });
 
 // ===============================
-// WIDTH CONTROL (percentage)
+// WIDTH CONTROL (direct input)
 // ===============================
-widthDecreaseBtn.addEventListener("click", () => {
-    if (currentlySelected) {
-        currentlySelected.classList.add("custom-styles");
-        let currentWidth = parsePercent(currentlySelected.style.maxWidth || "100%");
-        currentWidth = Math.max(5, currentWidth - 5); 
-        currentlySelected.style.maxWidth = currentWidth + "%";
-    }
-});
-
-widthIncreaseBtn.addEventListener("click", () => {
-    if (currentlySelected) {
-        currentlySelected.classList.add("custom-styles");
-        let currentWidth = parsePercent(currentlySelected.style.maxWidth || "100%");
-        currentWidth = Math.min(100, currentWidth + 5); 
-        currentlySelected.style.maxWidth = currentWidth + "%";
-    }
+widthInput.addEventListener("input", () => {
+  if (currentlySelected) {
+    currentlySelected.classList.add("custom-styles");
+    let width = parseFloat(widthInput.value) || 100;
+    width = Math.max(5, Math.min(100, width));
+    currentlySelected.style.maxWidth = width + "%";
+  }
 });
 
 // ===============================
 // ALIGNMENT
 // ===============================
 alignLeft.addEventListener("click", () => {
-    if (currentlySelected) {
-        currentlySelected.classList.add("custom-styles");
-        currentlySelected.classList.remove("building-block-align-center", "building-block-align-right");
-        currentlySelected.classList.add("building-block-align-left");
-    }
+  if (currentlySelected) {
+    currentlySelected.classList.add("custom-styles");
+    currentlySelected.classList.remove("building-block-align-center", "building-block-align-right");
+    currentlySelected.classList.add("building-block-align-left");
+  }
 });
 
 alignCenter.addEventListener("click", () => {
-    if (currentlySelected) {
-        currentlySelected.classList.add("custom-styles");
-        currentlySelected.classList.remove("building-block-align-left", "building-block-align-right");
-        currentlySelected.classList.add("building-block-align-center");
-    }
+  if (currentlySelected) {
+    currentlySelected.classList.add("custom-styles");
+    currentlySelected.classList.remove("building-block-align-left", "building-block-align-right");
+    currentlySelected.classList.add("building-block-align-center");
+  }
 });
 
 alignRight.addEventListener("click", () => {
-    if (currentlySelected) {
-        currentlySelected.classList.add("custom-styles");
-        currentlySelected.classList.remove("building-block-align-left", "building-block-align-center");
-        currentlySelected.classList.add("building-block-align-right");
-    }
+  if (currentlySelected) {
+    currentlySelected.classList.add("custom-styles");
+    currentlySelected.classList.remove("building-block-align-left", "building-block-align-center");
+    currentlySelected.classList.add("building-block-align-right");
+  }
+});
+
+alignTop.addEventListener("click", () => {
+  if (currentlySelected) {
+    currentlySelected.classList.add("custom-styles");
+    currentlySelected.classList.remove("building-column-content-center", "building-column-content-bottom");
+    currentlySelected.classList.add("building-column-content-top");
+  }
+});
+
+alignMiddle.addEventListener("click", () => {
+  if (currentlySelected) {
+    currentlySelected.classList.add("custom-styles");
+    currentlySelected.classList.remove("building-column-content-top", "building-column-content-bottom");
+    currentlySelected.classList.add("building-column-content-center");
+  }
+});
+
+alignBottom.addEventListener("click", () => {
+  if (currentlySelected) {
+    currentlySelected.classList.add("custom-styles");
+    currentlySelected.classList.remove("building-column-content-top", "building-column-content-center");
+    currentlySelected.classList.add("building-column-content-bottom");
+  }
 });
 
 // ===============================
-// PADDING CONTROL (increase/decrease by 10px)
+// PADDING INPUTS
 // ===============================
-paddingLeftIncreaseBtn.addEventListener("click", () => updatePadding("Left", 10));
-paddingLeftDecreaseBtn.addEventListener("click", () => updatePadding("Left", -10));
-paddingRightIncreaseBtn.addEventListener("click", () => updatePadding("Right", 10));
-paddingRightDecreaseBtn.addEventListener("click", () => updatePadding("Right", -10));
-paddingTopIncreaseBtn.addEventListener("click", () => updatePadding("Top", 10));
-paddingTopDecreaseBtn.addEventListener("click", () => updatePadding("Top", -10));
-paddingBottomIncreaseBtn.addEventListener("click", () => updatePadding("Bottom", 10));
-paddingBottomDecreaseBtn.addEventListener("click", () => updatePadding("Bottom", -10));
+function updatePaddingInput(side, inputEl) {
+  inputEl.addEventListener("input", () => {
+    if (currentlySelected) {
+      currentlySelected.classList.add("custom-styles");
+      let value = parseInt(inputEl.value) || 0;
+      currentlySelected.style[`padding${side}`] = Math.max(0, value) + "px";
+    }
+  });
+}
+
+updatePaddingInput("Top", paddingTopInput);
+updatePaddingInput("Left", paddingLeftInput);
+updatePaddingInput("Right", paddingRightInput);
+updatePaddingInput("Bottom", paddingBottomInput);
+
+// ===============================
+// MARGIN INPUTS
+// ===============================
+function updateMarginInput(side, inputEl) {
+  inputEl.addEventListener("input", () => {
+    if (currentlySelected) {
+      currentlySelected.classList.add("custom-styles");
+      let value = parseInt(inputEl.value) || 0;
+      currentlySelected.style[`margin${side}`] = value + "px";
+    }
+  });
+}
+
+updateMarginInput("Top", marginTopInput);
+updateMarginInput("Left", marginLeftInput);
+updateMarginInput("Right", marginRightInput);
+updateMarginInput("Bottom", marginBottomInput);
 
 // ===============================
 // SHIFT + A + CLICK trigger
