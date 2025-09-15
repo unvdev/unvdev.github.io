@@ -200,7 +200,7 @@ function invokeCMSMenu() {
 function invokeStyleMenu() {
     if (currentlySelected) {
         document.querySelector(".style-editor-sidebar").classList.remove('content-hide');
-        updateVerticalAlignControls();
+        ucheckRestrictedControls();
         loadStylesFromSelected();
     }
 }
