@@ -1,0 +1,126 @@
+ <div class="style-editor-pop content-hide">
+        <div class="style-editor-container">
+
+            <!-- Background Color -->
+            <div class="style-editor-item">
+                <div id="style-editor-background-color-button" class="default-button">
+                    <i class="fa-solid fa-palette"></i>
+                </div>
+            </div>
+
+            <!-- Width -->
+            <div class="style-editor-item">
+                <div id="style-editor-width-decrease-button" class="default-button">
+                    <i class="fa-solid fa-compress"></i>
+                </div>
+            </div>
+            <div class="style-editor-item">
+                <div id="style-editor-width-increase-button" class="default-button">
+                    <i class="fa-solid fa-expand"></i>
+                </div>
+            </div>
+
+            <!-- Alignment -->
+            <div class="style-editor-item">
+                <div id="style-editor-align-left-button" class="default-button">
+                    <i class="fa-solid fa-align-left"></i>
+                </div>
+            </div>
+            <div class="style-editor-item">
+                <div id="style-editor-align-center-button" class="default-button">
+                    <i class="fa-solid fa-align-center"></i>
+                </div>
+            </div>
+            <div class="style-editor-item">
+                <div id="style-editor-align-right-button" class="default-button">
+                    <i class="fa-solid fa-align-right"></i>
+                </div>
+            </div>
+
+            <!-- Padding LEFT -->
+            <div class="style-editor-item">
+                <div id="style-editor-padding-left-decrease-button" class="default-button">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </div>
+            </div>
+            <div class="style-editor-item">
+                <div id="style-editor-padding-left-increase-button" class="default-button">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </div>
+            </div>
+
+            <!-- Padding TOP -->
+            <div class="style-editor-item">
+                <div id="style-editor-padding-top-decrease-button" class="default-button">
+                    <i class="fa-solid fa-arrow-up"></i>
+                </div>
+            </div>
+            <div class="style-editor-item">
+                <div id="style-editor-padding-top-increase-button" class="default-button">
+                    <i class="fa-solid fa-arrow-up"></i>
+                </div>
+            </div>
+
+            <!-- Padding RIGHT -->
+            <div class="style-editor-item">
+                <div id="style-editor-padding-right-decrease-button" class="default-button">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+            </div>
+            <div class="style-editor-item">
+                <div id="style-editor-padding-right-increase-button" class="default-button">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+            </div>
+
+            <!-- Padding BOTTOM -->
+            <div class="style-editor-item">
+                <div id="style-editor-padding-bottom-decrease-button" class="default-button">
+                    <i class="fa-solid fa-arrow-down"></i>
+                </div>
+            </div>
+            <div class="style-editor-item">
+                <div id="style-editor-padding-bottom-increase-button" class="default-button">
+                    <i class="fa-solid fa-arrow-down"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    /* Style Editor Popup */
+.style-editor-pop {
+    display: block;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;       /* fixed width */
+    height: auto;       /* auto height based on content */
+    max-height: 90vh;   /* optional: prevent it from exceeding viewport */
+    background-color: silver;
+    z-index: 99999999999999;
+    box-sizing: border-box;
+    padding: 1rem;
+    overflow-y: auto;   /* scroll if it grows too tall */
+}
+
+/* Grid container */
+.style-editor-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: 1rem;
+    justify-items: center;
+    align-items: center;
+}
+
+/* Individual items */
+.style-editor-item {
+    width: 60px;
+    height: 60px;
+    background-color: silver;
+    color: whitesmoke;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
