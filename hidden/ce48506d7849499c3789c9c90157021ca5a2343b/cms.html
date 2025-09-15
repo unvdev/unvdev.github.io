@@ -273,115 +273,117 @@
     color: #bdc3c7;
 }
 
-/* Input Fields */
-input[type="number"], input[type="text"], select {
-    width: 100%;
-    background-color: #34495e;
-    border: 1px solid #7f8c8d;
-    color: #ecf0f1;
-    padding: 8px;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 0.9rem;
+/* Inputs */
+.cms-style-sidebar input[type="number"],
+.cms-style-sidebar input[type="text"],
+.cms-style-sidebar select {
+  width: 100%;
+  padding: 8px;
+  font-size: 0.9rem;
+  color: #ecf0f1;
+  background: #34495e;
+  border: 1px solid #7f8c8d;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
-input[type="number"]:focus, select:focus {
-    outline: none;
-    border-color: #3498db;
+.cms-style-sidebar input:focus,
+.cms-style-sidebar select:focus {
+  outline: none;
+  border-color: #3498db;
 }
 
-/* Input with Unit Selector (for Width) */
-.input-with-unit {
-    display: flex;
+/* Input + Unit */
+.cms-style-sidebar .input-with-unit {
+  display: flex;
 }
 
 /* Color Picker */
-.color-input-wrapper {
-    display: flex;
-    align-items: center;
-    background-color: #34495e;
-    border: 1px solid #7f8c8d;
-    border-radius: 4px;
-}
-input[type="color"] {
-    width: 40px;
-    height: 38px;
-    padding: 4px;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-}
-#style-editor-bg-color-hex {
-    padding-left: 10px;
-    font-family: monospace;
+.cms-style-sidebar .color-input-wrapper {
+  display: flex;
+  align-items: center;
+  background: #34495e;
+  border: 1px solid #7f8c8d;
+  border-radius: 4px;
 }
 
-/* Segmented Control (for Alignment) */
-.segmented-control {
-    display: flex;
-    width: 100%;
-}
-.segmented-control button {
-    flex: 1;
-    padding: 8px;
-    background-color: #34495e;
-    border: 1px solid #7f8c8d;
-    color: #ecf0f1;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-.segmented-control button:first-child {
-    border-radius: 4px 0 0 4px;
-}
-.segmented-control button:last-child {
-    border-radius: 0 4px 4px 0;
-    border-left: none;
-}
-.segmented-control button:not(:first-child):not(:last-child) {
-     border-left: none;
-}
-.segmented-control button.active, .segmented-control button:hover {
-    background-color: #3498db;
-    border-color: #3498db;
-    color: #ffffff;
+.cms-style-sidebar input[type="color"] {
+  width: 40px; 
+  height: 38px;
+  padding: 4px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
 }
 
-/* Padding Box Control */
-.padding-control {
-    display: grid;
-    /* Change columns to size based on content, not free space */
-    grid-template-columns: auto auto auto;
-    grid-template-rows: auto auto auto;
-    gap: 5px;
-    align-items: center;
-    justify-items: center;
+.cms-style-sidebar #style-editor-bg-color-hex {
+  padding-left: 10px;
+  font-family: monospace;
 }
 
-.padding-control input {
-    text-align: center;
-    /* Give all inputs a fixed, identical width */
-    width: 65px;
-    /* Add box-sizing for predictable padding and borders */
-    box-sizing: border-box;
+/* Segmented Control */
+.cms-style-sidebar .segmented-control { 
+  display: flex; 
+  width: 100%; 
 }
 
-/* No changes needed for the rest of the rules */
-.padding-top    { grid-column: 2; grid-row: 1; }
-.padding-left   { grid-column: 1; grid-row: 2; }
-.padding-center-label {
-    grid-column: 2;
-    grid-row: 2;
-    width: 40px;
-    height: 40px;
-    border: 1px dashed #7f8c8d;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    color: #7f8c8d;
+.cms-style-sidebar .segmented-control button {
+  flex: 1;
+  padding: 8px;
+  background: #34495e;
+  border: 1px solid #7f8c8d;
+  color: #ecf0f1;
+  cursor: pointer;
+  transition: background .2s ease;
 }
-.padding-right  { grid-column: 3; grid-row: 2; }
-.padding-bottom { grid-column: 2; grid-row: 3; }
+
+.cms-style-sidebar .segmented-control button:first-child { 
+  border-radius: 4px 0 0 4px; 
+}
+
+.cms-style-sidebar .segmented-control button:last-child { 
+  border-radius: 0 4px 4px 0; 
+  border-left: none; 
+}
+
+.cms-style-sidebar .segmented-control button:not(:first-child):not(:last-child) { 
+  border-left: none; 
+}
+
+.cms-style-sidebar .segmented-control button.active, 
+.cms-style-sidebar .segmented-control button:hover {
+  background: #3498db;
+  border-color: #3498db;
+  color: #fff;
+}
+
+/* Padding Control */
+.cms-style-sidebar .padding-control {
+  display: grid;
+  grid-template: auto auto auto / auto auto auto;
+  gap: 5px;
+  place-items: center;
+}
+
+.cms-style-sidebar .padding-control input {
+  width: 65px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.cms-style-sidebar .padding-top    { grid-column: 2; grid-row: 1; }
+.cms-style-sidebar .padding-left   { grid-column: 1; grid-row: 2; }
+.cms-style-sidebar .padding-center-label {
+  grid-column: 2; grid-row: 2;
+  width: 40px; height: 40px;
+  display: flex;
+  align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  color: #7f8c8d;
+  border: 1px dashed #7f8c8d;
+}
+.cms-style-sidebar .padding-right  { grid-column: 3; grid-row: 2; }
+.cms-style-sidebar .padding-bottom { grid-column: 2; grid-row: 3; }
     </style>
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 </head>
