@@ -459,7 +459,7 @@ function checkRestrictedControls() {
     verticalAlignControls.classList.add("content-hide");
   }
 
-  if (currentlySelected?.classList.contains("text-element")) {
+  if (!currentlySelected?.classList.contains("text-element")) {
     widthControls.classList.remove("content-hide");
   } else {
     widthControls.classList.add("content-hide");
