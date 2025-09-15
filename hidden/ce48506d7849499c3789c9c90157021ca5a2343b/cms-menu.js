@@ -453,15 +453,30 @@ function checkRestrictedControls() {
     { id: "style-editor-width-controls", restrictedClass: "text-element" }
   ];
 
+  // controls.forEach(({ id, restrictedClass }) => {
+  //   const el = document.getElementById(id);
+  //   if (!el) return;
+  //   if (currentlySelected?.classList.contains(restrictedClass)) {
+  //     el.classList.remove("content-hide");
+  //   } else {
+  //     el.classList.add("content-hide");
+  //   }
+  // });
   controls.forEach(({ id, restrictedClass }) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    if (currentlySelected?.classList.contains(restrictedClass)) {
-      el.classList.remove("content-hide");
-    } else {
-      el.classList.add("content-hide");
-    }
-  });
+  console.log('Checking control:', id, 'for class:', restrictedClass);
+  const el = document.getElementById(id);
+  if (!el) {
+    console.log('Element not found:', id);
+    return;
+  }
+  if (currentlySelected?.classList.contains(restrictedClass)) {
+    console.log('Showing control:', id);
+    el.classList.remove("content-hide");
+  } else {
+    console.log('Hiding control:', id);
+    el.classList.add("content-hide");
+  }
+});
 }
 
 // ===============================
