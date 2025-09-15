@@ -207,9 +207,11 @@ function invokeStyleMenu() {
 // === STYLE EDITOR LOGIC ===
 // Background color input
 const backgroundColorInput = document.getElementById("style-editor-bg-color-input");
+const backgroundColorValueSpan = document.getElementById("style-editor-bg-color-input-value");
 
 // Border inputs
 const borderColorInput = document.getElementById("style-editor-border-color-input");
+const borderColorValueSpan = document.getElementById("style-editor-border-color-input-value");
 const borderWidthInput = document.getElementById("style-editor-border-width-input");
 const borderRadiusInput = document.getElementById("style-editor-border-radius-input");
 
@@ -257,21 +259,24 @@ backgroundColorInput.addEventListener("input", () => {
     currentlySelected.classList.add("custom-styles");
     currentlySelected.style.backgroundColor = backgroundColorInput.value;
   }
+  if (backgroundColorValueSpan) {
+    backgroundColorValueSpan.textContent = backgroundColorInput.value.toUpperCase();
+  }
 });
 
 // ===============================
 // BORDER INPUTS
 // ===============================
-
-// Border color
 borderColorInput?.addEventListener("input", () => {
   if (currentlySelected) {
     currentlySelected.classList.add("custom-styles");
     currentlySelected.style.borderColor = borderColorInput.value;
   }
+  if (borderColorValueSpan) {
+    borderColorValueSpan.textContent = borderColorInput.value.toUpperCase();
+  }
 });
 
-// Border width
 borderWidthInput?.addEventListener("input", () => {
   if (currentlySelected) {
     currentlySelected.classList.add("custom-styles");
@@ -281,7 +286,6 @@ borderWidthInput?.addEventListener("input", () => {
   }
 });
 
-// Border radius
 borderRadiusInput?.addEventListener("input", () => {
   if (currentlySelected) {
     currentlySelected.classList.add("custom-styles");
@@ -403,12 +407,16 @@ function rgbToHex(rgb) {
   return `#${r}${g}${b}`;
 }
 
+// ===============================
+// LOAD STYLES FROM SELECTED ELEMENT
+// ===============================
 function loadStylesFromSelected() {
   if (!currentlySelected) return;
   const computed = window.getComputedStyle(currentlySelected);
 
   // Background
   backgroundColorInput.value = rgbToHex(computed.backgroundColor);
+  if (backgroundColorValueSpan) backgroundColorValueSpan.textContent = rgbToHex(computed.backgroundColor).toUpperCase();
 
   // Width
   if (currentlySelected.style.maxWidth && currentlySelected.style.maxWidth.includes("%")) {
@@ -433,6 +441,7 @@ function loadStylesFromSelected() {
 
   // Border
   if (borderColorInput) borderColorInput.value = rgbToHex(computed.borderColor);
+  if (borderColorValueSpan) borderColorValueSpan.textContent = rgbToHex(computed.borderColor).toUpperCase();
   if (borderWidthInput) borderWidthInput.value = parseInt(computed.borderWidth) || 0;
   if (borderRadiusInput) borderRadiusInput.value = parseInt(computed.borderRadius) || 0;
 }
