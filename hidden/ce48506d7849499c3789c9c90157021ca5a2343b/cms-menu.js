@@ -200,6 +200,7 @@ function invokeCMSMenu() {
 function invokeStyleMenu() {
     if (currentlySelected) {
         document.querySelector(".style-editor-sidebar").classList.remove('content-hide');
+        updateVerticalAlignControls();
         loadStylesFromSelected();
     }
 }
@@ -444,6 +445,17 @@ function loadStylesFromSelected() {
   if (borderColorValueSpan) borderColorValueSpan.textContent = rgbToHex(computed.borderColor).toUpperCase();
   if (borderWidthInput) borderWidthInput.value = parseInt(computed.borderWidth) || 0;
   if (borderRadiusInput) borderRadiusInput.value = parseInt(computed.borderRadius) || 0;
+}
+
+function updateVerticalAlignControls() {
+  const verticalAlignControls = document.getElementById("style-editor-vertical-align-controls");
+  if (!verticalAlignControls) return;
+
+  if (currentlySelected?.classList.contains("building-column")) {
+    verticalAlignControls.classList.remove("content-hide");
+  } else {
+    verticalAlignControls.classList.add("content-hide");
+  }
 }
 
 // ===============================
