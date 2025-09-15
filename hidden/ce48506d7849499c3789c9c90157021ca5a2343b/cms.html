@@ -523,88 +523,112 @@
     </div>
     
     <div class="cms-style-sidebar">
-    <div class="sidebar-header">
-        <h3>Style Editor</h3>
+  <div class="sidebar-header">
+    <h3>Style Editor</h3>
+  </div>
+
+  <!-- Appearance Section -->
+  <div class="sidebar-section">
+    <h4 class="section-title">Appearance</h4>
+    <div class="control-group">
+      <label for="style-editor-bg-color">Background Color</label>
+      <div class="color-input-wrapper">
+        <input type="color" id="style-editor-bg-color" value="#FFFFFF">
+        <span class="color-hex">#FFFFFF</span>
+      </div>
+
+      <label for="style-editor-border-color">Border Color</label>
+      <div class="color-input-wrapper">
+        <input type="color" id="style-editor-border-color" value="#FFFFFF">
+        <span class="color-hex">#FFFFFF</span>
+      </div>
+
+      <label for="style-editor-border">Border Size</label>
+      <div class="input-with-unit">
+        <input type="number" id="style-editor-border" value="0">
+      </div>
+
+      <label for="style-editor-radius">Border Radius</label>
+      <div class="input-with-unit">
+        <input type="number" id="style-editor-radius" value="0">
+      </div>
+    </div>
+  </div>
+
+  <!-- Sizing & Alignment Section -->
+  <div class="sidebar-section">
+    <h4 class="section-title">Sizing & Alignment</h4>
+    <div class="control-group">
+      <label for="style-editor-width">Width</label>
+      <div class="input-with-unit">
+        <input type="number" id="style-editor-width" value="100">
+      </div>
+
+      <label for="style-editor-height">Height</label>
+      <div class="input-with-unit">
+        <input type="number" id="style-editor-height" value="100">
+      </div>
     </div>
 
-    <div class="sidebar-section">
-        <h4 class="section-title">Appearance</h4>
-        <div class="control-group">
-            <label for="style-editor-bg-color">Background Color</label>
-            <div class="color-input-wrapper">
-                <input type="color" id="style-editor-bg-color" value="#FFFFFF">
-                <span id="style-editor-bg-color-hex">#FFFFFF</span>
-            </div>
-            <label for="style-editor-bg-color">Border Color</label>
-            <div class="color-input-wrapper">
-                <input type="color" id="style-editor-bg-color" value="#FFFFFF">
-                <span id="style-editor-bg-color-hex">#FFFFFF</span>
-            </div>
-            <label for="style-editor-border">Border Size</label>
-            <div class="input-with-unit">
-                <input type="number" id="style-editor-border" value="0">
-            </div>
-            <label for="style-editor-radius">Border Size</label>
-            <div class="input-with-unit">
-                <input type="number" id="style-editor-radius" value="0">
-            </div>
-        </div>
+    <div class="control-group">
+      <label>Horizontal Alignment</label>
+      <div class="segmented-control">
+        <button id="style-editor-align-left-button" class="active" title="Align Left">
+          <i class="fa-solid fa-align-left"></i>
+        </button>
+        <button id="style-editor-align-center-button" title="Align Center">
+          <i class="fa-solid fa-align-center"></i>
+        </button>
+        <button id="style-editor-align-right-button" title="Align Right">
+          <i class="fa-solid fa-align-right"></i>
+        </button>
+      </div>
+
+      <label>Vertical Alignment</label>
+      <div class="segmented-control">
+        <button id="style-editor-align-top-button" class="active" title="Align Top">
+          <i class="fa-solid fa-arrow-up"></i>
+        </button>
+        <button id="style-editor-align-middle-button" title="Align Middle">
+          <i class="fa-solid fa-arrows-up-down"></i>
+        </button>
+        <button id="style-editor-align-bottom-button" title="Align Bottom">
+          <i class="fa-solid fa-arrow-down"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Spacing Section -->
+  <div class="sidebar-section">
+    <div class="section-title-wrapper">
+      <h4 class="section-title">Spacing</h4>
     </div>
 
-    <div class="sidebar-section">
-        <h4 class="section-title">Sizing & Alignment</h4>
-        <div class="control-group">
-            <label for="style-editor-width">Width</label>
-            <div class="input-with-unit">
-                <input type="number" id="style-editor-width" value="100">
-            </div>
-            <label for="style-editor-height">Height</label>
-            <div class="input-with-unit">
-                <input type="number" id="style-editor-height" value="100">
-            </div>
-        </div>
-        <div class="control-group">
-            <label>Horizontal Alignment</label>
-            <div class="segmented-control">
-                <button id="style-editor-align-left-button" class="active" title="Align Left"><i class="fa-solid fa-align-left"></i></button>
-                <button id="style-editor-align-center-button" title="Align Center"><i class="fa-solid fa-align-center"></i></button>
-                <button id="style-editor-align-right-button" title="Align Right"><i class="fa-solid fa-align-right"></i></button>
-            </div>
-            <label>Vertical Alignment</label>
-            <div class="segmented-control">
-                <button id="style-editor-align-top-button" class="active" title="Align Left"><i class="fa-solid fa-arrow-up"></i>></button>
-                <button id="style-editor-align-middle-button" title="Align Center"><i class="fa-solid fa-arrows-up-down"></i></button>
-                <button id="style-editor-align-bottom-button" title="Align Right"><i class="fa-solid fa-arrow-down"></button>
-            </div>
-        </div>
+    <!-- Padding -->
+    <div class="quad-control">
+      <label for="style-editor-padding-top">Padding</label>
+      <input type="number" id="style-editor-padding-top" class="padding-top" value="0" title="Top Padding">
+      <input type="number" id="style-editor-padding-left" class="padding-left" value="0" title="Left Padding">
+      <div class="padding-center-label">
+        <i class="fa-solid fa-vector-square"></i>
+      </div>
+      <input type="number" id="style-editor-padding-right" class="padding-right" value="0" title="Right Padding">
+      <input type="number" id="style-editor-padding-bottom" class="padding-bottom" value="0" title="Bottom Padding">
     </div>
 
-    <div class="sidebar-section">
-        <div class="section-title-wrapper">
-            <h4 class="section-title">Spacing</h4>
-        </div>
-        <div class="quad-control">
-            <label for="style-editor-height">Padding</label>
-            <input type="number" id="style-editor-padding-top" class="padding-top" value="0" title="Top Padding">
-            <input type="number" id="style-editor-padding-left" class="padding-left" value="0" title="Left Padding">
-            <div class="padding-center-label">
-                <i class="fa-solid fa-vector-square"></i>
-            </div>
-            <input type="number" id="style-editor-padding-right" class="padding-right" value="0" title="Right Padding">
-            <input type="number" id="style-editor-padding-bottom" class="padding-bottom" value="0" title="Bottom Padding">
-        </div>
-        <div class="quad-control">
-            <label for="style-editor-height">Margin</label>
-            <input type="number" id="style-editor-padding-top" class="padding-top" value="0" title="Top Padding">
-            <input type="number" id="style-editor-padding-left" class="padding-left" value="0" title="Left Padding">
-            <div class="padding-center-label">
-                <i class="fa-solid fa-vector-square"></i>
-            </div>
-            <input type="number" id="style-editor-padding-right" class="padding-right" value="0" title="Right Padding">
-            <input type="number" id="style-editor-padding-bottom" class="padding-bottom" value="0" title="Bottom Padding">
-        </div>
+    <!-- Margin -->
+    <div class="quad-control">
+      <label for="style-editor-margin-top">Margin</label>
+      <input type="number" id="style-editor-margin-top" class="padding-top" value="0" title="Top Margin">
+      <input type="number" id="style-editor-margin-left" class="padding-left" value="0" title="Left Margin">
+      <div class="padding-center-label">
+        <i class="fa-solid fa-vector-square"></i>
+      </div>
+      <input type="number" id="style-editor-margin-right" class="padding-right" value="0" title="Right Margin">
+      <input type="number" id="style-editor-margin-bottom" class="padding-bottom" value="0" title="Bottom Margin">
     </div>
-
+  </div>
 </div>
 
     <div id="loaded-page" style="margin-top: 40px;"></div>
