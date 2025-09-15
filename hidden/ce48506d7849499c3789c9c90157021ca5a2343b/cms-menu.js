@@ -370,33 +370,44 @@ function rgbToHex(rgb) {
 function loadStylesFromSelected() {
   if (!currentlySelected) return;
 
-  // Use computed styles so defaults / class-based styles are captured too
   const computed = window.getComputedStyle(currentlySelected);
 
-  // Background color
+  // === Background ===
   backgroundColorInput.value = rgbToHex(computed.backgroundColor);
 
-  // Width (max-width % if set, otherwise fallback to computed width)
+  // === Width (in %) ===
   if (currentlySelected.style.maxWidth && currentlySelected.style.maxWidth.includes("%")) {
     widthInput.value = parseFloat(currentlySelected.style.maxWidth);
   } else {
-    // fallback: compute relative width of parent
     const parentWidth = currentlySelected.parentElement?.offsetWidth || 1;
     const actualWidth = currentlySelected.offsetWidth;
     widthInput.value = Math.round((actualWidth / parentWidth) * 100);
   }
 
-  // Padding
+  // === Padding ===
   paddingTopInput.value = parseInt(computed.paddingTop) || 0;
   paddingLeftInput.value = parseInt(computed.paddingLeft) || 0;
   paddingRightInput.value = parseInt(computed.paddingRight) || 0;
   paddingBottomInput.value = parseInt(computed.paddingBottom) || 0;
 
-  // Margin
+  // === Margin ===
   marginTopInput.value = parseInt(computed.marginTop) || 0;
   marginLeftInput.value = parseInt(computed.marginLeft) || 0;
   marginRightInput.value = parseInt(computed.marginRight) || 0;
   marginBottomInput.value = parseInt(computed.marginBottom) || 0;
+
+  // === Border ===
+  if (typeof borderColorInput !== "undefined") {
+    borderColorInput.value = rgbToHex(computed.borderColor);
+  }
+
+  if (typeof borderWidthInput !== "undefined") {
+    borderWidthInput.value = parseInt(computed.borderWidth) || 0;
+  }
+
+  if (typeof borderRadiusInput !== "undefined") {
+    borderRadiusInput.value = parseInt(computed.borderRadius) || 0;
+  }
 }
 
 // ===============================
