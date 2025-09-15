@@ -200,7 +200,7 @@ function invokeCMSMenu() {
 function invokeStyleMenu() {
     if (currentlySelected) {
         document.querySelector(".style-editor-sidebar").classList.remove('content-hide');
-        checkRestrictedControls();
+        updateVerticalAlignControls();
         loadStylesFromSelected();
     }
 }
@@ -448,35 +448,22 @@ function loadStylesFromSelected() {
 }
 
 function checkRestrictedControls() {
-  const controls = [
-    { id: "style-editor-vertical-align-controls", restrictedClass: "building-column" },
-    { id: "style-editor-width-controls", restrictedClass: "text-element" }
-  ];
+  const verticalAlignControls = document.getElementById("style-editor-vertical-align-controls");
+  const widthControls = document.getElementById("style-editor-width-controls");
 
-  // controls.forEach(({ id, restrictedClass }) => {
-  //   const el = document.getElementById(id);
-  //   if (!el) return;
-  //   if (currentlySelected?.classList.contains(restrictedClass)) {
-  //     el.classList.remove("content-hide");
-  //   } else {
-  //     el.classList.add("content-hide");
-  //   }
-  // });
-  controls.forEach(({ id, restrictedClass }) => {
-  console.log('Checking control:', id, 'for class:', restrictedClass);
-  const el = document.getElementById(id);
-  if (!el) {
-    console.log('Element not found:', id);
-    return;
-  }
-  if (currentlySelected?.classList.contains(restrictedClass)) {
-    console.log('Showing control:', id);
-    el.classList.remove("content-hide");
+  if (!verticalAlignControls && !widthControls) return;
+
+  if (currentlySelected?.classList.contains("building-column")) {
+    verticalAlignControls.classList.remove("content-hide");
   } else {
-    console.log('Hiding control:', id);
-    el.classList.add("content-hide");
+    verticalAlignControls.classList.add("content-hide");
   }
-});
+
+  if (currentlySelected?.classList.contains("text-element")) {
+    widthControls.classList.remove("content-hide");
+  } else {
+    widthControls.classList.add("content-hide");
+  }
 }
 
 // ===============================
