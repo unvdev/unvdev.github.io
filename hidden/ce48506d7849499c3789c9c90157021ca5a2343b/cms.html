@@ -371,9 +371,9 @@
   box-sizing: border-box;
 }
 
-.cms-style-sidebar .padding-top    { grid-column: 2; grid-row: 1; }
-.cms-style-sidebar .padding-left   { grid-column: 1; grid-row: 2; }
-.cms-style-sidebar .padding-center-label {
+.cms-style-sidebar .quad-top    { grid-column: 2; grid-row: 1; }
+.cms-style-sidebar .quad-left   { grid-column: 1; grid-row: 2; }
+.cms-style-sidebar .quad-center-label {
   grid-column: 2; grid-row: 2;
   width: 40px; height: 40px;
   display: flex;
@@ -382,8 +382,8 @@
   color: #7f8c8d;
   border: 1px dashed #7f8c8d;
 }
-.cms-style-sidebar .padding-right  { grid-column: 3; grid-row: 2; }
-.cms-style-sidebar .padding-bottom { grid-column: 2; grid-row: 3; }
+.cms-style-sidebar .quad-right  { grid-column: 3; grid-row: 2; }
+.cms-style-sidebar .quad-bottom { grid-column: 2; grid-row: 3; }
     </style>
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 </head>
@@ -606,27 +606,31 @@
     </div>
 
     <!-- Padding -->
+    <div class="segmented-control">
+    <label for="style-editor-padding-top">Padding</label>
     <div class="quad-control">
-      <label for="style-editor-padding-top">Padding</label>
-      <input type="number" id="style-editor-padding-top" class="padding-top" value="0" title="Top Padding">
-      <input type="number" id="style-editor-padding-left" class="padding-left" value="0" title="Left Padding">
+      <input type="number" id="style-editor-padding-top" class="quad-top" value="0" title="Top Padding">
+      <input type="number" id="style-editor-padding-left" class="quad-left" value="0" title="Left Padding">
       <div class="padding-center-label">
         <i class="fa-solid fa-vector-square"></i>
       </div>
-      <input type="number" id="style-editor-padding-right" class="padding-right" value="0" title="Right Padding">
-      <input type="number" id="style-editor-padding-bottom" class="padding-bottom" value="0" title="Bottom Padding">
+      <input type="number" id="style-editor-padding-right" class="quad-right" value="0" title="Right Padding">
+      <input type="number" id="style-editor-padding-bottom" class="quad-bottom" value="0" title="Bottom Padding">
+    </div>
     </div>
 
     <!-- Margin -->
+    <div class="segmented-control">
+    <label for="style-editor-margin-top">Margin</label>
     <div class="quad-control">
-      <label for="style-editor-margin-top">Margin</label>
-      <input type="number" id="style-editor-margin-top" class="padding-top" value="0" title="Top Margin">
-      <input type="number" id="style-editor-margin-left" class="padding-left" value="0" title="Left Margin">
+      <input type="number" id="style-editor-margin-top" class="quad-top" value="0" title="Top Margin">
+      <input type="number" id="style-editor-margin-left" class="quad-left" value="0" title="Left Margin">
       <div class="padding-center-label">
         <i class="fa-solid fa-vector-square"></i>
       </div>
-      <input type="number" id="style-editor-margin-right" class="padding-right" value="0" title="Right Margin">
-      <input type="number" id="style-editor-margin-bottom" class="padding-bottom" value="0" title="Bottom Margin">
+      <input type="number" id="style-editor-margin-right" class="quad-right" value="0" title="Right Margin">
+      <input type="number" id="style-editor-margin-bottom" class="quad-bottom" value="0" title="Bottom Margin">
+    </div>
     </div>
   </div>
 </div>
