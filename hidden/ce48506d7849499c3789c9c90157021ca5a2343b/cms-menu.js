@@ -200,6 +200,7 @@ function invokeCMSMenu() {
 function invokeStyleMenu() {
     if (currentlySelected) {
         document.querySelector(".style-editor-sidebar").classList.remove('content-hide');
+        loadStylesFromSelected();
     }
 }
 
@@ -351,6 +352,52 @@ updateMarginInput("Top", marginTopInput);
 updateMarginInput("Left", marginLeftInput);
 updateMarginInput("Right", marginRightInput);
 updateMarginInput("Bottom", marginBottomInput);
+
+// Helper: Convert "rgb(r,g,b)" or "rgba(r,g,b,a)" to "#rrggbb"
+function rgbToHex(rgb) {
+  if (!rgb) return "#000000";
+  const result = rgb.match(/\d+/g);
+  if (!result) return "#000000";
+
+  let [r, g, b] = result;
+  r = parseInt(r).toString(16).padStart(2, "0");
+  g = parseInt(g).toString(16).padStart(2, "0");
+  b = parseInt(b).toString(16).padStart(2, "0");
+
+  return `#${r}${g}${b}`;
+}
+
+function loadStylesFromSelected() {
+  if (!currentlySelected) return;
+
+  // Use computed styles so defaults / class-based styles are captured too
+  const computed = window.getComputedStyle(currentlySelected);
+
+  // Background color
+  backgroundColorInput.value = rgbToHex(computed.backgroundColor);
+
+  // Width (max-width % if set, otherwise fallback to computed width)
+  if (currentlySelected.style.maxWidth && currentlySelected.style.maxWidth.includes("%")) {
+    widthInput.value = parseFloat(currentlySelected.style.maxWidth);
+  } else {
+    // fallback: compute relative width of parent
+    const parentWidth = currentlySelected.parentElement?.offsetWidth || 1;
+    const actualWidth = currentlySelected.offsetWidth;
+    widthInput.value = Math.round((actualWidth / parentWidth) * 100);
+  }
+
+  // Padding
+  paddingTopInput.value = parseInt(computed.paddingTop) || 0;
+  paddingLeftInput.value = parseInt(computed.paddingLeft) || 0;
+  paddingRightInput.value = parseInt(computed.paddingRight) || 0;
+  paddingBottomInput.value = parseInt(computed.paddingBottom) || 0;
+
+  // Margin
+  marginTopInput.value = parseInt(computed.marginTop) || 0;
+  marginLeftInput.value = parseInt(computed.marginLeft) || 0;
+  marginRightInput.value = parseInt(computed.marginRight) || 0;
+  marginBottomInput.value = parseInt(computed.marginBottom) || 0;
+}
 
 // ===============================
 // SHIFT + A + CLICK trigger
