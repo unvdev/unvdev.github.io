@@ -358,14 +358,14 @@
 }
 
 /* Padding Control */
-.cms-style-sidebar .padding-control {
+.cms-style-sidebar .quad-control {
   display: grid;
   grid-template: auto auto auto / auto auto auto;
   gap: 5px;
   place-items: center;
 }
 
-.cms-style-sidebar .padding-control input {
+.cms-style-sidebar .quad-control input {
   width: 65px;
   text-align: center;
   box-sizing: border-box;
@@ -530,10 +530,23 @@
     <div class="sidebar-section">
         <h4 class="section-title">Appearance</h4>
         <div class="control-group">
-            <label for="style-editor-bg-color">Background</label>
+            <label for="style-editor-bg-color">Background Color</label>
             <div class="color-input-wrapper">
                 <input type="color" id="style-editor-bg-color" value="#FFFFFF">
                 <span id="style-editor-bg-color-hex">#FFFFFF</span>
+            </div>
+            <label for="style-editor-bg-color">Border Color</label>
+            <div class="color-input-wrapper">
+                <input type="color" id="style-editor-bg-color" value="#FFFFFF">
+                <span id="style-editor-bg-color-hex">#FFFFFF</span>
+            </div>
+            <label for="style-editor-border">Border Size</label>
+            <div class="input-with-unit">
+                <input type="number" id="style-editor-border" value="0">
+            </div>
+            <label for="style-editor-radius">Border Size</label>
+            <div class="input-with-unit">
+                <input type="number" id="style-editor-radius" value="0">
             </div>
         </div>
     </div>
@@ -547,7 +560,7 @@
             </div>
             <label for="style-editor-height">Height</label>
             <div class="input-with-unit">
-                <input type="number" id="style-editor-width" value="100">
+                <input type="number" id="style-editor-height" value="100">
             </div>
         </div>
         <div class="control-group">
@@ -568,9 +581,20 @@
 
     <div class="sidebar-section">
         <div class="section-title-wrapper">
-            <h4 class="section-title">Spacing (Padding)</h4>
+            <h4 class="section-title">Spacing</h4>
         </div>
-        <div class="padding-control">
+        <div class="quad-control">
+            <label for="style-editor-height">Padding</label>
+            <input type="number" id="style-editor-padding-top" class="padding-top" value="0" title="Top Padding">
+            <input type="number" id="style-editor-padding-left" class="padding-left" value="0" title="Left Padding">
+            <div class="padding-center-label">
+                <i class="fa-solid fa-vector-square"></i>
+            </div>
+            <input type="number" id="style-editor-padding-right" class="padding-right" value="0" title="Right Padding">
+            <input type="number" id="style-editor-padding-bottom" class="padding-bottom" value="0" title="Bottom Padding">
+        </div>
+        <div class="quad-control">
+            <label for="style-editor-height">Margin</label>
             <input type="number" id="style-editor-padding-top" class="padding-top" value="0" title="Top Padding">
             <input type="number" id="style-editor-padding-left" class="padding-left" value="0" title="Left Padding">
             <div class="padding-center-label">
