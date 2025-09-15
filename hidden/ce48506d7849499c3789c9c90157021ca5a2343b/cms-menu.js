@@ -450,7 +450,7 @@ function loadStylesFromSelected() {
 function checkRestrictedControls() {
   const controls = [
     { id: "style-editor-vertical-align-controls", className: "building-column", hideIfPresent: false },
-    { id: "style-editor-width-controls", className: "text-element", hideIfPresent: true }
+    { id: "style-editor-sizing-alignment-controls", className: "text-element", hideIfPresent: true }
   ];
 
   controls.forEach(({ id, className, hideIfPresent }) => {
