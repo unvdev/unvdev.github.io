@@ -215,42 +215,186 @@
   content: none !important;  /* remove Quill's default pseudo-element */
 }
 
-/* Style Editor Popup */
-.style-editor-pop {
-    display: block;
+/* Main Sidebar Container */
+.cms-style-sidebar {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 600px;       /* fixed width */
-    height: auto;       /* auto height based on content */
-    max-height: 90vh;   /* optional: prevent it from exceeding viewport */
-    background-color: silver;
-    z-index: 99999999999999;
-    box-sizing: border-box;
+    top: 0;
+    left: 0;
+    width: 280px;
+    height: 100vh;
+    background-color: #2c3e50; /* A modern dark gray */
+    color: #ecf0f1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     padding: 1rem;
-    overflow-y: auto;   /* scroll if it grows too tall */
-}
-
-/* Grid container */
-.style-editor-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
-    gap: 1rem;
-    justify-items: center;
-    align-items: center;
-}
-
-/* Individual items */
-.style-editor-item {
-    width: 60px;
-    height: 60px;
-    background-color: silver;
-    color: whitesmoke;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     box-sizing: border-box;
+    z-index: 10000;
+    overflow-y: auto;
+    border-right: 1px solid #34495e;
+}
+
+.sidebar-header {
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #34495e;
+    text-align: center;
+}
+
+.sidebar-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #ffffff;
+}
+
+/* Section Styling */
+.sidebar-section {
+    margin-bottom: 1.5rem;
+}
+
+.section-title, .section-title-wrapper {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #95a5a6;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* General Control Group Styling */
+.control-group {
+    margin-bottom: 1rem;
+}
+
+.control-group label {
+    display: block;
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+    color: #bdc3c7;
+}
+
+/* Input Fields */
+input[type="number"], input[type="text"], select {
+    width: 100%;
+    background-color: #34495e;
+    border: 1px solid #7f8c8d;
+    color: #ecf0f1;
+    padding: 8px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 0.9rem;
+}
+
+input[type="number"]:focus, select:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+/* Input with Unit Selector (for Width) */
+.input-with-unit {
+    display: flex;
+}
+.input-with-unit input {
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.input-with-unit select {
+    width: 60px;
+    border-left: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+
+/* Color Picker */
+.color-input-wrapper {
+    display: flex;
+    align-items: center;
+    background-color: #34495e;
+    border: 1px solid #7f8c8d;
+    border-radius: 4px;
+}
+input[type="color"] {
+    width: 40px;
+    height: 38px;
+    padding: 4px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+#style-editor-bg-color-hex {
+    padding-left: 10px;
+    font-family: monospace;
+}
+
+/* Segmented Control (for Alignment) */
+.segmented-control {
+    display: flex;
+    width: 100%;
+}
+.segmented-control button {
+    flex: 1;
+    padding: 8px;
+    background-color: #34495e;
+    border: 1px solid #7f8c8d;
+    color: #ecf0f1;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.segmented-control button:first-child {
+    border-radius: 4px 0 0 4px;
+}
+.segmented-control button:last-child {
+    border-radius: 0 4px 4px 0;
+    border-left: none;
+}
+.segmented-control button:not(:first-child):not(:last-child) {
+     border-left: none;
+}
+.segmented-control button.active, .segmented-control button:hover {
+    background-color: #3498db;
+    border-color: #3498db;
+    color: #ffffff;
+}
+
+/* Padding Box Control */
+.padding-control {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 5px;
+    align-items: center;
+    justify-items: center;
+}
+
+.padding-control input { text-align: center; }
+.padding-top    { grid-column: 2; grid-row: 1; }
+.padding-left   { grid-column: 1; grid-row: 2; }
+.padding-center-label {
+    grid-column: 2;
+    grid-row: 2;
+    width: 40px;
+    height: 40px;
+    border: 1px dashed #7f8c8d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: #7f8c8d;
+}
+.padding-right  { grid-column: 3; grid-row: 2; }
+.padding-bottom { grid-column: 2; grid-row: 3; }
+
+.link-button {
+    background: none;
+    border: none;
+    color: #7f8c8d;
+    cursor: pointer;
+    font-size: 1rem;
+}
+.link-button.active {
+    color: #3498db;
 }
     </style>
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
@@ -389,96 +533,65 @@
             <div id="quill-editor"></div>
         </div>
     </div>
-    <div class="style-editor-pop content-hide">
-        <div class="style-editor-container">
+    
+    <div class="cms-style-sidebar">
+    <div class="sidebar-header">
+        <h3>Style Editor</h3>
+    </div>
 
-            <!-- Background Color -->
-            <div class="style-editor-item">
-                <div id="style-editor-background-color-button" class="default-button">
-                    <i class="fa-solid fa-palette"></i>
-                </div>
+    <div class="sidebar-section">
+        <h4 class="section-title">Appearance</h4>
+        <div class="control-group">
+            <label for="style-editor-bg-color">Background</label>
+            <div class="color-input-wrapper">
+                <input type="color" id="style-editor-bg-color" value="#FFFFFF">
+                <span id="style-editor-bg-color-hex">#FFFFFF</span>
             </div>
-
-            <!-- Width -->
-            <div class="style-editor-item">
-                <div id="style-editor-width-decrease-button" class="default-button">
-                    <i class="fa-solid fa-compress"></i>
-                </div>
-            </div>
-            <div class="style-editor-item">
-                <div id="style-editor-width-increase-button" class="default-button">
-                    <i class="fa-solid fa-expand"></i>
-                </div>
-            </div>
-
-            <!-- Alignment -->
-            <div class="style-editor-item">
-                <div id="style-editor-align-left-button" class="default-button">
-                    <i class="fa-solid fa-align-left"></i>
-                </div>
-            </div>
-            <div class="style-editor-item">
-                <div id="style-editor-align-center-button" class="default-button">
-                    <i class="fa-solid fa-align-center"></i>
-                </div>
-            </div>
-            <div class="style-editor-item">
-                <div id="style-editor-align-right-button" class="default-button">
-                    <i class="fa-solid fa-align-right"></i>
-                </div>
-            </div>
-
-            <!-- Padding LEFT -->
-            <div class="style-editor-item">
-                <div id="style-editor-padding-left-decrease-button" class="default-button">
-                    <i class="fa-solid fa-arrow-left"></i>
-                </div>
-            </div>
-            <div class="style-editor-item">
-                <div id="style-editor-padding-left-increase-button" class="default-button">
-                    <i class="fa-solid fa-arrow-left"></i>
-                </div>
-            </div>
-
-            <!-- Padding TOP -->
-            <div class="style-editor-item">
-                <div id="style-editor-padding-top-decrease-button" class="default-button">
-                    <i class="fa-solid fa-arrow-up"></i>
-                </div>
-            </div>
-            <div class="style-editor-item">
-                <div id="style-editor-padding-top-increase-button" class="default-button">
-                    <i class="fa-solid fa-arrow-up"></i>
-                </div>
-            </div>
-
-            <!-- Padding RIGHT -->
-            <div class="style-editor-item">
-                <div id="style-editor-padding-right-decrease-button" class="default-button">
-                    <i class="fa-solid fa-arrow-right"></i>
-                </div>
-            </div>
-            <div class="style-editor-item">
-                <div id="style-editor-padding-right-increase-button" class="default-button">
-                    <i class="fa-solid fa-arrow-right"></i>
-                </div>
-            </div>
-
-            <!-- Padding BOTTOM -->
-            <div class="style-editor-item">
-                <div id="style-editor-padding-bottom-decrease-button" class="default-button">
-                    <i class="fa-solid fa-arrow-down"></i>
-                </div>
-            </div>
-            <div class="style-editor-item">
-                <div id="style-editor-padding-bottom-increase-button" class="default-button">
-                    <i class="fa-solid fa-arrow-down"></i>
-                </div>
-            </div>
-
         </div>
     </div>
 
+    <div class="sidebar-section">
+        <h4 class="section-title">Sizing & Alignment</h4>
+        <div class="control-group">
+            <label for="style-editor-width">Width</label>
+            <div class="input-with-unit">
+                <input type="number" id="style-editor-width" value="100">
+                <select id="style-editor-width-unit">
+                    <option>%</option>
+                    <option>px</option>
+                    <option>vw</option>
+                </select>
+            </div>
+        </div>
+        <div class="control-group">
+            <label>Alignment</label>
+            <div class="segmented-control">
+                <button id="style-editor-align-left-button" class="active" title="Align Left"><i class="fa-solid fa-align-left"></i></button>
+                <button id="style-editor-align-center-button" title="Align Center"><i class="fa-solid fa-align-center"></i></button>
+                <button id="style-editor-align-right-button" title="Align Right"><i class="fa-solid fa-align-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar-section">
+        <div class="section-title-wrapper">
+            <h4 class="section-title">Spacing (Padding)</h4>
+            <button id="padding-link-toggle" class="link-button active" title="Link all padding sides">
+                <i class="fa-solid fa-link"></i>
+            </button>
+        </div>
+        <div class="padding-control">
+            <input type="number" id="style-editor-padding-top" class="padding-top" value="0" title="Top Padding">
+            <input type="number" id="style-editor-padding-left" class="padding-left" value="0" title="Left Padding">
+            <div class="padding-center-label">
+                <i class="fa-solid fa-vector-square"></i>
+            </div>
+            <input type="number" id="style-editor-padding-right" class="padding-right" value="0" title="Right Padding">
+            <input type="number" id="style-editor-padding-bottom" class="padding-bottom" value="0" title="Bottom Padding">
+        </div>
+    </div>
+
+</div>
     <div id="loaded-page">
         <div style="margin-top: 40px;"></div>
     </div>
