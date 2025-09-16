@@ -31,7 +31,6 @@
   position: relative;
 }
 
-/* Full overlay border */
 .selected::before {
   content: "";
   position: absolute;
@@ -41,23 +40,21 @@
   z-index: 9998; /* sits below label */
 }
 
-/* Centered data-name label */
 .selected::after {
   content: attr(data-name);
   position: absolute;
-  top: 0;
+  top: -20px; /* move above the element border */
   left: 50%;
-  transform: translateX(-50%); /* centers horizontally */
+  transform: translateX(-50%);
   background: magenta;
   color: white;
   font-size: 12px;
   font-weight: bold;
   padding: 2px 8px;
-  border-bottom-left-radius: 6px;
-  border-bottom-right-radius: 6px;
   pointer-events: none;
   z-index: 9999;
   white-space: nowrap;
+  border-radius: 4px; /* optional: rounded corners */
 }
 
         .building-block {
