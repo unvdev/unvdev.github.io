@@ -130,9 +130,7 @@ const asymmRightColumn = `
 `;
 
 const spacer = `
-<div class="building-block">
-    <div class="spacer" style="padding-top: 10px; padding-bottom: 10px;"></div>
-</div>
+<div class="spacer" style="padding-top: 10px; padding-bottom: 10px;"></div>
 `;
 
 const divider = `
