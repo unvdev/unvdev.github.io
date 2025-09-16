@@ -35,16 +35,16 @@
         }
 
         /* custom + symbol */
-        summary::before {
-            content: "+";
-            color: silver;
-            font-weight: bold;
-            margin-right: 0.75rem;
-            font-size: 1.2rem;
-        }
+        details summary:first-child::before {
+    content: "+";
+    color: silver;
+    font-weight: bold;
+    margin-right: 0.75rem;
+    font-size: 1.2rem;
+}
 
         /* change to - when open */
-        details[open] summary::before {
+        details[open] summary:first-child::before {
             content: "−";
         }
     </style>
