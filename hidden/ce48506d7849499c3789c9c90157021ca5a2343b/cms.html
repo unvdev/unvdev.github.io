@@ -45,14 +45,17 @@
   content: "";
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  pointer-events: none; /* Don't block clicks */
-  border: 2px solid magenta; /* Looks like a box-shadow */
+  pointer-events: none;
+  border: 2px solid magenta;
   z-index: 9999;
-  opacity: 0; /* Hidden by default */
-  transition: opacity 0.15s ease;
+  opacity: 0;
 }
 
 .building-block:hover::after {
+  opacity: 1;
+}
+
+.building-block.hovered::after {
   opacity: 1;
 }
 
