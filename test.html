@@ -9,26 +9,59 @@
     <link rel="stylesheet" href="https://www.uv.vu/assets/global/css/globalstyles.css">
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 <style>
-  details summary {
-    cursor: pointer;
-    font-weight: bold;
-    margin: .5em 0;
+   details {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+    background: white;
   }
 
-  /* add + before */
+  summary {
+    cursor: pointer;
+    font-weight: 600;
+    padding: 0.75rem 1rem;
+    background: #eee;
+    list-style: none; /* hide default arrow in some browsers */
+    user-select: none;
+    position: relative;
+  }
+
+  /* remove default marker in WebKit */
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  /* custom + symbol */
   summary::before {
-    content: "+ ";
+    content: "+";
     color: magenta;
     font-weight: bold;
+    margin-right: 0.75rem;
+    font-size: 1.2rem;
   }
 
   /* change to - when open */
   details[open] summary::before {
-    content: "− ";
+    content: "−";
   }
 
-  details p {
-    margin: .5em 1.5em;
+  /* hover/active styling */
+  summary:hover {
+    background: #ddd;
+  }
+
+  details[open] summary {
+    background: #f0f0f0;
+    border-bottom: 1px solid #ddd;
+  }
+
+  /* content area */
+  details > div {
+    padding: 0.75rem 1rem;
+    background: white;
+    line-height: 1.5;
+    font-size: 0.95rem;
   }
 </style>
 </head>
@@ -40,18 +73,24 @@
     
     <div class="building-environment building-block" data-name="Building Block: Building Environment">
         <details>
-    <summary>Section 1</summary>
-    <p>Content for section 1.</p>
+    <summary>Accordion Item 1</summary>
+    <div>
+      This is the content for the first item.
+    </div>
   </details>
 
   <details>
-    <summary>Section 2</summary>
-    <p>Content for section 2.</p>
+    <summary>Accordion Item 2</summary>
+    <div>
+      Content for the second item goes here.
+    </div>
   </details>
 
   <details>
-    <summary>Section 3</summary>
-    <p>Content for section 3.</p>
+    <summary>Accordion Item 3</summary>
+    <div>
+      Third item content inside.
+    </div>
   </details>
         <div class="building-container building-block" data-name="Building Block: Building Container">
             <div class="building-column-span-one">
