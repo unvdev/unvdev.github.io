@@ -35,7 +35,7 @@
         }
 
         /* custom + symbol */
-        details summary:first-child::before {
+        details summary > div:first-child::before {
     content: "+";
     color: silver;
     font-weight: bold;
@@ -44,7 +44,7 @@
 }
 
         /* change to - when open */
-        details[open] summary:first-child::before {
+        details[open] summary > div:first-child:before {
             content: "−";
         }
     </style>
