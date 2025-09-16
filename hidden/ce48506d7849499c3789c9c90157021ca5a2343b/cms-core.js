@@ -22,42 +22,12 @@ function selectBuildingBlock(blockToSelect, originalTarget) {
     if (originalTarget.closest('.placeholder-block')) {
         deselectAll();
         currentlySelected = originalTarget;
-        selectedLabel();
         invokeCMSMenu();
         return;
     }
     deselectAll();
     currentlySelected = blockToSelect;
     currentlySelected.classList.add('selected');
-    selectedLabel();
-}
-
-function selectedLabel() {
-    if (!currentlySelected) return;
-
-    // Remove existing label if it exists
-    const existingLabel = document.querySelector(".selected-label");
-    if (existingLabel) {
-        existingLabel.remove();
-    }
-
-    // Map of class names to label text
-    const classMap = {
-        "building-environment": "Building Environment",
-        "building-container": "Building Container",
-        "building-column": "Building Column",
-        "building-block": "Building Block"
-    };
-
-    // Find the first matching class
-    const matchedClass = Object.keys(classMap).find(cls => currentlySelected.classList.contains(cls));
-    if (!matchedClass) return; // no match
-
-    // Create and prepend the label
-    const label = document.createElement("div");
-    label.classList.add("selected-label");
-    label.innerHTML = classMap[matchedClass];
-    currentlySelected.prepend(label);
 }
 
 function deleteElement() {
