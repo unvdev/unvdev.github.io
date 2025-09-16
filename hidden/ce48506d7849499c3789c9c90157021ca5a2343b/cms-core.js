@@ -35,7 +35,7 @@ function selectedLabel() {
     if (!currentlySelected) return;
 
     // Remove existing label if it exists
-    const existingLabel = currentlySelected.querySelector(".selected-label");
+    const existingLabel = document.querySelector(".selected-label");
     if (existingLabel) {
         existingLabel.remove();
     }
