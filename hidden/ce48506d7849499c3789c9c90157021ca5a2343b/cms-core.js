@@ -3,15 +3,6 @@ const styles = document.querySelector(".style-editor-sidebar");
 const deleteButton = document.querySelector(".delete-element");
 const loadedPage = document.querySelector("#loaded-page");
 
-document.querySelectorAll('.building-block').forEach(block => {
-  block.addEventListener('mouseenter', () => {
-    block.classList.add('hovered');
-  });
-  block.addEventListener('mouseleave', () => {
-    block.classList.remove('hovered');
-  });
-});
-
 let currentlySelected = null;
 let clipboard = {
     html: null,
