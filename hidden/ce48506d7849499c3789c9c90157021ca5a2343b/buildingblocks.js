@@ -134,9 +134,7 @@ const spacer = `
 `;
 
 const divider = `
-<div class="building-block">
-    <hr />
-</div>
+<div class="building-block building-block-align-center divider" style="max-width: 75%; padding-top: 2px; padding-bottom: 2px;"></div>
 `;
 
 const headingOne = `
