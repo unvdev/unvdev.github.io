@@ -17,15 +17,18 @@
     background: white;
   }
 
-  summary {
+summary {
+    display: block;          /* make it block-level so it spans width */
+    width: 100%;             /* ensure it fills the container */
+    max-width: 100%;         /* optional: prevent overflow */
     cursor: pointer;
     font-weight: 600;
     padding: 0.75rem 1rem;
     background: #eee;
-    list-style: none; /* hide default arrow in some browsers */
+    list-style: none;
     user-select: none;
     position: relative;
-  }
+}
 
   /* remove default marker in WebKit */
   summary::-webkit-details-marker {
