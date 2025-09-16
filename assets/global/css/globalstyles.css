@@ -376,8 +376,6 @@ a:hover, a:focus {
   display: block;
   position: relative;
   margin: 0 auto;
-  padding-top: 10px;
-  padding-bottom: 10px;
   width: 100%;
   height: auto;
 }
