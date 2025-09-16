@@ -8,15 +8,51 @@
     <meta name="description" content="A Simplistic HTML Weather Widget For iOS 16 &amp; 17.">
     <link rel="stylesheet" href="https://www.uv.vu/assets/global/css/globalstyles.css">
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
-    <style>
-    </style>
+<style>
+  details summary {
+    cursor: pointer;
+    font-weight: bold;
+    margin: .5em 0;
+  }
+
+  /* add + before */
+  summary::before {
+    content: "+ ";
+    color: magenta;
+    font-weight: bold;
+  }
+
+  /* change to - when open */
+  details[open] summary::before {
+    content: "− ";
+  }
+
+  details p {
+    margin: .5em 1.5em;
+  }
+</style>
 </head>
 
 <body>
     <header>
         <img class="headerImage" src="https://uv.vu/assets/global/images/logo.png">
     </header>
+    
     <div class="building-environment building-block" data-name="Building Block: Building Environment">
+        <details>
+    <summary>Section 1</summary>
+    <p>Content for section 1.</p>
+  </details>
+
+  <details>
+    <summary>Section 2</summary>
+    <p>Content for section 2.</p>
+  </details>
+
+  <details>
+    <summary>Section 3</summary>
+    <p>Content for section 3.</p>
+  </details>
         <div class="building-container building-block" data-name="Building Block: Building Container">
             <div class="building-column-span-one">
                 <div class="building-column building-block building-column-content-center" data-name="Building Block: Building Column">
