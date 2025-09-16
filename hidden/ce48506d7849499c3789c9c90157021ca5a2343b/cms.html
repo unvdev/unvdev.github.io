@@ -36,9 +36,25 @@
             z-index: 9999;
         }
 
-        .building-block {
-            cursor: pointer;
-        }
+.building-block {
+  position: relative;
+  cursor: pointer;
+}
+
+.building-block::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none; /* Don't block clicks */
+  border: 2px solid magenta; /* Looks like a box-shadow */
+  z-index: 9999;
+  opacity: 0; /* Hidden by default */
+  transition: opacity 0.15s ease;
+}
+
+.building-block:hover::after {
+  opacity: 1;
+}
 
         .placeholder-block {
             display: block;
