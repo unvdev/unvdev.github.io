@@ -8,72 +8,63 @@
     <meta name="description" content="A Simplistic HTML Weather Widget For iOS 16 &amp; 17.">
     <link rel="stylesheet" href="https://www.uv.vu/assets/global/css/globalstyles.css">
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
-<style>
-   details {
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    margin-bottom: 0.75rem;
-    overflow: hidden;
-    background: white;
-  }
+    <style>
+        details {
+            overflow: hidden;
+        }
 
-summary {
-    display: block;          /* make it block-level so it spans width */
-    width: 100%;             /* ensure it fills the container */
-    max-width: 100%;         /* optional: prevent overflow */
-    cursor: pointer;
-    font-weight: 600;
-    padding: 0.75rem 1rem;
-    background: #eee;
-    list-style: none;
-    user-select: none;
-    position: relative;
-}
+        summary {
+            display: block;
+            /* make it block-level so it spans width */
+            width: 100%;
+            /* ensure it fills the container */
+            max-width: 100%;
+            /* optional: prevent overflow */
+            cursor: pointer;
+            font-weight: 600;
+            padding: 0.75rem 1rem;
+            background: #eee;
+            list-style: none;
+            user-select: none;
+            position: relative;
+        }
 
-  /* remove default marker in WebKit */
-  summary::-webkit-details-marker {
-    display: none;
-  }
+        /* remove default marker in WebKit */
+        summary::-webkit-details-marker {
+            display: none;
+        }
 
-  /* custom + symbol */
-  summary::before {
-    content: "+";
-    color: magenta;
-    font-weight: bold;
-    margin-right: 0.75rem;
-    font-size: 1.2rem;
-  }
+        /* custom + symbol */
+        summary::before {
+            content: "+";
+            color: silver;
+            font-weight: bold;
+            margin-right: 0.75rem;
+            font-size: 1.2rem;
+        }
 
-  /* change to - when open */
-  details[open] summary::before {
-    content: "−";
-  }
+        /* change to - when open */
+        details[open] summary::before {
+            content: "−";
+        }
 
-  /* hover/active styling */
-  summary:hover {
-    background: #ddd;
-  }
+        /* hover/active styling */
+        summary:hover {
+            background: #ddd;
+        }
 
-  details[open] summary {
-    background: #f0f0f0;
-    border-bottom: 1px solid #ddd;
-  }
-
-  /* content area */
-  details > div {
-    padding: 0.75rem 1rem;
-    background: white;
-    line-height: 1.5;
-    font-size: 0.95rem;
-  }
-</style>
+        details[open] summary {
+            background: #f0f0f0;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
 </head>
 
 <body>
     <header>
         <img class="headerImage" src="https://uv.vu/assets/global/images/logo.png">
     </header>
-    
+
     <div class="building-environment building-block" data-name="Building Block: Building Environment">
         <div class="building-container building-block" data-name="Building Block: Building Container">
             <div class="building-column-span-one">
@@ -85,26 +76,36 @@ summary {
         <div class="building-container building-block" data-name="Building Block: Building Container">
             <div class="building-column-span-one">
                 <div class="building-column building-block building-column-content-center" data-name="Building Block: Building Column">
-                      <details>
-    <summary>Accordion Item 1</summary>
-    <div>
-      This is the content for the first item.
-    </div>
-  </details>
-
-  <details>
-    <summary>Accordion Item 2</summary>
-    <div>
-      Content for the second item goes here.
-    </div>
-  </details>
-
-  <details>
-    <summary>Accordion Item 3</summary>
-    <div>
-      Third item content inside.
-    </div>
-  </details>
+                    <details>
+                        <summary class="building-block" data-name="Building Block: Accordion">
+                            <div class="text-element building-block" data-name="Building Block: Text">
+                                <h4>Lorem ipsum</h4>
+                            </div>
+                        </summary>
+                        <div class="text-element building-block" data-name="Building Block: Text">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        </div>
+                    </details>
+                    <details>
+                        <summary class="building-block" data-name="Building Block: Accordion">
+                            <div class="text-element building-block" data-name="Building Block: Text">
+                                <h4>Lorem ipsum</h4>
+                            </div>
+                        </summary>
+                        <div class="text-element building-block" data-name="Building Block: Text">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        </div>
+                    </details>
+                    <details>
+                        <summary class="building-block" data-name="Building Block: Accordion">
+                            <div class="text-element building-block" data-name="Building Block: Text">
+                                <h4>Lorem ipsum</h4>
+                            </div>
+                        </summary>
+                        <div class="text-element building-block" data-name="Building Block: Text">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        </div>
+                    </details>
                 </div>
             </div>
         </div>

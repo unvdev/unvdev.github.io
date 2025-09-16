@@ -199,6 +199,12 @@ const image = `
 </div>
 `;
 
+const accordion = `
+<div class="misc-element building-block" data-name="Building Block: Accordion">
+    <img class="default-image"></img>
+</div>
+`;
+
 // const placeHolderInitial = `
 // <div class="building-container building-block">
 //     <div class="building-column-span-1">
