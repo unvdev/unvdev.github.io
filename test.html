@@ -35,18 +35,18 @@
         }
 
         /* custom + symbol */
-        /* details summary > div:first-child::before {
+        .accordion-state::before {
     content: "+";
     color: silver;
     font-weight: bold;
     margin-right: 0.75rem;
     font-size: 1.2rem;
-} */
+}
 
         /* change to - when open */
-        /* details[open] summary > div:first-child:before {
+        details[open] .accordion-state::before {
             content: "−";
-        } */
+        }
     </style>
 </head>
 
@@ -69,7 +69,7 @@
                     <div class="misc-element building-block" data-name="Building Block: Accordion">
                     <details open>
                         <summary class="building-block" onclick="event.preventDefault();" data-name="Building Block: Accordion Bar">
-                            <div class="text-element building-block" data-name="Building Block: Text">
+                            <div class="text-element building-block accordion-state" data-name="Building Block: Text">
                                 <h5>Lorem ipsum</h5>
                             </div>
                         </summary>
