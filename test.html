@@ -34,14 +34,6 @@
             display: none;
         }
 
-        details > summary {
-            pointer-events: none;
-        }
-
-        details > summary div {
-            pointer-events: auto;
-        }
-
         /* custom + symbol */
         details summary > div:first-child::before {
     content: "+";
@@ -76,8 +68,8 @@
                 <div class="building-column building-block building-column-content-center" data-name="Building Block: Building Column">
                     <div class="misc-element building-block" data-name="Building Block: Accordion">
                     <details open>
-                        <summary class="building-block" data-name="Building Block: Accordion Bar">
-                            <div class="text-element building-block" onclick="event.stopPropagation();" data-name="Building Block: Text">
+                        <summary class="building-block" onclick="event.preventDefault();" data-name="Building Block: Accordion Bar">
+                            <div class="text-element building-block" data-name="Building Block: Text">
                                 <h5>Lorem ipsum</h5>
                             </div>
                         </summary>
