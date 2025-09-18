@@ -652,6 +652,10 @@ footer {
             background-color: #eeeeee;
         }
 
+        .accordion-label> :first-child {
+            margin: 0 auto;
+        }
+
         .accordion-label> :first-child::after {
             content: "\25BC";
             position: absolute;
