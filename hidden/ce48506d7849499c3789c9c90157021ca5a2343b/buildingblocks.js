@@ -202,9 +202,7 @@ const image = `
 const accordion = `
 <div class="accordion-container building-block" data-name="Building Block: Accordion Container">
     <div class="accordion-label text-element building-block" data-name="Building Block: Accordion Title">
-        <div style="display:block; overflow: hidden; white-space:nowrap;">
-            <p>Lorem ipsum</p>
-        </div>
+        <p class="testing-removal">Lorem ipsum</p>
     </div>
     <div class="accordion-content">
         <div class="text-element building-block" data-name="Building Block: Text">
