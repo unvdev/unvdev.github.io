@@ -654,7 +654,6 @@ footer {
 
         .accordion-label> :first-child {
             margin: 0 auto;
-            max-width: 90%;
             overflow: hidden;
         }
 
