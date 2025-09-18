@@ -653,7 +653,7 @@ footer {
         }
 
         .accordion-label> :first-child {
-            display: inline-block;
+            display: block;
             max-width: calc(100% - 40px); /* subtract space for arrow */
             white-space: nowrap;
             overflow: hidden;
