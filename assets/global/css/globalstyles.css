@@ -649,9 +649,6 @@ footer {
             width: 100% !important;
             min-width: 100% !important;
             background-color: #eeeeee;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
         .accordion-label> :first-child {
