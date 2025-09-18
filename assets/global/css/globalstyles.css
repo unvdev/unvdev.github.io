@@ -645,7 +645,7 @@ footer {
             position: relative;
             padding-top: 15px !important;
             padding-bottom: 15px !important;
-            padding-left: 20px !important;
+            padding-left: 40px !important;
             padding-right: 20px !important;
             width: 100% !important;
             min-width: 100% !important;
@@ -656,10 +656,10 @@ footer {
             margin: 0;
         }
 
-        .accordion-label> :first-child::after {
+        .accordion-label> :first-child::before {
             content: "\25BC";
             position: absolute;
-            right: 20px;
+            left: 20px;
             color: inherit;
         }
 
