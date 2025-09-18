@@ -35,9 +35,10 @@
 
         .accordion-label > :first-child::after {
             content: "+";
-            float: right;
-            right: 0px;
-            transform: translateX(-40px);
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
         }
 
         .accordion-active:after {
