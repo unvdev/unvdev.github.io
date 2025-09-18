@@ -644,7 +644,7 @@ footer {
             display: inline-block;
             position: relative;
             padding-top: 15px !important;
-            padding-bottom: 15 !important;
+            padding-bottom: 15px !important;
             padding-left: 20px !important;
             width: 100%;
             background-color: #eeeeee;
