@@ -114,14 +114,14 @@
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                         </div>
                     </details> -->
-                    <div class="accordion" style="background-color: #eee;">
-                        <p class="accordion-label">Options</p>
-                    </div>
-                    <div class="accordion-content">
-                        <div>
-                            <p>Test</p>
-                        </div>
-                    </div>
+                    <div class="accordion">
+        <p class="accordion-label" style="padding: 15px;">Lorem ipsum</p>
+    </div>
+    <div class="accordion-content">
+        <div>
+            <p>This is the test content that will be shown and hidden.</p>
+        </div>
+    </div>
                     </div>
                 </div>
             </div>
@@ -133,23 +133,26 @@
 
     <script src="https://kit.fontawesome.com/0e61fd2654.js" crossorigin="anonymous"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            var accordion = document.querySelectorAll(".accordion");
-    for (var i = 0; i < accordion.length; i++) {
-        accordion[i].onclick = function() {
-            if (this.nextElementSibling.getAttribute("class") == "accordion-content") {
-                if (this.nextElementSibling.style.display != "block") {
-                    this.nextElementSibling.style.display = "block";
-                    this.firstElementChild.classList.add("accordion-active");
-                } else {
-                    this.nextElementSibling.style.display = "none";
+    document.addEventListener("DOMContentLoaded", () => {
+        var accordions = document.querySelectorAll(".accordion");
+        for (var i = 0; i < accordions.length; i++) {
+            accordions[i].onclick = function() {
+                // The content div is the next element in the HTML
+                var content = this.nextElementSibling;
+
+                if (content.style.display === "block") {
+                    // If it's visible, hide it
+                    content.style.display = "none";
                     this.firstElementChild.classList.remove("accordion-active");
-                };
+                } else {
+                    // If it's hidden, show it
+                    content.style.display = "block";
+                    this.firstElementChild.classList.add("accordion-active");
+                }
             };
-        };
-    };
+        }
     });
-    </script>
+</script>
 
 </body>
 
