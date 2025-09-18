@@ -653,6 +653,10 @@ footer {
         }
 
         .accordion-label> :first-child {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3; /* max 3 lines */
+            overflow: hidden;
             margin: 0 auto;
         }
 
