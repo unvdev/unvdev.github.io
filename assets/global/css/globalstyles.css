@@ -647,6 +647,7 @@ footer {
             padding-bottom: 15px !important;
             padding-left: 20px !important;
             width: 100% !important;
+            min-width: 100% !important;
             background-color: #eeeeee;
         }
 
