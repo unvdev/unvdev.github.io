@@ -48,7 +48,7 @@
         }
 
         .accordion-content {
-            display: none;
+            display: block !important;
             overflow: hidden;
         }
     </style>
@@ -70,7 +70,7 @@
         <div class="building-container building-block" data-name="Building Block: Building Container">
             <div class="building-column-span-one">
                 <div class="building-column building-block building-column-content-center" data-name="Building Block: Building Column">
-                    <div class="accordion-container building-block" data-name="Building Block: Accordion">
+                    <div class="accordion-container building-block" data-name="Building Block: Accordion Container">
                         <span class="accordion-label text-element building-block" data-name="Building Block: Accordion Title">
                             <p>Lorem ipsum</p>
                         </span>
@@ -91,7 +91,7 @@
     <script src="https://kit.fontawesome.com/0e61fd2654.js" crossorigin="anonymous"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            var accordions = document.querySelectorAll(".accordion-container");
+            var accordions = document.querySelectorAll(".accordion-label");
             for (var i = 0; i < accordions.length; i++) {
                 accordions[i].onclick = function() {
                     // Find the content div INSIDE the clicked accordion
