@@ -655,7 +655,6 @@ footer {
         .accordion-label> :first-child {
             display: inline-block;
             width: 100%;
-            margin: 0;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
