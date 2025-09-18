@@ -648,15 +648,8 @@ footer {
             padding-left: 20px !important;
             padding-right: 20px !important;
             width: 100% !important;
-            min-width: 0%;
+            min-width: 100% !important;
             background-color: #eeeeee;
-        }
-
-        .accordion-label> :first-child {
-            max-width: 75%;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
         .accordion-label> :first-child::after {
