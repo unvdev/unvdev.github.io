@@ -641,7 +641,7 @@ footer {
         }
 
         .accordion-label {
-            display: block;
+            display: flex;
             position: relative;
             padding-top: 15px !important;
             padding-bottom: 15px !important;
@@ -653,7 +653,6 @@ footer {
         }
 
         .accordion-label> :first-child {
-            display: block;
             max-width: 75%;
             white-space: nowrap;
             overflow: hidden;
