@@ -641,7 +641,7 @@ footer {
         }
 
         .accordion-label {
-            display: inline-block;
+            display: block;
             position: relative;
             padding-top: 15px !important;
             padding-bottom: 15px !important;
