@@ -18,6 +18,7 @@ const layoutElementAsymmLeftColumnButton = document.getElementById("layout-eleme
 const layoutElementAsymmRightColumnButton = document.getElementById("layout-element-asymm-right-column-button");
 const layoutElementSpacerButton = document.getElementById("layout-element-spacer-button");
 const layoutElementDividerButton = document.getElementById("layout-element-divider-button");
+const layoutElementAccordionButton = document.getElementById("layout-element-accordion-button");
 //Image Element Buttons
 const imageElementLinkButton = document.getElementById("image-element-link-button");
 const imageElementUploadButton = document.getElementById("image-element-upload-button");
@@ -185,6 +186,7 @@ layoutElementAsymmLeftColumnButton.addEventListener('click', () => insertLayoutE
 layoutElementAsymmRightColumnButton.addEventListener('click', () => insertLayoutElement(asymmRightColumn));
 layoutElementSpacerButton.addEventListener('click', () => insertElement(spacer));
 layoutElementDividerButton.addEventListener('click', () => insertElement(divider));
+layoutElementAccordionButton.addEventListener('click', () => insertElement(accordion));
 //Image Element Event Listeners
 imageElementLinkButton.addEventListener('click', () => insertImageLink(image));
 imageElementUploadButton.addEventListener('click', () => insertImageUpload(image));
