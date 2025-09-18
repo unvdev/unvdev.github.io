@@ -13,8 +13,6 @@
 
         .accordion {
             width: 100%;
-            padding-top: 20px;
-            padding-bottom: 20px;
         }
 
         .accordion:hover {
@@ -25,24 +23,27 @@
         .accordion-label {
             display: inline-block;
             position: relative;
-            width: 100%;
+            padding-top: 20px;
+            padding-bottom: 20px;
             padding-left: 20px;
+            width: 100%;
+            background-color: #eeeeee;
         }
 
-        .accordion-label > :first-child {
+        .accordion-label> :first-child {
             display: inline-block;
             margin: 0;
         }
 
-        .accordion-label > :first-child::after {
+        .accordion-label> :first-child::after {
             content: "\25BC";
             position: absolute;
             right: 20px;
             color: inherit;
         }
 
-        .accordion-label > .accordion-active:after {
-             content: "\25B2";
+        .accordion-label>.accordion-active:after {
+            content: "\25B2";
         }
 
         .accordion-content {
@@ -68,12 +69,10 @@
         <div class="building-container building-block" data-name="Building Block: Building Container">
             <div class="building-column-span-one">
                 <div class="building-column building-block building-column-content-center" data-name="Building Block: Building Column">
-                    <div class="misc-element building-block" data-name="Building Block: Accordion">
-                        <div class="accordion building-block" style="background-color: silver;" data-name="Building Block: Accordion Bar">
-                            <span class="accordion-label text-element building-block" data-name="Building Block: Text">
-                                <p>Lorem ipsum</p>
-                            </span>
-                        </div>
+                    <div class="accordion building-block" data-name="Building Block: Accordion">
+                        <span class="accordion-label text-element building-block" data-name="Building Block: Text">
+                            <p>Lorem ipsum</p>
+                        </span>
                         <div class="accordion-content">
                             <div class="text-element building-block" data-name="Building Block: Text">
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
@@ -90,25 +89,25 @@
 
     <script src="https://kit.fontawesome.com/0e61fd2654.js" crossorigin="anonymous"></script>
     <script>
-       document.addEventListener("DOMContentLoaded", () => {
-    var accordions = document.querySelectorAll(".accordion");
-    for (var i = 0; i < accordions.length; i++) {
-        accordions[i].onclick = function() {
-            // The content div is the next element in the HTML
-            var content = this.nextElementSibling;
+        document.addEventListener("DOMContentLoaded", () => {
+            var accordions = document.querySelectorAll(".accordion");
+            for (var i = 0; i < accordions.length; i++) {
+                accordions[i].onclick = function() {
+                    // Find the content div INSIDE the clicked accordion
+                    var content = this.querySelector(".accordion-content");
 
-            if (content.style.display === "block") {
-                // If it's visible, hide it
-                content.style.display = "none";
-                this.firstElementChild.firstElementChild.classList.remove("accordion-active");
-            } else {
-                // If it's hidden, show it
-                content.style.display = "block";
-                this.firstElementChild.firstElementChild.classList.add("accordion-active");
+                    if (content.style.display === "block") {
+                        // If it's visible, hide it
+                        content.style.display = "none";
+                        this.firstElementChild.firstElementChild.classList.remove("accordion-active");
+                    } else {
+                        // If it's hidden, show it
+                        content.style.display = "block";
+                        this.firstElementChild.firstElementChild.classList.add("accordion-active");
+                    }
+                };
             }
-        };
-    }
-});
+        });
     </script>
 
 </body>
