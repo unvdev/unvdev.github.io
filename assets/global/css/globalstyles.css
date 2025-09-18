@@ -645,7 +645,7 @@ footer {
             position: relative;
             padding-top: 15px !important;
             padding-bottom: 15px !important;
-            padding-left: 40px !important;
+            padding-left: 60px !important;
             padding-right: 20px !important;
             width: 100% !important;
             min-width: 100% !important;
@@ -660,10 +660,12 @@ footer {
             content: "\25BC";
             position: absolute;
             left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
             color: inherit;
         }
 
-        .accordion-label>.accordion-active:after {
+        .accordion-label>.accordion-active:before {
             content: "\25B2";
         }
 
