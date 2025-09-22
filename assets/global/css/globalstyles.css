@@ -654,6 +654,7 @@ footer {
 
         .accordion-label> :first-child {
             margin: 0;
+            color: var(--label-color, black);
         }
 
         .accordion-label> :first-child::before {
