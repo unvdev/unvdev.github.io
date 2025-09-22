@@ -654,7 +654,6 @@ footer {
 
         .accordion-label> :first-child {
             margin: 0;
-            --label-color: currentColor;
         }
 
         .accordion-label> :first-child::before {
@@ -663,7 +662,7 @@ footer {
             left: 25px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--label-color);
+            color: inherit;
         }
 
         .accordion-label>.accordion-active:before {
