@@ -22,7 +22,7 @@
     <div class="building-column-span-one">
         <div class="building-column building-block building-column-content-center" data-name="Building Block: Building Column">
             <div class="placeholder-block"></div>
-            <fa-icon-chooser id="chooser"></fa-icon-chooser>
+              <fa-icon-chooser kit-token="0e61fd2654" icons-per-row="10" size="2x"></fa-icon-chooser>
         </div>
     </div>
 </div>
@@ -184,10 +184,9 @@
     </footer>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@fortawesome/fa-icon-chooser@0.9.1/dist/fa-icon-chooser/fa-icon-chooser.esm.js"></script>
   <script nomodule src="https://cdn.jsdelivr.net/npm/@fortawesome/fa-icon-chooser@0.9.1/dist/fa-icon-chooser/fa-icon-chooser.js"></script>
-     <script>
-    const chooser = document.getElementById('chooser');
+  <script>
+    const chooser = document.querySelector('fa-icon-chooser');
 
-    // Listen for selection event
     chooser.addEventListener('faIconSelected', e => {
       console.log('User picked:', e.detail);
     });
