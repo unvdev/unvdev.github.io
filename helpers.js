@@ -1,4 +1,10 @@
     document.addEventListener("DOMContentLoaded", () => {
+        
+            const accordionLableText = document.querySelector('.accordion-label > :first-child');
+            const color = getComputedStyle(accordionLableText).color;
+            const label = accordionLableText.parentElement;
+            label.style.setProperty('--label-color', color);
+
             var accordions = document.querySelectorAll(".accordion-label");
             for (var i = 0; i < accordions.length; i++) {
                 accordions[i].onclick = function() {
