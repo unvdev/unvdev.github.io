@@ -185,11 +185,12 @@
         <script src="https://kit.fontawesome.com/0027766915.js" crossorigin="anonymous"></script>
 <script type="module" src="https://cdn.jsdelivr.net/npm/@fortawesome/fa-icon-chooser@0.9.1/dist/fa-icon-chooser/fa-icon-chooser.esm.js"></script>
 <script>
-    const chooser = document.querySelector('fa-icon-chooser');
-
-    chooser.addEventListener('faIconSelected', e => {
-      console.log('User picked:', e.detail);
-    });
+document.addEventListener('DOMContentLoaded', () => {
+  const chooser = document.querySelector('fa-icon-chooser');
+  chooser.addEventListener('faIconSelected', e => {
+    console.log('User picked:', e.detail);
+  });
+});
   </script>
     <script src="/helpers.js"></script>
 </body>
