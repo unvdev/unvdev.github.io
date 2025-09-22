@@ -183,15 +183,14 @@
         <div class="footerText">Copyright © 2023 Universe Dev</div>
     </footer>
     <script type="module">
-    // Import the module from jsDelivr
-    import fortawesomefaIconChooser from 'https://cdn.jsdelivr.net/npm/@fortawesome/fa-icon-chooser@0.9.1/+esm';
+    import { fortawesomefaIconChooser } from 'https://cdn.jsdelivr.net/npm/@fortawesome/fa-icon-chooser@0.9.1/+esm';
 
-    // Expose it globally
+    // Expose globally so you can use it in console if needed
     window.fortawesomefaIconChooser = fortawesomefaIconChooser;
 
     console.log('Module loaded:', fortawesomefaIconChooser);
 
-    // Example usage: initialize the chooser inside the container
+    // Your snippet
     const container = document.getElementById('fa-icon-chooser');
     fortawesomefaIconChooser.init({
       container,       // Where the chooser should appear
