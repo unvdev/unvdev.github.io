@@ -183,20 +183,23 @@
         <div class="footerText">Copyright © 2023 Universe Dev</div>
     </footer>
     <script type="module">
-    import { fortawesomefaIconChooser } from 'https://cdn.jsdelivr.net/npm/@fortawesome/fa-icon-chooser@0.9.1/+esm';
+          import * as chooserModule from 'https://cdn.jsdelivr.net/npm/@fortawesome/fa-icon-chooser@0.9.1/+esm';
 
-    // Expose globally so you can use it in console if needed
-    window.fortawesomefaIconChooser = fortawesomefaIconChooser;
+  console.log('All exports:', chooserModule);
+    // import { fortawesomefaIconChooser } from 'https://cdn.jsdelivr.net/npm/@fortawesome/fa-icon-chooser@0.9.1/+esm';
 
-    console.log('Module loaded:', fortawesomefaIconChooser);
+    // // Expose globally so you can use it in console if needed
+    // window.fortawesomefaIconChooser = fortawesomefaIconChooser;
 
-    // Your snippet
-    const container = document.getElementById('fa-icon-chooser');
-    fortawesomefaIconChooser.init({
-      container,       // Where the chooser should appear
-      iconsPerRow: 10, // Example configuration
-      size: '2x'
-    });
+    // console.log('Module loaded:', fortawesomefaIconChooser);
+
+    // // Your snippet
+    // const container = document.getElementById('fa-icon-chooser');
+    // fortawesomefaIconChooser.init({
+    //   container,       // Where the chooser should appear
+    //   iconsPerRow: 10, // Example configuration
+    //   size: '2x'
+    // });
   </script>
     <script src="https://kit.fontawesome.com/0e61fd2654.js" crossorigin="anonymous"></script>
     <script src="/helpers.js"></script>
