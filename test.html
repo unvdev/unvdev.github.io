@@ -182,7 +182,23 @@
     <footer>
         <div class="footerText">Copyright © 2023 Universe Dev</div>
     </footer>
-    <script type="module">import fortawesomefaIconChooser from 'https://cdn.jsdelivr.net/npm/@fortawesome/fa-icon-chooser@0.9.1/+esm';</script>
+    <script type="module">
+    // Import the module from jsDelivr
+    import fortawesomefaIconChooser from 'https://cdn.jsdelivr.net/npm/@fortawesome/fa-icon-chooser@0.9.1/+esm';
+
+    // Expose it globally
+    window.fortawesomefaIconChooser = fortawesomefaIconChooser;
+
+    console.log('Module loaded:', fortawesomefaIconChooser);
+
+    // Example usage: initialize the chooser inside the container
+    const container = document.getElementById('fa-icon-chooser');
+    fortawesomefaIconChooser.init({
+      container,       // Where the chooser should appear
+      iconsPerRow: 10, // Example configuration
+      size: '2x'
+    });
+  </script>
     <script src="https://kit.fontawesome.com/0e61fd2654.js" crossorigin="anonymous"></script>
     <script src="/helpers.js"></script>
 </body>
