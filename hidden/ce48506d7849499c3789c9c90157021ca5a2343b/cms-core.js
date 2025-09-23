@@ -129,7 +129,7 @@ document.addEventListener("click", (e) => {
 
 document.addEventListener("keydown", e => {
     // Ignore keystrokes inside editors
-    if (e.target.closest('.text-editor-pop') || e.target.closest('.style-editor-pop')) {
+    if (e.target.closest('.text-editor-pop') || e.target.closest('.style-editor-sidebar')) {
         return;
     }
 
