@@ -116,7 +116,7 @@ function pasteElement() {
 
 document.addEventListener("click", (e) => {
     const target = e.target;
-    const uiElements = ` .ql-container, .ql-toolbar, .ql-picker, .ql-tooltip, .ql-tooltip *, .ql-action, .text-editor-pop, .text-editor, .cms-menu-bar, .cms-menu, .cms-menu-container, .style-editor-sidebar `;
+    const uiElements = '.ql-container, .ql-toolbar, .ql-picker, .ql-tooltip, .ql-action, .text-editor-pop, .text-editor, .cms-menu-bar, .cms-menu, .cms-menu-container, .style-editor-sidebar';
     if (target.closest(uiElements)) return;
 
     const targetBlock = target.closest('.building-block');
