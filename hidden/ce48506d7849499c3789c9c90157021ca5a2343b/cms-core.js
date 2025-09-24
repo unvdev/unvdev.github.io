@@ -114,11 +114,19 @@ function pasteElement() {
     }
 }
 
-// This single listener replaces the separate click listeners in both your
-// cms-core.js and quill-editor-with-icons.js files.
 document.addEventListener("click", (e) => {
     const target = e.target;
     
+    // First, check for the Shift+A+Click combo for the style editor
+    // We handle this separately and stop if it matches.
+    if (shiftHeld && aHeld) {
+        if (currentlySelected) {
+            currentlySelected.classList.add("custom-styles");
+            invokeStyleMenu();
+        }
+        return; // Stop further execution
+    }
+
     // Determine the application's current state: Are we editing text?
     const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
 
@@ -127,42 +135,37 @@ document.addEventListener("click", (e) => {
         // If the editor is open, this listener's ONLY job is to close it
         // when a click occurs outside of its UI.
 
-        // ** THE FIX **
-        // We define the entire "editor zone" which includes the main pop-up
+        // Define the entire "editor zone" which includes the main pop-up
         // and ANY element with a "ql-" class (toolbars, tooltips, pickers).
         const isClickInsideEditorZone = target.closest('.text-editor-pop, [class*="ql-"]');
 
         if (!isClickInsideEditorZone) {
             // The click was truly outside the editor and all its UI. Close it.
-            // Assuming closeTextEditor is a global function
             closeTextEditor(true);
         }
-
-        // IMPORTANT: We stop execution here. No CMS selection logic should
-        // run while the text editor is active.
+        
+        // IMPORTANT: Stop execution here. No CMS logic should run while the editor is active.
         return;
     }
 
     // --- MODE 2: Text Editor is INACTIVE (Layout Mode) ---
     // If the editor is closed, the listener handles CMS block selection.
 
-    // First, ignore clicks on the CMS menu itself.
+    // Ignore clicks on the CMS menu itself.
     const isClickInsideCmsUI = target.closest('.cms-menu-bar, .cms-menu, .cms-menu-container, .style-editor-sidebar');
     if (isClickInsideCmsUI) {
         return;
     }
 
-    // Now, handle the selection of building blocks.
+    // Handle the selection of building blocks.
     const targetBlock = target.closest('.building-block');
     if (targetBlock) {
         // Only select a new block if it's not the one that's already selected.
         if (targetBlock !== currentlySelected) {
-            // Assuming selectBuildingBlock is a global function
             selectBuildingBlock(targetBlock, target);
         }
     } else {
         // If the click was not on any building block, deselect everything.
-        // Assuming deselectAll is a global function
         deselectAll();
     }
 });
