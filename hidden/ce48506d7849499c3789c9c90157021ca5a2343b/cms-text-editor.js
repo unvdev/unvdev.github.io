@@ -405,6 +405,7 @@ function openTextEditor(target) {
     quillEditor.setSelection(length, 0, "silent");
     // quillEditor.focus();
     isEditorLoading = false;
+  });
 }
 
 function cleanHtml(html) {
