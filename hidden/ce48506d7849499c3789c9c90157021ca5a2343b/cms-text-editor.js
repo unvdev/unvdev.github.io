@@ -456,15 +456,16 @@ function closeTextEditor(save = true) {
 // --- EVENT LISTENERS (Your existing code) ---
 
 document.addEventListener("dblclick", (e) => {
+  const target = e.target.closest(".text-element");
+  if (target) openTextEditor(target);
+});
+
+document.addEventListener("click", (e) => {
   const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
 
   if (isEditorVisible && !isEditorLoading) {
     const isClickInsideEditor = e.target.closest(".text-editor-pop");
-
-    // Include ALL Quill UI: toolbar, pickers, and tooltip
-    const isClickInsideQuillUI = e.target.closest(
-      ".ql-toolbar, .ql-picker, .ql-tooltip"
-    );
+    const isClickInsideQuillUI = e.target.closest(".ql-picker, .ql-tooltip");
 
     if (!isClickInsideEditor && !isClickInsideQuillUI) {
       closeTextEditor(true);
