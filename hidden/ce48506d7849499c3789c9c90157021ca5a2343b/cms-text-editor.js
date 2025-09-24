@@ -364,6 +364,16 @@ function initializeQuill() {
           "custom-color": customColorPicker,
           "day-mode": () => editorPop.style.backgroundColor = "whitesmoke",
           "night-mode": () => editorPop.style.backgroundColor = "#222222",
+          'link': function(value) {
+            if (value) {
+              const range = this.quill.getSelection();
+              if (range && range.length > 0) {
+                this.quill.theme.tooltip.edit('link');
+              }
+            } else {
+              this.quill.format('link', false);
+            }
+          }
         },
       },
     },
@@ -407,7 +417,7 @@ function openTextEditor(target) {
     quillEditor.enable(true);
     const length = quillEditor.getLength();
     quillEditor.setSelection(length, 0, "silent");
-    
+
     setTimeout(() => {
       quillEditor.focus();
       isEditorLoading = false;
