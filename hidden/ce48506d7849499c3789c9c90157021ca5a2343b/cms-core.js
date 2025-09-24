@@ -114,45 +114,17 @@ function pasteElement() {
     }
 }
 
-// CMS core: robust outside-click handler using composedPath()
-document.addEventListener('click', (e) => {
-  // build the event path (composedPath is best for shadow DOM etc)
-  const path = e.composedPath ? e.composedPath() : (e.path || (function () {
-    const arr = [];
-    let el = e.target;
-    while (el) { arr.push(el); el = el.parentNode; }
-    return arr;
-  })());
+document.addEventListener("click", (e) => {
+    const target = e.target;
+    const uiElements = ` .ql-container, .ql-toolbar, .ql-picker, .ql-tooltip, .ql-tooltip *, .ql-action, .text-editor-pop, .text-editor, .cms-menu-bar, .cms-menu, .cms-menu-container, .style-editor-sidebar `;
+    if (target.closest(uiElements)) return;
 
-  // selectors/elements we want to treat as "inside the UI" (clicks here are ignored)
-  const allowedSelectors = [
-    '.text-editor-pop',
-    '.text-editor',
-    '.ql-toolbar',
-    '.ql-container',
-    '.ql-picker',
-    '.ql-tooltip',
-    '.ql-action',
-    '.cms-menu-bar',
-    '.cms-menu',
-    '.cms-menu-container',
-    '.style-editor-sidebar'
-  ];
-
-  const isInsideAllowed = path.some(node => {
-    return node && node.nodeType === 1 && allowedSelectors.some(sel => {
-      try { return node.matches(sel); } catch (err) { return false; }
-    });
-  });
-
-  if (isInsideAllowed) return; // ignore clicks inside editor / quill UI / cms UI
-
-  const targetBlock = e.target.closest('.building-block');
-  if (targetBlock) {
-    selectBuildingBlock(targetBlock, e.target);
-  } else {
-    deselectAll();
-  }
+    const targetBlock = target.closest('.building-block');
+    if (targetBlock) {
+        selectBuildingBlock(targetBlock, target);
+    } else {
+        deselectAll();
+    }
 });
 
 document.addEventListener("keydown", e => {
