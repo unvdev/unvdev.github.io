@@ -347,7 +347,7 @@ function initializeQuill() {
     // This option forces Quill to attach tooltips and other pop-ups inside
     // the specified container, instead of the document body. This ensures
     // our "click outside" listener can correctly identify them.
-    bounds: editorContainer,
+    bounds: editorPop,
     modules: {
       toolbar: {
         container: [
