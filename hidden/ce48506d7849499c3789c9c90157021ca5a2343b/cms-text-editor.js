@@ -228,22 +228,20 @@ const Embed = Quill.import('blots/embed'); // For the icon blot
 const Delta = Quill.import('delta'); // For the clipboard matcher
 
 // --- FONT AWESOME ICON BLOT ---
-// This class teaches Quill to treat Font Awesome icons as special "embeds"
 class FontAwesomeBlot extends Embed {
   static create(className) {
     const node = super.create();
     node.setAttribute("class", className);
-    node.setAttribute("aria-hidden", "true"); // Good for accessibility
+    node.setAttribute("aria-hidden", "true");
     return node;
   }
 
   static value(node) {
-    return node.getAttribute("class"); // Store the classes
+    return node.getAttribute("class");
   }
 }
 FontAwesomeBlot.blotName = "font-awesome";
 FontAwesomeBlot.tagName = "I";
-// We register this blot inside initializeQuill, just before creating the editor.
 
 
 // --- CUSTOM FONT BLOT (Your existing code) ---
@@ -341,11 +339,15 @@ function updateFontPickerLabel(quill) {
 
 // --- INITIALIZE QUILL (Modified) ---
 function initializeQuill() {
-  // *** ADDITION 1: Register the FontAwesomeBlot before creating the editor ***
   Quill.register(FontAwesomeBlot);
 
   quillEditor = new Quill(editorContainer, {
     theme: "snow",
+    // *** THE FIX ***
+    // This option forces Quill to attach tooltips and other pop-ups inside
+    // the specified container, instead of the document body. This ensures
+    // our "click outside" listener can correctly identify them.
+    bounds: editorContainer,
     modules: {
       toolbar: {
         container: [
@@ -367,21 +369,17 @@ function initializeQuill() {
     },
   });
 
-  // *** ADDITION 2: Add the clipboard matcher to handle pasted <i> tags ***
   quillEditor.clipboard.addMatcher('I', (node, delta) => {
     const classes = node.getAttribute('class') || '';
     const isFaIcon = /fa-(solid|regular|brands)/.test(classes);
 
     if (isFaIcon) {
-      // If it's a Font Awesome icon, insert it as our custom blot.
       return new Delta().insert({ 'font-awesome': classes });
     } else {
-      // Otherwise, let Quill handle it as default (italics).
       return delta;
     }
   });
 
-  // Add custom toolbar icons
   document.querySelector(".ql-custom-color").innerHTML =
     '<i class="fa-solid fa-palette"></i>';
   document.querySelector(".ql-day-mode").innerHTML =
@@ -389,13 +387,11 @@ function initializeQuill() {
   document.querySelector(".ql-night-mode").innerHTML =
     '<i class="fa-solid fa-moon"></i>';
 
-  // Update the font picker whenever selection changes
   quillEditor.on('editor-change', () => updateFontPickerLabel(quillEditor));
-  updateFontPickerLabel(quillEditor); // Initial label set
+  updateFontPickerLabel(quillEditor);
 }
 
 // --- EDITOR MANAGEMENT FUNCTIONS (Your existing code) ---
-
 function openTextEditor(target) {
   isEditorLoading = true;
   activeTextElement = target;
