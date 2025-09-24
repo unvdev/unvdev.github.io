@@ -453,9 +453,6 @@ function closeTextEditor(save = true) {
 
 // --- EVENT LISTENERS (Your existing code) ---
 
-const editorPop = document.querySelector(".text-editor-pop");
-const editorContainer = document.querySelector("#quill-editor");
-
 // --- Prevent clicks inside the editor from closing it ---
 editorPop.addEventListener('click', (e) => e.stopPropagation());
 
