@@ -343,10 +343,6 @@ function initializeQuill() {
 
   quillEditor = new Quill(editorContainer, {
     theme: "snow",
-    // *** THE FIX ***
-    // This option forces Quill to attach tooltips and other pop-ups inside
-    // the specified container, instead of the document body. This ensures
-    // our "click outside" listener can correctly identify them.
     bounds: editorPop,
     modules: {
       toolbar: {
@@ -367,18 +363,6 @@ function initializeQuill() {
         },
       },
     },
-  });
-
-  const toolbar = quillEditor.getModule('toolbar');
-  toolbar.container.addEventListener('mousedown', (e) => {
-    e.preventDefault();
-  });
-
-  // We also track the selection so we can restore it in the link handler.
-  quillEditor.on('selection-change', (range) => {
-    if (range) {
-      savedRange = range;
-    }
   });
 
   quillEditor.clipboard.addMatcher('I', (node, delta) => {
