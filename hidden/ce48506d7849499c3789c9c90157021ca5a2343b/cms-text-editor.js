@@ -455,7 +455,7 @@ function closeTextEditor(save = true) {
 
 // --- EVENT LISTENERS (Your existing code) ---
 
-document.addEventListener("click", (e) => {
+document.addEventListener("dblclick", (e) => {
   const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
 
   if (isEditorVisible && !isEditorLoading) {
