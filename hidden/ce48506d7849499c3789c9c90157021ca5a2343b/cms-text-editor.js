@@ -408,9 +408,7 @@ function openTextEditor(target) {
     const content = target.innerHTML.trim();
     quillEditor.setContents([], "silent");
     quillEditor.clipboard.dangerouslyPasteHTML(0, content, "silent");
-
     quillEditor.enable(true);
-    quillEditor.setSelection(quillEditor.getSelection() || { index: 0, length: 0 });
     const length = quillEditor.getLength();
     quillEditor.setSelection(length, 0, "silent");
     quillEditor.focus();
@@ -454,6 +452,18 @@ function closeTextEditor(save = true) {
 }
 
 // --- EVENT LISTENERS (Your existing code) ---
+
+const editorPop = document.querySelector(".text-editor-pop");
+const editorContainer = document.querySelector("#quill-editor");
+
+// --- Prevent clicks inside the editor from closing it ---
+editorPop.addEventListener('click', (e) => e.stopPropagation());
+
+document.addEventListener('click', (e) => {
+  if (e.target.closest('.ql-tooltip, .ql-toolbar')) {
+    e.stopPropagation();
+  }
+}, true);
 
 document.addEventListener("dblclick", (e) => {
   const target = e.target.closest(".text-element");
