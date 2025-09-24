@@ -403,12 +403,8 @@ function openTextEditor(target) {
     quillEditor.enable(true);
     const length = quillEditor.getLength();
     quillEditor.setSelection(length, 0, "silent");
-
-    setTimeout(() => {
-      quillEditor.focus();
-      isEditorLoading = false;
-    }, 0);
-  });
+    // quillEditor.focus();
+    isEditorLoading = false;
 }
 
 function cleanHtml(html) {
