@@ -455,22 +455,28 @@ function closeTextEditor(save = true) {
 
 // --- EVENT LISTENERS (Your existing code) ---
 
-// Double-click to open editor
 document.addEventListener("dblclick", (e) => {
   const target = e.target.closest(".text-element");
   if (target) openTextEditor(target);
 });
 
-// Click outside to save & close
 document.addEventListener("click", (e) => {
   const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
 
   if (isEditorVisible && !isEditorLoading) {
     const isClickInsideEditor = e.target.closest(".text-editor-pop");
-    const isClickInsideQuillUI = e.target.closest(".ql-picker, .ql-tooltip");
+    const isClickInsideQuillUI = e.target.closest(".ql-tooltip");
 
-    if (!isClickInsideEditor && !isClickInsideQuillUI) {
+    // Only close if click is truly outside
+if (!isClickInsideEditor && !isClickInsideQuillUI) {
+  setTimeout(() => {
+    // re-check after tooltip has rendered
+    const stillInsideEditor = e.target.closest(".text-editor-pop");
+    const stillInsideTooltip = e.target.closest(".ql-tooltip");
+    if (!stillInsideEditor && !stillInsideTooltip) {
       closeTextEditor(true);
     }
+  }, 0);
+}
   }
 });
