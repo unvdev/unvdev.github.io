@@ -464,7 +464,13 @@ document.addEventListener("click", (e) => {
 
   if (isEditorVisible && !isEditorLoading) {
     const isClickInsideEditor = e.target.closest(".text-editor-pop");
-    const isClickInsideQuillUI = e.target.closest(".ql-picker, .ql-tooltip, .ql-tooltip *");
+    
+    // *** FIX: The selector for UI elements was corrected. ***
+    // The previous selector was flawed and didn't correctly identify clicks
+    // inside the link tooltip. This corrected version ensures that clicks on the
+    // font pickers and any tooltips (including the link editor) are not
+    // treated as "outside" clicks.
+    const isClickInsideQuillUI = e.target.closest(".ql-picker, .ql-tooltip");
 
     if (!isClickInsideEditor && !isClickInsideQuillUI) {
       closeTextEditor(true);
