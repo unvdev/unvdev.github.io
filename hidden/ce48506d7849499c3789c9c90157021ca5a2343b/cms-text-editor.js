@@ -460,23 +460,38 @@ document.addEventListener("dblclick", (e) => {
   if (target) openTextEditor(target);
 });
 
+// cms-editor file: more robust close handler
 document.addEventListener("click", (e) => {
   const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
+  if (!isEditorVisible || isEditorLoading) return;
 
-  if (isEditorVisible && !isEditorLoading) {
-    const isClickInsideEditor = e.target.closest(".text-editor-pop");
-    const isClickInsideQuillUI = e.target.closest(".ql-tooltip");
+  const path = e.composedPath ? e.composedPath() : (e.path || (function () {
+    const arr = [];
+    let el = e.target;
+    while (el) { arr.push(el); el = el.parentNode; }
+    return arr;
+  })());
 
-    // Only close if click is truly outside
-if (!isClickInsideEditor && !isClickInsideQuillUI) {
-  setTimeout(() => {
-    // re-check after tooltip has rendered
-    const stillInsideEditor = e.target.closest(".text-editor-pop");
-    const stillInsideTooltip = e.target.closest(".ql-tooltip");
-    if (!stillInsideEditor && !stillInsideTooltip) {
-      closeTextEditor(true);
-    }
-  }, 0);
-}
+  const insideEditorOrQuill = path.some(node =>
+    node && node.nodeType === 1 && (
+      node.matches && (node.matches('.text-editor-pop') || node.matches('.ql-tooltip'))
+    )
+  );
+
+  if (!insideEditorOrQuill) {
+    // small safety: let Quill finish any DOM updates before closing
+    setTimeout(() => {
+      // Re-check path after tick
+      const p2 = e.composedPath ? e.composedPath() : (e.path || (function () {
+        const arr = [];
+        let el = e.target;
+        while (el) { arr.push(el); el = el.parentNode; }
+        return arr;
+      })());
+      const stillInside = p2.some(node =>
+        node && node.nodeType === 1 && node.matches && (node.matches('.text-editor-pop') || node.matches('.ql-tooltip'))
+      );
+      if (!stillInside) closeTextEditor(true);
+    }, 0);
   }
 });
