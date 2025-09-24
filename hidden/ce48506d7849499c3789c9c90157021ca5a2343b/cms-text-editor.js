@@ -226,6 +226,7 @@ let isEditorLoading = false;
 const Inline = Quill.import("blots/inline");
 const Embed = Quill.import('blots/embed'); // For the icon blot
 const Delta = Quill.import('delta'); // For the clipboard matcher
+const LinkTooltip = Quill.import('ui/tooltip'); // Snow theme tooltip
 
 // --- FONT AWESOME ICON BLOT ---
 // This class teaches Quill to treat Font Awesome icons as special "embeds"
@@ -339,6 +340,12 @@ function updateFontPickerLabel(quill) {
   pickerLabel.textContent = displayName;
 }
 
+const originalShow = LinkTooltip.prototype.show;
+LinkTooltip.prototype.show = function () {
+  originalShow.call(this);
+  // Force tooltip visible
+  this.container.classList.remove('ql-hidden');
+};
 
 // --- INITIALIZE QUILL (Modified) ---
 function initializeQuill() {
@@ -411,17 +418,13 @@ function openTextEditor(target) {
     quillEditor.clipboard.dangerouslyPasteHTML(0, content, "silent");
 
     quillEditor.enable(true);
-
-    // Delay selection/focus slightly to avoid stealing focus from link tooltip
-    setTimeout(() => {
-      const length = quillEditor.getLength();
-      quillEditor.setSelection(length, 0, "silent");
-      quillEditor.focus();
-      isEditorLoading = false;
-    });
+    const length = quillEditor.getLength();
+    quillEditor.setSelection(length, 0, "silent");
+    quillEditor.focus();
+    
+    isEditorLoading = false;
   });
 }
-
 
 function cleanHtml(html) {
   const trimmed = html.trim();
