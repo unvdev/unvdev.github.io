@@ -360,6 +360,27 @@ function initializeQuill() {
           "custom-color": customColorPicker,
           "day-mode": () => editorPop.style.backgroundColor = "whitesmoke",
           "night-mode": () => editorPop.style.backgroundColor = "#222222",
+          'link': function(value) {
+            if (value) {
+              // Standard logic to prepare the tooltip
+              if (savedRange) {
+                this.quill.setSelection(savedRange);
+              }
+              this.quill.theme.tooltip.edit('link');
+
+              // Forcefully remove the ql-hidden class a moment later
+              // to override Quill's incorrect behavior.
+              setTimeout(() => {
+                const tooltip = this.quill.theme.tooltip.root;
+                if (tooltip.classList.contains('ql-hidden')) {
+                  tooltip.classList.remove('ql-hidden');
+                }
+              }, 0);
+
+            } else {
+              this.quill.format('link', false);
+            }
+          }
         },
       },
     },
