@@ -366,10 +366,8 @@ function initializeQuill() {
           "night-mode": () => editorPop.style.backgroundColor = "#222222",
           'link': function(value) {
             if (value) {
-              const range = this.quill.getSelection();
-              if (range && range.length > 0) {
-                this.quill.theme.tooltip.edit('link');
-              }
+              // The tooltip should open even if no text is selected.
+              this.quill.theme.tooltip.edit('link');
             } else {
               this.quill.format('link', false);
             }
