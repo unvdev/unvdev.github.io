@@ -161,6 +161,11 @@ document.addEventListener("click", (e) => {
     }
 });
 
+document.addEventListener("dblclick", (e) => {
+  const target = e.target.closest(".text-element");
+  if (target) openTextEditor(target);
+});
+
 document.addEventListener("keydown", e => {
     // Ignore keystrokes inside editors
     if (e.target.closest('.text-editor-pop') || e.target.closest('.style-editor-sidebar')) {
