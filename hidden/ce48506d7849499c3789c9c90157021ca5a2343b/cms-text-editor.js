@@ -460,7 +460,7 @@ document.addEventListener("dblclick", (e) => {
   if (target) openTextEditor(target);
 });
 
-// Click outside to save & close
+// // Click outside to save & close
 // document.addEventListener("click", (e) => {
 //   const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
 
@@ -472,4 +472,4 @@ document.addEventListener("dblclick", (e) => {
 //       closeTextEditor(true);
 //     }
 //   }
-});
+// });
