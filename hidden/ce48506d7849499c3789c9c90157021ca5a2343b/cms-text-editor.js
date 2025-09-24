@@ -455,6 +455,25 @@ function closeTextEditor(save = true) {
 
 // --- EVENT LISTENERS (Your existing code) ---
 
+// Prevent document click handlers from seeing clicks inside the editor pop
+editorPop.addEventListener('click', (ev) => ev.stopPropagation(), true);
+
+// Ensure clicks inside the Quill tooltip also don't bubble to document handlers.
+// Quill's tooltip is created dynamically; attach a delegation handler on document
+// that stops propagation when clicks occur inside any element matching .ql-tooltip
+document.addEventListener('click', (ev) => {
+  const path = ev.composedPath ? ev.composedPath() : (ev.path || (function () {
+    const arr = [];
+    let el = ev.target;
+    while (el) { arr.push(el); el = el.parentNode; }
+    return arr;
+  })());
+  if (path.some(n => n && n.nodeType === 1 && n.matches && n.matches('.ql-tooltip'))) {
+    ev.stopPropagation();
+  }
+}, true);
+
+
 document.addEventListener("dblclick", (e) => {
   const target = e.target.closest(".text-element");
   if (target) openTextEditor(target);
