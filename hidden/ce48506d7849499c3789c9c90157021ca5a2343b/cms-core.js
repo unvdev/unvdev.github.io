@@ -114,8 +114,6 @@ function pasteElement() {
     }
 }
 
-// This single listener replaces the separate click listeners in both your
-// cms-core.js and quill-editor-with-icons.js files.
 document.addEventListener("click", (e) => {
     const target = e.target;
 
@@ -152,10 +150,18 @@ document.addEventListener("click", (e) => {
 
     // Action B: Handle CMS selection and deselection.
     const targetBlock = target.closest('.building-block');
+    
     if (targetBlock) {
-        // Assuming selectBuildingBlock is a global function
-        selectBuildingBlock(targetBlock, target);
+        // *** THE FIX ***
+        // Only select a new block if it's not the one that's already selected.
+        // This prevents clicks inside an active editor from triggering a disruptive
+        // re-selection of its own container.
+        if (targetBlock !== currentlySelected) {
+            // Assuming selectBuildingBlock is a global function
+            selectBuildingBlock(targetBlock, target);
+        }
     } else {
+        // If the click was not on any building block, deselect everything.
         // Assuming deselectAll is a global function
         deselectAll();
     }
