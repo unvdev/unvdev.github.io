@@ -114,14 +114,14 @@ function pasteElement() {
     }
 }
 
-// It handles the selection and deselection of building blocks.
+// This single listener replaces the separate click listeners in both your
+// cms-core.js and quill-editor-with-icons.js files.
 document.addEventListener("click", (e) => {
     const target = e.target;
 
-    // --- Critical Check (V2 - More Robust) ---
-    // This check is expanded to ignore clicks inside any of Quill's active UI
-    // elements, not just the main editor window. This prevents this listener
-    // from incorrectly closing the link tooltip.
+    // --- PART 1: Define all UI areas that should IGNORE "click outside" logic ---
+
+    // Check for Quill Editor and its floating UI (tooltips, pickers)
     const isClickInsideEditorPop = target.closest(".text-editor-pop");
     
     const activeTooltip = document.querySelector('.ql-tooltip:not(.ql-hidden)');
@@ -133,22 +133,30 @@ document.addEventListener("click", (e) => {
         target.closest('.ql-picker-label')
     );
 
-    if (isClickInsideEditorPop || isClickInsideQuillUI) {
+    // Check for CMS UI
+    const isClickInsideCmsUI = target.closest('.cms-menu-bar, .cms-menu, .cms-menu-container, .style-editor-sidebar');
+
+    // If the click is inside ANY of these protected UI elements, stop right here.
+    if (isClickInsideEditorPop || isClickInsideQuillUI || isClickInsideCmsUI) {
         return;
     }
 
-    // This is the original logic from your cms-core file.
-    const cmsUiElements = '.cms-menu-bar, .cms-menu, .cms-menu-container, .style-editor-sidebar';
-    if (target.closest(cmsUiElements)) {
-        return;
+    // --- PART 2: If the click was truly "outside," perform actions ---
+
+    // Action A: Close the Quill editor if it's currently visible.
+    const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
+    if (isEditorVisible) {
+        // Assuming closeTextEditor is a global function
+        closeTextEditor(true);
     }
 
+    // Action B: Handle CMS selection and deselection.
     const targetBlock = target.closest('.building-block');
     if (targetBlock) {
-        // Assuming selectBuildingBlock is defined in your cms-core.js
+        // Assuming selectBuildingBlock is a global function
         selectBuildingBlock(targetBlock, target);
     } else {
-        // Assuming deselectAll is defined in your cms-core.js
+        // Assuming deselectAll is a global function
         deselectAll();
     }
 });

@@ -458,25 +458,25 @@ document.addEventListener("dblclick", (e) => {
   if (target) openTextEditor(target);
 });
 
-// Click outside to save & close
-// This listener handles closing the Quill editor when clicking outside.
-document.addEventListener("click", (e) => {
-    const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
+// // Click outside to save & close
+// // This listener handles closing the Quill editor when clicking outside.
+// document.addEventListener("click", (e) => {
+//     const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
 
-    if (isEditorVisible && !isEditorLoading) {
-        const isClickInsideEditorPop = e.target.closest(".text-editor-pop");
+//     if (isEditorVisible && !isEditorLoading) {
+//         const isClickInsideEditorPop = e.target.closest(".text-editor-pop");
         
-        const activeTooltip = document.querySelector('.ql-tooltip:not(.ql-hidden)');
-        const activePicker = document.querySelector('.ql-picker-options:not([style*="display: none"])');
+//         const activeTooltip = document.querySelector('.ql-tooltip:not(.ql-hidden)');
+//         const activePicker = document.querySelector('.ql-picker-options:not([style*="display: none"])');
         
-        const isClickInsideQuillUI = (
-            (activeTooltip && activeTooltip.contains(e.target)) ||
-            (activePicker && activePicker.contains(e.target)) ||
-            e.target.closest('.ql-picker-label')
-        );
+//         const isClickInsideQuillUI = (
+//             (activeTooltip && activeTooltip.contains(e.target)) ||
+//             (activePicker && activePicker.contains(e.target)) ||
+//             e.target.closest('.ql-picker-label')
+//         );
 
-        if (!isClickInsideEditorPop && !isClickInsideQuillUI) {
-            closeTextEditor(true);
-        }
-    }
-});
+//         if (!isClickInsideEditorPop && !isClickInsideQuillUI) {
+//             closeTextEditor(true);
+//         }
+//     }
+// });
