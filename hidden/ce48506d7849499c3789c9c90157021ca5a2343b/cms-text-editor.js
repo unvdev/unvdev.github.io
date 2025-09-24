@@ -468,8 +468,15 @@ document.addEventListener("click", (e) => {
     const isClickInsideQuillUI = e.target.closest(".ql-tooltip");
 
     // Only close if click is truly outside
-    if (!isClickInsideEditor && !isClickInsideQuillUI) {
+if (!isClickInsideEditor && !isClickInsideQuillUI) {
+  setTimeout(() => {
+    // re-check after tooltip has rendered
+    const stillInsideEditor = e.target.closest(".text-editor-pop");
+    const stillInsideTooltip = e.target.closest(".ql-tooltip");
+    if (!stillInsideEditor && !stillInsideTooltip) {
       closeTextEditor(true);
     }
+  }, 0);
+}
   }
 });
