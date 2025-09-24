@@ -118,11 +118,22 @@ function pasteElement() {
 document.addEventListener("click", (e) => {
     const target = e.target;
 
-    // --- Critical Check ---
-    // Ignore any clicks that originate from within the Quill editor popup
-    // or its floating tooltips to prevent conflicts.
+    // --- Critical Check (V2 - More Robust) ---
+    // This check is expanded to ignore clicks inside any of Quill's active UI
+    // elements, not just the main editor window. This prevents this listener
+    // from incorrectly closing the link tooltip.
+    const isClickInsideEditorPop = target.closest(".text-editor-pop");
+    
     const activeTooltip = document.querySelector('.ql-tooltip:not(.ql-hidden)');
-    if (target.closest(".text-editor-pop") || (activeTooltip && activeTooltip.contains(target))) {
+    const activePicker = document.querySelector('.ql-picker-options:not([style*="display: none"])');
+    
+    const isClickInsideQuillUI = (
+        (activeTooltip && activeTooltip.contains(target)) ||
+        (activePicker && activePicker.contains(target)) ||
+        target.closest('.ql-picker-label')
+    );
+
+    if (isClickInsideEditorPop || isClickInsideQuillUI) {
         return;
     }
 
