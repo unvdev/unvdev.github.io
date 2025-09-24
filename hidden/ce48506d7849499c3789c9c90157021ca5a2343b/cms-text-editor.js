@@ -465,8 +465,9 @@ document.addEventListener("click", (e) => {
 
   if (isEditorVisible && !isEditorLoading) {
     const isClickInsideEditor = e.target.closest(".text-editor-pop");
-    const isClickInsideQuillUI = e.target.closest(".ql-picker, .ql-tooltip");
+    const isClickInsideQuillUI = e.target.closest(".ql-tooltip");
 
+    // Only close if click is truly outside
     if (!isClickInsideEditor && !isClickInsideQuillUI) {
       closeTextEditor(true);
     }
