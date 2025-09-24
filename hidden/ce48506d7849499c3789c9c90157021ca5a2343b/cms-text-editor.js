@@ -369,6 +369,18 @@ function initializeQuill() {
     },
   });
 
+  const toolbar = quillEditor.getModule('toolbar');
+  toolbar.container.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+  });
+
+  // We also track the selection so we can restore it in the link handler.
+  quillEditor.on('selection-change', (range) => {
+    if (range) {
+      savedRange = range;
+    }
+  });
+
   quillEditor.clipboard.addMatcher('I', (node, delta) => {
     const classes = node.getAttribute('class') || '';
     const isFaIcon = /fa-(solid|regular|brands)/.test(classes);
