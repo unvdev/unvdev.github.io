@@ -453,15 +453,6 @@ function closeTextEditor(save = true) {
 
 // --- EVENT LISTENERS (Your existing code) ---
 
-// --- Prevent clicks inside the editor from closing it ---
-editorPop.addEventListener('click', (e) => e.stopPropagation());
-
-document.addEventListener('click', (e) => {
-  if (e.target.closest('.ql-tooltip, .ql-toolbar')) {
-    e.stopPropagation();
-  }
-}, true);
-
 document.addEventListener("dblclick", (e) => {
   const target = e.target.closest(".text-element");
   if (target) openTextEditor(target);
