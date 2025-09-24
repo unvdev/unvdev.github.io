@@ -403,7 +403,7 @@ function openTextEditor(target) {
     quillEditor.enable(true);
     const length = quillEditor.getLength();
     quillEditor.setSelection(length, 0, "silent");
-    // quillEditor.focus();
+    quillEditor.focus();
     isEditorLoading = false;
   });
 }
