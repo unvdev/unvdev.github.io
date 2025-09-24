@@ -114,15 +114,30 @@ function pasteElement() {
     }
 }
 
+// It handles the selection and deselection of building blocks.
 document.addEventListener("click", (e) => {
     const target = e.target;
-    const uiElements = '.ql-container, .ql-toolbar, .ql-picker, .ql-tooltip, .ql-action, .text-editor-pop, .text-editor, .cms-menu-bar, .cms-menu, .cms-menu-container, .style-editor-sidebar';
-    if (target.closest(uiElements)) return;
+
+    // --- Critical Check ---
+    // Ignore any clicks that originate from within the Quill editor popup
+    // or its floating tooltips to prevent conflicts.
+    const activeTooltip = document.querySelector('.ql-tooltip:not(.ql-hidden)');
+    if (target.closest(".text-editor-pop") || (activeTooltip && activeTooltip.contains(target))) {
+        return;
+    }
+
+    // This is the original logic from your cms-core file.
+    const cmsUiElements = '.cms-menu-bar, .cms-menu, .cms-menu-container, .style-editor-sidebar';
+    if (target.closest(cmsUiElements)) {
+        return;
+    }
 
     const targetBlock = target.closest('.building-block');
     if (targetBlock) {
+        // Assuming selectBuildingBlock is defined in your cms-core.js
         selectBuildingBlock(targetBlock, target);
     } else {
+        // Assuming deselectAll is defined in your cms-core.js
         deselectAll();
     }
 });
