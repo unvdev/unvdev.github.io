@@ -411,13 +411,17 @@ function openTextEditor(target) {
     quillEditor.clipboard.dangerouslyPasteHTML(0, content, "silent");
 
     quillEditor.enable(true);
-    const length = quillEditor.getLength();
-    quillEditor.setSelection(length, 0, "silent");
-    quillEditor.focus();
-    
-    isEditorLoading = false;
+
+    // Delay selection/focus slightly to avoid stealing focus from link tooltip
+    setTimeout(() => {
+      const length = quillEditor.getLength();
+      quillEditor.setSelection(length, 0, "silent");
+      quillEditor.focus();
+      isEditorLoading = false;
+    });
   });
 }
+
 
 function cleanHtml(html) {
   const trimmed = html.trim();
