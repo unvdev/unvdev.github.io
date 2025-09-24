@@ -369,11 +369,6 @@ function initializeQuill() {
     },
   });
 
-  const toolbar = quillEditor.getModule('toolbar');
-  toolbar.container.addEventListener('mousedown', (e) => {
-    e.preventDefault();
-  });
-
   quillEditor.clipboard.addMatcher('I', (node, delta) => {
     const classes = node.getAttribute('class') || '';
     const isFaIcon = /fa-(solid|regular|brands)/.test(classes);
