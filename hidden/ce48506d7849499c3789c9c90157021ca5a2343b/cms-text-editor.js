@@ -407,9 +407,11 @@ function openTextEditor(target) {
     quillEditor.enable(true);
     const length = quillEditor.getLength();
     quillEditor.setSelection(length, 0, "silent");
-    quillEditor.focus();
     
-    isEditorLoading = false;
+    setTimeout(() => {
+      quillEditor.focus();
+      isEditorLoading = false;
+    }, 0);
   });
 }
 
