@@ -221,6 +221,7 @@ const editorContainer = document.querySelector("#quill-editor");
 let activeTextElement = null;
 let quillEditor = null;
 let isEditorLoading = false;
+let savedRange = null; // Variable to hold the last known selection
 
 // --- QUILL IMPORTS ---
 const Inline = Quill.import("blots/inline");
@@ -384,6 +385,19 @@ function initializeQuill() {
         },
       },
     },
+  });
+
+  // This is still good practice to prevent other focus issues.
+  const toolbar = quillEditor.getModule('toolbar');
+  toolbar.container.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+  });
+
+  // We still need to track selection for the handler to work.
+  quillEditor.on('selection-change', (range) => {
+    if (range) {
+      savedRange = range;
+    }
   });
 
   quillEditor.clipboard.addMatcher('I', (node, delta) => {
