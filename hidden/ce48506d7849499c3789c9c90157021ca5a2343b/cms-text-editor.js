@@ -364,17 +364,14 @@ function initializeQuill() {
           "custom-color": customColorPicker,
           "day-mode": () => editorPop.style.backgroundColor = "whitesmoke",
           "night-mode": () => editorPop.style.backgroundColor = "#222222",
-          'link': function(value) {
-            if (value) {
-              // The tooltip should open even if no text is selected.
-              this.quill.theme.tooltip.edit('link');
-            } else {
-              this.quill.format('link', false);
-            }
-          }
         },
       },
     },
+  });
+
+  const toolbar = quillEditor.getModule('toolbar');
+  toolbar.container.addEventListener('mousedown', (e) => {
+    e.preventDefault();
   });
 
   quillEditor.clipboard.addMatcher('I', (node, delta) => {
