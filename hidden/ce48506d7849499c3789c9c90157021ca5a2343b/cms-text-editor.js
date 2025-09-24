@@ -360,9 +360,33 @@ function initializeQuill() {
           "custom-color": customColorPicker,
           "day-mode": () => editorPop.style.backgroundColor = "whitesmoke",
           "night-mode": () => editorPop.style.backgroundColor = "#222222",
+          'link': function(value) {
+            if (value) {
+              this.quill.focus(); // Re-focus the editor
+              if (savedRange) {
+                this.quill.setSelection(savedRange); // Restore the last known selection
+              }
+              this.quill.theme.tooltip.edit('link');
+            } else {
+              this.quill.format('link', false);
+            }
+          }
         },
       },
     },
+  });
+
+  // FIX 2: Prevent the toolbar mousedown from causing focus loss
+  const toolbar = quillEditor.getModule('toolbar');
+  toolbar.container.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+  });
+
+  // FIX 3: Track the selection so we can restore it in the link handler
+  quillEditor.on('selection-change', (range) => {
+    if (range) {
+      savedRange = range;
+    }
   });
 
   quillEditor.clipboard.addMatcher('I', (node, delta) => {
