@@ -460,16 +460,16 @@ document.addEventListener("dblclick", (e) => {
   if (target) openTextEditor(target);
 });
 
-// // Click outside to save & close
-// document.addEventListener("click", (e) => {
-//   const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
+// Click outside to save & close
+document.addEventListener("click", (e) => {
+  const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
 
-//   if (isEditorVisible && !isEditorLoading) {
-//     const isClickInsideEditor = e.target.closest(".text-editor-pop");
-//     const isClickInsideQuillUI = e.target.closest(".ql-picker, .ql-tooltip, .ql-tooltip *");
+  if (isEditorVisible && !isEditorLoading) {
+    const isClickInsideEditor = e.target.closest(".text-editor-pop");
+    const isClickInsideQuillUI = e.target.closest(".ql-picker, .ql-tooltip, .ql-tooltip *");
 
-//     if (!isClickInsideEditor && !isClickInsideQuillUI) {
-//       closeTextEditor(true);
-//     }
-//   }
-// });
+    if (!isClickInsideEditor && !isClickInsideQuillUI) {
+      closeTextEditor(true);
+    }
+  }
+});
