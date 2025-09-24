@@ -119,23 +119,18 @@ document.addEventListener("click", (e) => {
 
     // --- PART 1: Define all UI areas that should IGNORE "click outside" logic ---
 
-    // Check for Quill Editor and its floating UI (tooltips, pickers)
-    const isClickInsideEditorPop = target.closest(".text-editor-pop");
-    
-    const activeTooltip = document.querySelector('.ql-tooltip:not(.ql-hidden)');
-    const activePicker = document.querySelector('.ql-picker-options:not([style*="display: none"])');
-    
-    const isClickInsideQuillUI = (
-        (activeTooltip && activeTooltip.contains(target)) ||
-        (activePicker && activePicker.contains(target)) ||
-        target.closest('.ql-picker-label')
-    );
+    // ** THE FIX **
+    // A click on ANY element with a class starting with "ql-" (the prefix for all
+    // Quill UI elements) is considered an internal UI click. This is much more
+    // reliable than checking for specific pop-ups, as it covers the toolbar,
+    // tooltips, pickers, and the editor area itself.
+    const isClickInsideAnyQuillUI = target.closest('[class*="ql-"]');
 
     // Check for CMS UI
     const isClickInsideCmsUI = target.closest('.cms-menu-bar, .cms-menu, .cms-menu-container, .style-editor-sidebar');
 
     // If the click is inside ANY of these protected UI elements, stop right here.
-    if (isClickInsideEditorPop || isClickInsideQuillUI || isClickInsideCmsUI) {
+    if (isClickInsideAnyQuillUI || isClickInsideCmsUI) {
         return;
     }
 
@@ -152,10 +147,7 @@ document.addEventListener("click", (e) => {
     const targetBlock = target.closest('.building-block');
     
     if (targetBlock) {
-        // *** THE FIX ***
         // Only select a new block if it's not the one that's already selected.
-        // This prevents clicks inside an active editor from triggering a disruptive
-        // re-selection of its own container.
         if (targetBlock !== currentlySelected) {
             // Assuming selectBuildingBlock is a global function
             selectBuildingBlock(targetBlock, target);
