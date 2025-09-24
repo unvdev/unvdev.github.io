@@ -114,38 +114,46 @@ function pasteElement() {
     }
 }
 
+// This single listener replaces the separate click listeners in both your
+// cms-core.js and quill-editor-with-icons.js files.
 document.addEventListener("click", (e) => {
     const target = e.target;
+    
+    // Determine the application's current state: Are we editing text?
+    const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
 
-    // --- PART 1: Define all UI areas that should IGNORE "click outside" logic ---
+    // --- MODE 1: Text Editor is ACTIVE ---
+    if (isEditorVisible) {
+        // If the editor is open, this listener's ONLY job is to close it
+        // when a click occurs outside of its UI.
 
-    // ** THE FIX **
-    // A click on ANY element with a class starting with "ql-" (the prefix for all
-    // Quill UI elements) is considered an internal UI click. This is much more
-    // reliable than checking for specific pop-ups, as it covers the toolbar,
-    // tooltips, pickers, and the editor area itself.
-    const isClickInsideAnyQuillUI = target.closest('[class*="ql-"]');
+        // ** THE FIX **
+        // We define the entire "editor zone" which includes the main pop-up
+        // and ANY element with a "ql-" class (toolbars, tooltips, pickers).
+        const isClickInsideEditorZone = target.closest('.text-editor-pop, [class*="ql-"]');
 
-    // Check for CMS UI
-    const isClickInsideCmsUI = target.closest('.cms-menu-bar, .cms-menu, .cms-menu-container, .style-editor-sidebar');
+        if (!isClickInsideEditorZone) {
+            // The click was truly outside the editor and all its UI. Close it.
+            // Assuming closeTextEditor is a global function
+            closeTextEditor(true);
+        }
 
-    // If the click is inside ANY of these protected UI elements, stop right here.
-    if (isClickInsideAnyQuillUI || isClickInsideCmsUI) {
+        // IMPORTANT: We stop execution here. No CMS selection logic should
+        // run while the text editor is active.
         return;
     }
 
-    // --- PART 2: If the click was truly "outside," perform actions ---
+    // --- MODE 2: Text Editor is INACTIVE (Layout Mode) ---
+    // If the editor is closed, the listener handles CMS block selection.
 
-    // Action A: Close the Quill editor if it's currently visible.
-    const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
-    if (isEditorVisible) {
-        // Assuming closeTextEditor is a global function
-        closeTextEditor(true);
+    // First, ignore clicks on the CMS menu itself.
+    const isClickInsideCmsUI = target.closest('.cms-menu-bar, .cms-menu, .cms-menu-container, .style-editor-sidebar');
+    if (isClickInsideCmsUI) {
+        return;
     }
 
-    // Action B: Handle CMS selection and deselection.
+    // Now, handle the selection of building blocks.
     const targetBlock = target.closest('.building-block');
-    
     if (targetBlock) {
         // Only select a new block if it's not the one that's already selected.
         if (targetBlock !== currentlySelected) {
