@@ -461,16 +461,18 @@ document.addEventListener("dblclick", (e) => {
   if (target) openTextEditor(target);
 });
 
-// Click outside to save & close
 document.addEventListener("click", (e) => {
-  const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
+    const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
 
-  if (isEditorVisible && !isEditorLoading) {
-    const isClickInsideEditor = e.target.closest(".text-editor-pop");
-    const isClickInsideQuillUI = e.target.closest(".ql-picker, .ql-tooltip");
-
-    if (!isClickInsideEditor && !isClickInsideQuillUI) {
-      closeTextEditor(true);
+    if (!isEditorVisible || isEditorLoading) {
+        return;
     }
-  }
+
+    const clickedElement = e.target;
+.
+    const isClickInsideEditorZone = clickedElement.closest(".text-editor-pop, .ql-picker, .ql-tooltip");
+
+    if (!isClickInsideEditorZone) {
+        closeTextEditor(true);
+    }
 });
