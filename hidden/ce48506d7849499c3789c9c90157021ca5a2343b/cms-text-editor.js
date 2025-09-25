@@ -225,7 +225,7 @@ let iconSearchRange = null;
 
 // --- ICON DATA ---
 const faIcons = [
-    "fa-solid fa-0", "fa-solid fa-1", "fa-solid fa-2", "fa-solid fa-3", "fa-solid fa-4", "fa-solid fa-5", "fa-solid fa-6", "fa-solid fa-7", "fa-solid fa-8", "fa-solid fa-9"
+    "fa-solid fa-0", "fa-solid fa-1", "fa-solid fa-2", "fa-solid fa-3", "fa-solid fa-4", "fa-solid fa-5", "fa-solid fa-6", "fa-solid fa-7", "fa-solid fa-8", "fa-solid fa-9", "fa-solid fa-arrow-up", "fa-solid fa-arrow-down"
 ];
 
 // --- QUILL IMPORTS ---
@@ -246,7 +246,6 @@ class FontAwesomeBlot extends Embed {
         node.style.fontSize = "inherit";
         return node;
     }
-
     static value(node) {
         return node.getAttribute("class");
     }
@@ -254,13 +253,11 @@ class FontAwesomeBlot extends Embed {
 FontAwesomeBlot.blotName = "font-awesome";
 FontAwesomeBlot.tagName = "I";
 
-
 // --- CUSTOM FONT BLOT ---
 class CustomFont extends Inline {
     static blotName = "font";
     static tagName = "SPAN";
     static classPrefix = "ql-font-";
-
     static whitelist = [
         "agbalumo", "alumni-sans-pinstripe", "baskervville", "baskervville-sc",
         "bebas-neue", "borel", "cal-sans", "caveat-brush", "chewy", "cinzel",
@@ -272,12 +269,10 @@ class CustomFont extends Inline {
         "poller-one", "quintessential", "roboto", "short-stack", "sono", "suse",
         "twinkle-star", "ultra", "unifrakturmaguntia",
     ];
-
     static sanitize(value) {
         if (!value) return value;
         return value.replace(/['"]/g, "").replace(/\s+/g, "-").toLowerCase();
     }
-
     static create(value) {
         const node = super.create();
         const normalized = this.sanitize(value);
@@ -285,13 +280,11 @@ class CustomFont extends Inline {
         node.setAttribute("class", this.classPrefix + normalized);
         return node;
     }
-
     static formats(node) {
         const className = node.getAttribute("class") || "";
         const match = className.match(new RegExp(this.classPrefix + "([a-z0-9-]+)"));
         return match ? match[1] : null;
     }
-
     format(name, value) {
         if (name === CustomFont.blotName) {
             if (value) {
@@ -309,7 +302,6 @@ class CustomFont extends Inline {
 }
 Quill.register(CustomFont, true);
 
-
 // --- ICON SEARCH TOOLTIP FUNCTIONS ---
 
 function setupIconSearch(quill) {
@@ -320,7 +312,6 @@ function setupIconSearch(quill) {
         </div>
     `;
 
-    // MODIFIED: Removed static positioning from CSS
     const css = `
         .ql-icon-search-tooltip {
             position: absolute;
@@ -329,36 +320,16 @@ function setupIconSearch(quill) {
             box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
             padding: 10px;
             z-index: 1000;
-            width: 250px;
+            width: 280px;
             max-height: 300px;
             overflow-y: auto;
+            left: 50%;
+            transform: translateX(-50%);
         }
-        .ql-icon-search-input {
-            width: 100%;
-            box-sizing: border-box;
-            margin-bottom: 10px;
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-        }
-        .ql-icon-search-results {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(30px, 1fr));
-            gap: 10px;
-        }
-        .ql-icon-search-result {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 24px;
-            padding: 5px;
-            border-radius: 3px;
-            transition: background-color 0.2s;
-        }
-        .ql-icon-search-result:hover {
-            background-color: #f0f0f0;
-        }
+        .ql-icon-search-input { width: 100%; box-sizing: border-box; margin-bottom: 10px; padding: 5px; border: 1px solid #ccc; border-radius: 3px; }
+        .ql-icon-search-results { display: grid; grid-template-columns: repeat(auto-fill, minmax(30px, 1fr)); gap: 10px; }
+        .ql-icon-search-result { display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 24px; padding: 5px; border-radius: 3px; transition: background-color 0.2s; }
+        .ql-icon-search-result:hover { background-color: #f0f0f0; }
     `;
 
     const style = document.createElement('style');
@@ -372,12 +343,17 @@ function setupIconSearch(quill) {
     const resultsContainer = document.querySelector('.ql-icon-search-results');
 
     input.addEventListener('input', (e) => {
-        const query = e.target.value.toLowerCase().trim();
+        // **FIX: Replaced spaces with hyphens in the search query**
+        const query = e.target.value.toLowerCase().trim().replace(/\s+/g, '-');
+        
         resultsContainer.innerHTML = '';
 
-        if (query.length < 2) return;
+        if (query.length < 1) return;
 
-        const filteredIcons = faIcons.filter(icon => icon.includes(query)).slice(0, 15);
+        const filteredIcons = faIcons.filter(icon => {
+            const iconName = icon.split(' ').pop().substring(3);
+            return iconName.includes(query);
+        }).slice(0, 15);
 
         filteredIcons.forEach(iconClass => {
             const iconEl = document.createElement('div');
@@ -391,50 +367,34 @@ function setupIconSearch(quill) {
     resultsContainer.addEventListener('click', (e) => {
         const result = e.target.closest('.ql-icon-search-result');
         if (!result) return;
-
-        // **FIX 1: STOP THE EVENT FROM CLOSING THE EDITOR**
         e.stopPropagation();
 
         const iconClass = result.dataset.iconClass;
-
         if (iconSearchRange) {
             quill.insertEmbed(iconSearchRange.index, 'font-awesome', iconClass, Quill.sources.USER);
             quill.setSelection(iconSearchRange.index + 1, Quill.sources.USER);
         }
 
-        tooltip.style.display = 'none'; // Hide after selection
+        tooltip.style.display = 'none';
         input.value = '';
         resultsContainer.innerHTML = '';
         quill.focus();
     });
 }
 
-// **FIX 2: COMPLETE REWRITE OF THE HANDLER FOR DYNAMIC POSITIONING**
 function iconSearchHandler() {
     const tooltip = document.querySelector('.ql-icon-search-tooltip');
     if (!tooltip) return;
 
     if (tooltip.style.display === 'none') {
         iconSearchRange = quillEditor.getSelection(true);
-        if (!iconSearchRange) return;
-
-        const rangeBounds = quillEditor.getBounds(iconSearchRange.index, iconSearchRange.length);
-        const editorBounds = quillEditor.container.getBoundingClientRect();
-
-        tooltip.style.display = 'block'; // Show it first to measure its dimensions
-        const tooltipHeight = tooltip.offsetHeight;
-
-        // Position horizontally centered on the cursor
-        tooltip.style.left = `${rangeBounds.left + (rangeBounds.width / 2) - (tooltip.offsetWidth / 2)}px`;
-
-        // Position vertically, flipping if it overflows
-        if (rangeBounds.bottom + tooltipHeight > editorBounds.height) {
-            // Flip to appear above the cursor
-            tooltip.style.top = `${rangeBounds.top - tooltipHeight - 5}px`;
-        } else {
-            // Position below the cursor
-            tooltip.style.top = `${rangeBounds.bottom + 5}px`;
+        if (!iconSearchRange) {
+            iconSearchRange = { index: 0, length: 0 };
         }
+        
+        const toolbar = document.querySelector('.ql-toolbar');
+        tooltip.style.display = 'block';
+        tooltip.style.top = `${toolbar.offsetHeight + 5}px`;
 
         document.querySelector('.ql-icon-search-input').focus();
     } else {
@@ -443,9 +403,7 @@ function iconSearchHandler() {
     }
 }
 
-
 // --- QUILL HELPER FUNCTIONS ---
-
 function customColorPicker() {
     const color = prompt("Enter a hex color code (e.g., #ff00ff):");
     if (color && /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color)) {
@@ -458,28 +416,18 @@ function customColorPicker() {
 function updateFontPickerLabel(quill) {
     const pickerLabel = document.querySelector(".ql-font .ql-picker-label");
     if (!pickerLabel) return;
-
     const format = quill.getFormat();
     let currentFont = format.font || '';
     let displayName = 'Font Family';
-
     if (currentFont) {
-        displayName = currentFont
-            .split('-')
-            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(' ');
-
-        pickerLabel.style.fontFamily = currentFont.includes('-') || currentFont.includes(' ') ?
-            `"${displayName}"` :
-            displayName;
+        displayName = currentFont.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+        pickerLabel.style.fontFamily = currentFont.includes('-') || currentFont.includes(' ') ? `"${displayName}"` : displayName;
     } else {
         pickerLabel.style.fontFamily = 'inherit';
     }
-
     pickerLabel.setAttribute('data-value', currentFont);
     pickerLabel.textContent = displayName;
 }
-
 
 // --- INITIALIZE QUILL ---
 function initializeQuill() {
@@ -491,9 +439,7 @@ function initializeQuill() {
         ["bold", "italic", "underline", "strike"],
         [{ list: "ordered" }, { list: "bullet" }],
         [{ color: [] }, "custom-color", "icon-search"],
-        ["link"],
-        ["clean"],
-        ["day-mode", "night-mode"]
+        ["link"], ["clean"], ["day-mode", "night-mode"]
     ];
 
     quillEditor = new Quill(editorContainer, {
@@ -514,8 +460,7 @@ function initializeQuill() {
 
     quillEditor.clipboard.addMatcher('I', (node, delta) => {
         const classes = node.getAttribute('class') || '';
-        const isFaIcon = /fa-(solid|regular|brands)/.test(classes);
-        if (isFaIcon) {
+        if (/fa-(solid|regular|brands)/.test(classes)) {
             return new Delta().insert({ 'font-awesome': classes });
         }
         return delta;
@@ -529,9 +474,7 @@ function initializeQuill() {
     const toolbar = quillEditor.getModule('toolbar');
     toolbar.container.addEventListener('click', (e) => {
         if (e.target.closest('.ql-font .ql-picker-item')) {
-            setTimeout(() => {
-                updateFontPickerLabel(quillEditor);
-            }, 0);
+            setTimeout(() => { updateFontPickerLabel(quillEditor); }, 0);
         }
     });
 
@@ -545,9 +488,7 @@ function openTextEditor(target) {
     activeTextElement = target;
     editorPop.classList.remove("content-hide");
     editorPop.classList.add("content-show");
-
     if (!quillEditor) initializeQuill();
-
     requestAnimationFrame(() => {
         const content = target.innerHTML.trim();
         quillEditor.setContents([], "silent");
@@ -559,12 +500,10 @@ function openTextEditor(target) {
         isEditorLoading = false;
     });
 }
-
 function cleanHtml(html) {
     const trimmed = html.trim();
     return trimmed.replace(/<(\w+)(?:\s[^>]*)?>\s*(<br\s*\/?>)?\s*<\/\1>/gi, "").trim();
 }
-
 function normalizeLists(html) {
     return html.replace(/<ol[^>]*>([\s\S]*?)<\/ol>/gi, (match, inner) => {
         if (/data-list="bullet"/.test(match)) {
@@ -573,37 +512,30 @@ function normalizeLists(html) {
         return `<ol>${inner.replace(/ data-list="ordered"/g, "")}</ol>`;
     });
 }
-
 function closeTextEditor(save = true) {
     if (!activeTextElement || !quillEditor) return;
-
     if (save) {
         let newContent = quillEditor.root.innerHTML;
         newContent = normalizeLists(newContent);
         const cleaned = cleanHtml(newContent);
         if (cleaned) activeTextElement.innerHTML = cleaned;
     }
-
     editorPop.classList.remove("content-show");
     editorPop.classList.add("content-hide");
     activeTextElement = null;
 }
 
 // --- GLOBAL EVENT LISTENERS ---
-
 document.addEventListener("dblclick", (e) => {
     const target = e.target.closest(".text-element");
     if (target) openTextEditor(target);
 });
-
 document.addEventListener("click", (e) => {
     const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
     if (!isEditorVisible || isEditorLoading) return;
-
     const isClickInsideEditorZone = e.target.closest(
         ".text-editor-pop, .ql-picker, .ql-tooltip, .ql-icon-search-tooltip"
     );
-
     if (!isClickInsideEditorZone) {
         closeTextEditor(true);
     }
