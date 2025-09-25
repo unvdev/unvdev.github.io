@@ -386,6 +386,12 @@
             color: #fff;
         }
 
+        .style-editor-sidebar .style-editor-segmented-control .active {
+            background: magenta;
+            border-color: magenta;
+            color: #fff;
+        }
+
         /* Padding Control */
         .style-editor-sidebar .style-editor-quad-control {
             display: grid;

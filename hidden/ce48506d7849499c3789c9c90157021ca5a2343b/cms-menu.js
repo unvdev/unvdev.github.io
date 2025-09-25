@@ -309,56 +309,91 @@ widthInput.addEventListener("input", () => {
   }
 });
 
-// ===============================
+//
 // ALIGNMENT
-// ===============================
-alignLeft.addEventListener("click", () => {
+// Utility: mark the right button active
+function highlightActiveAlignments() {
+  if (!currentlySelected) return;
+
+  // Clear old actives
+  [alignLeft, alignCenter, alignRight, alignTop, alignMiddle, alignBottom]
+    .forEach(btn => btn.classList.remove("active"));
+
+  // Horizontal
+  if (currentlySelected.classList.contains("building-block-align-left")) {
+    alignLeft.classList.add("active");
+  } else if (currentlySelected.classList.contains("building-block-align-center")) {
+    alignCenter.classList.add("active");
+  } else if (currentlySelected.classList.contains("building-block-align-right")) {
+    alignRight.classList.add("active");
+  }
+
+  // Vertical
+  if (currentlySelected.classList.contains("building-column-content-top")) {
+    alignTop.classList.add("active");
+  } else if (currentlySelected.classList.contains("building-column-content-center")) {
+    alignMiddle.classList.add("active");
+  } else if (currentlySelected.classList.contains("building-column-content-bottom")) {
+    alignBottom.classList.add("active");
+  }
+}
+
+// Wrap existing button handlers so they also highlight
+function wrapWithHighlight(fn) {
+  return () => {
+    fn();
+    highlightActiveAlignments();
+  };
+}
+
+// Replace your listeners with wrapped ones
+alignLeft.addEventListener("click", wrapWithHighlight(() => {
   if (currentlySelected) {
     currentlySelected.classList.add("custom-styles");
     currentlySelected.classList.remove("building-block-align-center", "building-block-align-right");
     currentlySelected.classList.add("building-block-align-left");
   }
-});
+}));
 
-alignCenter.addEventListener("click", () => {
+alignCenter.addEventListener("click", wrapWithHighlight(() => {
   if (currentlySelected) {
     currentlySelected.classList.add("custom-styles");
     currentlySelected.classList.remove("building-block-align-left", "building-block-align-right");
     currentlySelected.classList.add("building-block-align-center");
   }
-});
+}));
 
-alignRight.addEventListener("click", () => {
+alignRight.addEventListener("click", wrapWithHighlight(() => {
   if (currentlySelected) {
     currentlySelected.classList.add("custom-styles");
     currentlySelected.classList.remove("building-block-align-left", "building-block-align-center");
     currentlySelected.classList.add("building-block-align-right");
   }
-});
+}));
 
-alignTop.addEventListener("click", () => {
+alignTop.addEventListener("click", wrapWithHighlight(() => {
   if (currentlySelected) {
     currentlySelected.classList.add("custom-styles");
     currentlySelected.classList.remove("building-column-content-center", "building-column-content-bottom");
     currentlySelected.classList.add("building-column-content-top");
   }
-});
+}));
 
-alignMiddle.addEventListener("click", () => {
+alignMiddle.addEventListener("click", wrapWithHighlight(() => {
   if (currentlySelected) {
     currentlySelected.classList.add("custom-styles");
     currentlySelected.classList.remove("building-column-content-top", "building-column-content-bottom");
     currentlySelected.classList.add("building-column-content-center");
   }
-});
+}));
 
-alignBottom.addEventListener("click", () => {
+alignBottom.addEventListener("click", wrapWithHighlight(() => {
   if (currentlySelected) {
     currentlySelected.classList.add("custom-styles");
     currentlySelected.classList.remove("building-column-content-top", "building-column-content-center");
     currentlySelected.classList.add("building-column-content-bottom");
   }
-});
+}));
 
 // ===============================
 // PADDING INPUTS
@@ -429,6 +464,9 @@ function loadStylesFromSelected() {
     const actualWidth = currentlySelected.offsetWidth;
     widthInput.value = Math.round((actualWidth / parentWidth) * 100);
   }
+
+  // Segmented Buttons
+  highlightActiveAlignments();
 
   // Padding
   paddingTopInput.value = parseInt(computed.paddingTop) || 0;
