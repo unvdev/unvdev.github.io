@@ -221,7 +221,6 @@ const editorContainer = document.querySelector("#quill-editor");
 let activeTextElement = null;
 let quillEditor = null;
 let isEditorLoading = false;
-let savedRange = null; // Variable to hold the last known selection
 
 // --- QUILL IMPORTS ---
 const Inline = Quill.import("blots/inline");
@@ -361,46 +360,9 @@ function initializeQuill() {
           "custom-color": customColorPicker,
           "day-mode": () => editorPop.style.backgroundColor = "whitesmoke",
           "night-mode": () => editorPop.style.backgroundColor = "#222222",
-          'link': function(value) {
-            if (value) {
-              if (savedRange) {
-                this.quill.setSelection(savedRange);
-              }
-              this.quill.theme.tooltip.edit('link');
-            } else {
-              this.quill.format('link', false);
-            }
-          }
         },
       },
     },
-  });
-
-  // --- DEFINITIVE FIX: MONKEY-PATCH QUILL'S TOOLTIP ---
-  // The bug is a race condition within Quill's internal focus management.
-  // This patch overrides the tooltip's default 'hide' method to make it smarter.
-  // It prevents the tooltip from hiding itself if the editor still has focus,
-  // which is what happens when you click a toolbar button.
-  const tooltip = quillEditor.theme.tooltip;
-  const originalHide = tooltip.hide; // Save the original hide function
-  tooltip.hide = function() {
-    // Only call the original hide function if the editor truly lost focus.
-    if (!this.quill.hasFocus()) {
-      originalHide.call(this);
-    }
-  };
-
-  // This is still good practice to prevent other focus issues.
-  const toolbar = quillEditor.getModule('toolbar');
-  toolbar.container.addEventListener('mousedown', (e) => {
-    e.preventDefault();
-  });
-
-  // We still need to track selection for the handler to work.
-  quillEditor.on('selection-change', (range) => {
-    if (range) {
-      savedRange = range;
-    }
   });
 
   quillEditor.clipboard.addMatcher('I', (node, delta) => {
@@ -422,7 +384,7 @@ function initializeQuill() {
     '<i class="fa-solid fa-moon"></i>';
 
   quillEditor.on('editor-change', () => updateFontPickerLabel(quillEditor));
-  updateFontPickerLabel(quillEditor);
+  // updateFontPickerLabel(quillEditor);
 }
 
 // --- EDITOR MANAGEMENT FUNCTIONS (Your existing code) ---
