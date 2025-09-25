@@ -383,7 +383,7 @@ function initializeQuill() {
   document.querySelector(".ql-night-mode").innerHTML =
     '<i class="fa-solid fa-moon"></i>';
 
-  quillEditor.on('editor-change', () => updateFontPickerLabel(quillEditor));
+  // quillEditor.on('editor-change', () => updateFontPickerLabel(quillEditor));
   // updateFontPickerLabel(quillEditor);
 }
 
