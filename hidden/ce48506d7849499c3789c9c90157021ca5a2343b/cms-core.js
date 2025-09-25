@@ -115,17 +115,29 @@ function pasteElement() {
 }
 
 document.addEventListener("click", (e) => {
+    const clickedElement = e.target;
 
-    const target = e.target;
-    const uiElements = '.ql-container, .ql-toolbar, .ql-picker, .ql-tooltip, .ql-action, .text-editor-pop, .text-editor, .cms-menu-bar, .cms-menu, .cms-menu-container, .style-editor-sidebar';
+    // Define the primary UI containers that should not trigger selection changes.
+    // Clicks inside these elements are considered UI interactions and should be ignored here.
+    const isInsideQuillUI = clickedElement.closest('.text-editor-pop');
+    const isInsideCmsUI = clickedElement.closest('.cms-menu-container, .cms-menu-bar');
+    const isInsideStyleEditor = clickedElement.closest('.style-editor-sidebar');
 
-    if (target.closest(uiElements)) return;
+    // If the click is inside any of our main UI containers, stop further execution.
+    if (isInsideQuillUI || isInsideCmsUI || isInsideStyleEditor) {
+        return;
+    }
 
-    const targetBlock = target.closest('.building-block');
+    // If the click was not in a UI area, check if it was on a building block.
+    const targetBuildingBlock = clickedElement.closest('.building-block');
 
-    if (targetBlock) {
-        selectBuildingBlock(targetBlock, target);
+    if (targetBuildingBlock) {
+        // If a building block was clicked, select it.
+        // The `selectBuildingBlock` function handles the specific logic.
+        selectBuildingBlock(targetBuildingBlock, clickedElement);
     } else {
+        // If the click was on the page background or another non-block element,
+        // deselect whatever is currently active.
         deselectAll();
     }
 });
