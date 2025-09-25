@@ -382,9 +382,22 @@ function initializeQuill() {
     '<i class="fa-solid fa-sun"></i>';
   document.querySelector(".ql-night-mode").innerHTML =
     '<i class="fa-solid fa-moon"></i>';
+    
+    // *** THE FIX: Replaced the noisy 'editor-change' with a targeted listener ***
+  const toolbar = quillEditor.getModule('toolbar');
+  toolbar.container.addEventListener('click', (e) => {
+    // Only update the label if a font picker item was clicked
+    if (e.target.closest('.ql-font .ql-picker-item')) {
+      // Use a brief timeout to allow Quill to update its internal state
+      // before we read the new font format.
+      setTimeout(() => {
+        updateFontPickerLabel(quillEditor);
+      }, 0);
+    }
+  });
 
-  // quillEditor.on('editor-change', () => updateFontPickerLabel(quillEditor));
-  // updateFontPickerLabel(quillEditor);
+  // Run once on initialization to set the default label
+  updateFontPickerLabel(quillEditor);
 }
 
 // --- EDITOR MANAGEMENT FUNCTIONS (Your existing code) ---
