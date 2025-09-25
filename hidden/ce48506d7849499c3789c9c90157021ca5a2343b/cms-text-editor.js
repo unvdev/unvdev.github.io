@@ -343,7 +343,6 @@ function setupIconSearch(quill) {
     const resultsContainer = document.querySelector('.ql-icon-search-results');
 
     input.addEventListener('input', (e) => {
-        // **FIX: Replaced spaces with hyphens in the search query**
         const query = e.target.value.toLowerCase().trim().replace(/\s+/g, '-');
         
         resultsContainer.innerHTML = '';
@@ -530,12 +529,28 @@ document.addEventListener("dblclick", (e) => {
     const target = e.target.closest(".text-element");
     if (target) openTextEditor(target);
 });
+
+// **MODIFIED: Integrated the "click outside" logic for the icon search tooltip**
 document.addEventListener("click", (e) => {
+    // First, handle the icon search tooltip closing
+    const iconTooltip = document.querySelector('.ql-icon-search-tooltip');
+    if (iconTooltip && iconTooltip.style.display !== 'none') {
+        const isClickOnButton = e.target.closest('.ql-icon-search');
+        const isClickInTooltip = e.target.closest('.ql-icon-search-tooltip');
+        if (!isClickOnButton && !isClickInTooltip) {
+            iconTooltip.style.display = 'none';
+        }
+    }
+
+    // Second, handle the main editor closing
     const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
     if (!isEditorVisible || isEditorLoading) return;
+
     const isClickInsideEditorZone = e.target.closest(
-        ".text-editor-pop, .ql-picker, .ql-tooltip, .ql-icon-search-tooltip"
+        ".text-editor-pop, .ql-picker, .ql-tooltip"
     );
+    // Note: .ql-icon-search-tooltip is intentionally left out here now,
+    // because its closing is handled above. A click on it is still "inside" the editor pop.
     if (!isClickInsideEditorZone) {
         closeTextEditor(true);
     }
