@@ -469,7 +469,6 @@ document.addEventListener("click", (e) => {
     }
 
     const clickedElement = e.target;
-.
     const isClickInsideEditorZone = clickedElement.closest(".text-editor-pop, .ql-picker, .ql-tooltip");
 
     if (!isClickInsideEditorZone) {
