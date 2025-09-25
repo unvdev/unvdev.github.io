@@ -224,7 +224,6 @@ let isEditorLoading = false;
 let iconSearchRange = null; // To store cursor position for icon insertion
 
 // --- ICON DATA ---
-// NOTE: Using the shortened list as requested. You can paste your full list here.
 const faIcons = [
     "fa-solid fa-0", "fa-solid fa-1", "fa-solid fa-2", "fa-solid fa-3", "fa-solid fa-4", "fa-solid fa-5", "fa-solid fa-6", "fa-solid fa-7", "fa-solid fa-8", "fa-solid fa-9"
 ];
@@ -240,7 +239,6 @@ class FontAwesomeBlot extends Embed {
         const node = super.create();
         node.setAttribute("class", className);
         node.setAttribute("aria-hidden", "true");
-        // Add some basic styling to make icons visible
         node.style.display = "inline-block";
         node.style.width = "1em";
         node.style.height = "1em";
@@ -312,7 +310,7 @@ class CustomFont extends Inline {
 Quill.register(CustomFont, true);
 
 
-// --- ICON SEARCH TOOLTIP FUNCTIONS (NEW) ---
+// --- ICON SEARCH TOOLTIP FUNCTIONS ---
 
 function setupIconSearch(quill) {
     const tooltipHTML = `
@@ -333,6 +331,9 @@ function setupIconSearch(quill) {
             width: 250px;
             max-height: 300px;
             overflow-y: auto;
+            /* NEW: Added these styles to control positioning */
+            left: 50%; 
+            transform: translateX(-50%); /* Center horizontally */
         }
         .ql-icon-search-input {
             width: 100%;
@@ -375,16 +376,15 @@ function setupIconSearch(quill) {
     const input = document.querySelector('.ql-icon-search-input');
     const resultsContainer = document.querySelector('.ql-icon-search-results');
 
-    // Handle search input
     input.addEventListener('input', (e) => {
         const query = e.target.value.toLowerCase().trim();
-        resultsContainer.innerHTML = ''; // Clear previous results
+        resultsContainer.innerHTML = '';
 
         if (query.length < 2) return;
 
         const filteredIcons = faIcons
             .filter(icon => icon.includes(query))
-            .slice(0, 15); // Show up to 15 results
+            .slice(0, 15);
 
         filteredIcons.forEach(iconClass => {
             const iconEl = document.createElement('div');
@@ -395,7 +395,6 @@ function setupIconSearch(quill) {
         });
     });
 
-    // Handle icon selection
     resultsContainer.addEventListener('click', (e) => {
         const result = e.target.closest('.ql-icon-search-result');
         if (!result) return;
@@ -406,34 +405,41 @@ function setupIconSearch(quill) {
             quill.insertEmbed(iconSearchRange.index, 'font-awesome', iconClass, Quill.sources.USER);
             quill.setSelection(iconSearchRange.index + 1, Quill.sources.USER);
         } else {
-            // Fallback if range is lost
             quill.focus();
             const currentIndex = quill.getSelection(true).index;
             quill.insertEmbed(currentIndex, 'font-awesome', iconClass, Quill.sources.USER);
+            quill.setSelection(currentIndex + 1, Quill.sources.USER);
         }
         
-        tooltip.style.display = 'none';
+        // OLD: tooltip.style.display = 'none'; // Removed this line
         input.value = '';
         resultsContainer.innerHTML = '';
+        quill.focus(); // Keep focus on the editor
     });
 }
 
 
 function iconSearchHandler() {
     const tooltip = document.querySelector('.ql-icon-search-tooltip');
-    if (!tooltip) return;
+    const iconButton = document.querySelector('.ql-icon-search'); // Get the button
+    if (!tooltip || !iconButton) return;
     
-    // Save cursor position
     iconSearchRange = quillEditor.getSelection(true);
 
     if (tooltip.style.display === 'none') {
-        const toolbar = document.querySelector('.ql-toolbar');
         tooltip.style.display = 'block';
-        tooltip.style.top = `${toolbar.offsetHeight}px`; // Position below toolbar
-        tooltip.style.left = '10px';
+
+        // NEW: Position the tooltip right below the icon button
+        const buttonRect = iconButton.getBoundingClientRect();
+        const toolbarRect = document.querySelector('.ql-toolbar').getBoundingClientRect();
+        
+        tooltip.style.top = `${buttonRect.bottom - toolbarRect.top + 5}px`; // 5px padding below button
+        tooltip.style.left = `${buttonRect.left - toolbarRect.left + (buttonRect.width / 2) - (tooltip.offsetWidth / 2)}px`;
+        
         document.querySelector('.ql-icon-search-input').focus();
     } else {
         tooltip.style.display = 'none';
+        quillEditor.focus(); // Return focus to the editor when closing
     }
 }
 
@@ -479,13 +485,12 @@ function updateFontPickerLabel(quill) {
 function initializeQuill() {
     Quill.register(FontAwesomeBlot);
 
-    // MODIFICATION: Added 'icon-search' to the toolbar array
     const toolbarOptions = [
         [{ font: CustomFont.whitelist }],
         [{ header: [1, 2, 3, 4, 5, false] }, { align: [] }],
         ["bold", "italic", "underline", "strike"],
         [{ list: "ordered" }, { list: "bullet" }],
-        [{ color: [] }, "custom-color", "icon-search"], // Added here
+        [{ color: [] }, "custom-color", "icon-search"],
         ["link"],
         ["clean"],
         ["day-mode", "night-mode"]
@@ -499,7 +504,6 @@ function initializeQuill() {
                 container: toolbarOptions,
                 handlers: {
                     "custom-color": customColorPicker,
-                    // NEW: Handler for the icon search button
                     "icon-search": iconSearchHandler,
                     "day-mode": () => editorPop.style.backgroundColor = "whitesmoke",
                     "night-mode": () => editorPop.style.backgroundColor = "#222222",
@@ -521,7 +525,6 @@ function initializeQuill() {
     document.querySelector(".ql-custom-color").innerHTML = '<i class="fa-solid fa-palette"></i>';
     document.querySelector(".ql-day-mode").innerHTML = '<i class="fa-solid fa-sun"></i>';
     document.querySelector(".ql-night-mode").innerHTML = '<i class="fa-solid fa-moon"></i>';
-    // NEW: Set the icon for our new button
     document.querySelector(".ql-icon-search").innerHTML = '<i class="fa-solid fa-icons"></i>';
 
 
@@ -537,7 +540,6 @@ function initializeQuill() {
 
     updateFontPickerLabel(quillEditor);
 
-    // NEW: Set up all the icon search functionality
     setupIconSearch(quillEditor);
 }
 
@@ -604,12 +606,19 @@ document.addEventListener("click", (e) => {
     const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
     if (!isEditorVisible || isEditorLoading) return;
 
-    // MODIFIED: Also check if the click is inside our new icon search tooltip
-    const isClickInsideEditorZone = e.target.closest(
+    const clickedElement = e.target;
+    const isClickInsideEditorZone = clickedElement.closest(
         ".text-editor-pop, .ql-picker, .ql-tooltip, .ql-icon-search-tooltip"
     );
 
-    if (!isClickInsideEditorZone) {
+    // NEW: If the click is inside the icon search tooltip, prevent closing the editor.
+    // However, if the click is outside BOTH the editor and the icon search, then close.
+    if (!isClickInsideEditorZone && !clickedElement.closest('.ql-icon-search-tooltip')) {
         closeTextEditor(true);
+    } else if (clickedElement.closest('.ql-icon-search-tooltip')) {
+        // If clicked inside the icon search tooltip, we don't close the editor.
+        // We also want to prevent the document-level click from potentially propagating
+        // and causing unintended side effects if other listeners are present.
+        e.stopPropagation();
     }
 });
