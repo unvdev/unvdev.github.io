@@ -363,21 +363,10 @@ function initializeQuill() {
           "night-mode": () => editorPop.style.backgroundColor = "#222222",
           'link': function(value) {
             if (value) {
-              // Standard logic to prepare the tooltip
               if (savedRange) {
                 this.quill.setSelection(savedRange);
               }
               this.quill.theme.tooltip.edit('link');
-
-              // Forcefully remove the ql-hidden class a moment later
-              // to override Quill's incorrect behavior.
-              setTimeout(() => {
-                const tooltip = this.quill.theme.tooltip.root;
-                if (tooltip.classList.contains('ql-hidden')) {
-                  tooltip.classList.remove('ql-hidden');
-                }
-              }, 0);
-
             } else {
               this.quill.format('link', false);
             }
@@ -386,6 +375,20 @@ function initializeQuill() {
       },
     },
   });
+
+  // --- DEFINITIVE FIX: MONKEY-PATCH QUILL'S TOOLTIP ---
+  // The bug is a race condition within Quill's internal focus management.
+  // This patch overrides the tooltip's default 'hide' method to make it smarter.
+  // It prevents the tooltip from hiding itself if the editor still has focus,
+  // which is what happens when you click a toolbar button.
+  const tooltip = quillEditor.theme.tooltip;
+  const originalHide = tooltip.hide; // Save the original hide function
+  tooltip.hide = function() {
+    // Only call the original hide function if the editor truly lost focus.
+    if (!this.quill.hasFocus()) {
+      originalHide.call(this);
+    }
+  };
 
   // This is still good practice to prevent other focus issues.
   const toolbar = quillEditor.getModule('toolbar');
