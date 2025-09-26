@@ -252,7 +252,6 @@
                 /* Limit height of the font dropdown and enable scrolling */
         .ql-snow .ql-picker.ql-size .ql-picker-options {
             max-height: 550px;
-            max-width: 150px;
             overflow-y: auto;
         }
 
