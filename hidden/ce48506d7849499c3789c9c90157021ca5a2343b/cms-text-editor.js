@@ -228,7 +228,6 @@ const Inline = Quill.import("blots/inline");
 const Embed = Quill.import('blots/embed');
 const Delta = Quill.import('delta');
 const Size = Quill.import('attributors/style/size');
-const Header = Quill.import('blots/header'); 
 
 // --- ICON DATA ---
 const faIcons = [
@@ -532,9 +531,6 @@ class CustomFont extends Inline {
 }
 Quill.register(CustomFont, true);
 
-Header.whitelist = [1, 2, 3, 4, 5, false];
-Quill.register(Header, true);
-
 Size.whitelist = ['9px', '12px', '14px', '16px', '20px', '24px', '28px', '32px', '36px', '40px', '50px', '60px', '70px', '80px', '90px', '100px'];
 Quill.register(Size, true);
 
@@ -620,7 +616,7 @@ function initializeQuill() {
     Quill.register(FontAwesomeBlot);
 
     const toolbarOptions = [
-        [{ header: Header.whitelist }, { font: CustomFont.whitelist }, { size: Size.whitelist }],
+        [{ header: [1, 2, 3, 4, 5, false] }, { font: CustomFont.whitelist }, { size: Size.whitelist }],
         [{ align: [] }],
         ["bold", "italic", "underline"],
         [{ list: "ordered" }, { list: "bullet" }],

@@ -616,8 +616,8 @@
     content: 'Header 5';
 }
 
-.ql-snow .ql-picker.ql-header .ql-picker-item[data-value="false"]::before {
-    content: 'Normal';
+.ql-snow .ql-picker.ql-header .ql-picker-item:not([data-value])::before {
+  content: 'Paragraph';
 }
 
         /* Main Sidebar Container */
