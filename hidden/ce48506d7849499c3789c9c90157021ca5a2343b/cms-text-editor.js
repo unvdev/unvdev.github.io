@@ -678,23 +678,6 @@ function initializeQuill() {
     document.querySelector(".ql-night-mode").innerHTML = '<i class="fa-solid fa-moon"></i>';
     document.querySelector(".ql-icon-search").innerHTML = '<i class="fa-solid fa-icons"></i>';
 
-    const toolbar = quillEditor.getModule('toolbar');
-    toolbar.container.addEventListener('click', (e) => {
-        if (e.target.closest('.ql-font .ql-picker-item')) {
-            setTimeout(() => {
-                updateFontPickerLabel(quillEditor);
-        }, 0);
-        } else if (e.target.closest('.ql-size .ql-picker-item')) {
-            setTimeout(() => {
-                updateSizePickerLabel(quillEditor);
-            }, 0);
-        } else if (e.target.closest('.ql-header .ql-picker-item')) {
-            setTimeout(() => {
-                updateHeaderPickerLabel(quillEditor);
-            }, 0);
-        }
-    });
-
     editorContainer.addEventListener("mousedown", (e) => {
       const activeTooltip = e.target.closest('.ql-tooltip.ql-editing');
       if (activeTooltip) return;
