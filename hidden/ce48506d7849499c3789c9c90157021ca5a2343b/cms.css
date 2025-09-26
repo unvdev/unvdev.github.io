@@ -308,7 +308,7 @@
         .ql-icon-search-result:hover { background-color: #f0f0f0; }
 
         /*Google-To-Quill Fonts*/
-/* Font: Roboto */
+/* Font: Default */
 .ql-snow .ql-editor .ql-font-default { font-family: ''} /* Editor-Specific Rule */
 .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="default"]::before { content: "Default"; font-family: 'Roboto', sans-serif; }
 
