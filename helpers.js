@@ -1,4 +1,13 @@
     document.addEventListener("DOMContentLoaded", () => {
+        
+        setTimeout(function() {
+            const script = document.createElement("script");
+            script.src = "https://kit.fontawesome.com/0027766915.js";
+            script.crossOrigin = "anonymous";
+            script.defer = true; // optional, ensures it doesn’t block parsing
+        }, 0);
+
+        document.head.appendChild(script); // or document.body.appendChild(script)
 
         // Recursive function to get the first non-default color
         function getEffectiveColor(el) {
