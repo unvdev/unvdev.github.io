@@ -46,6 +46,136 @@
 @import url('https://fonts.googleapis.com/css2?family=Baskervville+SC:wght@400..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Baskervville:ital,wght@0,400..700;1,400..700&display=swap'); */
 
+/*Google-To-Quill Fonts*/
+/* Font: Roboto */
+.ql-font-roboto { font-family: 'Roboto', sans-serif !important; } /* General Rule */
+
+/* Font: Comfortaa */
+.ql-font-comfortaa { font-family: 'Comfortaa', cursive !important; }
+
+/* Font: Lora */
+.ql-font-lora { font-family: 'Lora', serif !important; }
+
+/* Font: Bebas Neue */
+.ql-font-bebas-neue { font-family: 'Bebas Neue', sans-serif !important; }
+
+/* Font: Google Sans Code */
+.ql-font-google-sans-code { font-family: 'Google Sans Code', monospace !important; }
+
+/* Font: Funnel Display */
+.ql-font-funnel-display { font-family: 'Funnel Display', sans-serif !important; }
+
+/* Font: Alumni Sans Pinstripe */
+.ql-font-alumni-sans-pinstripe { font-family: 'Alumni Sans Pinstripe', sans-serif !important; }
+
+/* Font: Lexend */
+.ql-font-lexend { font-family: 'Lexend', sans-serif !important; }
+
+/* Font: Cal Sans */
+.ql-font-cal-sans { font-family: 'Cal Sans', sans-serif !important; }
+
+/* Font: Sono */
+.ql-font-sono { font-family: 'Sono', sans-serif !important; }
+
+/* Font: Pacifico */
+.ql-font-pacifico { font-family: 'Pacifico', cursive !important; }
+
+/* Font: Delius */
+.ql-font-delius { font-family: 'Delius', cursive !important; }
+
+/* Font: Meow Script */
+.ql-font-meow-script { font-family: 'Meow Script', cursive !important; }
+
+/* Font: Borel */
+.ql-font-borel { font-family: 'Borel', cursive !important; }
+
+/* Font: DynaPuff */
+.ql-font-dynapuff { font-family: 'DynaPuff', cursive !important; }
+
+/* Font: Chewy */
+.ql-font-chewy { font-family: 'Chewy', cursive !important; }
+
+/* Font: Twinkle Star */
+.ql-font-twinkle-star { font-family: 'Twinkle Star', cursive !important; }
+
+/* Font: Agbalumo */
+.ql-font-agbalumo { font-family: 'Agbalumo', serif !important; }
+
+/* Font: Playwrite ZA */
+.ql-font-playwrite-za { font-family: 'Playwrite ZA', serif !important; }
+
+/* Font: Lobster */
+.ql-font-lobster { font-family: 'Lobster', cursive !important; }
+
+/* Font: Quintessential */
+.ql-font-quintessential { font-family: 'Quintessential', cursive !important; }
+
+/* Font: Poller One */
+.ql-font-poller-one { font-family: 'Poller One', cursive !important; }
+
+/* Font: Cinzel */
+.ql-font-cinzel { font-family: 'Cinzel', serif !important; }
+
+/* Font: Germania One */
+.ql-font-germania-one { font-family: 'Germania One', cursive !important; }
+
+/* Font: Ultra */
+.ql-font-ultra { font-family: 'Ultra', serif !important; }
+
+/* Font: Pixelify Sans */
+.ql-font-pixelify-sans { font-family: 'Pixelify Sans', sans-serif !important; }
+
+/* Font: UnifrakturMaguntia */
+.ql-font-unifrakturmaguntia { font-family: 'UnifrakturMaguntia', cursive !important; }
+
+/* Font: MonteCarlo */
+.ql-font-montecarlo { font-family: 'MonteCarlo', cursive !important; }
+
+/* Font: Marck Script */
+.ql-font-marck-script { font-family: 'Marck Script', cursive !important; }
+
+/* Font: Fugaz One */
+.ql-font-fugaz-one { font-family: 'Fugaz One', cursive !important; }
+
+/* Font: Caveat Brush */
+.ql-font-caveat-brush { font-family: 'Caveat Brush', cursive !important; }
+
+/* Font: Coming Soon */
+.ql-font-coming-soon { font-family: 'Coming Soon', cursive !important; }
+
+/* Font: Short Stack */
+.ql-font-short-stack { font-family: 'Short Stack', cursive !important; }
+
+/* Font: Michroma */
+.ql-font-michroma { font-family: 'Michroma', sans-serif !important; }
+
+/* Font: SUSE */
+.ql-font-suse { font-family: 'SUSE', sans-serif !important; }
+
+/* Font: Noto Sans */
+.ql-font-noto-sans { font-family: 'Noto Sans', sans-serif !important; }
+
+/* Font: Merriweather Sans */
+.ql-font-merriweather-sans { font-family: 'Merriweather Sans', sans-serif !important; }
+
+/* Font: Host Grotesk */
+.ql-font-host-grotesk { font-family: 'Host Grotesk', sans-serif !important; }
+
+/* Font: Lato */
+.ql-font-lato { font-family: 'Lato', sans-serif !important; }
+
+/* Font: Newsreader */
+.ql-font-newsreader { font-family: 'Newsreader', serif !important; }
+
+/* Font: Libre Bodoni */
+.ql-font-libre-bodoni { font-family: 'Libre Bodoni', serif !important; }
+
+/* Font: Baskervville SC */
+.ql-font-baskervville-sc { font-family: 'Baskervville SC', serif !important; }
+
+/* Font: Baskervville */
+.ql-font-baskervville { font-family: 'Baskervville', serif !important; }
+
 /* Font Awesome Styles */
         .fa, .fa-brands, .fa-classic, .fa-duotone, .fa-light, .fa-regular, .fa-sharp, .fa-sharp-duotone, .fa-solid, .fa-thin, .fab, .fad, .fadl, .fadr, .fadt, .fal, .far, .fas, .fasdl, .fasdr, .fasds, .fasdt, .fasl, .fasr, .fass, .fast, .fat {
             width: auto !important;
