@@ -575,20 +575,24 @@ function updateSizePickerLabel(quill) {
     pickerLabel.textContent = displayName;
 }
 
+const headerNameMap = {
+  '1': 'Title',
+  '2': 'Subtitle',
+  '3': 'Section',
+  '4': 'Subsection',
+  '5': 'Detail',
+  'false': 'Paragraph' // The value for "Normal" text
+};
+
 function updateHeaderPickerLabel(quill) {
-    const pickerLabel = document.querySelector(".ql-header .ql-picker-label");
-    if (!pickerLabel) return;
-    const format = quill.getFormat();
-    let currentHeader = format.header || '';
-    let displayName = 'Font Style';
-    if (currentHeader) {
-        displayName = currentHeader;
-    } else {
-        displayName = 'Font Style';
-    }
-    pickerLabel.setAttribute('data-value', currentHeader);
-    pickerLabel.textContent = displayName;
-}
+  const pickerLabel = document.querySelector(".ql-header .ql-picker-label");
+  if (!pickerLabel) return;
+  const format = quill.getFormat();
+  const currentHeaderValue = String(format.header || false);
+  const displayName = headerNameMap[currentHeaderValue] || 'Font Style';
+  pickerLabel.textContent = displayName;
+  pickerLabel.setAttribute('data-value', currentHeaderValue);
+};
 
 function iconSearchHandler() {
     const tooltip = document.querySelector('.ql-icon-search-tooltip');
@@ -609,7 +613,7 @@ function iconSearchHandler() {
         tooltip.style.display = 'none';
         quillEditor.focus();
     }
-}
+};
 
 // --- INITIALIZE QUILL ---
 function initializeQuill() {
