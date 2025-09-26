@@ -252,8 +252,7 @@
                 /* Limit height of the font dropdown and enable scrolling */
         .ql-snow .ql-picker.ql-size .ql-picker-options {
             max-height: 550px;
-            max-width: 120px;
-            font-size: 16px !important;
+            max-width: 150px;
             overflow-y: auto;
         }
 
@@ -495,17 +494,17 @@
         /* Font Sizes */
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="9px"]::before {
     content: '9px';
-    font-size: 9px !important;
+    font-size: 16px !important;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="12px"]::before {
     content: '12px';
-    font-size: 12px !important;
+    font-size: 16px !important;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="14px"]::before {
     content: '14px';
-    font-size: 14px !important;
+    font-size: 16px !important;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="16px"]::before {
@@ -515,62 +514,62 @@
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="20px"]::before {
     content: '20px';
-    font-size: 20px !important;
+    font-size: 16px !important;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="24px"]::before {
     content: '24px';
-    font-size: 24px !important;
+    font-size: 16px !important;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="28px"]::before {
     content: '28px';
-    font-size: 28px !important;
+    font-size: 16px !important;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="32px"]::before {
     content: '32px';
-    font-size: 32px !important;
+    font-size: 16px !important;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="36px"]::before {
     content: '36px';
-    font-size: 36px !important;
+    font-size: 16px !important;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="40px"]::before {
     content: '40px';
-    font-size: 40px !important;
+    font-size: 16px !important;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="50px"]::before {
     content: '50px';
-    font-size: 50px !important;
+    font-size: 16px !important;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="60px"]::before {
     content: '60px';
-    font-size: 60px !important;
+    font-size: 16px !important;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="70px"]::before {
     content: '70px';
-    font-size: 70px !important;
+    font-size: 16px !important;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="80px"]::before {
     content: '80px';
-    font-size: 80px !important;
+    font-size: 16px !important;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="90px"]::before {
     content: '90px';
-    font-size: 90px !important;
+    font-size: 16px !important;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="100px"]::before {
     content: '100px';
-    font-size: 100px !important;
+    font-size: 16px !important;
 }
 
         /* Main Sidebar Container */
