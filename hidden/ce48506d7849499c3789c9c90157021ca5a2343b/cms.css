@@ -481,7 +481,12 @@
 .ql-snow .ql-editor .ql-font-baskervville { font-family: 'Baskervville', serif !important; }
 .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="baskervville"]::before { content: "Baskervville"; font-family: 'Baskervville', serif; }
 
-        /* Font Sizes */
+/* Font Size Values */
+.ql-snow .ql-picker.ql-size .ql-picker-item:not([data-value])::before {
+  content: 'Clear' !important;
+  font-size: 16px !important;
+}
+
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="9px"]::before {
     content: '9px' !important;
     font-size: 16px !important;
@@ -560,6 +565,8 @@
     content: '100px' !important;
     font-size: 16px !important;
 }
+
+/* Header Values */
 
 .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="1"]::before {
     content: 'Title' !important;

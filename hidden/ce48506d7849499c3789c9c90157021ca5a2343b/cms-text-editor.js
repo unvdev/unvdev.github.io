@@ -531,7 +531,7 @@ class CustomFont extends Inline {
 }
 Quill.register(CustomFont, true);
 
-Size.whitelist = ['9px', '12px', '14px', '16px', '20px', '24px', '28px', '32px', '36px', '40px', '50px', '60px', '70px', '80px', '90px', '100px'];
+Size.whitelist = [false, '9px', '12px', '14px', '16px', '20px', '24px', '28px', '32px', '36px', '40px', '50px', '60px', '70px', '80px', '90px', '100px'];
 Quill.register(Size, true);
 
 // --- QUILL HELPER FUNCTIONS ---
