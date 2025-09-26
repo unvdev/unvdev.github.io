@@ -663,6 +663,23 @@ function initializeQuill() {
       }, 0);
     });
 
+    const toolbar = quillEditor.getModule('toolbar');
+    toolbar.container.addEventListener('click', (e) => {
+        if (e.target.closest('.ql-font .ql-picker-item')) {
+            setTimeout(() => {
+                updateFontPickerLabel(quillEditor);
+        }, 0);
+        } else if (e.target.closest('.ql-size .ql-picker-item')) {
+            setTimeout(() => {
+                updateSizePickerLabel(quillEditor);
+            }, 0);
+        } else if (e.target.closest('.ql-header .ql-picker-item')) {
+            setTimeout(() => {
+                updateHeaderPickerLabel(quillEditor);
+            }, 0);
+        }
+    });
+
     updateFontPickerLabel(quillEditor);
     updateSizePickerLabel(quillEditor);
     updateHeaderPickerLabel(quillEditor);
