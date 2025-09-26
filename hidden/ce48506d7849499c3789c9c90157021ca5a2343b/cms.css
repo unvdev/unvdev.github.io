@@ -491,91 +491,91 @@
 
         /* Font Sizes */
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="9px"]::before {
-    content: '9px';
+    content: '9px' !important;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="12px"]::before {
-    content: '12px';
+    content: '12px' !important;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="14px"]::before {
-    content: '14px';
+    content: '14px' !important;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="16px"]::before {
-    content: '16px';
+    content: '16px' !important;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="20px"]::before {
-    content: '20px';
+    content: '20px' !important;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="24px"]::before {
-    content: '24px';
+    content: '24px' !important;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="28px"]::before {
-    content: '28px';
+    content: '28px' !important;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="32px"]::before {
-    content: '32px';
+    content: '32px' !important;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="36px"]::before {
-    content: '36px';
+    content: '36px' !important;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="40px"]::before {
-    content: '40px';
+    content: '40px' !important;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="50px"]::before {
-    content: '50px';
+    content: '50px' !important;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="60px"]::before {
-    content: '60px';
+    content: '60px' !important;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="70px"]::before {
-    content: '70px';
+    content: '70px' !important;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="80px"]::before {
-    content: '80px';
+    content: '80px' !important;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="90px"]::before {
-    content: '90px';
+    content: '90px' !important;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="100px"]::before {
-    content: '100px';
+    content: '100px' !important;
 }
 
 .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="1"]::before {
-    content: 'Title';
+    content: 'Title' !important;
 }
 
 .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="2"]::before {
-    content: 'Subtitle';
+    content: 'Subtitle' !important;
 }
 
 .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="3"]::before {
-    content: 'Section';
+    content: 'Section' !important;
 }
 
 .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="4"]::before {
-    content: 'Subsection';
+    content: 'Subsection' !important;
 }
 
 .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="5"]::before {
-    content: 'Detail';
+    content: 'Detail' !important;
 }
 
 .ql-snow .ql-picker.ql-header .ql-picker-item:not([data-value])::before {
-  content: 'Paragraph';
+  content: 'Paragraph' !important;
 }
 
         /* Main Sidebar Container */
