@@ -611,7 +611,7 @@ function initializeQuill() {
 
     const toolbarOptions = [
         [{ font: CustomFont.whitelist }],
-        [{ size: ['9px', '12px', '14px', '16px', '20px', '24px', '28px', '32px', '36px', '40px', '50px', '60px', '70px', '80px', '90px', '100px'] }],
+        [{ size: Size.whitelist }],
         [{ header: [1, 2, 3, 4, 5, false] }, { align: [] }],
         ["bold", "italic", "underline"],
         [{ list: "ordered" }, { list: "bullet" }],
