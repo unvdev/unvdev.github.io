@@ -249,6 +249,11 @@
             /* remove Quill's default pseudo-element */
         }
 
+        .ql-font .ql-picker-label::after {
+            content: '\00a0\2B0D' !important;
+            /* remove Quill's default pseudo-element */
+        }
+
                 /* Limit height of the font dropdown and enable scrolling */
         .ql-snow .ql-picker.ql-size .ql-picker-options {
             max-height: 550px;
@@ -265,12 +270,22 @@
         }
 
         .ql-size .ql-picker-label::before {
-            content: 'Font Size';
+            content: none !important;
+            /* remove Quill's default pseudo-element */
+        }
+
+        .ql-size .ql-picker-label::after {
+            content: '\00a0\2B0D' !important;
             /* remove Quill's default pseudo-element */
         }
 
         .ql-header .ql-picker-label::before {
-            content: 'Font Style';
+            content: none !important;
+            /* remove Quill's default pseudo-element */
+        }
+
+        .ql-header .ql-picker-label::after {
+            content: '\00a0\2B0D' !important;
             /* remove Quill's default pseudo-element */
         }
 

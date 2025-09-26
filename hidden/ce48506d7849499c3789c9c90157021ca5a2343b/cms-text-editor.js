@@ -584,6 +584,36 @@ function updateFontPickerLabel(quill) {
     pickerLabel.textContent = displayName;
 }
 
+function updateSizePickerLabel(quill) {
+    const pickerLabel = document.querySelector(".ql-size .ql-picker-label");
+    if (!pickerLabel) return;
+    const format = quill.getFormat();
+    let currentSize = format.size || '';
+    let displayName = 'Font Size';
+    if (currentSize) {
+        displayName = currentSize;
+    } else {
+        displayName = 'Font Size';
+    }
+    pickerLabel.setAttribute('data-value', currentSize);
+    pickerLabel.textContent = displayName;
+}
+
+function updateHeaderPickerLabel(quill) {
+    const pickerLabel = document.querySelector(".ql-header .ql-picker-label");
+    if (!pickerLabel) return;
+    const format = quill.getFormat();
+    let currentHeader = format.header || '';
+    let displayName = 'Font Style';
+    if (currentHeader) {
+        displayName = currentHeader;
+    } else {
+        displayName = 'Font Style';
+    }
+    pickerLabel.setAttribute('data-value', currentHeader);
+    pickerLabel.textContent = displayName;
+}
+
 function iconSearchHandler() {
     const tooltip = document.querySelector('.ql-icon-search-tooltip');
     if (!tooltip) return;
@@ -651,11 +681,17 @@ function initializeQuill() {
     const toolbar = quillEditor.getModule('toolbar');
     toolbar.container.addEventListener('click', (e) => {
         if (e.target.closest('.ql-font .ql-picker-item')) {
-            setTimeout(() => { updateFontPickerLabel(quillEditor); }, 0);
+            setTimeout(() => {
+                updateFontPickerLabel(quillEditor);
+                updateSizePickerLabel(quillEditor);
+                updateHeaderPickerLabel(quillEditor);
+            }, 0);
         }
     });
 
     updateFontPickerLabel(quillEditor);
+    updateSizePickerLabel(quillEditor);
+    updateHeaderPickerLabel(quillEditor);
     setupIconSearch(quillEditor);
 }
 
