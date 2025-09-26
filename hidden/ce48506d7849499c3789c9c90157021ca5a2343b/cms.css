@@ -229,23 +229,6 @@
             border-radius: 4px;
         }
 
-                /* Limit height of the font dropdown and enable scrolling */
-        .ql-snow .ql-picker.ql-size .ql-picker-options {
-            max-height: 550px;
-            /* your desired height */
-            overflow-y: auto;
-            /* adds scrollbar when content exceeds height */
-        }
-
-        .ql-snow .ql-picker.ql-size .ql-picker-options::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .ql-snow .ql-picker.ql-size .ql-picker-options::-webkit-scrollbar-thumb {
-            background-color: rgba(0, 0, 0, 0.3);
-            border-radius: 4px;
-        }
-
         .ql-font .ql-picker-label {
             white-space: nowrap;
             /* Prevent line breaks */
@@ -263,6 +246,33 @@
 
         .ql-font .ql-picker-label::before {
             content: none !important;
+            /* remove Quill's default pseudo-element */
+        }
+
+                /* Limit height of the font dropdown and enable scrolling */
+        .ql-snow .ql-picker.ql-size .ql-picker-options {
+            max-height: 550px;
+            max-width: 120px;
+            font-size: 16px !important;
+            overflow-y: auto;
+        }
+
+        .ql-snow .ql-picker.ql-size .ql-picker-options::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .ql-snow .ql-picker.ql-size .ql-picker-options::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+        }
+
+        .ql-size .ql-picker-label::before {
+            content: 'Font Size';
+            /* remove Quill's default pseudo-element */
+        }
+
+        .ql-header .ql-picker-label::before {
+            content: 'Font Style';
             /* remove Quill's default pseudo-element */
         }
 
