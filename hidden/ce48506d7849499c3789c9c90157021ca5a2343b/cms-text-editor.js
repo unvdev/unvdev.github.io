@@ -695,6 +695,14 @@ function initializeQuill() {
         }
     });
 
+    quillEditor.addEventListener("mousedown", () => {
+      setTimeout(() => {
+        updateFontPickerLabel(quillEditor);
+        updateSizePickerLabel(quillEditor);
+        updateHeaderPickerLabel(quillEditor);
+      }, 0);
+    });
+
     updateFontPickerLabel(quillEditor);
     updateSizePickerLabel(quillEditor);
     updateHeaderPickerLabel(quillEditor);
