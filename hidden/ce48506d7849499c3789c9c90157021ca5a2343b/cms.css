@@ -192,12 +192,6 @@
             box-sizing: border-box;
         }
 
-        .fa, .fas, .far, .fal, .fad, .fab {
-  user-select: auto !important;
-  -webkit-user-select: auto !important;
-  cursor: text !important;
-}
-
         /* Quill Toolbar */
         .ql-toolbar {
             position: relative;
