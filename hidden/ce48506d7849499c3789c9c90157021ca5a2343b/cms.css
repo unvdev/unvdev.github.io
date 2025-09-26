@@ -309,7 +309,10 @@
 
         /*Google-To-Quill Fonts*/
 /* Font: Roboto */
-.ql-snow .ql-editor .ql-font-roboto { font-family: 'Roboto', sans-serif !important; } /* Editor-Specific Rule */
+.ql-snow .ql-editor .ql-font-default { font-family: ''} /* Editor-Specific Rule */
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="default"]::before { content: "Default"; font-family: 'Roboto', sans-serif; }
+
+.ql-snow .ql-editor .ql-font-roboto { font-family: 'Roboto', sans-serif !important; }
 .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="roboto"]::before { content: "Roboto"; font-family: 'Roboto', sans-serif; }
 
 /* Font: Comfortaa */
