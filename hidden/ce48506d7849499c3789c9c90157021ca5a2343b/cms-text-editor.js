@@ -620,7 +620,7 @@ function initializeQuill() {
     Quill.register(FontAwesomeBlot);
 
     const toolbarOptions = [
-        [{ header: [1, 2, 3, 4, 5, false] }, { font: CustomFont.whitelist }, { size: Size.whitelist }],
+        [{ header: Header.whitelist }, { font: CustomFont.whitelist }, { size: Size.whitelist }],
         [{ align: [] }],
         ["bold", "italic", "underline"],
         [{ list: "ordered" }, { list: "bullet" }],
