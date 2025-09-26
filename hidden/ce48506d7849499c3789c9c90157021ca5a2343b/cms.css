@@ -229,6 +229,23 @@
             border-radius: 4px;
         }
 
+                /* Limit height of the font dropdown and enable scrolling */
+        .ql-snow .ql-picker.ql-size .ql-picker-options {
+            max-height: 550px;
+            /* your desired height */
+            overflow-y: auto;
+            /* adds scrollbar when content exceeds height */
+        }
+
+        .ql-snow .ql-picker.ql-size .ql-picker-options::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .ql-snow .ql-picker.ql-size .ql-picker-options::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+        }
+
         .ql-font .ql-picker-label {
             white-space: nowrap;
             /* Prevent line breaks */
