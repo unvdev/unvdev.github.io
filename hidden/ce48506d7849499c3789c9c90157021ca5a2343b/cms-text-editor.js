@@ -684,11 +684,11 @@ function initializeQuill() {
             setTimeout(() => {
                 updateFontPickerLabel(quillEditor);
         }, 0);
-        else if (e.target.closest('.ql-size .ql-picker-item')) {
+        } else if (e.target.closest('.ql-size .ql-picker-item')) {
             setTimeout(() => {
                 updateSizePickerLabel(quillEditor);
             }, 0);
-        else if (e.target.closest('.ql-header .ql-picker-item')) {
+        } else if (e.target.closest('.ql-header .ql-picker-item')) {
             setTimeout(() => {
                 updateHeaderPickerLabel(quillEditor);
             }, 0);
