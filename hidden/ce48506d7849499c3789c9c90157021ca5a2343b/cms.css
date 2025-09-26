@@ -597,23 +597,23 @@
 }
 
 .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="1"]::before {
-    content: 'Header 1';
+    content: 'Title';
 }
 
 .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="2"]::before {
-    content: 'Header 2';
+    content: 'Subtitle';
 }
 
 .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="3"]::before {
-    content: 'Header 3';
+    content: 'Section';
 }
 
 .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="4"]::before {
-    content: 'Header 4';
+    content: 'Subsection';
 }
 
 .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="5"]::before {
-    content: 'Header 5';
+    content: 'Detail';
 }
 
 .ql-snow .ql-picker.ql-header .ql-picker-item:not([data-value])::before {
