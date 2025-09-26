@@ -223,6 +223,12 @@ let quillEditor = null;
 let isEditorLoading = false;
 let iconSearchRange = null;
 
+// --- QUILL IMPORTS ---
+const Inline = Quill.import("blots/inline");
+const Embed = Quill.import('blots/embed');
+const Delta = Quill.import('delta');
+const Size = Quill.import('attributors/style/size');
+
 // --- ICON DATA ---
 const faIcons = [
             "fa-solid fa-0", "fa-solid fa-1", "fa-solid fa-2", "fa-solid fa-3", "fa-solid fa-4", "fa-solid fa-5", "fa-solid fa-6", "fa-solid fa-7", "fa-solid fa-8", "fa-solid fa-9", "fa-solid fa-a", "fa-solid fa-address-book", "fa-regular fa-address-book", "fa-solid fa-address-card", "fa-regular fa-address-card",
@@ -401,11 +407,6 @@ const faIcons = [
             "fa-brands fa-wpforms", "fa-brands fa-wpressr", "fa-brands fa-xbox", "fa-brands fa-xing", "fa-brands fa-y-combinator", "fa-brands fa-yahoo", "fa-brands fa-yammer", "fa-brands fa-yandex", "fa-brands fa-yandex-international", "fa-brands fa-yarn", "fa-brands fa-yelp", "fa-brands fa-yoast", "fa-brands fa-youtube", "fa-brands fa-zhihu",
         ];
 
-// --- QUILL IMPORTS ---
-const Inline = Quill.import("blots/inline");
-const Embed = Quill.import('blots/embed');
-const Delta = Quill.import('delta');
-
 // --- FONT AWESOME ICON BLOT ---
 class FontAwesomeBlot extends Embed {
     static create(className) {
@@ -425,55 +426,6 @@ class FontAwesomeBlot extends Embed {
 }
 FontAwesomeBlot.blotName = "font-awesome";
 FontAwesomeBlot.tagName = "I";
-
-// --- CUSTOM FONT BLOT ---
-class CustomFont extends Inline {
-    static blotName = "font";
-    static tagName = "SPAN";
-    static classPrefix = "ql-font-";
-    static whitelist = [
-        "agbalumo", "alumni-sans-pinstripe", "baskervville", "baskervville-sc",
-        "bebas-neue", "borel", "cal-sans", "caveat-brush", "chewy", "cinzel",
-        "comfortaa", "coming-soon", "delius", "dynapuff", "fugaz-one",
-        "funnel-display", "germania-one", "google-sans-code", "host-grotesk",
-        "lato", "lexend", "libre-bodoni", "lobster", "lora", "marck-script",
-        "meow-script", "merriweather-sans", "michroma", "montecarlo",
-        "newsreader", "noto-sans", "pacifico", "pixelify-sans", "playwrite-za",
-        "poller-one", "quintessential", "roboto", "short-stack", "sono", "suse",
-        "twinkle-star", "ultra", "unifrakturmaguntia",
-    ];
-    static sanitize(value) {
-        if (!value) return value;
-        return value.replace(/['"]/g, "").replace(/\s+/g, "-").toLowerCase();
-    }
-    static create(value) {
-        const node = super.create();
-        const normalized = this.sanitize(value);
-        if (this.whitelist && !this.whitelist.includes(normalized)) return node;
-        node.setAttribute("class", this.classPrefix + normalized);
-        return node;
-    }
-    static formats(node) {
-        const className = node.getAttribute("class") || "";
-        const match = className.match(new RegExp(this.classPrefix + "([a-z0-9-]+)"));
-        return match ? match[1] : null;
-    }
-    format(name, value) {
-        if (name === CustomFont.blotName) {
-            if (value) {
-                const normalized = CustomFont.sanitize(value);
-                if (CustomFont.whitelist.includes(normalized)) {
-                    this.domNode.setAttribute("class", CustomFont.classPrefix + normalized);
-                }
-            } else {
-                this.domNode.removeAttribute("class");
-            }
-        } else {
-            super.format(name, value);
-        }
-    }
-}
-Quill.register(CustomFont, true);
 
 // --- ICON SEARCH TOOLTIP FUNCTIONS ---
 
@@ -554,26 +506,57 @@ function setupIconSearch(quill) {
     });
 }
 
-function iconSearchHandler() {
-    const tooltip = document.querySelector('.ql-icon-search-tooltip');
-    if (!tooltip) return;
-
-    if (tooltip.style.display === 'none') {
-        iconSearchRange = quillEditor.getSelection(true);
-        if (!iconSearchRange) {
-            iconSearchRange = { index: 0, length: 0 };
+// --- CUSTOM FONT BLOT ---
+class CustomFont extends Inline {
+    static blotName = "font";
+    static tagName = "SPAN";
+    static classPrefix = "ql-font-";
+    static whitelist = [
+        "agbalumo", "alumni-sans-pinstripe", "baskervville", "baskervville-sc",
+        "bebas-neue", "borel", "cal-sans", "caveat-brush", "chewy", "cinzel",
+        "comfortaa", "coming-soon", "delius", "dynapuff", "fugaz-one",
+        "funnel-display", "germania-one", "google-sans-code", "host-grotesk",
+        "lato", "lexend", "libre-bodoni", "lobster", "lora", "marck-script",
+        "meow-script", "merriweather-sans", "michroma", "montecarlo",
+        "newsreader", "noto-sans", "pacifico", "pixelify-sans", "playwrite-za",
+        "poller-one", "quintessential", "roboto", "short-stack", "sono", "suse",
+        "twinkle-star", "ultra", "unifrakturmaguntia",
+    ];
+    static sanitize(value) {
+        if (!value) return value;
+        return value.replace(/['"]/g, "").replace(/\s+/g, "-").toLowerCase();
+    }
+    static create(value) {
+        const node = super.create();
+        const normalized = this.sanitize(value);
+        if (this.whitelist && !this.whitelist.includes(normalized)) return node;
+        node.setAttribute("class", this.classPrefix + normalized);
+        return node;
+    }
+    static formats(node) {
+        const className = node.getAttribute("class") || "";
+        const match = className.match(new RegExp(this.classPrefix + "([a-z0-9-]+)"));
+        return match ? match[1] : null;
+    }
+    format(name, value) {
+        if (name === CustomFont.blotName) {
+            if (value) {
+                const normalized = CustomFont.sanitize(value);
+                if (CustomFont.whitelist.includes(normalized)) {
+                    this.domNode.setAttribute("class", CustomFont.classPrefix + normalized);
+                }
+            } else {
+                this.domNode.removeAttribute("class");
+            }
+        } else {
+            super.format(name, value);
         }
-        
-        const toolbar = document.querySelector('.ql-toolbar');
-        tooltip.style.display = 'block';
-        tooltip.style.top = `${toolbar.offsetHeight + 5}px`;
-
-        document.querySelector('.ql-icon-search-input').focus();
-    } else {
-        tooltip.style.display = 'none';
-        quillEditor.focus();
     }
 }
+Quill.register(CustomFont, true);
+
+Size.whitelist = ['9px', '12px', '14px', '16px', '20px', '24px', '28px', '32px', '36px', '40px', '50px', '60px', '70px', '80px', '90px', '100px'];
+Quill.register(Size, true);
 
 // --- QUILL HELPER FUNCTIONS ---
 function customColorPicker() {
@@ -601,12 +584,34 @@ function updateFontPickerLabel(quill) {
     pickerLabel.textContent = displayName;
 }
 
+function iconSearchHandler() {
+    const tooltip = document.querySelector('.ql-icon-search-tooltip');
+    if (!tooltip) return;
+
+    if (tooltip.style.display === 'none') {
+        iconSearchRange = quillEditor.getSelection(true);
+        if (!iconSearchRange) {
+            iconSearchRange = { index: 0, length: 0 };
+        }
+        
+        const toolbar = document.querySelector('.ql-toolbar');
+        tooltip.style.display = 'block';
+        tooltip.style.top = `${toolbar.offsetHeight + 5}px`;
+
+        document.querySelector('.ql-icon-search-input').focus();
+    } else {
+        tooltip.style.display = 'none';
+        quillEditor.focus();
+    }
+}
+
 // --- INITIALIZE QUILL ---
 function initializeQuill() {
     Quill.register(FontAwesomeBlot);
 
     const toolbarOptions = [
         [{ font: CustomFont.whitelist }],
+        [{ size: Size.whitelist }],
         [{ header: [1, 2, 3, 4, 5, false] }, { align: [] }],
         ["bold", "italic", "underline", "strike"],
         [{ list: "ordered" }, { list: "bullet" }],
