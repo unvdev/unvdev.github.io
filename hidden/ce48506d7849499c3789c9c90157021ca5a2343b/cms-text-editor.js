@@ -695,7 +695,7 @@ function initializeQuill() {
         }
     });
 
-    quillEditor.addEventListener("mousedown", () => {
+    editorContainer.addEventListener("mousedown", () => {
       setTimeout(() => {
         updateFontPickerLabel(quillEditor);
         updateSizePickerLabel(quillEditor);
