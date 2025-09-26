@@ -307,10 +307,11 @@
         .ql-icon-search-result { display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 24px; padding: 5px; border-radius: 3px; transition: background-color 0.2s; }
         .ql-icon-search-result:hover { background-color: #f0f0f0; }
 
-        /*Google-To-Quill Fonts*/
+/*Google-To-Quill Fonts*/
 /* Font: Default */
-.ql-snow .ql-editor .ql-font-default { font-family: ''} /* Editor-Specific Rule */
-.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="default"]::before { content: "Default"; font-family: 'Roboto', sans-serif; }
+.ql-snow .ql-picker.ql-font .ql-picker-item:not([data-value])::before {
+  content: 'Clear' !important;
+}
 
 .ql-snow .ql-editor .ql-font-roboto { font-family: 'Roboto', sans-serif !important; }
 .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="roboto"]::before { content: "Roboto"; font-family: 'Roboto', sans-serif; }

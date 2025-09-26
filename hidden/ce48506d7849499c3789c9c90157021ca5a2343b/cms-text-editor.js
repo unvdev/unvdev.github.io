@@ -488,7 +488,7 @@ class CustomFont extends Inline {
     static tagName = "SPAN";
     static classPrefix = "ql-font-";
     static whitelist = [
-        "default", "agbalumo", "alumni-sans-pinstripe", "baskervville", "baskervville-sc",
+        false, "agbalumo", "alumni-sans-pinstripe", "baskervville", "baskervville-sc",
         "bebas-neue", "borel", "cal-sans", "caveat-brush", "chewy", "cinzel",
         "comfortaa", "coming-soon", "delius", "dynapuff", "fugaz-one",
         "funnel-display", "germania-one", "google-sans-code", "host-grotesk",

@@ -47,9 +47,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Baskervville:ital,wght@0,400..700;1,400..700&display=swap'); */
 
 /*Google-To-Quill Fonts*/
-/* Font: Default */
-.ql-font-default { font-family: '' } /* General Rule */
-
 /* Font: Roboto */
 .ql-font-roboto { font-family: 'Roboto', sans-serif !important; }
 
