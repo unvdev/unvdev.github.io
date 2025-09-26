@@ -51,19 +51,22 @@ document.addEventListener("DOMContentLoaded", async () => {
         // The head from the /test page completely overwrites the original head.
         document.head.innerHTML = doc.head.innerHTML;
 
-        // --- 3. REBUILD THE BODY (Same as before) ---
+        // --- 3. REBUILD BODY & EXTRACT SCRIPTS FROM NEW CONTENT ---
         const originalCmsBodyNodes = Array.from(document.body.childNodes);
         const loadedPageWrapper = document.createElement('div');
         loadedPageWrapper.id = 'loaded-page';
         loadedPageWrapper.innerHTML = doc.body.innerHTML;
+
+        // NEW: Find all scripts within the new content...
+        const scriptsFromLoadedPage = Array.from(loadedPageWrapper.querySelectorAll('script'));
+        // ...and remove them from the wrapper so they can be moved.
+        scriptsFromLoadedPage.forEach(script => script.remove());
 
         document.body.innerHTML = '';
         originalCmsBodyNodes.forEach(node => document.body.appendChild(node));
         document.body.appendChild(loadedPageWrapper);
 
         // --- 4. APPEND REQUIRED ASSETS ---
-        // These will be added to the new head and body after they are in place.
-
         const loadStylesheet = (href) => {
             if (!document.head.querySelector(`link[href="${href}"]`)) {
                 const link = document.createElement('link');
@@ -83,19 +86,24 @@ document.addEventListener("DOMContentLoaded", async () => {
             });
         };
 
-        const loadAppendedAssets = async () => {
-            // Append the defined stylesheets to the new head
+        const loadAppendedAssets = async (scriptsToMove) => {
             loadStylesheet('cms.css');
             loadStylesheet('https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css');
 
-            // Load the defined scripts sequentially
+            // NEW: Add cms-loader.js specifically to the <head>
+            const loaderScript = document.createElement('script');
+            loaderScript.src = 'cms-loader.js';
+            document.head.appendChild(loaderScript);
+
             try {
+                // Load core scripts sequentially in the body
                 await loadScript('https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js');
                 await loadScript('cms-core.js');
                 await loadScript('cms-menu.js');
                 await loadScript('cms-text-editor.js');
                 await loadScript('buildingblocks.js');
 
+                // Execute the inline validation script
                 const inlineScript = document.createElement('script');
                 inlineScript.textContent = `
                     let paramString = window.location.search.split('?')[1];
@@ -106,12 +114,26 @@ document.addEventListener("DOMContentLoaded", async () => {
                     }
                 `;
                 document.body.appendChild(inlineScript);
+
+                // NEW: Move and execute the scripts found in the loaded page content
+                scriptsToMove.forEach(script => {
+                    const newScript = document.createElement('script');
+                    for (const attr of script.attributes) {
+                        newScript.setAttribute(attr.name, attr.value);
+                    }
+                    if (script.textContent) {
+                        newScript.textContent = script.textContent;
+                    }
+                    document.body.appendChild(newScript);
+                });
+
             } catch (error) {
                 console.error("Failed to load appended scripts:", error);
             }
         };
         
-        await loadAppendedAssets();
+        // Pass the extracted scripts to the asset loader function
+        await loadAppendedAssets(scriptsFromLoadedPage);
 
     } catch (error) {
         console.error("Error during page load process:", error);
