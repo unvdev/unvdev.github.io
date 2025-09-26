@@ -41,14 +41,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     try {
         // --- 1. CAPTURE ORIGINAL PAGE STATE ---
-        // Capture all nodes from the original body to be re-inserted later.
         const originalCmsBodyNodes = Array.from(document.body.childNodes);
-        // Capture original stylesheets and style tags to be merged.
         const originalStylesheets = Array.from(document.head.querySelectorAll('link[rel="stylesheet"]'));
         const originalStyles = Array.from(document.head.querySelectorAll('style'));
-        // Capture all scripts from the original page for re-execution.
-        const originalScripts = Array.from(document.scripts);
-
+        
         // --- 2. FETCH AND PARSE THE NEW PAGE ---
         const response = await fetch(targetPage);
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
@@ -57,20 +53,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         const doc = parser.parseFromString(html, 'text/html');
 
         // --- 3. MERGE HEADS ---
-        // We will use the new page's head as the base.
-        // Now, merge in any stylesheets from the original page that don't already exist in the new one.
         originalStylesheets.forEach(link => {
             if (!doc.head.querySelector(`link[href="${link.href}"]`)) {
                 doc.head.appendChild(link.cloneNode(true));
             }
         });
-
-        // Also merge in any inline <style> blocks from the original page.
         originalStyles.forEach(style => {
             doc.head.appendChild(style.cloneNode(true));
         });
-
-        // Completely replace the old head with our newly merged head.
         document.head.innerHTML = doc.head.innerHTML;
 
         // --- 4. REBUILD THE BODY ---
@@ -78,33 +68,28 @@ document.addEventListener("DOMContentLoaded", async () => {
         loadedPageWrapper.id = 'loaded-page';
         loadedPageWrapper.innerHTML = doc.body.innerHTML;
 
-        // Clear the current body.
         document.body.innerHTML = '';
-
-        // Append the original CMS content first.
-        originalCmsBodyNodes.forEach(node => {
-            document.body.appendChild(node);
-        });
-
-        // Append the new, wrapped content second.
+        originalCmsBodyNodes.forEach(node => document.body.appendChild(node));
         document.body.appendChild(loadedPageWrapper);
 
-        // --- 5. MERGE AND EXECUTE SCRIPTS ---
-        // Combine scripts from the original page and the newly loaded page.
-        const newScripts = Array.from(doc.querySelectorAll('script'));
-        const allScriptsToExecute = [...originalScripts, ...newScripts];
+        // --- 5. EXECUTE *ONLY* THE NEW SCRIPTS ---
+        // This is the key change. We only query the scripts from the fetched document.
+        const newScripts = doc.querySelectorAll('script');
 
-        allScriptsToExecute.forEach(script => {
+        newScripts.forEach(script => {
             const newScript = document.createElement('script');
+            
             // Copy all attributes (src, type, async, defer, etc.)
             for (const attr of script.attributes) {
                 newScript.setAttribute(attr.name, attr.value);
             }
+            
             // Copy inline script content
             if (script.textContent) {
                 newScript.textContent = script.textContent;
             }
-            // Appending the new script element to the body causes it to be executed.
+
+            // Appending the new script element causes it to be fetched and executed.
             document.body.appendChild(newScript);
         });
 
