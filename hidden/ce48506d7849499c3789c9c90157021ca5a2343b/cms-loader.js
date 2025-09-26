@@ -34,20 +34,24 @@
 //     }
 // });
 document.addEventListener("DOMContentLoaded", async () => {
-    // The page whose content you want to load.
-    const targetPage = '/test'; // e.g., '/test.html'
+    const targetPage = '/test'; // The page to load content and head from
     if (!targetPage) {
         return console.error("Please set a target page path.");
     }
 
     try {
-        // --- 1. FETCH AND REBUILD PAGE BODY (Same as before) ---
+        // --- 1. FETCH AND PARSE THE NEW PAGE ---
         const response = await fetch(targetPage);
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         const html = await response.text();
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
 
+        // --- 2. REPLACE THE ENTIRE HEAD ---
+        // The head from the /test page completely overwrites the original head.
+        document.head.innerHTML = doc.head.innerHTML;
+
+        // --- 3. REBUILD THE BODY (Same as before) ---
         const originalCmsBodyNodes = Array.from(document.body.childNodes);
         const loadedPageWrapper = document.createElement('div');
         loadedPageWrapper.id = 'loaded-page';
@@ -57,10 +61,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         originalCmsBodyNodes.forEach(node => document.body.appendChild(node));
         document.body.appendChild(loadedPageWrapper);
 
+        // --- 4. APPEND REQUIRED ASSETS ---
+        // These will be added to the new head and body after they are in place.
 
-        // --- 2. DYNAMICALLY LOAD NEW STYLES AND SCRIPTS ---
-
-        // Helper function to append a stylesheet to the <head>
         const loadStylesheet = (href) => {
             if (!document.head.querySelector(`link[href="${href}"]`)) {
                 const link = document.createElement('link');
@@ -70,7 +73,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
         };
 
-        // Helper function to load a script and wait for it to finish
         const loadScript = (src) => {
             return new Promise((resolve, reject) => {
                 const script = document.createElement('script');
@@ -80,23 +82,20 @@ document.addEventListener("DOMContentLoaded", async () => {
                 document.body.appendChild(script);
             });
         };
-        
-        // --- An async function to load all assets in order ---
-        const loadAssets = async () => {
-            // Append stylesheets
+
+        const loadAppendedAssets = async () => {
+            // Append the defined stylesheets to the new head
             loadStylesheet('cms.css');
             loadStylesheet('https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css');
 
-            // Load scripts sequentially
+            // Load the defined scripts sequentially
             try {
                 await loadScript('https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js');
-                // Note: 'cms-loader.js' is skipped to prevent it from re-running itself in a loop.
                 await loadScript('cms-core.js');
                 await loadScript('cms-menu.js');
                 await loadScript('cms-text-editor.js');
                 await loadScript('buildingblocks.js');
 
-                // Finally, create and execute your inline script for validation
                 const inlineScript = document.createElement('script');
                 inlineScript.textContent = `
                     let paramString = window.location.search.split('?')[1];
@@ -107,16 +106,14 @@ document.addEventListener("DOMContentLoaded", async () => {
                     }
                 `;
                 document.body.appendChild(inlineScript);
-
             } catch (error) {
-                console.error("Failed to load required scripts:", error);
+                console.error("Failed to load appended scripts:", error);
             }
         };
         
-        // Start loading all the new assets
-        await loadAssets();
+        await loadAppendedAssets();
 
     } catch (error) {
-        console.error("Error loading or merging page:", error);
+        console.error("Error during page load process:", error);
     }
 });
