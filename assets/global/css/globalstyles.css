@@ -262,6 +262,10 @@
 .ql-snow .ql-editor .ql-font-baskervville { font-family: 'Baskervville', serif !important; }
 .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="baskervville"]::before { content: "Baskervville"; font-family: 'Baskervville', serif; }
 
+        .fa, .fa-brands, .fa-classic, .fa-duotone, .fa-light, .fa-regular, .fa-sharp, .fa-sharp-duotone, .fa-solid, .fa-thin, .fab, .fad, .fadl, .fadr, .fadt, .fal, .far, .fas, .fasdl, .fasdr, .fasds, .fasdt, .fasl, .fasr, .fass, .fast, .fat {
+            width: auto !important;
+            height: auto !important;
+        }
 
 /* 2. CSS RESET & DEFAULTS */
 *,
