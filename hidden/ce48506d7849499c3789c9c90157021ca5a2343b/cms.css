@@ -289,6 +289,24 @@
             /* remove Quill's default pseudo-element */
         }
 
+                .ql-icon-search-tooltip {
+            position: absolute;
+            background: white;
+            border: 1px solid #ccc;
+            box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+            padding: 10px;
+            z-index: 1000;
+            width: 280px;
+            max-height: 300px;
+            overflow-y: auto;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .ql-icon-search-input { width: 100%; box-sizing: border-box; margin-bottom: 10px; padding: 5px; border: 1px solid #ccc; border-radius: 3px; }
+        .ql-icon-search-results { display: grid; grid-template-columns: repeat(auto-fill, minmax(30px, 1fr)); gap: 10px; }
+        .ql-icon-search-result { display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 24px; padding: 5px; border-radius: 3px; transition: background-color 0.2s; }
+        .ql-icon-search-result:hover { background-color: #f0f0f0; }
+
         /*Google-To-Quill Fonts*/
 /* Font: Roboto */
 .ql-font-roboto { font-family: 'Roboto', sans-serif !important; } /* General Rule */
