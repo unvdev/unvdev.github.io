@@ -695,7 +695,9 @@ function initializeQuill() {
         }
     });
 
-    editorContainer.addEventListener("mousedown", () => {
+    editorContainer.addEventListener("mousedown", (e) => {
+      const activeTooltip = e.target.closest('.ql-tooltip.ql-editing');
+      if (activeTooltip) return;
       setTimeout(() => {
         updateFontPickerLabel(quillEditor);
         updateSizePickerLabel(quillEditor);
