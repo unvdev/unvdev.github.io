@@ -262,6 +262,88 @@
 .ql-snow .ql-editor .ql-font-baskervville { font-family: 'Baskervville', serif !important; }
 .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="baskervville"]::before { content: "Baskervville"; font-family: 'Baskervville', serif; }
 
+/* Font Sizes */
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="9px"]::before {
+    content: '9px';
+    font-size: 9px !important;
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="12px"]::before {
+    content: '12px';
+    font-size: 12px !important;
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="14px"]::before {
+    content: '14px';
+    font-size: 14px !important;
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="16px"]::before {
+    content: '16px';
+    font-size: 16px !important;
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="20px"]::before {
+    content: '20px';
+    font-size: 20px !important;
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="24px"]::before {
+    content: '24px';
+    font-size: 24px !important;
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="28px"]::before {
+    content: '28px';
+    font-size: 28px !important;
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="32px"]::before {
+    content: '32px';
+    font-size: 32px !important;
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="36px"]::before {
+    content: '36px';
+    font-size: 36px !important;
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="40px"]::before {
+    content: '40px';
+    font-size: 40px !important;
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="50px"]::before {
+    content: '50px';
+    font-size: 50px !important;
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="60px"]::before {
+    content: '60px';
+    font-size: 60px !important;
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="70px"]::before {
+    content: '70px';
+    font-size: 70px !important;
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="80px"]::before {
+    content: '80px';
+    font-size: 80px !important;
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="90px"]::before {
+    content: '90px';
+    font-size: 90px !important;
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="100px"]::before {
+    content: '100px';
+    font-size: 100px !important;
+}
+
+/* Font Awesome Styles */
         .fa, .fa-brands, .fa-classic, .fa-duotone, .fa-light, .fa-regular, .fa-sharp, .fa-sharp-duotone, .fa-solid, .fa-thin, .fab, .fad, .fadl, .fadr, .fadt, .fal, .far, .fas, .fasdl, .fasdr, .fasds, .fasdt, .fasl, .fasr, .fass, .fast, .fat {
             width: auto !important;
             height: auto !important;
