@@ -250,7 +250,7 @@
         }
 
         .ql-font .ql-picker-label::after {
-            content: '\00a0\2B0D' !important;
+            content: '\00a0\25BC' !important;
             /* remove Quill's default pseudo-element */
         }
 
@@ -275,7 +275,7 @@
         }
 
         .ql-size .ql-picker-label::after {
-            content: '\00a0\2B0D' !important;
+            content: '\00a0\25BC' !important;
             /* remove Quill's default pseudo-element */
         }
 
@@ -285,7 +285,7 @@
         }
 
         .ql-header .ql-picker-label::after {
-            content: '\00a0\2B0D' !important;
+            content: '\00a0\25BC' !important;
             /* remove Quill's default pseudo-element */
         }
 
