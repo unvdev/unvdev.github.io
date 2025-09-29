@@ -122,22 +122,19 @@ async function savePage() {
         const parser = new DOMParser();
         const tempDoc = parser.parseFromString(originalHtml, 'text/html');
 
-        // 2. Find and remove all unwanted elements in a single step
+        // 2. Find and remove all unwanted elements
         const unwantedSelectors = [
-            // Your existing data-name selectors
+            // Your existing selectors
             '[data-name="cms environment"]',
             '[data-name="cms stylesheet"]',
             '[data-name="cms javascript"]',
-
-            // NEW: Your improved selector for all Font Awesome IDs
-            '[id^="fa-"]'
+            '[id^="fa-"]',
+            'link[href^="chrome-extension://"]'
             
         ].join(', ');
 
         const elementsToRemove = tempDoc.querySelectorAll(unwantedSelectors);
         elementsToRemove.forEach(element => element.remove());
-        
-        // The separate loop for IDs is no longer needed.
 
         // 3. Convert the cleaned document back into an HTML string and format it
         let cleanedHtml = `<!DOCTYPE html>\n${tempDoc.documentElement.outerHTML}`;
