@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         loadedPageWrapper.id = 'loaded-page';
         loadedPageWrapper.innerHTML = doc.body.innerHTML;
 
-        // NEW: Find all scripts within the new content...
+        // Find all scripts within the new content...
         const scriptsFromLoadedPage = Array.from(loadedPageWrapper.querySelectorAll('script'));
         // ...and remove them from the wrapper so they can be moved.
         scriptsFromLoadedPage.forEach(script => script.remove());
@@ -80,6 +80,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             return new Promise((resolve, reject) => {
                 const script = document.createElement('script');
                 script.src = src;
+                // MODIFICATION: Added the data-name attribute
+                script.setAttribute('data-name', 'cms javascript');
                 script.onload = () => resolve(script);
                 script.onerror = () => reject(new Error(`Script load error for ${src}`));
                 document.body.appendChild(script);
@@ -90,13 +92,14 @@ document.addEventListener("DOMContentLoaded", async () => {
             loadStylesheet('cms.css');
             loadStylesheet('https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css');
 
-            // NEW: Add cms-loader.js specifically to the <head>
+            // Add cms-loader.js specifically to the <head>
             const loaderScript = document.createElement('script');
             loaderScript.src = 'cms-loader.js';
             document.head.appendChild(loaderScript);
 
             try {
                 // Load core scripts sequentially in the body
+                // The updated loadScript function above will add the attribute to these
                 await loadScript('https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js');
                 await loadScript('cms-core.js');
                 await loadScript('cms-menu.js');
@@ -105,6 +108,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 // Execute the inline validation script
                 const inlineScript = document.createElement('script');
+                // MODIFICATION: Added the data-name attribute
+                inlineScript.setAttribute('data-name', 'cms javascript');
                 inlineScript.textContent = `
                     let paramString = window.location.search.split('?')[1];
                     let queryString = new URLSearchParams(paramString);
@@ -115,7 +120,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 `;
                 document.body.appendChild(inlineScript);
 
-                // NEW: Move and execute the scripts found in the loaded page content
+                // Move and execute the scripts found in the loaded page content
                 scriptsToMove.forEach(script => {
                     const newScript = document.createElement('script');
                     for (const attr of script.attributes) {
