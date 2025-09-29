@@ -115,49 +115,44 @@ function pasteElement() {
     }
 }
 
-// NEW HELPER FUNCTION: A robust HTML formatter
-function formatHtml(node, level = -1, indentChar = '  ') {
-    // A list of tags that should not have newlines inserted around them
+// HELPER FUNCTION: A robust HTML formatter (no changes here, but included for completeness)
+function formatHtml(node, level = 0, indentChar = '  ') {
     const inlineTags = new Set(['a', 'abbr', 'b', 'bdi', 'bdo', 'br', 'cite', 'code', 'data', 'dfn', 'em', 'i', 'kbd', 'mark', 'q', 's', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'time', 'u', 'var', 'wbr']);
-    // A list of tags that do not have a closing tag
     const voidTags = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr']);
 
     let result = '';
-    const isInline = inlineTags.has(node.nodeName.toLowerCase());
-    
-    // Add indentation and newline before block-level elements
-    if (!isInline && level >= 0) {
-        result += '\n' + indentChar.repeat(level);
+    const nodeName = node.nodeName.toLowerCase();
+    const isInline = inlineTags.has(nodeName);
+
+    if (!isInline && level > 0) { // Indent for block elements, but not the root <html>
+        result += '\n' + indentChar.repeat(level - 1);
     }
-    
+
     switch (node.nodeType) {
         case Node.ELEMENT_NODE:
-            const tagName = node.nodeName.toLowerCase();
-            result += `<${tagName}`;
+            result += `<${nodeName}`;
             for (const attr of node.attributes) {
                 result += ` ${attr.name}="${attr.value}"`;
             }
             result += '>';
 
-            if (!voidTags.has(tagName)) {
+            if (!voidTags.has(nodeName)) {
                 if (node.hasChildNodes()) {
                     for (const child of node.childNodes) {
                         result += formatHtml(child, level + 1, indentChar);
                     }
                 }
-                // Add closing tag with indentation for block-level elements
-                if (!isInline) {
-                    result += '\n' + indentChar.repeat(level);
+                if (!isInline && level > 0) {
+                    result += '\n' + indentChar.repeat(level - 1);
                 }
-                result += `</${tagName}>`;
+                result += `</${nodeName}>`;
             }
             break;
 
         case Node.TEXT_NODE:
-            // Clean up whitespace in text nodes but avoid collapsing everything
             const trimmedValue = node.nodeValue.trim();
             if (trimmedValue) {
-                 result += trimmedValue.replace(/\s+/g, ' ');
+                result += ' ' + trimmedValue.replace(/\s+/g, ' ') + ' ';
             }
             break;
 
@@ -170,7 +165,7 @@ function formatHtml(node, level = -1, indentChar = '  ') {
 }
 
 
-// THE UPDATED savePage FUNCTION
+// THE CORRECTED savePage FUNCTION
 async function savePage() {
     try {
         // 1. Create a temporary, in-memory copy of the document
@@ -190,9 +185,12 @@ async function savePage() {
         const elementsToRemove = tempDoc.querySelectorAll(unwantedSelectors);
         elementsToRemove.forEach(element => element.remove());
 
-        // 3. Convert the cleaned document back into a formatted HTML string using the new helper
-        // ALL REGEX FORMATTING HAS BEEN REMOVED
-        const cleanedHtml = formatHtml(tempDoc);
+        // 3. Convert the cleaned document back into a formatted HTML string
+        // **FIX:** Start formatting from the <html> element, not the whole document.
+        let formattedHtml = formatHtml(tempDoc.documentElement);
+
+        // **FIX:** Prepend the DOCTYPE to the final string.
+        const cleanedHtml = '<!DOCTYPE html>\n' + formattedHtml;
 
         // 4. Copy the final, formatted HTML to the clipboard
         await navigator.clipboard.writeText(cleanedHtml);
