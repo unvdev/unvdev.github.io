@@ -12,11 +12,10 @@
 </head>
 
 <body>
-
+<div data-name="cms environment">
     <div class="cms-menu-bar">
-        <input class="target-page" style="width: 300px; height: 20px;" type="text">
-        <button class="load-page">Grab Page Code</button>
-        <button class="delete-element">Delete Element</button>
+        <button id="delete-element">Delete Element</button>
+        <button id="copy-page-code">Save and Copy</button>
     </div>
 
     <div class="cms-menu content-hide">
@@ -274,6 +273,7 @@
         let nva = parseInt(queryString.get('nva'));
         if (Number.isNaN(nva) || new Date().getTime() > nva) window.location = '/cms_login';
     </script> -->
+    </div>
 </body>
 
 </html>
