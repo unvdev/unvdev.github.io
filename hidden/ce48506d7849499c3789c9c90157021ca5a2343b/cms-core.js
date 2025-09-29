@@ -115,49 +115,40 @@ function pasteElement() {
     }
 }
 
-async function savePage_Debug() {
+async function savePage() {
     try {
-        console.log("--- Starting savePage debug ---");
-
-        // Create a temporary document
+        // 1. Get the full HTML of the current page as a string.
         const originalHtml = `<!DOCTYPE html>\n${document.documentElement.outerHTML}`;
+
+        // 2. Create a temporary, in-memory document to safely modify the HTML.
         const parser = new DOMParser();
         const tempDoc = parser.parseFromString(originalHtml, 'text/html');
 
-        // Define the selectors
+        // 3. Find all elements to be removed in the temporary document.
         const unwantedSelectors = [
-            '[data-attribute-name="cms environment"]',
-            '[data-attribute-name="cms stylesheet"]',
-            '[data-attribute-name="cms javascript"]'
-        ].join(', ');
+            '[data-name="cms environment"]',
+            '[data-name="cms stylesheet"]',
+            '[data-name="cms javascript"]'
+        ].join(', '); // Combine selectors for a single query
 
-        console.log("Looking for elements with these selectors:", unwantedSelectors);
-
-        // Find elements in the temporary document
         const elementsToRemove = tempDoc.querySelectorAll(unwantedSelectors);
 
-        // *** THIS IS THE MOST IMPORTANT CHECK ***
-        console.log(`Found ${elementsToRemove.length} elements to remove.`);
-
-        if (elementsToRemove.length === 0) {
-            console.warn("Warning: No elements were found to remove. The copied HTML will be unchanged. Please check your selectors.");
-        } else {
-            // Remove them from the temporary document
-            elementsToRemove.forEach(element => element.remove());
-            console.log("Elements successfully removed from the copy.");
-        }
+        // 4. Remove them from the temporary document.
+        elementsToRemove.forEach(element => element.remove());
         
-        // Convert the cleaned document back to an HTML string
+        // 5. Convert the cleaned document back to an HTML string.
         const cleanedHtml = `<!DOCTYPE html>\n${tempDoc.documentElement.outerHTML}`;
 
-        // Copy the final HTML string to the clipboard
+        // 6. Copy the final HTML string to the clipboard.
         await navigator.clipboard.writeText(cleanedHtml);
         
         console.log('Cleaned page HTML copied to clipboard!');
-        alert('Page HTML copied!');
+        // You could also add a user-friendly alert here.
+        // alert('Page HTML copied!');
 
     } catch (err) {
         console.error('Failed to copy HTML to clipboard:', err);
+        // alert('Could not copy HTML.');
     }
 }
 
@@ -225,7 +216,7 @@ document.addEventListener("keydown", e => {
 });
 
 deleteButton.addEventListener("click", deleteElement);
-saveButton.addEventListener("click", savePage_Debug);
+saveButton.addEventListener("click", savePage);
 
 
 // const cms = document.querySelector(".cms-menu");
