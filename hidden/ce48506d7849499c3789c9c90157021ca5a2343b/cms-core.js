@@ -140,10 +140,8 @@ async function savePage() {
         // 4. Format the string: remove blank lines
         cleanedHtml = cleanedHtml.replace(/(^[ \t]*\n)/gm, "");
 
-        // 5. NEW: Add newlines before closing body and html tags for readability
-        cleanedHtml = cleanedHtml
-            .replace('</body>', '\n</body>')
-            .replace('</html>', '\n</html>');
+        // 5. NEW: Ensure a newline exists between all adjacent tags
+        cleanedHtml = cleanedHtml.replace(/>\s*</g, '>\n<');
 
         // 6. Copy the final, formatted HTML to the clipboard
         await navigator.clipboard.writeText(cleanedHtml);
