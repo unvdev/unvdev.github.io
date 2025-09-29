@@ -117,38 +117,40 @@ function pasteElement() {
 
 async function savePage() {
     try {
-        // 1. Get the full HTML of the current page as a string.
+        // 1. Create a temporary, in-memory copy of the document
         const originalHtml = `<!DOCTYPE html>\n${document.documentElement.outerHTML}`;
-
-        // 2. Create a temporary, in-memory document to safely modify the HTML.
         const parser = new DOMParser();
         const tempDoc = parser.parseFromString(originalHtml, 'text/html');
 
-        // 3. Find all elements to be removed in the temporary document.
+        // 2. Find and remove the unwanted elements from the copy
         const unwantedSelectors = [
             '[data-name="cms environment"]',
             '[data-name="cms stylesheet"]',
             '[data-name="cms javascript"]'
-        ].join(', '); // Combine selectors for a single query
+        ].join(', ');
 
         const elementsToRemove = tempDoc.querySelectorAll(unwantedSelectors);
-
-        // 4. Remove them from the temporary document.
         elementsToRemove.forEach(element => element.remove());
         
-        // 5. Convert the cleaned document back to an HTML string.
-        const cleanedHtml = `<!DOCTYPE html>\n${tempDoc.documentElement.outerHTML}`;
+        // 3. Convert the cleaned document back into an HTML string
+        let cleanedHtml = `<!DOCTYPE html>\n${tempDoc.documentElement.outerHTML}`;
 
-        // 6. Copy the final HTML string to the clipboard.
+        // 4. NEW: Format the HTML string
+        cleanedHtml = cleanedHtml
+            // Remove spaces between tags
+            .replace(/>\s+</g, '><') 
+            // Remove blank lines
+            .replace(/^\s*[\r\n]/gm, '');
+
+        // 5. Copy the final, formatted HTML to the clipboard
         await navigator.clipboard.writeText(cleanedHtml);
         
-        console.log('Cleaned page HTML copied to clipboard!');
-        // You could also add a user-friendly alert here.
-        // alert('Page HTML copied!');
+        console.log('Formatted page HTML copied to clipboard!');
+        alert('Page HTML copied!');
 
     } catch (err) {
         console.error('Failed to copy HTML to clipboard:', err);
-        // alert('Could not copy HTML.');
+        alert('Could not copy HTML.');
     }
 }
 
