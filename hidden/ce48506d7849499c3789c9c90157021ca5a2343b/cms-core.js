@@ -115,6 +115,62 @@ function pasteElement() {
     }
 }
 
+// NEW HELPER FUNCTION: A robust HTML formatter
+function formatHtml(node, level = -1, indentChar = '  ') {
+    // A list of tags that should not have newlines inserted around them
+    const inlineTags = new Set(['a', 'abbr', 'b', 'bdi', 'bdo', 'br', 'cite', 'code', 'data', 'dfn', 'em', 'i', 'kbd', 'mark', 'q', 's', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'time', 'u', 'var', 'wbr']);
+    // A list of tags that do not have a closing tag
+    const voidTags = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr']);
+
+    let result = '';
+    const isInline = inlineTags.has(node.nodeName.toLowerCase());
+    
+    // Add indentation and newline before block-level elements
+    if (!isInline && level >= 0) {
+        result += '\n' + indentChar.repeat(level);
+    }
+    
+    switch (node.nodeType) {
+        case Node.ELEMENT_NODE:
+            const tagName = node.nodeName.toLowerCase();
+            result += `<${tagName}`;
+            for (const attr of node.attributes) {
+                result += ` ${attr.name}="${attr.value}"`;
+            }
+            result += '>';
+
+            if (!voidTags.has(tagName)) {
+                if (node.hasChildNodes()) {
+                    for (const child of node.childNodes) {
+                        result += formatHtml(child, level + 1, indentChar);
+                    }
+                }
+                // Add closing tag with indentation for block-level elements
+                if (!isInline) {
+                    result += '\n' + indentChar.repeat(level);
+                }
+                result += `</${tagName}>`;
+            }
+            break;
+
+        case Node.TEXT_NODE:
+            // Clean up whitespace in text nodes but avoid collapsing everything
+            const trimmedValue = node.nodeValue.trim();
+            if (trimmedValue) {
+                 result += trimmedValue.replace(/\s+/g, ' ');
+            }
+            break;
+
+        case Node.COMMENT_NODE:
+            result += ``;
+            break;
+    }
+
+    return result;
+}
+
+
+// THE UPDATED savePage FUNCTION
 async function savePage() {
     try {
         // 1. Create a temporary, in-memory copy of the document
@@ -134,20 +190,11 @@ async function savePage() {
         const elementsToRemove = tempDoc.querySelectorAll(unwantedSelectors);
         elementsToRemove.forEach(element => element.remove());
 
-        // 3. Convert the cleaned document back into an HTML string
-        let cleanedHtml = `<!DOCTYPE html>\n${tempDoc.documentElement.outerHTML}`;
+        // 3. Convert the cleaned document back into a formatted HTML string using the new helper
+        // ALL REGEX FORMATTING HAS BEEN REMOVED
+        const cleanedHtml = formatHtml(tempDoc);
 
-        // 4. Remove any truly blank lines from the source
-        cleanedHtml = cleanedHtml.replace(/(^[ \t]*\n)/gm, "");
-
-        // 5. NEW: Apply two-step formatting for readability
-        cleanedHtml = cleanedHtml
-            // Step 1: Add a newline between all adjacent tags
-            .replace(/>\s*</g, '>\n<')
-            // Step 2: Find any empty tags that were split and join them back together
-            .replace(/>\n\s*<\//g, '></');
-
-        // 6. Copy the final, formatted HTML to the clipboard
+        // 4. Copy the final, formatted HTML to the clipboard
         await navigator.clipboard.writeText(cleanedHtml);
         
         console.log('Formatted page HTML copied to clipboard!');
