@@ -124,23 +124,28 @@ async function savePage() {
 
         // 2. Find and remove all unwanted elements
         const unwantedSelectors = [
-            // Your existing selectors
             '[data-name="cms environment"]',
             '[data-name="cms stylesheet"]',
             '[data-name="cms javascript"]',
             '[id^="fa-"]',
             'link[href^="chrome-extension://"]'
-            
         ].join(', ');
 
         const elementsToRemove = tempDoc.querySelectorAll(unwantedSelectors);
         elementsToRemove.forEach(element => element.remove());
 
-        // 3. Convert the cleaned document back into an HTML string and format it
+        // 3. Convert the cleaned document back into an HTML string
         let cleanedHtml = `<!DOCTYPE html>\n${tempDoc.documentElement.outerHTML}`;
+
+        // 4. Format the string: remove blank lines
         cleanedHtml = cleanedHtml.replace(/(^[ \t]*\n)/gm, "");
 
-        // 4. Copy the final, formatted HTML to the clipboard
+        // 5. NEW: Add newlines before closing body and html tags for readability
+        cleanedHtml = cleanedHtml
+            .replace('</body>', '\n</body>')
+            .replace('</html>', '\n</html>');
+
+        // 6. Copy the final, formatted HTML to the clipboard
         await navigator.clipboard.writeText(cleanedHtml);
         
         console.log('Formatted page HTML copied to clipboard!');
