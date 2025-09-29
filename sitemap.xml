@@ -32,4 +32,7 @@
     <loc>https://www.uv.vu/test.html</loc>
     <title>Testing</title>
   </url>
+  <url>
+    <loc>https://www.uv.vu/test2.html</loc>
+  </url>
 </urlset>
