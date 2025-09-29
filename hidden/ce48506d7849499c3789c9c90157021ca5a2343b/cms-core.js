@@ -136,11 +136,8 @@ async function savePage() {
         let cleanedHtml = `<!DOCTYPE html>\n${tempDoc.documentElement.outerHTML}`;
 
         // 4. NEW: Format the HTML string
-        cleanedHtml = cleanedHtml
-            // Remove spaces between tags
-            .replace(/>\s+</g, '><') 
-            // Remove blank lines
-            .replace(/^\s*[\r\n]/gm, '');
+        // This regex finds and removes any line that is either empty or contains only spaces/tabs.
+        cleanedHtml = cleanedHtml.replace(/(^[ \t]*\n)/gm, "");
 
         // 5. Copy the final, formatted HTML to the clipboard
         await navigator.clipboard.writeText(cleanedHtml);
