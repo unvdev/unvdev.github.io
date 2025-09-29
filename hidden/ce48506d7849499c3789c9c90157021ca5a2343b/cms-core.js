@@ -137,11 +137,15 @@ async function savePage() {
         // 3. Convert the cleaned document back into an HTML string
         let cleanedHtml = `<!DOCTYPE html>\n${tempDoc.documentElement.outerHTML}`;
 
-        // 4. Format the string: remove blank lines
+        // 4. Remove any truly blank lines from the source
         cleanedHtml = cleanedHtml.replace(/(^[ \t]*\n)/gm, "");
 
-        // 5. NEW: Ensure a newline exists between all adjacent tags
-        cleanedHtml = cleanedHtml.replace(/>\s*</g, '>\n<');
+        // 5. NEW: Apply two-step formatting for readability
+        cleanedHtml = cleanedHtml
+            // Step 1: Add a newline between all adjacent tags
+            .replace(/>\s*</g, '>\n<')
+            // Step 2: Find any empty tags that were split and join them back together
+            .replace(/>\n\s*<\//g, '></');
 
         // 6. Copy the final, formatted HTML to the clipboard
         await navigator.clipboard.writeText(cleanedHtml);
