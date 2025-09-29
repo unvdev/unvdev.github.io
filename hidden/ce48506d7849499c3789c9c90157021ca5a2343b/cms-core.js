@@ -115,44 +115,58 @@ function pasteElement() {
     }
 }
 
-// HELPER FUNCTION: A robust HTML formatter (no changes here, but included for completeness)
+// NEW, CORRECTED HELPER FUNCTION
 function formatHtml(node, level = 0, indentChar = '  ') {
     const inlineTags = new Set(['a', 'abbr', 'b', 'bdi', 'bdo', 'br', 'cite', 'code', 'data', 'dfn', 'em', 'i', 'kbd', 'mark', 'q', 's', 'samp', 'small', 'span', 'strong', 'sub', 'sup', 'time', 'u', 'var', 'wbr']);
     const voidTags = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr']);
 
     let result = '';
-    const nodeName = node.nodeName.toLowerCase();
-    const isInline = inlineTags.has(nodeName);
-
-    if (!isInline && level > 0) { // Indent for block elements, but not the root <html>
-        result += '\n' + indentChar.repeat(level - 1);
-    }
 
     switch (node.nodeType) {
         case Node.ELEMENT_NODE:
-            result += `<${nodeName}`;
+            const tagName = node.nodeName.toLowerCase();
+            const isInline = inlineTags.has(tagName);
+            const indent = indentChar.repeat(level);
+
+            // Add newline and indentation before block-level tags
+            if (!isInline && level > 0) {
+                result += '\n' + indent;
+            }
+
+            result += `<${tagName}`;
             for (const attr of node.attributes) {
                 result += ` ${attr.name}="${attr.value}"`;
             }
             result += '>';
 
-            if (!voidTags.has(nodeName)) {
+            if (!voidTags.has(tagName)) {
+                let isEffectivelyEmpty = true;
+                // Check if the element contains any non-whitespace children
                 if (node.hasChildNodes()) {
+                    for (const child of node.childNodes) {
+                        if ((child.nodeType === Node.TEXT_NODE && child.nodeValue.trim() !== '') || child.nodeType === Node.ELEMENT_NODE) {
+                            isEffectivelyEmpty = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (!isEffectivelyEmpty) {
                     for (const child of node.childNodes) {
                         result += formatHtml(child, level + 1, indentChar);
                     }
+                    if (!isInline) {
+                        result += '\n' + indent;
+                    }
                 }
-                if (!isInline && level > 0) {
-                    result += '\n' + indentChar.repeat(level - 1);
-                }
-                result += `</${nodeName}>`;
+                result += `</${tagName}>`;
             }
             break;
 
         case Node.TEXT_NODE:
             const trimmedValue = node.nodeValue.trim();
             if (trimmedValue) {
-                result += ' ' + trimmedValue.replace(/\s+/g, ' ') + ' ';
+                result += trimmedValue;
             }
             break;
 
@@ -163,7 +177,6 @@ function formatHtml(node, level = 0, indentChar = '  ') {
 
     return result;
 }
-
 
 // THE CORRECTED savePage FUNCTION
 async function savePage() {
