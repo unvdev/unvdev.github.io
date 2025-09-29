@@ -122,24 +122,28 @@ async function savePage() {
         const parser = new DOMParser();
         const tempDoc = parser.parseFromString(originalHtml, 'text/html');
 
-        // 2. Find and remove the unwanted elements from the copy
+        // 2. Find and remove all unwanted elements in a single step
         const unwantedSelectors = [
+            // Your existing data-name selectors
             '[data-name="cms environment"]',
             '[data-name="cms stylesheet"]',
-            '[data-name="cms javascript"]'
+            '[data-name="cms javascript"]',
+
+            // NEW: Your improved selector for all Font Awesome IDs
+            '[id^="fa-"]'
+            
         ].join(', ');
 
         const elementsToRemove = tempDoc.querySelectorAll(unwantedSelectors);
         elementsToRemove.forEach(element => element.remove());
         
-        // 3. Convert the cleaned document back into an HTML string
-        let cleanedHtml = `<!DOCTYPE html>\n${tempDoc.documentElement.outerHTML}`;
+        // The separate loop for IDs is no longer needed.
 
-        // 4. NEW: Format the HTML string
-        // This regex finds and removes any line that is either empty or contains only spaces/tabs.
+        // 3. Convert the cleaned document back into an HTML string and format it
+        let cleanedHtml = `<!DOCTYPE html>\n${tempDoc.documentElement.outerHTML}`;
         cleanedHtml = cleanedHtml.replace(/(^[ \t]*\n)/gm, "");
 
-        // 5. Copy the final, formatted HTML to the clipboard
+        // 4. Copy the final, formatted HTML to the clipboard
         await navigator.clipboard.writeText(cleanedHtml);
         
         console.log('Formatted page HTML copied to clipboard!');
