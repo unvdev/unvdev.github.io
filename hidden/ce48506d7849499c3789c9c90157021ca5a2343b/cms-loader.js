@@ -48,7 +48,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         const doc = parser.parseFromString(html, 'text/html');
 
         // --- 2. REPLACE THE ENTIRE HEAD ---
-        // The head from the /test page completely overwrites the original head.
         document.head.innerHTML = doc.head.innerHTML;
 
         // --- 3. REBUILD BODY & EXTRACT SCRIPTS FROM NEW CONTENT ---
@@ -57,9 +56,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         loadedPageWrapper.id = 'loaded-page';
         loadedPageWrapper.innerHTML = doc.body.innerHTML;
 
-        // Find all scripts within the new content...
         const scriptsFromLoadedPage = Array.from(loadedPageWrapper.querySelectorAll('script'));
-        // ...and remove them from the wrapper so they can be moved.
         scriptsFromLoadedPage.forEach(script => script.remove());
 
         document.body.innerHTML = '';
@@ -72,6 +69,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const link = document.createElement('link');
                 link.rel = 'stylesheet';
                 link.href = href;
+                // MODIFICATION: Added the data-name attribute
+                link.setAttribute('data-name', 'cms stylesheet');
                 document.head.appendChild(link);
             }
         };
@@ -80,7 +79,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             return new Promise((resolve, reject) => {
                 const script = document.createElement('script');
                 script.src = src;
-                // MODIFICATION: Added the data-name attribute
                 script.setAttribute('data-name', 'cms javascript');
                 script.onload = () => resolve(script);
                 script.onerror = () => reject(new Error(`Script load error for ${src}`));
@@ -95,11 +93,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             // Add cms-loader.js specifically to the <head>
             const loaderScript = document.createElement('script');
             loaderScript.src = 'cms-loader.js';
+            // MODIFICATION: Added the data-name attribute
+            loaderScript.setAttribute('data-name', 'cms javascript');
             document.head.appendChild(loaderScript);
 
             try {
                 // Load core scripts sequentially in the body
-                // The updated loadScript function above will add the attribute to these
                 await loadScript('https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js');
                 await loadScript('cms-core.js');
                 await loadScript('cms-menu.js');
@@ -108,7 +107,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 // Execute the inline validation script
                 const inlineScript = document.createElement('script');
-                // MODIFICATION: Added the data-name attribute
                 inlineScript.setAttribute('data-name', 'cms javascript');
                 inlineScript.textContent = `
                     let paramString = window.location.search.split('?')[1];
@@ -137,7 +135,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
         };
         
-        // Pass the extracted scripts to the asset loader function
         await loadAppendedAssets(scriptsFromLoadedPage);
 
     } catch (error) {
