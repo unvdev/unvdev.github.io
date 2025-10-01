@@ -1,7 +1,7 @@
 //Open The Styles Menu
 function invokeStyleMenu() {
     if (currentlySelected) {
-        document.querySelector(".style-editor-sidebar").classList.remove('content-hide');
+        document.getElementById("style-editor-sidebar").classList.remove('content-hide');
         checkRestrictedControls();
         loadStylesFromSelected();
     }
