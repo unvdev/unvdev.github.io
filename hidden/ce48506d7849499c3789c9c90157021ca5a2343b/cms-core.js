@@ -1,5 +1,5 @@
 const cms = document.querySelector(".cms-menu");
-const styles = document.querySelector(".style-editor-sidebar");
+const styles = document.getElementById("style-editor-sidebar");
 const deleteButton = document.getElementById("delete-element");
 const saveButton = document.getElementById("save-and-copy");
 const loadedPage = document.getElementById("loaded-page");
