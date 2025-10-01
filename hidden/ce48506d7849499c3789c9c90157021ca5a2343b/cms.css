@@ -603,7 +603,7 @@
 }
 
         /* Main Sidebar Container */
-        .style-editor-sidebar {
+        .sidebar {
             position: fixed;
             top: 0;
             left: 0;
@@ -620,25 +620,25 @@
             border-right: 1px solid #34495e;
         }
 
-        .style-editor-sidebar-header {
+        .sidebar-header {
             padding-bottom: 1rem;
             margin-bottom: 1rem;
             border-bottom: 1px solid #34495e;
             text-align: center;
         }
 
-        .style-editor-sidebar-header h3 {
+        .sidebar-header h3 {
             margin: 0;
             font-size: 1.2rem;
             color: #ffffff;
         }
 
         /* Section Styling */
-        .style-editor-sidebar-section {
+        .sidebar-section {
             margin-bottom: 1.5rem;
         }
 
-        .style-editor-section-title {
+        .sidebar-section-title {
             font-size: 0.9rem;
             font-weight: bold;
             color: #95a5a6;
@@ -650,11 +650,11 @@
         }
 
         /* General Control Group Styling */
-        .style-editor-control-group {
+        .sidebar-control-group {
             margin-bottom: 1rem;
         }
 
-        .style-editor-control-group label {
+        .sidebar-control-group label {
             display: block;
             font-size: 0.85rem;
             margin-bottom: 0.5rem;
@@ -662,9 +662,9 @@
         }
 
         /* Inputs */
-        .style-editor-sidebar input[type="number"],
-        .style-editor-sidebar input[type="text"],
-        .style-editor-sidebar select {
+        .sidebar input[type="number"],
+        .sidebar input[type="text"],
+        .sidebar select {
             width: 100%;
             padding: 8px;
             font-size: 0.9rem;
@@ -675,19 +675,19 @@
             box-sizing: border-box;
         }
 
-        .style-editor-sidebar input:focus,
-        .style-editor-sidebar select:focus {
+        .sidebar input:focus,
+        .sidebar select:focus {
             outline: none;
             border-color: magenta;
         }
 
         /* Input + Unit */
-        .style-editor-sidebar .style-editor-input-with-unit {
+        .sidebar .input-with-unit {
             display: flex;
         }
 
         /* Color Picker */
-        .style-editor-sidebar .style-editor-color-input-wrapper {
+        .sidebar .color-input-wrapper {
             display: flex;
             align-items: center;
             background: #34495e;
@@ -695,7 +695,7 @@
             border-radius: 4px;
         }
 
-        .style-editor-sidebar input[type="color"] {
+        .sidebar input[type="color"] {
             width: 40px;
             height: 38px;
             padding: 4px;
@@ -705,12 +705,12 @@
         }
 
         /* Segmented Control */
-        .style-editor-sidebar .style-editor-segmented-control {
+        .sidebar .sidebar-segmented-control {
             display: flex;
             width: 100%;
         }
 
-        .style-editor-sidebar .style-editor-segmented-control button {
+        .sidebar .sidebar-segmented-control button {
             flex: 1;
             padding: 8px;
             background: #34495e;
@@ -720,56 +720,56 @@
             transition: background .2s ease;
         }
 
-        .style-editor-sidebar .style-editor-segmented-control button:first-child {
+        .sidebar .sidebar-segmented-control button:first-child {
             border-radius: 4px 0 0 4px;
         }
 
-        .style-editor-sidebar .style-editor-segmented-control button:last-child {
+        .sidebar .sidebar-segmented-control button:last-child {
             border-radius: 0 4px 4px 0;
             border-left: none;
         }
 
-        .style-editor-sidebar .style-editor-segmented-control button:not(:first-child):not(:last-child) {
+        .sidebar .sidebar-segmented-control button:not(:first-child):not(:last-child) {
             border-left: none;
         }
 
-        .style-editor-sidebar .style-editor-segmented-control button:hover {
+        .sidebar .sidebar-segmented-control button:hover {
             background: magenta;
             border-color: magenta;
             color: #fff;
         }
 
-        .style-editor-sidebar .style-editor-segmented-control .active {
+        .sidebar .sidebar-segmented-control .active {
             background: magenta;
             border-color: magenta;
             color: #fff;
         }
 
         /* Padding Control */
-        .style-editor-sidebar .style-editor-quad-control {
+        .sidebar .sidebar-quad-control {
             display: grid;
             grid-template: auto auto auto / auto auto auto;
             gap: 5px;
             place-items: center;
         }
 
-        .style-editor-sidebar .style-editor-quad-control input {
+        .sidebar .sidebar-quad-control input {
             width: 65px;
             text-align: center;
             box-sizing: border-box;
         }
 
-        .style-editor-sidebar .style-editor-quad-top {
+        .sidebar .sidebar-quad-control .quad-top {
             grid-column: 2;
             grid-row: 1;
         }
 
-        .style-editor-sidebar .style-editor-quad-left {
+        .sidebar .sidebar-quad-control .quad-left {
             grid-column: 1;
             grid-row: 2;
         }
 
-        .style-editor-sidebar .quad-center-label {
+        .sidebar .sidebar-quad-control .quad-center-label {
             grid-column: 2;
             grid-row: 2;
             width: 40px;
@@ -782,12 +782,12 @@
             border: 1px dashed #7f8c8d;
         }
 
-        .style-editor-sidebar .style-editor-quad-right {
+        .sidebar .sidebar-quad-control .quad-right {
             grid-column: 3;
             grid-row: 2;
         }
 
-        .style-editor-sidebar .style-editor-quad-bottom {
+        .sidebar .sidebar-quad-control .quad-bottom {
             grid-column: 2;
             grid-row: 3;
         }
