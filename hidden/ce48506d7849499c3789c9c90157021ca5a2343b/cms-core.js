@@ -14,7 +14,6 @@ function deselectAll() {
     if (currentlySelected) {
         currentlySelected.classList.remove('selected');
         currentlySelected = null;
-        cms.classList.add("content-hide");
         styles.classList.add("content-hide");
     }
 }

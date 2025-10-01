@@ -27,7 +27,6 @@ const imageElementUploadButton = document.getElementById("image-element-upload-b
 function insertElement(htmlContent) {
     if (currentlySelected) {
         currentlySelected.insertAdjacentHTML('beforebegin', htmlContent);
-        cms.classList.add('content-hide');
         deselectAll();
     }
 }
@@ -43,7 +42,6 @@ function insertImageLink(htmlContent) {
       insertedImage.src = imageLink;
     }
 
-    cms.classList.add("content-hide");
     deselectAll();
   }
 }
@@ -59,7 +57,6 @@ async function insertImageUpload(htmlContent) {
       insertedImage.src = imageUpload;
     }
 
-    cms.classList.add("content-hide");
     deselectAll();
   }
 }
@@ -76,7 +73,6 @@ function insertLayoutElement(htmlContent) {
             return;
         }
 
-        cms.classList.add('content-hide');
         deselectAll();
     }
 }
