@@ -223,7 +223,7 @@ document.addEventListener("click", (e) => {
     // Define the primary UI containers that should not trigger selection changes.
     // Clicks inside these elements are considered UI interactions and should be ignored here.
     const isInsideQuillUI = clickedElement.closest('.text-editor-pop');
-    const isInsideCmsUI = clickedElement.closest('.cms-menu-container, .cms-menu-bar');
+    const isInsideCmsUI = clickedElement.closest('.cms-menu');
     const isInsideStyleEditor = clickedElement.closest('#style-editor-sidebar');
 
     // If the click is inside any of our main UI containers, stop further execution.
