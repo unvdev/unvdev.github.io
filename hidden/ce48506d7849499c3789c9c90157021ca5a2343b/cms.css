@@ -72,7 +72,7 @@
     margin-top: 0 !important;
 }
 
-.building-block.building-environment .building-block.building-container .building-block.building-column :has(> .building-block:last-child) > .building-block:last-child {
+.building-block.building-environment .building-block.building-container .building-block.building-column:has(> .building-block:last-child) > .building-block:last-child {
   margin-bottom: 1rem !important;
 }
 
