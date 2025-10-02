@@ -66,15 +66,20 @@
     padding: 1rem !important;
 }
 
-.building-block:not(.building-environment, .building-container, .building-column):first-child {
-    margin-top: 0 !important;
-}
-
 .building-block {
     margin-top: 1rem !important;
     cursor: pointer;
     border: 1px dotted silver;
 }
+
+.building-block:not(.building-environment, .building-container, .building-column) {
+    margin-top: 0 !important;
+}
+
+.building-block:first-child {
+    margin-top: 0 !important;
+}
+
 
         .placeholder-block {
             display: block;
