@@ -211,7 +211,7 @@ body {
 /* Headings */
 h1, h2, h3, h4, h5 {
   margin-bottom: 0.75rem;
-  max-width: 100%;
+  width: 100%;
   line-height: 1.2;
   font-weight: 700;
   overflow-wrap: break-word;
@@ -240,7 +240,7 @@ h5 {
 /* Paragraph */
 p {
   margin-bottom: 1rem;
-  max-width: 100%;
+  width: 100%;
   font-size: 1rem; /* 16px */
   font-weight: 400;
   overflow-wrap: break-word;
@@ -250,7 +250,7 @@ p {
 ul, ol {
   margin-bottom: 1rem;
   padding-left: 2rem;
-  max-width: 100%;
+  width: 100%;
 }
 
 li {
@@ -286,7 +286,7 @@ a:hover, a:focus {
 .default-image {
   display: block;
   position: relative;
-  max-width: 100%;
+  width: 100%;
   height: auto;
 }
 
@@ -294,7 +294,7 @@ a:hover, a:focus {
   display: block;
   position: relative;
   margin: 0 auto;
-  max-width: 100%;
+  width: 100%;
   height: auto;
 }
 
@@ -302,7 +302,7 @@ a:hover, a:focus {
   display: block;
   position: relative;
   margin: 0 auto;
-  max-width: 100%;
+  width: 100%;
   height: auto;
   background-color: silver;
 }
@@ -408,7 +408,7 @@ footer {
         .building-column-span-one {
             display: grid;
             grid-template-columns: 1fr;
-            max-width: 100%;
+            width: 100%;
             /* padding: 1rem; */
             gap: 1rem;
         }
@@ -417,7 +417,7 @@ footer {
         .building-column-span-two {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            max-width: 100%;
+            width: 100%;
             /* padding: 1rem; */
             gap: 1rem;
         }
@@ -426,7 +426,7 @@ footer {
         .building-column-span-three {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            max-width: 100%;
+            width: 100%;
             /* padding: 1rem; */
             gap: 1rem;
         }
@@ -435,7 +435,7 @@ footer {
         .building-column-span-four {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            max-width: 100%;
+            width: 100%;
             /* padding: 1rem; */
             gap: 1rem;
         }
@@ -444,7 +444,7 @@ footer {
         .building-column-span-five {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            max-width: 100%;
+            width: 100%;
             /* padding: 1rem; */
             gap: 1rem;
         }
@@ -453,7 +453,7 @@ footer {
         .building-column-span-six {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
-            max-width: 100%;
+            width: 100%;
             /* padding: 1rem; */
             gap: 1rem;
         }
@@ -462,7 +462,7 @@ footer {
         .building-column-span-asymm-left {
         display: grid;
         grid-template-columns: 1fr 2fr;
-        max-width: 100%;
+        width: 100%;
         /* padding: 1rem; */
         gap: 1rem;
         }
@@ -471,7 +471,7 @@ footer {
         .building-column-span-asymm-right {
         display: grid;
         grid-template-columns: 2fr 1fr;
-        max-width: 100%;
+        width: 100%;
         /* padding: 1rem; */
         gap: 1rem;
         }
@@ -552,13 +552,13 @@ footer {
         .building-column {
             display: block;
             position: relative;
-            max-width: 100%;
+            width: 100%;
         }
 
                 /*Accordion*/
 
         .accordion-container {
-            max-width: 100%;
+            width: 100%;
         }
 
         .accordion:hover {
@@ -573,7 +573,7 @@ footer {
             padding-bottom: 15px !important;
             padding-left: 60px !important;
             padding-right: 20px !important;
-            max-width: 100%;
+            width: 100%;
             background-color: #eeeeee;
         }
 
