@@ -72,13 +72,13 @@
 
 /* This will still apply to ALL building blocks, which is what you want. */
 .building-block {
+    margin-top: 1rem;
     cursor: pointer;
     border: 1px dotted silver;
 }
 
-.building-block::after {
-    content: '';
-    height: 1rem !important;
+.building-block:first-child {
+    margin-top: 0rem;
 }
 
         .placeholder-block {
