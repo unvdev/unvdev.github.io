@@ -56,7 +56,7 @@
 
         .building-block {
             cursor: pointer;
-            border: 1px dashed silver;
+            border: 0.5px solid silver;
             box-sizing: border-box;
         }
 
