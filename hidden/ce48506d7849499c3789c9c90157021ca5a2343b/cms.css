@@ -54,24 +54,30 @@
   white-space: nowrap;
 }
 
-        .building-environment {
-            padding: 1rem !important;
-        }
+.building-environment {
+    padding: 1rem !important;
+}
 
-        .building-container {
-            padding: 1rem !important;
-        }
+.building-container {
+    padding: 1rem !important;
+}
 
-        .building-column {
-            padding: 1rem !important;
-        }
+.building-column {
+    padding: 1rem !important;
+}
 
-        .building-block {
-            margin: 1rem !important;
-            cursor: pointer;
-            border: 1px dotted silver;
-            /* box-sizing: border-box; */
-        }
+/* This now applies to any .building-block that is NOT a 
+  .building-environment, .building-container, or .building-column.
+*/
+.building-block:not(.building-environment):not(.building-container):not(.building-column) {
+    margin: 1rem !important;
+}
+
+/* This will still apply to ALL building blocks, which is what you want. */
+.building-block {
+    cursor: pointer;
+    border: 1px dotted silver;
+}
 
         .placeholder-block {
             display: block;
