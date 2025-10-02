@@ -54,14 +54,6 @@
   white-space: nowrap;
 }
 
-.building-environment,
-.building-container,
-.building-column {
-    padding: 1rem !important;
-    cursor: pointer;
-    border: 1px dotted silver;
-}
-
 .building-environment .building-block.building-container .building-block.building-column .building-block {
     margin-top: 1rem !important;
     cursor: pointer;
@@ -72,8 +64,23 @@
     margin-top: 0 !important;
 }
 
-.building-environment .building-block.building-container .building-block.building-column .building-block:last-of-type {
-  margin-bottom: 1rem !important;
+.building-environment,
+.building-container,
+.building-column {
+    padding: 1rem !important;
+    cursor: pointer;
+}
+
+.building-environment {
+    border: 1px dotted lime;
+}
+
+.building-container {
+    border: 1px dotted cyan;
+}
+
+.building-column {
+    border: 1px dotted yellow;
 }
 
         .placeholder-block {
