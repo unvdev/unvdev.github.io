@@ -246,9 +246,17 @@ document.addEventListener("click", (e) => {
 
 document.addEventListener("keydown", e => {
 
-    // Ignore keystrokes inside editors
-    if (e.target.closest('.text-editor-pop') || e.target.closest('.style-editor-sidebar')) {
-        return;
+    const target = e.target;
+
+    // Ignore keystrokes inside editors OR form fields
+    if (
+        target.closest('.text-editor-pop') ||
+        target.closest('.style-editor-sidebar') ||
+        target.tagName === 'INPUT' ||
+        target.tagName === 'TEXTAREA' ||
+        target.isContentEditable
+    ) {
+        return; // allow normal typing
     }
 
     const isCtrl = e.ctrlKey || e.metaKey; // metaKey for macOS (Command key)
@@ -257,14 +265,14 @@ document.addEventListener("keydown", e => {
     if (isCtrl && e.key.toLowerCase() === 'c') {
         e.preventDefault();
         copyElement();
-        return; // Stop further execution
+        return;
     }
 
     // Paste: Ctrl+V or Cmd+V
     if (isCtrl && e.key.toLowerCase() === 'v') {
         e.preventDefault();
         pasteElement();
-        return; // Stop further execution
+        return;
     }
 
     if (currentlySelected) {
