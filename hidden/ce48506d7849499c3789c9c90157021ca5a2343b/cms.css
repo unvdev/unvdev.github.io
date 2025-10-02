@@ -66,19 +66,14 @@
     padding: 1rem !important;
 }
 
-/* .building-block:not(.building-environment):not(.building-container):not(.building-column) {
-    margin: 1rem !important;
-} */
+.building-block:not(.building-environment):not(.building-container):not(.building-column):first-child {
+    margin-top: 1rem !important;
+}
 
-/* This will still apply to ALL building blocks, which is what you want. */
 .building-block {
     margin-top: 1rem;
     cursor: pointer;
     border: 1px dotted silver;
-}
-
-.building-block:first-child {
-    margin-top: 0rem;
 }
 
         .placeholder-block {
