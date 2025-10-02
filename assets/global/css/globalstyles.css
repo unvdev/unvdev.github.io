@@ -550,7 +550,7 @@ footer {
                 /*Accordion*/
 
         .accordion-container {
-            width: 100%;
+            width: auto;
             /* padding: 1rem !important; */
         }
 
@@ -566,8 +566,7 @@ footer {
             padding-bottom: 15px !important;
             padding-left: 60px !important;
             padding-right: 20px !important;
-            width: 100% !important;
-            min-width: 100% !important;
+            width: auto;
             background-color: #eeeeee;
         }
 
