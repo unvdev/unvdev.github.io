@@ -295,7 +295,6 @@ a:hover, a:focus {
   display: block;
   position: relative;
   margin: 0 auto;
-  width: 100%;
   height: auto;
 }
 
@@ -303,7 +302,6 @@ a:hover, a:focus {
   display: block;
   position: relative;
   margin: 0 auto;
-  width: 100%;
   height: auto;
   background-color: silver;
 }
