@@ -290,6 +290,14 @@ a:hover, a:focus {
   height: auto;
 }
 
+.stretch-image {
+  display: block;
+  position: relative;
+  width: 100vw;
+  height: 20vh;
+  object-fit: cover;
+}
+
 .spacer {
   display: block;
   position: relative;
