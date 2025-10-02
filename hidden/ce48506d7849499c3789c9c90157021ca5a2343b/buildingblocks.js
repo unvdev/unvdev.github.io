@@ -1,7 +1,7 @@
 const oneColumn = `
-<div class="building-container building-block" data-name="Building Block: Building Container">
+<div class="building-container building-block building-block-align-center" data-name="Building Block: Building Container">
     <div class="building-column-span-one">
-        <div class="building-column building-block building-column-content-center" data-name="Building Block: Building Column">
+        <div class="building-column building-block building-block-align-center building-column-content-center" data-name="Building Block: Building Column">
             <div class="placeholder-block"></div>
         </div>
     </div>
@@ -9,12 +9,12 @@ const oneColumn = `
 `;
 
 const twoColumns = `
-<div class="building-container building-block" data-name="Building Block: Building Container">
+<div class="building-container building-block building-block-align-center" data-name="Building Block: Building Container">
     <div class="building-column-span-two">
-        <div class="building-column building-block building-column-content-center" data-name="Building Block: Building Column">
+        <div class="building-column building-block building-block-align-center building-column-content-center" data-name="Building Block: Building Column">
             <div class="placeholder-block"></div>
         </div>
-        <div class="building-column building-block building-column-content-center" data-name="Building Block: Building Column">
+        <div class="building-column building-block building-block-align-center building-column-content-center" data-name="Building Block: Building Column">
             <div class="placeholder-block"></div>
         </div>
     </div>
@@ -22,15 +22,15 @@ const twoColumns = `
 `;
 
 const threeColumns = `
-<div class="building-container building-block" data-name="Building Block: Building Container">
+<div class="building-container building-block building-block-align-center" data-name="Building Block: Building Container">
     <div class="building-column-span-three">
-        <div class="building-column building-block building-column-content-center" data-name="Building Block: Building Column">
+        <div class="building-column building-block building-block-align-center building-column-content-center" data-name="Building Block: Building Column">
             <div class="placeholder-block"></div>
         </div>
-        <div class="building-column building-block building-column-content-center" data-name="Building Block: Building Column">
+        <div class="building-column building-block building-block-align-center building-column-content-center" data-name="Building Block: Building Column">
             <div class="placeholder-block"></div>
         </div>
-        <div class="building-column building-block building-column-content-center" data-name="Building Block: Building Column">
+        <div class="building-column building-block building-block-align-center building-column-content-center" data-name="Building Block: Building Column">
             <div class="placeholder-block"></div>
         </div>
     </div>
@@ -38,18 +38,18 @@ const threeColumns = `
 `;
 
 const fourColumns = `
-<div class="building-container building-block" data-name="Building Block: Building Container">
+<div class="building-container building-block building-block-align-center" data-name="Building Block: Building Container">
     <div class="building-column-span-four">
-        <div class="building-column building-block building-column-content-center" data-name="Building Block: Building Column">
+        <div class="building-column building-block building-block-align-center building-column-content-center" data-name="Building Block: Building Column">
             <div class="placeholder-block"></div>
         </div>
-        <div class="building-column building-block building-column-content-center" data-name="Building Block: Building Column">
+        <div class="building-column building-block building-block-align-center building-column-content-center" data-name="Building Block: Building Column">
             <div class="placeholder-block"></div>
         </div>
-        <div class="building-column building-block building-column-content-center" data-name="Building Block: Building Column">
+        <div class="building-column building-block building-block-align-center building-column-content-center" data-name="Building Block: Building Column">
             <div class="placeholder-block"></div>
         </div>
-        <div class="building-column building-block building-column-content-center" data-name="Building Block: Building Column">
+        <div class="building-column building-block building-block-align-center building-column-content-center" data-name="Building Block: Building Column">
             <div class="placeholder-block"></div>
         </div>
     </div>
@@ -57,21 +57,21 @@ const fourColumns = `
 `;
 
 const fiveColumns = `
-<div class="building-container building-block" data-name="Building Block: Building Container">
+<div class="building-container building-block building-block-align-center" data-name="Building Block: Building Container">
     <div class="building-column-span-five">
-        <div class="building-column building-block building-column-content-center" data-name="Building Block: Building Column">
+        <div class="building-column building-block building-block-align-center building-column-content-center" data-name="Building Block: Building Column">
             <div class="placeholder-block"></div>
         </div>
-        <div class="building-column building-block building-column-content-center" data-name="Building Block: Building Column">
+        <div class="building-column building-block building-block-align-center building-column-content-center" data-name="Building Block: Building Column">
             <div class="placeholder-block"></div>
         </div>
-        <div class="building-column building-block building-column-content-center" data-name="Building Block: Building Column">
+        <div class="building-column building-block building-block-align-center building-column-content-center" data-name="Building Block: Building Column">
             <div class="placeholder-block"></div>
         </div>
-        <div class="building-column building-block building-column-content-center" data-name="Building Block: Building Column">
+        <div class="building-column building-block building-block-align-center building-column-content-center" data-name="Building Block: Building Column">
             <div class="placeholder-block"></div>
         </div>
-        <div class="building-column building-block building-column-content-center" data-name="Building Block: Building Column">
+        <div class="building-column building-block building-block-align-center building-column-content-center" data-name="Building Block: Building Column">
             <div class="placeholder-block"></div>
         </div>
     </div>
@@ -79,24 +79,24 @@ const fiveColumns = `
 `;
 
 const sixColumns = `
-<div class="building-container building-block" data-name="Building Block: Building Container">
+<div class="building-container building-block building-block-align-center" data-name="Building Block: Building Container">
     <div class="building-column-span-six">
-        <div class="building-column building-block building-column-content-center" data-name="Building Block: Building Column">
+        <div class="building-column building-block building-block-align-center building-column-content-center" data-name="Building Block: Building Column">
             <div class="placeholder-block"></div>
         </div>
-        <div class="building-column building-block building-column-content-center" data-name="Building Block: Building Column">
+        <div class="building-column building-block building-block-align-center building-column-content-center" data-name="Building Block: Building Column">
             <div class="placeholder-block"></div>
         </div>
-        <div class="building-column building-block building-column-content-center" data-name="Building Block: Building Column">
+        <div class="building-column building-block building-block-align-center building-column-content-center" data-name="Building Block: Building Column">
             <div class="placeholder-block"></div>
         </div>
-        <div class="building-column building-block building-column-content-center" data-name="Building Block: Building Column">
+        <div class="building-column building-block building-block-align-center building-column-content-center" data-name="Building Block: Building Column">
             <div class="placeholder-block"></div>
         </div>
-        <div class="building-column building-block building-column-content-center" data-name="Building Block: Building Column">
+        <div class="building-column building-block building-block-align-center building-column-content-center" data-name="Building Block: Building Column">
             <div class="placeholder-block"></div>
         </div>
-        <div class="building-column building-block building-column-content-center" data-name="Building Block: Building Column">
+        <div class="building-column building-block building-block-align-center building-column-content-center" data-name="Building Block: Building Column">
             <div class="placeholder-block"></div>
         </div>
     </div>
@@ -104,12 +104,12 @@ const sixColumns = `
 `;
 
 const asymmLeftColumn = `
-<div class="building-container building-block" data-name="Building Block: Building Container">
+<div class="building-container building-block building-block-align-center" data-name="Building Block: Building Container">
     <div class="building-column-span-asymm-left">
-        <div class="building-column building-block building-column-content-center" data-name="Building Block: Building Column">
+        <div class="building-column building-block building-block-align-center building-column-content-center" data-name="Building Block: Building Column">
             <div class="placeholder-block"></div>
         </div>
-        <div class="building-column building-block building-column-content-center" data-name="Building Block: Building Column">
+        <div class="building-column building-block building-block-align-center building-column-content-center" data-name="Building Block: Building Column">
             <div class="placeholder-block"></div>
         </div>
     </div>
@@ -117,12 +117,12 @@ const asymmLeftColumn = `
 `;
 
 const asymmRightColumn = `
-<div class="building-container building-block" data-name="Building Block: Building Container">
+<div class="building-container building-block building-block-align-center" data-name="Building Block: Building Container">
     <div class="building-column-span-asymm-right">
-        <div class="building-column building-block building-column-content-center" data-name="Building Block: Building Column">
+        <div class="building-column building-block building-block-align-center building-column-content-center" data-name="Building Block: Building Column">
             <div class="placeholder-block"></div>
         </div>
-        <div class="building-column building-block building-column-content-center" data-name="Building Block: Building Column">
+        <div class="building-column building-block building-block-align-center building-column-content-center" data-name="Building Block: Building Column">
             <div class="placeholder-block"></div>
         </div>
     </div>
@@ -130,7 +130,7 @@ const asymmRightColumn = `
 `;
 
 const spacer = `
-<div class="building-block spacer" style="padding-top: 10px; padding-bottom: 10px;" data-name="Building Block: Spacer"></div>
+<div class="building-block building-block-align-center spacer" style="padding-top: 10px; padding-bottom: 10px;" data-name="Building Block: Spacer"></div>
 `;
 
 const divider = `
@@ -138,43 +138,43 @@ const divider = `
 `;
 
 const headingOne = `
-<div class="text-element building-block" data-name="Building Block: Text">
+<div class="text-element building-block building-block-align-center" data-name="Building Block: Text">
     <h1>Lorem ipsum</h1>
 </div>
 `;
 
 const headingTwo = `
-<div class="text-element building-block" data-name="Building Block: Text">
+<div class="text-element building-block building-block-align-center" data-name="Building Block: Text">
     <h2>Lorem ipsum</h2>
 </div>
 `;
 
 const headingThree = `
-<div class="text-element building-block" data-name="Building Block: Text">
+<div class="text-element building-block building-block-align-center" data-name="Building Block: Text">
     <h3>Lorem ipsum</h3>
 </div>
 `;
 
 const headingFour = `
-<div class="text-element building-block" data-name="Building Block: Text">
+<div class="text-element building-block building-block-align-center" data-name="Building Block: Text">
     <h4>Lorem ipsum</h4>
 </div>
 `;
 
 const headingFive = `
-<div class="text-element building-block" data-name="Building Block: Text">
+<div class="text-element building-block building-block-align-center" data-name="Building Block: Text">
     <h5>Lorem ipsum</h5>
 </div>
 `;
 
 const paragraph = `
-<div class="text-element building-block" data-name="Building Block: Text">
+<div class="text-element building-block building-block-align-center" data-name="Building Block: Text">
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 </div>
 `;
 
 const unorderedList = `
-<div class="text-element building-block" data-name="Building Block: Text">
+<div class="text-element building-block building-block-align-center" data-name="Building Block: Text">
     <ul>
         <li>Lorem ipsum</li>
         <li>Lorem ipsum</li>
@@ -184,7 +184,7 @@ const unorderedList = `
 `;
 
 const orderedList = `
-<div class="text-element building-block" data-name="Building Block: Text">
+<div class="text-element building-block building-block-align-center" data-name="Building Block: Text">
     <ol>
         <li>Lorem ipsum</li>
         <li>Lorem ipsum</li>
@@ -194,18 +194,18 @@ const orderedList = `
 `;
 
 const image = `
-<div class="image-element building-block" data-name="Building Block: Image">
+<div class="image-element building-block building-block-align-center" data-name="Building Block: Image">
     <img class="default-image"></img>
 </div>
 `;
 
 const accordion = `
-<div class="accordion-container building-block" data-name="Building Block: Accordion Container">
-    <div class="accordion-label text-element building-block" data-name="Building Block: Accordion Title">
+<div class="accordion-container building-block building-block-align-center" data-name="Building Block: Accordion Container">
+    <div class="accordion-label text-element building-block building-block-align-center" data-name="Building Block: Accordion Title">
         <p><strong>Lorem ipsum</strong></p>
     </div>
     <div class="accordion-content">
-        <div class="text-element building-block" data-name="Building Block: Text">
+        <div class="text-element building-block building-block-align-center" data-name="Building Block: Text">
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         </div>
         <div class="placeholder-block"></div>
@@ -214,9 +214,9 @@ const accordion = `
 `;
 
 // const placeHolderInitial = `
-// <div class="building-container building-block">
+// <div class="building-container building-block building-block-align-center">
 //     <div class="building-column-span-1">
-//         <div class="building-column building-block building-column-content-center">
+//         <div class="building-column building-block building-block-align-center building-column-content-center">
 //             <div class="placeholder-block"></div>
 //         </div>
 //     </div>
