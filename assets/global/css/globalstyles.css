@@ -483,7 +483,15 @@ footer {
             }
 
             .building-column-span-five {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(6, 1fr);
+            }
+
+            .building-column-span-five:nth-child(-n+3) {
+                 grid-column: span 2;
+            }
+
+            .building-column-span-five:nth-child(n+4) {
+                 grid-column: span 3;
             }
 
             .building-column-span-four {
@@ -491,7 +499,7 @@ footer {
             }
 
             .building-column-span-three {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(3, 1fr);
             }
 
             .building-column-span-two {
