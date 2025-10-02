@@ -842,6 +842,10 @@
             display: block !important;
         }
 
+        .accordion-content .building-block:first-child {
+            margin-top: 1rem !important;
+        }
+
         .accordion-label> :first-child::before {
             content: "\25B2" !important;
             color: magenta !important;
