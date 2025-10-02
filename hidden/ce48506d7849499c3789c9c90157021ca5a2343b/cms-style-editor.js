@@ -121,7 +121,7 @@ function highlightActiveControls() {
   if (!currentlySelected) return;
 
   // Clear old actives
-  [alignLeft, alignCenter, alignRight, alignTop, alignMiddle, alignBottom]
+  [alignLeft, alignCenter, alignRight, alignTop, alignMiddle, alignBottom, imageStretch, imageDefault]
     .forEach(btn => btn.classList.remove("active"));
 
   // Horizontal
