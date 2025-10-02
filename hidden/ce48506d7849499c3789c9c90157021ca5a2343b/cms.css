@@ -58,6 +58,8 @@
 .building-block.building-container,
 .building-block.building-column {
     padding: 1rem !important;
+    cursor: pointer;
+    border: 1px dotted silver;
 }
 
 .building-block.building-environment .building-block.building-container .building-block.building-column .building-block {
@@ -70,7 +72,7 @@
     margin-top: 0 !important;
 }
 
-.building-block.building-environment .building-block.building-container .building-block.building-column .building-block:last-child {
+.building-block.building-environment .building-block.building-container .building-block.building-column .building-block:last-of-type {
     margin-bottom: 1rem !important;
 }
 
