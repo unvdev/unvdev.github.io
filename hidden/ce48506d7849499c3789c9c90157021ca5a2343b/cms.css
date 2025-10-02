@@ -2,7 +2,7 @@
             outline: none;
         }
 
-        #loaded-page .sidebar-active {
+        #loaded-page.sidebar-active {
             position: absolute;
             top: 0;
             right: 0;
