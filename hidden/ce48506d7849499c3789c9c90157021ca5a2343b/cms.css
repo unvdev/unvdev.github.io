@@ -62,6 +62,10 @@
     padding: 1rem !important;
 }
 
+.building-column {
+    padding: 1rem !important;
+}
+
 /* .building-block:not(.building-environment):not(.building-container):not(.building-column) {
     margin: 1rem !important;
 } */
