@@ -76,6 +76,11 @@
     border: 1px dotted silver;
 }
 
+.building-block::after {
+    content: '';
+    height: 1rem !important;
+}
+
         .placeholder-block {
             display: block;
             position: relative;
