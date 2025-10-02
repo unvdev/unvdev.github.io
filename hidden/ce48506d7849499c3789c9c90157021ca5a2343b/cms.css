@@ -57,22 +57,20 @@
 .building-block.building-environment,
 .building-block.building-container,
 .building-block.building-column {
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
     padding: 1rem !important;
 }
 
-.building-block {
+.building-block.building-environment .building-block.building-container .building-block.building-column .building-block {
     margin-top: 1rem !important;
     cursor: pointer;
     border: 1px dotted silver;
 }
 
-.building-block:first-child {
+.building-block.building-environment .building-block.building-container .building-block.building-column .building-block:first-child {
     margin-top: 0 !important;
 }
 
-.building-block:last-child {
+.building-block.building-environment .building-block.building-container .building-block.building-column .building-block:last-child {
     margin-bottom: 1rem !important;
 }
 
