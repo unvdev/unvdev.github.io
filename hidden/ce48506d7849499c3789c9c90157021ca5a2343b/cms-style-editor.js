@@ -42,6 +42,10 @@ const marginLeftInput = document.getElementById("style-editor-margin-left-input"
 const marginRightInput = document.getElementById("style-editor-margin-right-input");
 const marginBottomInput = document.getElementById("style-editor-margin-bottom-input");
 
+// Image Options
+const imageDefault = document.getElementById("style-editor-image-default-button");
+const imageStretch = document.getElementById("style-editor-image-stretch-button");
+
 // ===============================
 // HELPERS
 // ===============================
@@ -113,7 +117,7 @@ widthInput.addEventListener("input", () => {
 //
 // ALIGNMENT
 // Utility: mark the right button active
-function highlightActiveAlignments() {
+function highlightActiveControls() {
   if (!currentlySelected) return;
 
   // Clear old actives
@@ -137,13 +141,20 @@ function highlightActiveAlignments() {
   } else if (currentlySelected.classList.contains("building-column-content-bottom")) {
     alignBottom.classList.add("active");
   }
+
+  // Image
+  if (currentlySelected.classList.contains("stretch-image")) {
+    imageStretch.classList.add("active");
+  } else if (currentlySelected.classList.contains("default-image")) {
+    imageDefault.classList.add("active");
+  }
 }
 
 // Wrap existing button handlers so they also highlight
 function wrapWithHighlight(fn) {
   return () => {
     fn();
-    highlightActiveAlignments();
+    highlightActiveControls();
   };
 }
 
@@ -193,6 +204,22 @@ alignBottom.addEventListener("click", wrapWithHighlight(() => {
     currentlySelected.classList.add("custom-styles");
     currentlySelected.classList.remove("building-column-content-top", "building-column-content-center");
     currentlySelected.classList.add("building-column-content-bottom");
+  }
+}));
+
+imageStretch.addEventListener("click", wrapWithHighlight(() => {
+  if (currentlySelected) {
+    currentlySelected.classList.add("custom-styles");
+    currentlySelected.classList.remove("default-image");
+    currentlySelected.classList.add("stretch-image");
+  }
+}));
+
+imageDefault.addEventListener("click", wrapWithHighlight(() => {
+  if (currentlySelected) {
+    currentlySelected.classList.add("custom-styles");
+    currentlySelected.classList.remove("stretch-image");
+    currentlySelected.classList.add("default-image");
   }
 }));
 
@@ -267,7 +294,7 @@ function loadStylesFromSelected() {
   }
 
   // Segmented Buttons
-  highlightActiveAlignments();
+  highlightActiveControls();
 
   // Padding
   paddingTopInput.value = parseInt(computed.paddingTop) || 0;
@@ -290,12 +317,19 @@ function loadStylesFromSelected() {
 
 function checkRestrictedControls() {
   const verticalAlignControls = document.getElementById("style-editor-vertical-align-controls");
-  if (!verticalAlignControls) return;
+  const imageControls = document.getElementById("style-editor-image-controls");
+  if (!verticalAlignControls || !imageControls) return;
 
   if (currentlySelected?.classList.contains("building-column")) {
     verticalAlignControls.classList.remove("content-hide");
   } else {
     verticalAlignControls.classList.add("content-hide");
+  }
+
+  if (currentlySelected?.tagName === 'IMG') {
+    imageControls.classList.remove("content-hide");
+  } else {
+    imageControls.classList.add("content-hide");
   }
 }
 
