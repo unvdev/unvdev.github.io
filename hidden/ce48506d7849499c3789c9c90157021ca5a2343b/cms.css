@@ -57,7 +57,7 @@
 .building-environment .building-block.building-container .building-block.building-column .building-block {
     margin-top: 1rem !important;
     cursor: pointer;
-    border: 2px dotted silver;
+    border: 2px dashed silver;
 }
 
 .building-environment .building-block.building-container .building-block.building-column .building-block:first-child {
@@ -77,7 +77,7 @@
 .building-column {
     padding: 1rem !important;
     cursor: pointer;
-    border: 2px dotted silver;
+    border: 2px dashed silver;
 }
 
         .placeholder-block {
