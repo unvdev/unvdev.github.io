@@ -326,7 +326,7 @@ function checkRestrictedControls() {
     verticalAlignControls.classList.add("content-hide");
   }
 
-  if (currentlySelected?.tagName === 'IMG') {
+  if (currentlySelected?.classList.contains("image-element") {
     imageControls.classList.remove("content-hide");
   } else {
     imageControls.classList.add("content-hide");
