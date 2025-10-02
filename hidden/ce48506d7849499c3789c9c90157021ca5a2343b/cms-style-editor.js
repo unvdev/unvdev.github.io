@@ -209,17 +209,17 @@ alignBottom.addEventListener("click", wrapWithHighlight(() => {
 
 imageStretch.addEventListener("click", wrapWithHighlight(() => {
   if (currentlySelected) {
-    currentlySelected.classList.add("custom-styles");
-    currentlySelected.classList.remove("default-image");
-    currentlySelected.classList.add("stretch-image");
+    currentlySelected.firstElementChild.classList.add("custom-styles");
+    currentlySelected.firstElementChild.classList.remove("default-image");
+    currentlySelected.firstElementChild.classList.add("stretch-image");
   }
 }));
 
 imageDefault.addEventListener("click", wrapWithHighlight(() => {
   if (currentlySelected) {
-    currentlySelected.classList.add("custom-styles");
-    currentlySelected.classList.remove("stretch-image");
-    currentlySelected.classList.add("default-image");
+    currentlySelected.firstElementChild.add("custom-styles");
+    currentlySelected.firstElementChild.remove("stretch-image");
+    currentlySelected.firstElementChild.add("default-image");
   }
 }));
 
