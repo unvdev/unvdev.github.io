@@ -60,7 +60,7 @@
     border: 2px dashed silver;
 }
 
-.building-environment .building-block.building-container .building-block.building-column .building-block:first-child {
+.building-environment .building-block.building-container .building-block.building-column .building-block:first-child:not(.accordion-content) {
     margin-top: 0 !important;
 }
 
