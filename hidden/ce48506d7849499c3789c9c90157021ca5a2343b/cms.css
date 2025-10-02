@@ -625,6 +625,10 @@
 }
 
         /* Main Sidebar Container */
+        #styles-editor-sidebar {
+            z-index: 999999999999999;
+        }
+
         .sidebar {
             position: fixed;
             top: 0;
