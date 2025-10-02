@@ -57,7 +57,8 @@
 .building-block.building-environment,
 .building-block.building-container,
 .building-block.building-column {
-    margin: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
     padding: 1rem !important;
 }
 
@@ -74,7 +75,6 @@
 .building-block:last-child {
     margin-bottom: 1rem !important;
 }
-
 
         .placeholder-block {
             display: block;
