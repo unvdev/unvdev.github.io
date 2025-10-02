@@ -73,13 +73,8 @@
 /* This will still apply to ALL building blocks, which is what you want. */
 .building-block {
     cursor: pointer;
-    border: 1px dotted silver;
-    border-top: none;
-}
-
-.building-block:first-child {
-    cursor: pointer;
-    border-top: 1px dotted silver;
+    outline: 2px dotted silver;
+    outline-offset: 1rem;
 }
 
         .placeholder-block {
