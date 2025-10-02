@@ -66,8 +66,8 @@
     padding: 1rem !important;
 }
 
-.building-block:not(.building-environment):not(.building-container):not(.building-column):first-child {
-    margin-top: 0rem !important;
+.building-block:not(.building-environment, .building-container, .building-column):first-child {
+    margin-top: 0 !important;
 }
 
 .building-block {
