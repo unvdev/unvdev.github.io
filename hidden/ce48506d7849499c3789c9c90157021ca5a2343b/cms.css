@@ -55,7 +55,7 @@
 }
 
         .building-block {
-            margin: 1rem !important;
+            padding: 1rem !important;
             cursor: pointer;
             border: 1px dotted silver;
             /* box-sizing: border-box; */
