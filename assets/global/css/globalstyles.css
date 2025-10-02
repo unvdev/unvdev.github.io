@@ -486,11 +486,11 @@ footer {
                 grid-template-columns: repeat(6, 1fr);
             }
 
-            .building-column-span-five:nth-child(-n+3) {
+            .building-column-span-five .building-column:nth-child(-n+3) {
                  grid-column: span 2;
             }
 
-            .building-column-span-five:nth-child(n+4) {
+            .building-column-span-five .building-column:nth-child(n+4) {
                  grid-column: span 3;
             }
 
