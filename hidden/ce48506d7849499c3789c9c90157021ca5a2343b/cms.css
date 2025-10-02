@@ -72,15 +72,15 @@
 }
 
 .building-environment {
-    border: 1px dotted lime;
+    border: 1px dotted darkorchid;
 }
 
 .building-container {
-    border: 1px dotted cyan;
+    border: 1px dotted darkcyan;
 }
 
 .building-column {
-    border: 1px dotted yellow;
+    border: 1px dotted darkorange;
 }
 
         .placeholder-block {
