@@ -55,7 +55,7 @@
 }
 
         .building-block {
-            margin: 1rem;
+            margin: 1rem !important;
             cursor: pointer;
             border: 1px dotted silver;
             /* box-sizing: border-box; */
@@ -90,6 +90,10 @@
 
         .placeholder-block:hover {
             background-color: magenta;
+        }
+
+        .building-environment {
+            padding: 1rem !important;
         }
 
         .building-environment {
