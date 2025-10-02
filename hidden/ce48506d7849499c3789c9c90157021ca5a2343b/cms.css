@@ -66,9 +66,6 @@
     padding: 1rem !important;
 }
 
-/* This now applies to any .building-block that is NOT a 
-  .building-environment, .building-container, or .building-column.
-*/
 .building-block:not(.building-environment):not(.building-container):not(.building-column) {
     margin: 1rem !important;
 }
