@@ -143,7 +143,7 @@ function highlightActiveControls() {
   }
 
   // Image
-  if (currentlySelected.classList.contains("stretch-image")) {
+  if (currentlySelected.firstElementChild.classList.contains("stretch-image")) {
     imageStretch.classList.add("active");
   } else if (currentlySelected.classList.contains("default-image")) {
     imageDefault.classList.add("active");
