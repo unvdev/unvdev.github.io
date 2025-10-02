@@ -62,13 +62,6 @@
             padding: 1rem !important;
         }
 
-        .building-environment .building-block {
-            margin: 0 !important;
-            cursor: pointer;
-            border: 0px !important;
-            /* box-sizing: border-box; */
-        }
-
         .building-block {
             margin: 1rem !important;
             cursor: pointer;
