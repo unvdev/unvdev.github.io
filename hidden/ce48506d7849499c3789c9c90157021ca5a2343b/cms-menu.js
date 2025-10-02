@@ -191,5 +191,6 @@ imageElementUploadButton.addEventListener('click', () => insertImageUpload(image
 function invokeCMSMenu() {
     if (currentlySelected && currentlySelected.classList.contains('placeholder-block')) {
         cms.classList.remove('content-hide');
+        loadedPage.classList.add("sidebar-active");
     }
 }
