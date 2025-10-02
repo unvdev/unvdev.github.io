@@ -842,6 +842,10 @@
             color: #fff;
         }
 
+        .accordion-container {
+            padding: 1rem;
+        }
+
          .accordion-content {
             display: block !important;
         }
