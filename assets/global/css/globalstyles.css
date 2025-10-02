@@ -211,8 +211,7 @@ body {
 /* Headings */
 h1, h2, h3, h4, h5 {
   margin-bottom: 0.75rem;
-  width: auto;
-  max-width: 100%;
+  width: 100%;
   line-height: 1.2;
   font-weight: 700;
   overflow-wrap: break-word;
@@ -241,8 +240,7 @@ h5 {
 /* Paragraph */
 p {
   margin-bottom: 1rem;
-  width: auto;
-  max-width: 100%;
+  width: 100%;
   font-size: 1rem; /* 16px */
   font-weight: 400;
   overflow-wrap: break-word;
@@ -251,7 +249,8 @@ p {
 /* Lists */
 ul, ol {
   margin-bottom: 1rem;
-  padding-left: 2rem; /* Indent list items */
+  padding-left: 2rem;
+  width: 100%;
 }
 
 li {
@@ -409,6 +408,7 @@ footer {
         .building-column-span-one {
             display: grid;
             grid-template-columns: 1fr;
+            width: 100%;
             /* padding: 1rem; */
             gap: 1rem;
         }
@@ -417,6 +417,7 @@ footer {
         .building-column-span-two {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
+            width: 100%;
             /* padding: 1rem; */
             gap: 1rem;
         }
@@ -425,6 +426,7 @@ footer {
         .building-column-span-three {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
+            width: 100%;
             /* padding: 1rem; */
             gap: 1rem;
         }
@@ -433,6 +435,7 @@ footer {
         .building-column-span-four {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
+            width: 100%;
             /* padding: 1rem; */
             gap: 1rem;
         }
@@ -441,6 +444,7 @@ footer {
         .building-column-span-five {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
+            width: 100%;
             /* padding: 1rem; */
             gap: 1rem;
         }
@@ -449,6 +453,7 @@ footer {
         .building-column-span-six {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
+            width: 100%;
             /* padding: 1rem; */
             gap: 1rem;
         }
@@ -457,6 +462,7 @@ footer {
         .building-column-span-asymm-left {
         display: grid;
         grid-template-columns: 1fr 2fr;
+        width: 100%;
         /* padding: 1rem; */
         gap: 1rem;
         }
@@ -465,6 +471,7 @@ footer {
         .building-column-span-asymm-right {
         display: grid;
         grid-template-columns: 2fr 1fr;
+        width: 100%;
         /* padding: 1rem; */
         gap: 1rem;
         }
@@ -545,6 +552,7 @@ footer {
         .building-column {
             display: block;
             position: relative;
+            width: 100%;
         }
 
                 /*Accordion*/
