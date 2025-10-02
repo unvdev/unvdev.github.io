@@ -73,8 +73,7 @@
 /* This will still apply to ALL building blocks, which is what you want. */
 .building-block {
     cursor: pointer;
-    outline: 2px dotted silver;
-    outline-offset: 1rem;
+    border: 1px dotted silver;
 }
 
         .placeholder-block {
