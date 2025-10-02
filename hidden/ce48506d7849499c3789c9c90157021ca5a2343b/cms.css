@@ -64,23 +64,20 @@
     margin-top: 0 !important;
 }
 
+.building-environment .building-block.building-container {
+    margin-top: 1rem !important;
+}
+
+.building-environment .building-block.building-container:first-child {
+    margin-top: 0 !important;
+}
+
 .building-environment,
 .building-container,
 .building-column {
     padding: 1rem !important;
     cursor: pointer;
-}
-
-.building-environment {
-    border: 2px dotted darkorchid;
-}
-
-.building-container {
-    border: 2px dotted darkcyan;
-}
-
-.building-column {
-    border: 2px dotted darkorange;
+    border: 2px dotted silver;
 }
 
         .placeholder-block {
