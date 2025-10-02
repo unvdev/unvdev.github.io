@@ -409,7 +409,7 @@ footer {
         .building-column-span-one {
             display: grid;
             grid-template-columns: 1fr;
-            padding: 1rem;
+            /* padding: 1rem; */
             gap: 1rem;
         }
 
@@ -417,7 +417,7 @@ footer {
         .building-column-span-two {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            padding: 1rem;
+            /* padding: 1rem; */
             gap: 1rem;
         }
 
@@ -425,7 +425,7 @@ footer {
         .building-column-span-three {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            padding: 1rem;
+            /* padding: 1rem; */
             gap: 1rem;
         }
 
@@ -433,7 +433,7 @@ footer {
         .building-column-span-four {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            padding: 1rem;
+            /* padding: 1rem; */
             gap: 1rem;
         }
 
@@ -441,7 +441,7 @@ footer {
         .building-column-span-five {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            padding: 1rem;
+            /* padding: 1rem; */
             gap: 1rem;
         }
 
@@ -449,7 +449,7 @@ footer {
         .building-column-span-six {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
-            padding: 1rem;
+            /* padding: 1rem; */
             gap: 1rem;
         }
 
@@ -457,7 +457,7 @@ footer {
         .building-column-span-asymm-left {
         display: grid;
         grid-template-columns: 1fr 2fr;
-        padding: 1rem;
+        /* padding: 1rem; */
         gap: 1rem;
         }
 
@@ -465,7 +465,7 @@ footer {
         .building-column-span-asymm-right {
         display: grid;
         grid-template-columns: 2fr 1fr;
-        padding: 1rem;
+        /* padding: 1rem; */
         gap: 1rem;
         }
 
