@@ -63,7 +63,10 @@
 }
 
 .building-block:not(.building-environment):not(.building-container):not(.building-column) {
-    margin: 1rem !important;
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
 }
 
 /* This will still apply to ALL building blocks, which is what you want. */
