@@ -55,27 +55,27 @@
 }
 
 .building-environment .building-block.building-container .building-block.building-column .building-block {
-    margin-top: 1rem !important;
+    margin-top: 1rem;
     cursor: pointer;
     border: 2px dashed silver;
 }
 
-.building-environment .building-block.building-container .building-block.building-column .building-block:first-child:not(.accordion-content) {
-    margin-top: 0 !important;
+.building-environment .building-block.building-container .building-block.building-column .building-block:first-child {
+    margin-top: 0;
 }
 
 .building-environment .building-block.building-container {
-    margin-top: 1rem !important;
+    margin-top: 1rem;
 }
 
 .building-environment .building-block.building-container:first-child {
-    margin-top: 0 !important;
+    margin-top: 0;
 }
 
 .building-environment,
 .building-container,
 .building-column {
-    padding: 1rem !important;
+    padding: 1rem;
     cursor: pointer;
     border: 2px dashed silver;
 }
