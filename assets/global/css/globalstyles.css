@@ -48,276 +48,401 @@
 
 /*Google-To-Quill Fonts*/
 /* Font: Roboto */
-.ql-font-roboto { font-family: 'Roboto', sans-serif !important; }
+.ql-font-roboto {
+    font-family: 'Roboto', sans-serif !important;
+}
 
 /* Font: Comfortaa */
-.ql-font-comfortaa { font-family: 'Comfortaa', cursive !important; }
+.ql-font-comfortaa {
+    font-family: 'Comfortaa', cursive !important;
+}
 
 /* Font: Lora */
-.ql-font-lora { font-family: 'Lora', serif !important; }
+.ql-font-lora {
+    font-family: 'Lora', serif !important;
+}
 
 /* Font: Bebas Neue */
-.ql-font-bebas-neue { font-family: 'Bebas Neue', sans-serif !important; }
+.ql-font-bebas-neue {
+    font-family: 'Bebas Neue', sans-serif !important;
+}
 
 /* Font: Google Sans Code */
-.ql-font-google-sans-code { font-family: 'Google Sans Code', monospace !important; }
+.ql-font-google-sans-code {
+    font-family: 'Google Sans Code', monospace !important;
+}
 
 /* Font: Funnel Display */
-.ql-font-funnel-display { font-family: 'Funnel Display', sans-serif !important; }
+.ql-font-funnel-display {
+    font-family: 'Funnel Display', sans-serif !important;
+}
 
 /* Font: Alumni Sans Pinstripe */
-.ql-font-alumni-sans-pinstripe { font-family: 'Alumni Sans Pinstripe', sans-serif !important; }
+.ql-font-alumni-sans-pinstripe {
+    font-family: 'Alumni Sans Pinstripe', sans-serif !important;
+}
 
 /* Font: Lexend */
-.ql-font-lexend { font-family: 'Lexend', sans-serif !important; }
+.ql-font-lexend {
+    font-family: 'Lexend', sans-serif !important;
+}
 
 /* Font: Cal Sans */
-.ql-font-cal-sans { font-family: 'Cal Sans', sans-serif !important; }
+.ql-font-cal-sans {
+    font-family: 'Cal Sans', sans-serif !important;
+}
 
 /* Font: Sono */
-.ql-font-sono { font-family: 'Sono', sans-serif !important; }
+.ql-font-sono {
+    font-family: 'Sono', sans-serif !important;
+}
 
 /* Font: Pacifico */
-.ql-font-pacifico { font-family: 'Pacifico', cursive !important; }
+.ql-font-pacifico {
+    font-family: 'Pacifico', cursive !important;
+}
 
 /* Font: Delius */
-.ql-font-delius { font-family: 'Delius', cursive !important; }
+.ql-font-delius {
+    font-family: 'Delius', cursive !important;
+}
 
 /* Font: Meow Script */
-.ql-font-meow-script { font-family: 'Meow Script', cursive !important; }
+.ql-font-meow-script {
+    font-family: 'Meow Script', cursive !important;
+}
 
 /* Font: Borel */
-.ql-font-borel { font-family: 'Borel', cursive !important; }
+.ql-font-borel {
+    font-family: 'Borel', cursive !important;
+}
 
 /* Font: DynaPuff */
-.ql-font-dynapuff { font-family: 'DynaPuff', cursive !important; }
+.ql-font-dynapuff {
+    font-family: 'DynaPuff', cursive !important;
+}
 
 /* Font: Chewy */
-.ql-font-chewy { font-family: 'Chewy', cursive !important; }
+.ql-font-chewy {
+    font-family: 'Chewy', cursive !important;
+}
 
 /* Font: Twinkle Star */
-.ql-font-twinkle-star { font-family: 'Twinkle Star', cursive !important; }
+.ql-font-twinkle-star {
+    font-family: 'Twinkle Star', cursive !important;
+}
 
 /* Font: Agbalumo */
-.ql-font-agbalumo { font-family: 'Agbalumo', serif !important; }
+.ql-font-agbalumo {
+    font-family: 'Agbalumo', serif !important;
+}
 
 /* Font: Playwrite ZA */
-.ql-font-playwrite-za { font-family: 'Playwrite ZA', serif !important; }
+.ql-font-playwrite-za {
+    font-family: 'Playwrite ZA', serif !important;
+}
 
 /* Font: Lobster */
-.ql-font-lobster { font-family: 'Lobster', cursive !important; }
+.ql-font-lobster {
+    font-family: 'Lobster', cursive !important;
+}
 
 /* Font: Quintessential */
-.ql-font-quintessential { font-family: 'Quintessential', cursive !important; }
+.ql-font-quintessential {
+    font-family: 'Quintessential', cursive !important;
+}
 
 /* Font: Poller One */
-.ql-font-poller-one { font-family: 'Poller One', cursive !important; }
+.ql-font-poller-one {
+    font-family: 'Poller One', cursive !important;
+}
 
 /* Font: Cinzel */
-.ql-font-cinzel { font-family: 'Cinzel', serif !important; }
+.ql-font-cinzel {
+    font-family: 'Cinzel', serif !important;
+}
 
 /* Font: Germania One */
-.ql-font-germania-one { font-family: 'Germania One', cursive !important; }
+.ql-font-germania-one {
+    font-family: 'Germania One', cursive !important;
+}
 
 /* Font: Ultra */
-.ql-font-ultra { font-family: 'Ultra', serif !important; }
+.ql-font-ultra {
+    font-family: 'Ultra', serif !important;
+}
 
 /* Font: Pixelify Sans */
-.ql-font-pixelify-sans { font-family: 'Pixelify Sans', sans-serif !important; }
+.ql-font-pixelify-sans {
+    font-family: 'Pixelify Sans', sans-serif !important;
+}
 
 /* Font: UnifrakturMaguntia */
-.ql-font-unifrakturmaguntia { font-family: 'UnifrakturMaguntia', cursive !important; }
+.ql-font-unifrakturmaguntia {
+    font-family: 'UnifrakturMaguntia', cursive !important;
+}
 
 /* Font: MonteCarlo */
-.ql-font-montecarlo { font-family: 'MonteCarlo', cursive !important; }
+.ql-font-montecarlo {
+    font-family: 'MonteCarlo', cursive !important;
+}
 
 /* Font: Marck Script */
-.ql-font-marck-script { font-family: 'Marck Script', cursive !important; }
+.ql-font-marck-script {
+    font-family: 'Marck Script', cursive !important;
+}
 
 /* Font: Fugaz One */
-.ql-font-fugaz-one { font-family: 'Fugaz One', cursive !important; }
+.ql-font-fugaz-one {
+    font-family: 'Fugaz One', cursive !important;
+}
 
 /* Font: Caveat Brush */
-.ql-font-caveat-brush { font-family: 'Caveat Brush', cursive !important; }
+.ql-font-caveat-brush {
+    font-family: 'Caveat Brush', cursive !important;
+}
 
 /* Font: Coming Soon */
-.ql-font-coming-soon { font-family: 'Coming Soon', cursive !important; }
+.ql-font-coming-soon {
+    font-family: 'Coming Soon', cursive !important;
+}
 
 /* Font: Short Stack */
-.ql-font-short-stack { font-family: 'Short Stack', cursive !important; }
+.ql-font-short-stack {
+    font-family: 'Short Stack', cursive !important;
+}
 
 /* Font: Michroma */
-.ql-font-michroma { font-family: 'Michroma', sans-serif !important; }
+.ql-font-michroma {
+    font-family: 'Michroma', sans-serif !important;
+}
 
 /* Font: SUSE */
-.ql-font-suse { font-family: 'SUSE', sans-serif !important; }
+.ql-font-suse {
+    font-family: 'SUSE', sans-serif !important;
+}
 
 /* Font: Noto Sans */
-.ql-font-noto-sans { font-family: 'Noto Sans', sans-serif !important; }
+.ql-font-noto-sans {
+    font-family: 'Noto Sans', sans-serif !important;
+}
 
 /* Font: Merriweather Sans */
-.ql-font-merriweather-sans { font-family: 'Merriweather Sans', sans-serif !important; }
+.ql-font-merriweather-sans {
+    font-family: 'Merriweather Sans', sans-serif !important;
+}
 
 /* Font: Host Grotesk */
-.ql-font-host-grotesk { font-family: 'Host Grotesk', sans-serif !important; }
+.ql-font-host-grotesk {
+    font-family: 'Host Grotesk', sans-serif !important;
+}
 
 /* Font: Lato */
-.ql-font-lato { font-family: 'Lato', sans-serif !important; }
+.ql-font-lato {
+    font-family: 'Lato', sans-serif !important;
+}
 
 /* Font: Newsreader */
-.ql-font-newsreader { font-family: 'Newsreader', serif !important; }
+.ql-font-newsreader {
+    font-family: 'Newsreader', serif !important;
+}
 
 /* Font: Libre Bodoni */
-.ql-font-libre-bodoni { font-family: 'Libre Bodoni', serif !important; }
+.ql-font-libre-bodoni {
+    font-family: 'Libre Bodoni', serif !important;
+}
 
 /* Font: Baskervville SC */
-.ql-font-baskervville-sc { font-family: 'Baskervville SC', serif !important; }
+.ql-font-baskervville-sc {
+    font-family: 'Baskervville SC', serif !important;
+}
 
 /* Font: Baskervville */
-.ql-font-baskervville { font-family: 'Baskervville', serif !important; }
+.ql-font-baskervville {
+    font-family: 'Baskervville', serif !important;
+}
 
 /* Font Awesome Styles */
-        .fa, .fa-brands, .fa-classic, .fa-duotone, .fa-light, .fa-regular, .fa-sharp, .fa-sharp-duotone, .fa-solid, .fa-thin, .fab, .fad, .fadl, .fadr, .fadt, .fal, .far, .fas, .fasdl, .fasdr, .fasds, .fasdt, .fasl, .fasr, .fass, .fast, .fat {
-            width: auto !important;
-            height: auto !important;
-        }
+.fa,
+.fa-brands,
+.fa-classic,
+.fa-duotone,
+.fa-light,
+.fa-regular,
+.fa-sharp,
+.fa-sharp-duotone,
+.fa-solid,
+.fa-thin,
+.fab,
+.fad,
+.fadl,
+.fadr,
+.fadt,
+.fal,
+.far,
+.fas,
+.fasdl,
+.fasdr,
+.fasds,
+.fasdt,
+.fasl,
+.fasr,
+.fass,
+.fast,
+.fat {
+    width: auto !important;
+    height: auto !important;
+}
 
 /* 2. CSS RESET & DEFAULTS */
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 html {
-  /* Set base font size to 16px, making 1rem = 16px for easy calculations */
-  font-size: 100%;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    /* Set base font size to 16px, making 1rem = 16px for easy calculations */
+    font-size: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
-  line-height: 1.6;
-  color: #333;
-  background-color: #fdfdfd;
-  margin: 0 auto; /* Center the content */
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #fdfdfd;
+    margin: 0 auto;
+    /* Center the content */
 }
 
 /* 3. TYPOGRAPHY STYLES */
 
 /* Headings */
-h1, h2, h3, h4, h5 {
-  margin-bottom: 0.75rem;
-  width: 100%;
-  line-height: 1.2;
-  font-weight: 700;
-  overflow-wrap: break-word;
+h1,
+h2,
+h3,
+h4,
+h5 {
+    margin-bottom: 0.75rem;
+    width: 100%;
+    line-height: 1.2;
+    font-weight: 700;
+    overflow-wrap: break-word;
 }
 
 h1 {
-  font-size: 4.5rem; /* 40px */
+    font-size: 4.5rem;
+    /* 40px */
 }
 
 h2 {
-  font-size: 3.5rem; /* 32px */
+    font-size: 3.5rem;
+    /* 32px */
 }
 
 h3 {
-  font-size: 2.5rem; /* 28px */
+    font-size: 2.5rem;
+    /* 28px */
 }
 
 h4 {
-  font-size: 2rem; /* 24px */
+    font-size: 2rem;
+    /* 24px */
 }
 
 h5 {
-  font-size: 1.5rem; /* 20px */
+    font-size: 1.5rem;
+    /* 20px */
 }
 
 /* Paragraph */
 p {
-  margin-bottom: 1rem;
-  width: 100%;
-  font-size: 1rem; /* 16px */
-  font-weight: 400;
-  overflow-wrap: break-word;
+    margin-bottom: 1rem;
+    width: 100%;
+    font-size: 1rem;
+    /* 16px */
+    font-weight: 400;
+    overflow-wrap: break-word;
 }
 
 /* Lists */
-ul, ol {
-  margin-bottom: 1rem;
-  padding-left: 2rem;
-  width: 100%;
+ul,
+ol {
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+    width: 100%;
 }
 
 li {
-  margin-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 
 /* Links */
 a {
-  color: #007bff;
-  text-decoration: none;
+    color: #007bff;
+    text-decoration: none;
 }
 
-a:hover, a:focus {
-  text-decoration: underline;
+a:hover,
+a:focus {
+    text-decoration: underline;
 }
 
 .ql-align-left {
-  text-align: left;
+    text-align: left;
 }
 
 .ql-align-right {
-  text-align: right;
+    text-align: right;
 }
 
 .ql-align-center {
-  text-align: center;
+    text-align: center;
 }
 
 .ql-align-justify {
-  text-align: justify;
+    text-align: justify;
 }
 
 .image-element {
-  width: 100%;
+    width: 100%;
 }
 
 .default-image {
-  display: block;
-  position: relative;
-  width: 100%;
-  height: auto;
+    display: block;
+    position: relative;
+    width: 100%;
+    height: auto;
 }
 
 .crop-image {
-  display: block;
-  position: relative;
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  object-position: 50%;
+    display: block;
+    position: relative;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    object-position: 50%;
 }
 
 .spacer {
-  display: block;
-  position: relative;
-  margin: 0 auto;
-  width: 100%;
-  height: auto;
+    display: block;
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    height: auto;
 }
 
 .divider {
-  display: block;
-  position: relative;
-  margin: 0 auto;
-  width: 100%;
-  height: auto;
-  background-color: silver;
+    display: block;
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    height: auto;
+    background-color: silver;
 }
 
 /* hr {
@@ -331,10 +456,10 @@ a:hover, a:focus {
 } */
 
 @media screen and (max-width: 700px) {
-  .custom-styles {
-    padding: 0px !important;
-    max-width: 100% !important;
-  }
+    .custom-styles {
+        padding: 0px !important;
+        max-width: 100% !important;
+    }
 }
 
 header {
@@ -357,6 +482,7 @@ footer {
     background-color: #2D2D3A;
     z-index: 999;
 }
+
 /*Classes*/
 
 .headerImage {
@@ -410,143 +536,144 @@ footer {
     justify-items: center;
 }
 
-        .building-container {
-            display: grid;
-            position: relative;
-            width: 100%;
-            gap: 1rem;
-        }
+.building-container {
+    display: grid;
+    position: relative;
+    width: 100%;
+    gap: 1rem;
+}
 
-        /* 1 column */
-        .building-column-span-one {
-            display: grid;
-            grid-template-columns: 1fr;
-            width: 100%;
-            /* padding: 1rem; */
-            gap: 1rem;
-        }
+/* 1 column */
+.building-column-span-one {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+    /* padding: 1rem; */
+    gap: 1rem;
+}
 
-        /* 2 columns */
-        .building-column-span-two {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            width: 100%;
-            /* padding: 1rem; */
-            gap: 1rem;
-        }
+/* 2 columns */
+.building-column-span-two {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    /* padding: 1rem; */
+    gap: 1rem;
+}
 
-        /* 3 columns */
-        .building-column-span-three {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            width: 100%;
-            /* padding: 1rem; */
-            gap: 1rem;
-        }
+/* 3 columns */
+.building-column-span-three {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+    /* padding: 1rem; */
+    gap: 1rem;
+}
 
-        /* 4 columns */
-        .building-column-span-four {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            width: 100%;
-            /* padding: 1rem; */
-            gap: 1rem;
-        }
+/* 4 columns */
+.building-column-span-four {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+    /* padding: 1rem; */
+    gap: 1rem;
+}
 
-        /* 5 columns */
-        .building-column-span-five {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            width: 100%;
-            /* padding: 1rem; */
-            gap: 1rem;
-        }
+/* 5 columns */
+.building-column-span-five {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    width: 100%;
+    /* padding: 1rem; */
+    gap: 1rem;
+}
 
-        /* 6 columns */
-        .building-column-span-six {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            width: 100%;
-            /* padding: 1rem; */
-            gap: 1rem;
-        }
+/* 6 columns */
+.building-column-span-six {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    width: 100%;
+    /* padding: 1rem; */
+    gap: 1rem;
+}
 
-        /* Asymm left column */
-        .building-column-span-asymm-left {
-        display: grid;
-        grid-template-columns: 1fr 2fr;
-        width: 100%;
-        /* padding: 1rem; */
-        gap: 1rem;
-        }
+/* Asymm left column */
+.building-column-span-asymm-left {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    width: 100%;
+    /* padding: 1rem; */
+    gap: 1rem;
+}
 
-        /* Asymm right column */
-        .building-column-span-asymm-right {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        width: 100%;
-        /* padding: 1rem; */
-        gap: 1rem;
-        }
+/* Asymm right column */
+.building-column-span-asymm-right {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    width: 100%;
+    /* padding: 1rem; */
+    gap: 1rem;
+}
 
-        /* Responsive media queries for all spans */
-        @media (max-width: 1200px) {
-            .building-column-span-six {
-                grid-template-columns: repeat(3, 1fr);
-            }
+/* Responsive media queries for all spans */
+@media (max-width: 1200px) {
+    .building-column-span-six {
+        grid-template-columns: repeat(3, 1fr);
+    }
 
-            .building-column-span-five {
-                grid-template-columns: repeat(6, 1fr);
-            }
+    .building-column-span-five {
+        grid-template-columns: repeat(6, 1fr);
+    }
 
-            .building-column-span-five .building-column:nth-child(-n+3) {
-                 grid-column: span 2;
-            }
+    .building-column-span-five .building-column:nth-child(-n+3) {
+        grid-column: span 2;
+    }
 
-            .building-column-span-five .building-column:nth-child(n+4) {
-                 grid-column: span 3;
-            }
+    .building-column-span-five .building-column:nth-child(n+4) {
+        grid-column: span 3;
+    }
 
-            .building-column-span-four {
-                grid-template-columns: repeat(2, 1fr);
-            }
+    .building-column-span-four {
+        grid-template-columns: repeat(2, 1fr);
+    }
 
-            .building-column-span-three {
-                grid-template-columns: repeat(3, 1fr);
-            }
+    .building-column-span-three {
+        grid-template-columns: repeat(3, 1fr);
+    }
 
-            .building-column-span-two {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
+    .building-column-span-two {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
 
-         @media (max-width: 960px) {
-            .building-column-span-six {
-                grid-template-columns: repeat(2, 1fr);
-            }
+@media (max-width: 960px) {
+    .building-column-span-six {
+        grid-template-columns: repeat(2, 1fr);
+    }
 
-            .building-column-span-five {
-                grid-template-columns: repeat(2, 1fr);
-            }
+    .building-column-span-five {
+        grid-template-columns: repeat(2, 1fr);
+    }
 
-            .building-column-span-five .building-column {
-                grid-column: auto;
-            }
+    .building-column-span-five .building-column {
+        grid-column: auto;
+    }
 
-            .building-column-span-five .building-column:nth-child(5) {
-                  grid-column: span 2;
-            }
+    .building-column-span-five .building-column:nth-child(5) {
+        grid-column: span 2;
+    }
 
-            .building-column-span-three {
-                grid-template-columns: repeat(2, 1fr);
-            }
+    .building-column-span-three {
+        grid-template-columns: repeat(2, 1fr);
+    }
 
-            .building-column-span-three .building-column:nth-child(3) {
-                grid-column: span 2;
-            }
-        }
+    .building-column-span-three .building-column:nth-child(3) {
+        grid-column: span 2;
+    }
+}
 
 @media (max-width: 640px) {
+
     .building-column-span-six,
     .building-column-span-five,
     .building-column-span-four,
@@ -563,89 +690,89 @@ footer {
     }
 }
 
-        /* Column content alignment */
-        .building-column-content-top {
-            align-self: start;
-        }
+/* Column content alignment */
+.building-column-content-top {
+    align-self: start;
+}
 
-        .building-column-content-center {
-            align-self: center;
-        }
+.building-column-content-center {
+    align-self: center;
+}
 
-        .building-column-content-bottom {
-            align-self: end;
-        }
+.building-column-content-bottom {
+    align-self: end;
+}
 
-        /* Block alignment */
-        .building-block-align-left {
-            justify-self: start;
-        }
+/* Block alignment */
+.building-block-align-left {
+    justify-self: start;
+}
 
-        .building-block-align-center {
-            justify-self: center;
-        }
+.building-block-align-center {
+    justify-self: center;
+}
 
-        .building-block-align-right {
-            justify-self: end;
-        }
+.building-block-align-right {
+    justify-self: end;
+}
 
-        /* Stretch / grow adjustments */
-        .building-column-stretch {
-            padding-left: 0 !important;
-            padding-right: 0 !important;
-        }
+/* Stretch / grow adjustments */
+.building-column-stretch {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
 
-        .building-column-grow {
-            padding-top: 0 !important;
-            padding-bottom: 0 !important;
-        }
+.building-column-grow {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
 
-        .building-column {
-            display: block;
-            position: relative;
-            width: 100%;
-        }
+.building-column {
+    display: block;
+    position: relative;
+    width: 100%;
+}
 
-                /*Accordion*/
+/*Accordion*/
 
-        .accordion-container {
-            width: 100%;
-        }
+.accordion-container {
+    width: 100%;
+}
 
-        .accordion:hover {
-            opacity: 70%;
-            cursor: pointer;
-        }
+.accordion:hover {
+    opacity: 70%;
+    cursor: pointer;
+}
 
-        .accordion-label {
-            display: block;
-            position: relative;
-            padding-top: 15px !important;
-            padding-bottom: 15px !important;
-            padding-left: 60px !important;
-            padding-right: 20px !important;
-            width: 100%;
-            background-color: #eeeeee;
-        }
+.accordion-label {
+    display: block;
+    position: relative;
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+    padding-left: 60px !important;
+    padding-right: 20px !important;
+    width: 100%;
+    background-color: #eeeeee;
+}
 
-        .accordion-label> :first-child {
-            margin: 0;
-            color: var(--label-color, black);
-        }
+.accordion-label> :first-child {
+    margin: 0;
+    color: var(--label-color, black);
+}
 
-        .accordion-label> :first-child::before {
-            content: "\25BC";
-            position: absolute;
-            left: 25px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: inherit;
-        }
+.accordion-label> :first-child::before {
+    content: "\25BC";
+    position: absolute;
+    left: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: inherit;
+}
 
-        .accordion-label>.accordion-active:before {
-            content: "\25B2";
-        }
+.accordion-label>.accordion-active:before {
+    content: "\25B2";
+}
 
-        .accordion-content {
-            display: none;
-        }
+.accordion-content {
+    display: none;
+}
