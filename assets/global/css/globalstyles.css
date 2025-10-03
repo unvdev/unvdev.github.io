@@ -283,6 +283,10 @@ a:hover, a:focus {
   text-align: justify;
 }
 
+.image-element {
+  width: 100%;
+}
+
 .default-image {
   display: block;
   position: relative;
