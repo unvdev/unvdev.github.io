@@ -525,7 +525,7 @@ footer {
                 grid-template-columns: repeat(2, 1fr);
             }
 
-            .building-column-span-3 {
+            .building-column-span-three {
                 grid-template-columns: repeat(2, 1fr);
             }
 
