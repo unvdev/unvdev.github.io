@@ -376,6 +376,9 @@ function checkRestrictedControls() {
   }
 }
 
+imageDefault.addEventListener("click", () => {checkRestrictedControls});
+imageCrop.addEventListener("click", () => {checkRestrictedControls});
+
 // ===============================
 // SHIFT + A + CLICK trigger
 // ===============================
