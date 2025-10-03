@@ -294,7 +294,7 @@ a:hover, a:focus {
   height: auto;
 }
 
-.stretch-image {
+.crop-image {
   display: block;
   position: relative;
   width: 100%;

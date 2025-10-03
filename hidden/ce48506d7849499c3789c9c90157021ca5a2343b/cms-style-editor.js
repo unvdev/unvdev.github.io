@@ -44,7 +44,7 @@ const marginBottomInput = document.getElementById("style-editor-margin-bottom-in
 
 // Image Options
 const imageDefault = document.getElementById("style-editor-image-default-button");
-const imageStretch = document.getElementById("style-editor-image-stretch-button");
+const imageCrop = document.getElementById("style-editor-image-crop-button");
 
 // ===============================
 // HELPERS
@@ -121,7 +121,7 @@ function highlightActiveControls() {
   if (!currentlySelected) return;
 
   // Clear old actives
-  [alignLeft, alignCenter, alignRight, alignTop, alignMiddle, alignBottom, imageStretch, imageDefault]
+  [alignLeft, alignCenter, alignRight, alignTop, alignMiddle, alignBottom, imageCrop, imageDefault]
     .forEach(btn => btn.classList.remove("active"));
 
   // Horizontal
@@ -143,8 +143,8 @@ function highlightActiveControls() {
   }
 
   // Image
-  if (currentlySelected.firstElementChild.classList.contains("stretch-image")) {
-    imageStretch.classList.add("active");
+  if (currentlySelected.firstElementChild.classList.contains("crop-image")) {
+    imageCrop.classList.add("active");
   } else if (currentlySelected.firstElementChild.classList.contains("default-image")) {
     imageDefault.classList.add("active");
   }
@@ -207,18 +207,18 @@ alignBottom.addEventListener("click", wrapWithHighlight(() => {
   }
 }));
 
-imageStretch.addEventListener("click", wrapWithHighlight(() => {
+imageCrop.addEventListener("click", wrapWithHighlight(() => {
   if (currentlySelected) {
     currentlySelected.firstElementChild.classList.add("custom-styles");
     currentlySelected.firstElementChild.classList.remove("default-image");
-    currentlySelected.firstElementChild.classList.add("stretch-image");
+    currentlySelected.firstElementChild.classList.add("crop-image");
   }
 }));
 
 imageDefault.addEventListener("click", wrapWithHighlight(() => {
   if (currentlySelected) {
     currentlySelected.firstElementChild.classList.add("custom-styles");
-    currentlySelected.firstElementChild.classList.remove("stretch-image");
+    currentlySelected.firstElementChild.classList.remove("crop-image");
     currentlySelected.firstElementChild.classList.add("default-image");
   }
 }));
