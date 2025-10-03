@@ -181,6 +181,7 @@ function formatHtml(node, level = 0, indentChar = '  ') {
 
 // THE CORRECTED savePage FUNCTION
 async function savePage() {
+    deselectAll();
     try {
         // 1. Create a temporary, in-memory copy of the document
         const originalHtml = `<!DOCTYPE html>\n${document.documentElement.outerHTML}`;
