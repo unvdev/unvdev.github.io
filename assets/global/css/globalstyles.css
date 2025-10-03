@@ -330,7 +330,7 @@ a:hover, a:focus {
   border: none;
 } */
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 700px) {
   .custom-styles {
     padding: 0px !important;
     max-width: 100% !important;
@@ -521,10 +521,27 @@ footer {
         }
 
         @media (max-width: 900px) {
-
             .building-column-span-six,
             .building-column-span-five,
-            .building-column-span-four,
+            .building-column-span-four {
+                grid-template-columns: 1fr;
+            }
+
+            .building-column-span-three {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .building-column-span-five .building-column:nth-child(-n+1) {
+                 grid-column: span 1;
+            }
+
+            .building-column-span-five .building-column:nth-child(n+2) {
+                 grid-column: span 2;
+            }
+            
+        }
+
+        @media (max-width: 700px) {
             .building-column-span-three,
             .building-column-span-two,
             .building-column-span-asymm-left,
