@@ -656,11 +656,11 @@ footer {
     }
 
     .building-column-span-five .building-column {
-        grid-column: auto;
+        grid-column: auto !important;
     }
 
     .building-column-span-five .building-column:nth-child(5) {
-        grid-column: span 2;
+        grid-column: span 2 !important;
     }
 
     .building-column-span-three {
