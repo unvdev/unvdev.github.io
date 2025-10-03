@@ -45,6 +45,8 @@ const marginBottomInput = document.getElementById("style-editor-margin-bottom-in
 // Image Options
 const imageDefault = document.getElementById("style-editor-image-default-button");
 const imageCrop = document.getElementById("style-editor-image-crop-button");
+const imageHeightInput = document.getElementById("style-editor-image-height-input");
+const imagePositionInput = document.getElementById("style-editor-image-position-input");
 
 // ===============================
 // HELPERS
@@ -111,6 +113,30 @@ widthInput.addEventListener("input", () => {
     let width = parseFloat(widthInput.value) || 100;
     width = Math.max(5, Math.min(100, width));
     currentlySelected.style.maxWidth = width + "%";
+  }
+});
+
+// ===============================
+// IMAGE HEIGHT CONTROL (direct input)
+// ===============================
+imageHeightInput.addEventListener("input", () => {
+  if (currentlySelected) {
+    currentlySelected.classList.add("custom-styles");
+    let height = parseFloat(imageHeightInput.value) || 100;
+    height = Math.max(5, Math.min(100, height));
+    currentlySelected.style.maxHeight = height + "%";
+  }
+});
+
+// ===============================
+// IMAGE POSITION CONTROL (direct input)
+// ===============================
+imagePositionInput.addEventListener("input", () => {
+  if (currentlySelected) {
+    currentlySelected.classList.add("custom-styles");
+    let position = parseFloat(imagePositionInput.value) || 100;
+    position = Math.max(5, Math.min(100, position));
+    currentlySelected.style.maxWidth = position + "%";
   }
 });
 
@@ -318,6 +344,7 @@ function loadStylesFromSelected() {
 function checkRestrictedControls() {
   const verticalAlignControls = document.getElementById("style-editor-vertical-align-controls");
   const imageControls = document.getElementById("style-editor-image-controls");
+  const imageCropControls = document.getElementById("style-editor-image-crop-controls")
   if (!verticalAlignControls || !imageControls) return;
 
   if (currentlySelected?.classList.contains("building-column")) {
@@ -330,6 +357,12 @@ function checkRestrictedControls() {
     imageControls.classList.remove("content-hide");
   } else {
     imageControls.classList.add("content-hide");
+  }
+
+  if (currentlySelected?.firstElementChild.classList.contains("crop-image")) {
+    imageCropControls.classList.remove("content-hide");
+  } else {
+    imageCropControls.classList.add("content-hide");
   }
 }
 
