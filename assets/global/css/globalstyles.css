@@ -297,8 +297,8 @@ a:hover, a:focus {
 .stretch-image {
   display: block;
   position: relative;
-  width: 100vw;
-  height: 20vh;
+  width: 300px;
+  height: 500px;
   object-fit: cover;
 }
 
