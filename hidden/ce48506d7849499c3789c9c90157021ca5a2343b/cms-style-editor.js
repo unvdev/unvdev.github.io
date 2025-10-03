@@ -376,8 +376,11 @@ function checkRestrictedControls() {
   }
 }
 
+// Custom Event Listeners
 imageDefault.addEventListener("click", () => {
     setTimeout(checkRestrictedControls, 0);
+    const imageElement = currentlySelected.firstElementChild;
+    imageElement.removeAttribute('style');
 });
 
 imageCrop.addEventListener("click", () => {
