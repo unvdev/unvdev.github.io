@@ -121,10 +121,10 @@ widthInput.addEventListener("input", () => {
 // ===============================
 imageHeightInput.addEventListener("input", () => {
   if (currentlySelected) {
-    currentlySelected.classList.add("custom-styles");
+    currentlySelected.firstElementChild.classList.add("custom-styles");
     let height = parseFloat(imageHeightInput.value) || 100;
-    height = Math.max(5, Math.min(100, height));
-    currentlySelected.style.maxHeight = height + "%";
+    height = Math.max(10, Math.min(2000, height));
+    currentlySelected.firstElementChild.style.height = height + "px";
   }
 });
 
@@ -133,10 +133,10 @@ imageHeightInput.addEventListener("input", () => {
 // ===============================
 imagePositionInput.addEventListener("input", () => {
   if (currentlySelected) {
-    currentlySelected.classList.add("custom-styles");
+    currentlySelected.firstElementChild.classList.add("custom-styles");
     let position = parseFloat(imagePositionInput.value) || 100;
     position = Math.max(5, Math.min(100, position));
-    currentlySelected.style.objectPosition = position + "%";
+    currentlySelected.firstElementChild.style.objectPosition = position + "%";
   }
 });
 
@@ -339,6 +339,16 @@ function loadStylesFromSelected() {
   if (borderColorValueSpan) borderColorValueSpan.textContent = rgbToHex(computed.borderColor).toUpperCase();
   if (borderWidthInput) borderWidthInput.value = parseInt(computed.borderWidth) || 0;
   if (borderRadiusInput) borderRadiusInput.value = parseInt(computed.borderRadius) || 0;
+
+  // Image Cropper
+  if (currentlySelected) {
+    const imageElement = currentlySelected.firstElementChild;
+    const computedStyle = window.getComputedStyle(imageElement);
+    imageHeightInput.value = parseFloat(computedStyle.height);
+    const objectPositionValue = computedStyle.objectPosition;
+    const positionX = objectPositionValue.split(' ')[0];
+    imagePositionInput.value = parseFloat(positionX) || 50;
+  }
 }
 
 function checkRestrictedControls() {
