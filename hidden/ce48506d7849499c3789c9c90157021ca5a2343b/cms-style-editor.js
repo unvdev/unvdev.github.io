@@ -136,7 +136,7 @@ imagePositionInput.addEventListener("input", () => {
     currentlySelected.classList.add("custom-styles");
     let position = parseFloat(imagePositionInput.value) || 100;
     position = Math.max(5, Math.min(100, position));
-    currentlySelected.style.maxWidth = position + "%";
+    currentlySelected.style.objectPosition = position + "%";
   }
 });
 
