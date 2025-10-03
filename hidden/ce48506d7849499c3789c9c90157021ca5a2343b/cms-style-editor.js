@@ -376,8 +376,13 @@ function checkRestrictedControls() {
   }
 }
 
-imageDefault.addEventListener("click", () => {checkRestrictedControls;console.log("Fired.");});
-imageCrop.addEventListener("click", () => {checkRestrictedControls;console.log("Fired.");});
+imageDefault.addEventListener("click", () => {
+    setTimeout(checkRestrictedControls, 0);
+});
+
+imageCrop.addEventListener("click", () => {
+    setTimeout(checkRestrictedControls, 0);
+});
 
 // ===============================
 // SHIFT + A + CLICK trigger
