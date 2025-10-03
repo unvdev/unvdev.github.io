@@ -655,10 +655,15 @@ footer {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .building-column-span-five .building-column {
+    .building-column-span-five .building-column:nth-child(-n+3) {
         grid-column: auto;
     }
 
+    .building-column-span-five .building-column:nth-child(n+4) {
+        grid-column: auto;
+    }
+
+    /* 4. NOW apply your layout rule for the 5th item */
     .building-column-span-five .building-column:nth-child(5) {
         grid-column: span 2;
     }
