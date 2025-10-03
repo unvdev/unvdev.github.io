@@ -217,9 +217,9 @@ imageStretch.addEventListener("click", wrapWithHighlight(() => {
 
 imageDefault.addEventListener("click", wrapWithHighlight(() => {
   if (currentlySelected) {
-    currentlySelected.firstElementChild.add("custom-styles");
-    currentlySelected.firstElementChild.remove("stretch-image");
-    currentlySelected.firstElementChild.add("default-image");
+    currentlySelected.firstElementChild.classList.add("custom-styles");
+    currentlySelected.firstElementChild.classList.remove("stretch-image");
+    currentlySelected.firstElementChild.classList.add("default-image");
   }
 }));
 
