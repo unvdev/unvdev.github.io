@@ -195,7 +195,7 @@ const orderedList = `
 
 const image = `
 <div class="image-element building-block building-block-align-left" data-name="Building Block: Image">
-    <img></img>
+    <img class="default-image"></img>
 </div>
 `;
 
