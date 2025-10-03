@@ -293,7 +293,6 @@ a:hover, a:focus {
 .stretch-image {
   display: block;
   position: relative;
-  margin-left: calc(50% - 50vw);
   width: 100vw;
   height: 20vh;
   object-fit: cover;
