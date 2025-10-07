@@ -234,7 +234,7 @@ document.addEventListener("click", (e) => {
     const isInsideStyleEditor = clickedElement.closest('#style-editor-sidebar');
 
     // If the click is inside any of our main UI containers, stop further execution.
-    if (isInsideQuillUI || isInsideCmsUI || isInsideCmsMenuBar || isInsideStyleEditor) {
+    if (isInsideQuillUI || isInsideCmsUI || (isInsideCmsMenuBar && !moveUp && !moveDown) || isInsideStyleEditor) {
         return;
     }
 
@@ -299,7 +299,7 @@ document.addEventListener("keydown", e => {
             }
         }
     }
-    
+
 });
 
 deleteButton.addEventListener("click", deleteElement);
