@@ -125,7 +125,7 @@ imageWidthInput.addEventListener("input", () => {
     currentlySelected.firstElementChild.classList.add("custom-styles");
     let width = parseFloat(imageWidthInput.value) || 100;
     width = Math.max(10, Math.min(2000, width));
-    currentlySelected.firstElementChild.style.height = height + "px";
+    currentlySelected.firstElementChild.style.width = width + "px";
   }
 });
 
