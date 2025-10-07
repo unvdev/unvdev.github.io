@@ -230,12 +230,15 @@ document.addEventListener("click", (e) => {
     // Clicks inside these elements are considered UI interactions and should be ignored here.
     const isInsideQuillUI = clickedElement.closest('.text-editor-pop');
     const isInsideCmsUI = clickedElement.closest('.cms-menu');
-    const isInsideCmsMenuBar = clickedElement.closest('.cms-menu-bar');
     const isInsideStyleEditor = clickedElement.closest('#style-editor-sidebar');
 
     // If the click is inside any of our main UI containers, stop further execution.
-    if (isInsideQuillUI || isInsideCmsUI || (isInsideCmsMenuBar && !moveUp && !moveDown) || isInsideStyleEditor) {
+    if (isInsideQuillUI || isInsideCmsUI || isInsideStyleEditor) {
         return;
+    }
+
+    if (cmsMenuBar.contains(e.target) && e.target !== moveUp && e.target !== moveDown) {
+        return; 
     }
 
     // If the click was not in a UI area, check if it was on a building block.
