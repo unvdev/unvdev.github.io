@@ -403,7 +403,7 @@ document.addEventListener("keydown", (e) => {
   const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
   if (isEditorVisible) return;
   e.preventDefault();
-  if (e.key === 'e') {
+  if (e.key === 's') {
         if (currentlySelected) {
             currentlySelected.classList.add("custom-styles");
             invokeStyleMenu();
