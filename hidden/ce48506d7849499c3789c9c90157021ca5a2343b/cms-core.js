@@ -138,9 +138,9 @@ function addSelectionLabel() {
 }
 
 function removeSelectionLabel() {
-    const label = currentlySelected.nextElementSibling;
+    const label = document.querySelector(".selection-label");
     // Check if the next sibling exists and is a label before removing
-    if (label && label.classList.contains('selection-label')) {
+    if (label) {
         label.remove();
     }
 }
