@@ -256,6 +256,8 @@ document.addEventListener("click", (e) => {
                     }
                 }
             }
+
+            return;
         }
     }
 
