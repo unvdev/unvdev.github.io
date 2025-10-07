@@ -36,10 +36,13 @@ function insertImageLink(htmlContent) {
     currentlySelected.insertAdjacentHTML('beforebegin', htmlContent);
 
     const insertedImage = currentlySelected.previousElementSibling.querySelector("img");
+    console.log(insertedImage);
     const imageLink = grabImageLink();
+    console.log(insertedImage);
 
     if (imageLink && insertedImage) {
       insertedImage.src = imageLink;
+      console.log(nsertedImage.src);
     }
 
     deselectAll();
