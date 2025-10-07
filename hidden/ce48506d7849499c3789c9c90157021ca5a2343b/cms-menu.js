@@ -91,6 +91,7 @@ function grabImageLink() {
     return link;
   } else if (link) {
     alert("Please enter a valid image URL (jpg, png, gif, webp, svg).");
+    grabImageLink();
   }
 
   return null;
