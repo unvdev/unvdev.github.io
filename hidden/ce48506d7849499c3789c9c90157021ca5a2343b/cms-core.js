@@ -238,7 +238,7 @@ document.addEventListener("click", (e) => {
         return;
     }
 
-    if (isInsideCmsMenuBar && clickedElement !== moveUp && clickedElement !== moveDown) {
+    if (clickedElement !== moveUp && clickedElement !== moveDown && isInsideCmsMenuBar) {
         return; 
     }
 
