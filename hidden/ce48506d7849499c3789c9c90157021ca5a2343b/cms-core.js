@@ -2,6 +2,8 @@ const cms = document.querySelector(".cms-menu");
 const styles = document.getElementById("style-editor-sidebar");
 const styleButton = document.getElementById("style-element");
 const deleteButton = document.getElementById("delete-element");
+const moveUp = document.getElementById("move-element-up");
+const moveDown = document.getElementById("move-element-down");
 const saveButton = document.getElementById("save-and-copy");
 const loadedPage = document.getElementById("loaded-page");
 
