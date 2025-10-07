@@ -73,7 +73,7 @@
       <label>
         Width
         <div class="input-with-unit">
-          <input type="number" id="style-editor-width-input" value="100" min="0" max="100">
+          <input type="number" id="style-editor-width-input" value="100" min="1" max="100">
         </div>
       </label>
     </div>
@@ -152,7 +152,7 @@
       <h4 class="sidebar-section-title">Image Options</h4>
       <div class="sidebar-control-group">
         <label>
-          Image Size
+          Image Style
           <div class="sidebar-segmented-control">
             <button id="style-editor-image-default-button" class="active" title="image default">
               <i class="fa-solid fa-up-right-and-down-left-from-center" style="transform: rotate(45deg)"></i>
@@ -165,15 +165,21 @@
           <div id="style-editor-image-crop-controls" class="content-hide">
             <div class="sidebar-control-group">
             <label>
-              Image Height
+              Image Width
               <div class="input-with-unit">
-                <input type="number" id="style-editor-crop-height-input" value="0" min="0">
+                <input type="number" id="style-editor-crop-width-input" value="0" min="10">
               </div>
             </label>
             <label>
-              Image Position
+              Image Height
               <div class="input-with-unit">
-                <input type="number" id="style-editor-crop-position-input" value="0" min="0">
+                <input type="number" id="style-editor-crop-height-input" value="0" min="10">
+              </div>
+            </label>
+            <label>
+              Frame Position
+              <div class="input-with-unit">
+                <input type="number" id="style-editor-crop-position-input" value="0" min="1" max="100">
               </div>
             </label>
             </div>

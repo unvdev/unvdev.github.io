@@ -45,6 +45,7 @@ const marginBottomInput = document.getElementById("style-editor-margin-bottom-in
 // Image Options
 const imageDefault = document.getElementById("style-editor-image-default-button");
 const imageCrop = document.getElementById("style-editor-image-crop-button");
+const imageWidthtInput = document.getElementById("style-editor-crop-width-input");
 const imageHeightInput = document.getElementById("style-editor-crop-height-input");
 const imagePositionInput = document.getElementById("style-editor-crop-position-input");
 
@@ -113,6 +114,18 @@ widthInput.addEventListener("input", () => {
     let width = parseFloat(widthInput.value) || 100;
     width = Math.max(5, Math.min(100, width));
     currentlySelected.style.maxWidth = width + "%";
+  }
+});
+
+// ===============================
+// IMAGE WIDTH CONTROL (direct input)
+// ===============================
+imageWidthInput.addEventListener("input", () => {
+  if (currentlySelected) {
+    currentlySelected.firstElementChild.classList.add("custom-styles");
+    let width = parseFloat(imageWidthInput.value) || 100;
+    width = Math.max(10, Math.min(2000, width));
+    currentlySelected.firstElementChild.style.height = height + "px";
   }
 });
 
@@ -344,7 +357,8 @@ function loadStylesFromSelected() {
   if (currentlySelected) {
     const imageElement = currentlySelected.firstElementChild;
     const computedStyle = window.getComputedStyle(imageElement);
-    imageHeightInput.value = parseFloat(computedStyle.height);
+    Math.round(imageWidthInput.value = parseFloat(computedStyle.height));
+    Math.round(imageHeightInput.value = parseFloat(computedStyle.height));
     const objectPositionValue = computedStyle.objectPosition;
     const positionX = objectPositionValue.split(' ')[0];
     imagePositionInput.value = parseFloat(positionX) || 50;
