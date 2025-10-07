@@ -387,27 +387,35 @@ imageCrop.addEventListener("click", () => {
     setTimeout(checkRestrictedControls, 0);
 });
 
+// Open Styles Menu
+styleButton.addEventListener("click", () => {
+  if (currentlySelected) {
+    currentlySelected.classList.add("custom-styles");
+    invokeStyleMenu();
+  }
+});
+
 // ===============================
 // SHIFT + A + CLICK trigger
 // ===============================
-let shiftHeld = false;
-let aHeld = false;
+// let shiftHeld = false;
+// let aHeld = false;
 
-document.addEventListener("keydown", (e) => {
-    if (e.key === "Shift") shiftHeld = true;
-    if (e.key.toLowerCase() === "a") aHeld = true;
-});
+// document.addEventListener("keydown", (e) => {
+//     if (e.key === "Shift") shiftHeld = true;
+//     if (e.key.toLowerCase() === "a") aHeld = true;
+// });
 
-document.addEventListener("keyup", (e) => {
-    if (e.key === "Shift") shiftHeld = false;
-    if (e.key.toLowerCase() === "a") aHeld = false;
-});
+// document.addEventListener("keyup", (e) => {
+//     if (e.key === "Shift") shiftHeld = false;
+//     if (e.key.toLowerCase() === "a") aHeld = false;
+// });
 
-document.addEventListener("click", (e) => {
-    if (shiftHeld && aHeld) {
-        if (currentlySelected) {
-            currentlySelected.classList.add("custom-styles"); // mark element when opening style menu
-            invokeStyleMenu();
-        }
-    }
-});
+// document.addEventListener("click", (e) => {
+//     if (shiftHeld && aHeld) {
+//         if (currentlySelected) {
+//             currentlySelected.classList.add("custom-styles"); // mark element when opening style menu
+//             invokeStyleMenu();
+//         }
+//     }
+// });
