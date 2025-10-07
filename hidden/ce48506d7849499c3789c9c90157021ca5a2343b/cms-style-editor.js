@@ -400,6 +400,8 @@ styleButton.addEventListener("click", () => {
 // ===============================
 
 document.addEventListener("keydown", (e) => {
+  const isEditorVisible = window.getComputedStyle(editorPop).display !== "none";
+  if (isEditorVisible) return;
   e.preventDefault();
   if (e.key === 'e') {
         if (currentlySelected) {
