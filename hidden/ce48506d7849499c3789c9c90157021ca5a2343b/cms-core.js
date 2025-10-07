@@ -224,14 +224,14 @@ async function savePage() {
 }
 
 document.addEventListener("click", (e) => {
-    const clickedElement = e.target;
+    const target = e.target;
 
     // Define the primary UI containers that should not trigger selection changes.
     // Clicks inside these elements are considered UI interactions and should be ignored here.
-    const isInsideQuillUI = clickedElement.closest('.text-editor-pop');
-    const isInsideCmsUI = clickedElement.closest('.cms-menu');
-    const isInsideCmsMenuBar = clickedElement.closest('.cms-menu-bar');
-    const isInsideStyleEditor = clickedElement.closest('#style-editor-sidebar');
+    const isInsideQuillUI = target.closest('.text-editor-pop');
+    const isInsideCmsUI = target.closest('.cms-menu');
+    const isInsideCmsMenuBar = target.closest('.cms-menu-bar');
+    const isInsideStyleEditor = target.closest('#style-editor-sidebar');
 
     // If the click is inside any of our main UI containers, stop further execution.
     if (isInsideQuillUI || isInsideCmsUI || isInsideStyleEditor) {
@@ -239,9 +239,23 @@ document.addEventListener("click", (e) => {
     }
 
     if (isInsideCmsMenuBar) {
-        if (clickedElement !== moveUp && clickedElement !== moveDown) {
-            console.log("Is not an arrow button.");
+        if (target !== moveUp && target !== moveDown) {
             return;
+        } else {
+            if (currentlySelected) {
+                if (target === moveUp) {
+                    const prev = currentlySelected.previousElementSibling;
+                    if (prev) {
+                        currentlySelected.parentElement.insertBefore(currentlySelected, prev);
+                    }
+                } 
+                else if (target === moveDown) {
+                    const next = currentlySelected.nextElementSibling;
+                    if (next) {
+                        currentlySelected.parentElement.insertBefore(currentlySelected, next.nextElementSibling);
+                    }
+                }
+            }
         }
     }
 
@@ -291,14 +305,14 @@ document.addEventListener("keydown", e => {
     }
 
     if (currentlySelected) {
-        if (e.key === 'ArrowUp' || target === moveUp) {
+        if (e.key === 'ArrowUp') {
             e.preventDefault();
             const prev = currentlySelected.previousElementSibling;
             if (prev) {
                 currentlySelected.parentElement.insertBefore(currentlySelected, prev);
             }
         } 
-        else if (e.key === 'ArrowDown' || target === moveDown) {
+        else if (e.key === 'ArrowDown') {
             e.preventDefault();
             const next = currentlySelected.nextElementSibling;
             if (next) {
