@@ -183,7 +183,6 @@ function formatHtml(node, level = 0, indentChar = '  ') {
     return result;
 }
 
-// THE CORRECTED savePage FUNCTION
 async function savePage() {
     deselectAll();
     try {
@@ -204,11 +203,28 @@ async function savePage() {
         const elementsToRemove = tempDoc.querySelectorAll(unwantedSelectors);
         elementsToRemove.forEach(element => element.remove());
 
-        // 3. Convert the cleaned document back into a formatted HTML string
-        // **FIX:** Start formatting from the <html> element, not the whole document.
-        let formattedHtml = formatHtml(tempDoc.documentElement);
+        // --- ADDED CODE STARTS HERE ---
 
-        // **FIX:** Prepend the DOCTYPE to the final string.
+        // Find the wrapper element to unwrap within the tempDoc
+        const wrapperToUnwrap = tempDoc.getElementById('loaded-page');
+
+        // Check if the wrapper exists to avoid errors
+        if (wrapperToUnwrap) {
+            const parent = wrapperToUnwrap.parentElement;
+
+            // Move all children from the wrapper to the parent, placing them before the wrapper
+            while (wrapperToUnwrap.firstChild) {
+                parent.insertBefore(wrapperToUnwrap.firstChild, wrapperToUnwrap);
+            }
+            
+            // Remove the now-empty wrapper
+            wrapperToUnwrap.remove();
+        }
+
+        // --- ADDED CODE ENDS HERE ---
+
+        // 3. Convert the cleaned document back into a formatted HTML string
+        let formattedHtml = formatHtml(tempDoc.documentElement);
         const cleanedHtml = '<!DOCTYPE html>\n' + formattedHtml;
 
         // 4. Copy the final, formatted HTML to the clipboard
