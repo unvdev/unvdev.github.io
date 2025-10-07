@@ -50,7 +50,7 @@ async function insertImageUpload(htmlContent) {
   if (currentlySelected) {
     currentlySelected.insertAdjacentHTML("beforebegin", htmlContent);
 
-    const insertedImage = currentlySelected.previousElementSibling.querySelector("img");
+    const insertedImage = currentlySelected.previousElementSibling;
     const imageUpload = await grabImageUpload();
 
     if (imageUpload && insertedImage) {
