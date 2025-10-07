@@ -33,15 +33,15 @@ function insertElement(htmlContent) {
 
 function insertImageLink(htmlContent) {
   if (currentlySelected) {
+
+    if (grabImageLink() === null) {
+      return;
+    }
+    
     currentlySelected.insertAdjacentHTML('beforebegin', htmlContent);
 
     const insertedImage = currentlySelected.previousElementSibling;
     const imageLink = grabImageLink();
-    
-    if (imageLink === null) {
-      currentlySelected.previousElementSibling.remove();
-      return;
-    }
 
     if (imageLink && insertedImage) {
       insertedImage.src = imageLink;
@@ -91,9 +91,11 @@ function grabImageLink() {
     return link;
   } else if (link) {
     alert("Please enter a valid image URL (jpg, png, gif, webp, svg).");
+    return null;
+  } else if (link === null) {
+    alert("Please enter a valid image URL (jpg, png, gif, webp, svg).");
+    return null;
   }
-
-  return null;
 }
 
 function grabImageUpload() {
