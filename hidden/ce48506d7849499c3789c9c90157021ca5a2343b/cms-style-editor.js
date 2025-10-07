@@ -398,17 +398,17 @@ styleButton.addEventListener("click", () => {
 // ===============================
 // SHIFT + A + CLICK trigger
 // ===============================
-let shiftHeld = false;
+
 let aHeld = false;
 
 document.addEventListener("keydown", (e) => {
-    if (e.key === "Shift") shiftHeld = true;
-    if (e.key.toLowerCase() === "a") aHeld = true;
-});
-
-document.addEventListener("keyup", (e) => {
-    if (e.key === "Shift") shiftHeld = false;
-    if (e.key.toLowerCase() === "a") aHeld = false;
+  e.preventDefault();
+  if (e.key === 'a') {
+        if (currentlySelected) {
+            currentlySelected.classList.add("custom-styles");
+            invokeStyleMenu();
+        }
+    }
 });
 
 document.addEventListener("click", (e) => {
