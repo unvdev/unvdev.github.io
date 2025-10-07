@@ -33,8 +33,9 @@ function insertElement(htmlContent) {
 
 function insertImageLink(htmlContent) {
   if (currentlySelected) {
+    const imageLink = grabImageLink();
 
-    if (grabImageLink() === null) {
+    if (imageLink === null) {
       return;
     }
     
@@ -91,11 +92,9 @@ function grabImageLink() {
     return link;
   } else if (link) {
     alert("Please enter a valid image URL (jpg, png, gif, webp, svg).");
-    return null;
-  } else if (link === null) {
-    alert("Please enter a valid image URL (jpg, png, gif, webp, svg).");
-    return null;
   }
+
+  return null;
 }
 
 function grabImageUpload() {
