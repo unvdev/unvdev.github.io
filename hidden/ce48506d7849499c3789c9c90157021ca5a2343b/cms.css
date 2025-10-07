@@ -56,12 +56,11 @@
 
 .selected {
   position: relative;
-  outline: 2px solid magenta;
+  outline: inset 2px solid magenta;
 }
 
 .selected-label {
   position: absolute;
-  top: -20px;
   left: 50%;
   transform: translateX(-50%);
   background: magenta;
