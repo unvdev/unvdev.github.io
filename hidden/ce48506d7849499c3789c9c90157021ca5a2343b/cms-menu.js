@@ -42,7 +42,6 @@ function insertImageLink(htmlContent) {
     currentlySelected.insertAdjacentHTML('beforebegin', htmlContent);
 
     const insertedImage = currentlySelected.previousElementSibling;
-    const imageLink = grabImageLink();
 
     if (imageLink && insertedImage) {
       insertedImage.src = imageLink;
