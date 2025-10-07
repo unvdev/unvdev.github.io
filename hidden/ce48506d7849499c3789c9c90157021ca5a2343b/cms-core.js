@@ -130,7 +130,7 @@ function addSelectionLabel() {
     removeSelectionLabel(currentlySelected);
 
     const label = document.createElement('span');
-    label.className = 'selection-label';
+    label.classList.add("selected-label");
     label.innerText = labelText;
 
     // Place the label right after the selected element in the HTML
@@ -138,7 +138,7 @@ function addSelectionLabel() {
 }
 
 function removeSelectionLabel() {
-    const label = document.querySelector(".selection-label");
+    const label = document.querySelector(".selected-label");
     // Check if the next sibling exists and is a label before removing
     if (label) {
         label.remove();
