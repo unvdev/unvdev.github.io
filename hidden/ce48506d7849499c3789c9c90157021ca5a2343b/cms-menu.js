@@ -41,6 +41,7 @@ function insertImageLink(htmlContent) {
     if (imageLink === null) {
       currentlySelected.previousElementSibling.remove();
       alert("Please enter a valid image URL (jpg, png, gif, webp, svg).");
+      deselectAll();
     }
 
     if (imageLink && insertedImage) {
