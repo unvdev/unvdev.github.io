@@ -319,8 +319,10 @@ document.addEventListener("keydown", e => {
         else if (e.key === 'ArrowDown') {
             e.preventDefault();
             const next = currentlySelected.nextElementSibling;
-            if (next) {
+            if (!next.classList.contains("placeholder-block")) {
                 currentlySelected.parentElement.insertBefore(currentlySelected, next.nextElementSibling);
+            } else {
+                return;
             }
         }
     }
