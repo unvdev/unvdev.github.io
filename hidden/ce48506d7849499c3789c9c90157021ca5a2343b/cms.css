@@ -61,10 +61,7 @@
 }
 
 .selected-label {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative;
   background: magenta;
   color: white;
   font-size: 12px;
