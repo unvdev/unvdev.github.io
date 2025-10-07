@@ -238,8 +238,11 @@ document.addEventListener("click", (e) => {
         return;
     }
 
-    if (clickedElement !== moveUp && clickedElement !== moveDown && isInsideCmsMenuBar) {
-        return; 
+    if (isInsideCmsMenuBar) {
+        if (clickedElement !== moveUp && clickedElement !== moveDown) {
+            console.log("Is not an arrow button.");
+            return;
+        }
     }
 
     // If the click was not in a UI area, check if it was on a building block.
