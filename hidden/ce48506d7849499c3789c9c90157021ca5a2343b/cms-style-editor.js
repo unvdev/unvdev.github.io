@@ -396,10 +396,8 @@ styleButton.addEventListener("click", () => {
 });
 
 // ===============================
-// SHIFT + A + CLICK trigger
+// e and button triggers
 // ===============================
-
-let aHeld = false;
 
 document.addEventListener("keydown", (e) => {
   e.preventDefault();
