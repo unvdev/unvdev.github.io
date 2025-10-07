@@ -282,11 +282,6 @@ document.addEventListener("keydown", e => {
         pasteElement();
         return;
     }
-});
-
-function handleElementMoving(e) {
-
-    const target = e.target;
 
     if (currentlySelected) {
         if (e.key === 'ArrowUp' || target === moveUp) {
@@ -304,7 +299,8 @@ function handleElementMoving(e) {
             }
         }
     }
-}
+    
+});
 
 deleteButton.addEventListener("click", deleteElement);
 saveButton.addEventListener("click", savePage);
