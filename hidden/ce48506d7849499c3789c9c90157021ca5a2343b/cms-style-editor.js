@@ -401,18 +401,9 @@ styleButton.addEventListener("click", () => {
 
 document.addEventListener("keydown", (e) => {
   e.preventDefault();
-  if (e.key === 'a') {
+  if (e.key === 'e') {
         if (currentlySelected) {
             currentlySelected.classList.add("custom-styles");
-            invokeStyleMenu();
-        }
-    }
-});
-
-document.addEventListener("click", (e) => {
-    if (shiftHeld && aHeld) {
-        if (currentlySelected) {
-            currentlySelected.classList.add("custom-styles"); // mark element when opening style menu
             invokeStyleMenu();
         }
     }
