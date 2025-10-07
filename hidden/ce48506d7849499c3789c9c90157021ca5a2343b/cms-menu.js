@@ -37,6 +37,11 @@ function insertImageLink(htmlContent) {
 
     const insertedImage = currentlySelected.previousElementSibling;
     const imageLink = grabImageLink();
+    
+    if (imageLink === null) {
+      currentlySelected.previousElementSibling.remove();
+      alert("Please enter a valid image URL (jpg, png, gif, webp, svg).");
+    }
 
     if (imageLink && insertedImage) {
       insertedImage.src = imageLink;
@@ -88,7 +93,7 @@ function grabImageLink() {
     alert("Please enter a valid image URL (jpg, png, gif, webp, svg).");
   }
 
-  return;
+  return null;
 }
 
 function grabImageUpload() {
