@@ -396,7 +396,7 @@ styleButton.addEventListener("click", () => {
 });
 
 // ===============================
-// e and button triggers
+// s and button triggers
 // ===============================
 
 document.addEventListener("keydown", (e) => {
