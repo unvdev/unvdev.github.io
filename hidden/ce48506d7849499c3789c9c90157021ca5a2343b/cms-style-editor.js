@@ -45,7 +45,7 @@ const marginBottomInput = document.getElementById("style-editor-margin-bottom-in
 // Image Options
 const imageDefault = document.getElementById("style-editor-image-default-button");
 const imageCrop = document.getElementById("style-editor-image-crop-button");
-const imageWidthtInput = document.getElementById("style-editor-crop-width-input");
+const imageWidthInput = document.getElementById("style-editor-crop-width-input");
 const imageHeightInput = document.getElementById("style-editor-crop-height-input");
 const imagePositionInput = document.getElementById("style-editor-crop-position-input");
 
