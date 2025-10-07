@@ -402,7 +402,7 @@ styleButton.addEventListener("click", () => {
 document.addEventListener("keydown", (e) => {
   const isStyleEditorVisible = window.getComputedStyle(styles).display !== "none";
   const isTextEditorVisible = window.getComputedStyle(editorPop).display !== "none";
-  if (isEditorVisible || isStyleEditorVisible) return;
+  if (isTextEditorVisible || isStyleEditorVisible) return;
   e.preventDefault();
   if (e.key === 's') {
         if (currentlySelected) {
