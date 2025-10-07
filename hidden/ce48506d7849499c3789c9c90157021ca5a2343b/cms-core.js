@@ -260,12 +260,12 @@ document.addEventListener("click", (e) => {
     }
 
     // If the click was not in a UI area, check if it was on a building block.
-    const targetBuildingBlock = clickedElement.closest('.building-block');
+    const targetBuildingBlock = target.closest('.building-block');
 
     if (targetBuildingBlock) {
         // If a building block was clicked, select it.
         // The `selectBuildingBlock` function handles the specific logic.
-        selectBuildingBlock(targetBuildingBlock, clickedElement);
+        selectBuildingBlock(targetBuildingBlock, target);
     } else {
         // If the click was on the page background or another non-block element,
         // deselect whatever is currently active.
