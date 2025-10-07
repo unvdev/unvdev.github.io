@@ -122,10 +122,10 @@ widthInput.addEventListener("input", () => {
 // ===============================
 imageWidthInput.addEventListener("input", () => {
   if (currentlySelected) {
-    currentlySelected.firstElementChild.classList.add("custom-styles");
+    currentlySelected.classList.add("custom-styles");
     let width = parseFloat(imageWidthInput.value) || 100;
     width = Math.max(10, Math.min(2000, width));
-    currentlySelected.firstElementChild.style.width = width + "px";
+    currentlySelected.style.width = width + "px";
   }
 });
 
@@ -134,10 +134,10 @@ imageWidthInput.addEventListener("input", () => {
 // ===============================
 imageHeightInput.addEventListener("input", () => {
   if (currentlySelected) {
-    currentlySelected.firstElementChild.classList.add("custom-styles");
+    currentlySelected.classList.add("custom-styles");
     let height = parseFloat(imageHeightInput.value) || 100;
     height = Math.max(10, Math.min(2000, height));
-    currentlySelected.firstElementChild.style.height = height + "px";
+    currentlySelected.style.height = height + "px";
   }
 });
 
@@ -146,10 +146,10 @@ imageHeightInput.addEventListener("input", () => {
 // ===============================
 imagePositionInput.addEventListener("input", () => {
   if (currentlySelected) {
-    currentlySelected.firstElementChild.classList.add("custom-styles");
+    currentlySelected.classList.add("custom-styles");
     let position = parseFloat(imagePositionInput.value) || 100;
     position = Math.max(5, Math.min(100, position));
-    currentlySelected.firstElementChild.style.objectPosition = position + "%";
+    currentlySelected.style.objectPosition = position + "%";
   }
 });
 
@@ -182,9 +182,9 @@ function highlightActiveControls() {
   }
 
   // Image
-  if (currentlySelected.firstElementChild.classList.contains("crop-image")) {
+  if (currentlySelected.classList.contains("crop-image")) {
     imageCrop.classList.add("active");
-  } else if (currentlySelected.firstElementChild.classList.contains("default-image")) {
+  } else if (currentlySelected.classList.contains("default-image")) {
     imageDefault.classList.add("active");
   }
 }
@@ -248,17 +248,17 @@ alignBottom.addEventListener("click", wrapWithHighlight(() => {
 
 imageCrop.addEventListener("click", wrapWithHighlight(() => {
   if (currentlySelected) {
-    currentlySelected.firstElementChild.classList.add("custom-styles");
-    currentlySelected.firstElementChild.classList.remove("default-image");
-    currentlySelected.firstElementChild.classList.add("crop-image");
+    currentlySelected.classList.add("custom-styles");
+    currentlySelected.classList.remove("default-image");
+    currentlySelected.classList.add("crop-image");
   }
 }));
 
 imageDefault.addEventListener("click", wrapWithHighlight(() => {
   if (currentlySelected) {
-    currentlySelected.firstElementChild.classList.add("custom-styles");
-    currentlySelected.firstElementChild.classList.remove("crop-image");
-    currentlySelected.firstElementChild.classList.add("default-image");
+    currentlySelected.classList.add("custom-styles");
+    currentlySelected.classList.remove("crop-image");
+    currentlySelected.classList.add("default-image");
   }
 }));
 
@@ -355,7 +355,7 @@ function loadStylesFromSelected() {
 
   // Image Cropper
   if (currentlySelected) {
-    const imageElement = currentlySelected.firstElementChild;
+    const imageElement = currentlySelected;
     const computedStyle = window.getComputedStyle(imageElement);
     Math.round(imageWidthInput.value = parseFloat(computedStyle.height));
     Math.round(imageHeightInput.value = parseFloat(computedStyle.height));
@@ -383,7 +383,7 @@ function checkRestrictedControls() {
     imageControls.classList.add("content-hide");
   }
 
-  if (currentlySelected?.firstElementChild.classList.contains("crop-image")) {
+  if (currentlySelected?.classList.contains("crop-image")) {
     imageCropControls.classList.remove("content-hide");
   } else {
     imageCropControls.classList.add("content-hide");
@@ -392,7 +392,7 @@ function checkRestrictedControls() {
 
 // Custom Event Listeners
 imageDefault.addEventListener("click", () => {
-    const imageElement = currentlySelected.firstElementChild;
+    const imageElement = currentlySelected;
     imageElement.removeAttribute('style');
     setTimeout(checkRestrictedControls, 0);
 });
