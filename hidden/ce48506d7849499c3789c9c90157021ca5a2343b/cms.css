@@ -25,7 +25,7 @@
             cursor: move !important;
         }
 
-.selected {
+/* .selected {
   position: relative;
 }
 
@@ -35,13 +35,33 @@
   top: 0; left: 0; right: 0; bottom: 0;
   pointer-events: none;
   box-shadow: 0 0 0 2px magenta;
-  z-index: 9998; /* sits below label */
-}
+  z-index: 9998;
+} */
 
-.selected::after {
+/* .selected::after {
   content: attr(data-name);
   position: absolute;
-  top: -20px; /* move above the element border */
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: magenta;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 1px 8px;
+  pointer-events: none;
+  z-index: 9999;
+  white-space: nowrap;
+} */
+
+.selected {
+  position: relative;
+  outline: 2px solid magenta;
+}
+
+.selected-label {
+  position: absolute;
+  top: -20px;
   left: 50%;
   transform: translateX(-50%);
   background: magenta;

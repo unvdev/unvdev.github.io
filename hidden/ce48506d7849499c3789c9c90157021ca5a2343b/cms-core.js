@@ -21,6 +21,7 @@ function deselectAll() {
         cms.classList.add("content-hide");
         styles.classList.add("content-hide");
         loadedPage.classList.remove("sidebar-active");
+        removeSelectionLabel();
     }
 }
 
@@ -34,6 +35,7 @@ function selectBuildingBlock(blockToSelect, originalTarget) {
     deselectAll();
     currentlySelected = blockToSelect;
     currentlySelected.classList.add('selected');
+    addSelectionLabel();
 }
 
 function deleteElement() {
@@ -117,6 +119,29 @@ function pasteElement() {
         }
     } finally {
         deselectAll();
+    }
+}
+
+function addSelectionLabel() {
+    const labelText = currentlySelected.dataset.name;
+    if (!labelText) return; // Don't add a label if there's no data-name
+
+    // To be safe, first remove any old label that might exist
+    removeSelectionLabel(currentlySelected);
+
+    const label = document.createElement('span');
+    label.className = 'selection-label';
+    label.innerText = labelText;
+
+    // Place the label right after the selected element in the HTML
+    currentlySelected.after(label);
+}
+
+function removeSelectionLabel() {
+    const label = currentlySelected.nextElementSibling;
+    // Check if the next sibling exists and is a label before removing
+    if (label && label.classList.contains('selection-label')) {
+        label.remove();
     }
 }
 
