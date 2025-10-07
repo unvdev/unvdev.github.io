@@ -251,8 +251,10 @@ document.addEventListener("click", (e) => {
                 } 
                 else if (target === moveDown) {
                     const next = currentlySelected.nextElementSibling;
-                    if (next) {
+                    if (!next.classList.contains("placeholder-block")) {
                         currentlySelected.parentElement.insertBefore(currentlySelected, next.nextElementSibling);
+                    } else {
+                        return;
                     }
                 }
             }
