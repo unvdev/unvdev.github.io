@@ -56,7 +56,8 @@
 
 .selected {
   position: relative;
-  outline: inset 2px solid magenta;
+  outline: 2px solid magenta;
+    outline-offset: -2px;
 }
 
 .selected-label {
