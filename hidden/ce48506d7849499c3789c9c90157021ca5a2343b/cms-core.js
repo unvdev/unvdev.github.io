@@ -282,18 +282,29 @@ document.addEventListener("keydown", e => {
         pasteElement();
         return;
     }
+});
+
+function handleElementMoving(e) {
+
+    const target = e.target;
 
     if (currentlySelected) {
-        e.preventDefault();
-        if (e.key === 'ArrowUp') {
+        if (e.key === 'ArrowUp' || target === moveUp) {
+            e.preventDefault();
             const prev = currentlySelected.previousElementSibling;
-            if (prev) currentlySelected.parentElement.insertBefore(currentlySelected, prev);
-        } else if (e.key === 'ArrowDown') {
+            if (prev) {
+                currentlySelected.parentElement.insertBefore(currentlySelected, prev);
+            }
+        } 
+        else if (e.key === 'ArrowDown' || target === moveDown) {
+            e.preventDefault();
             const next = currentlySelected.nextElementSibling;
-            if (next) currentlySelected.parentElement.insertBefore(currentlySelected, next.nextElementSibling);
+            if (next) {
+                currentlySelected.parentElement.insertBefore(currentlySelected, next.nextElementSibling);
+            }
         }
     }
-});
+}
 
 deleteButton.addEventListener("click", deleteElement);
 saveButton.addEventListener("click", savePage);
