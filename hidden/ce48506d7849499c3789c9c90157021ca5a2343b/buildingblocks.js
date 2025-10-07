@@ -193,10 +193,14 @@ const orderedList = `
 </div>
 `;
 
+// const image = `
+// <div class="image-element building-block building-block-align-left" data-name="Building Block: Image">
+//     <img class="default-image"></img>
+// </div>
+// `;
+
 const image = `
-<div class="image-element building-block building-block-align-left" data-name="Building Block: Image">
-    <img class="default-image"></img>
-</div>
+<img class="image-element default-image building-block building-block-align-left" data-name="Building Block: Image"></img>
 `;
 
 const accordion = `
