@@ -1,4 +1,5 @@
 const cms = document.querySelector(".cms-menu");
+const cmsMenuBar = document.querySelector(".cms-menu-bar");
 const styles = document.getElementById("style-editor-sidebar");
 const styleButton = document.getElementById("style-element");
 const deleteButton = document.getElementById("delete-element");
@@ -229,10 +230,11 @@ document.addEventListener("click", (e) => {
     // Clicks inside these elements are considered UI interactions and should be ignored here.
     const isInsideQuillUI = clickedElement.closest('.text-editor-pop');
     const isInsideCmsUI = clickedElement.closest('.cms-menu');
+    const isInsideCmsMenuBar = clickedElement.closest('.cms-menu-bar');
     const isInsideStyleEditor = clickedElement.closest('#style-editor-sidebar');
 
     // If the click is inside any of our main UI containers, stop further execution.
-    if (isInsideQuillUI || isInsideCmsUI || isInsideStyleEditor) {
+    if (isInsideQuillUI || isInsideCmsUI || isInsideCmsMenuBar || isInsideStyleEditor) {
         return;
     }
 
