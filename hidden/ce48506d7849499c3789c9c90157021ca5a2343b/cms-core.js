@@ -185,25 +185,26 @@ function formatHtml(node, level = 0, indentChar = '  ') {
 
 async function savePage() {
     deselectAll();
-    const liveWrapper = document.querySelector('#loaded-page');
 
+    const liveWrapper = document.querySelector('#loaded-page');
     if (!liveWrapper) {
-        alert('No #loaded-page found!');
+        alert('Could not find #loaded-page.');
         return;
     }
 
-    // Keep a placeholder to rewrap later
     const wrapperParent = liveWrapper.parentNode;
     const wrapperNextSibling = liveWrapper.nextSibling;
 
-    try {
-        // --- Step 1: Unwrap live DOM ---
-        wrapperParent.insertBefore(...liveWrapper.childNodes, liveWrapper);
-        liveWrapper.remove();
+    // ----- Step 1: Unwrap the live wrapper -----
+    const liveChildren = Array.from(liveWrapper.childNodes);
+    liveChildren.forEach(child => wrapperParent.insertBefore(child, liveWrapper));
+    wrapperParent.removeChild(liveWrapper);
 
-        // --- Step 2: Clone the live DOM and remove unwanted elements ---
+    try {
+        // ----- Step 2: Clone the live DOM -----
         const tempDoc = document.cloneNode(true);
 
+        // ----- Step 3: Remove unwanted CMS/extension elements -----
         const unwantedSelectors = [
             '[data-name="cms environment"]',
             '[data-name="cms stylesheet"]',
@@ -214,11 +215,17 @@ async function savePage() {
 
         tempDoc.querySelectorAll(unwantedSelectors).forEach(el => el.remove());
 
-        // --- Step 3: Format HTML ---
-        let formattedHtml = formatHtml(tempDoc.documentElement);
-        const cleanedHtml = '<!DOCTYPE html>\n' + formattedHtml;
+        // ----- Step 4: Unwrap #loaded-page in the tempDoc -----
+        const tempWrapper = tempDoc.querySelector('#loaded-page');
+        if (tempWrapper) {
+            tempWrapper.replaceWith(...tempWrapper.childNodes);
+        }
 
+        // ----- Step 5: Format and copy HTML -----
+        const formattedHtml = formatHtml(tempDoc.documentElement);
+        const cleanedHtml = '<!DOCTYPE html>\n' + formattedHtml;
         await navigator.clipboard.writeText(cleanedHtml);
+
         console.log('Formatted page HTML copied to clipboard!');
         alert('Page HTML copied!');
 
@@ -226,29 +233,21 @@ async function savePage() {
         console.error('Failed to copy HTML to clipboard:', err);
         alert('Could not copy HTML.');
     } finally {
-    // --- Step 4: Rewrap the live DOM ---
-    const newWrapper = document.createElement('div');
+        // ----- Step 6: Safely rewrap the live DOM -----
+        const newWrapper = document.createElement('div');
+        newWrapper.id = 'loaded-page';
+        newWrapper.className = liveWrapper.className;
 
-    // Copy id, classes, and any other attributes from the original wrapper
-    newWrapper.id = 'loaded-page';
-    newWrapper.className = liveWrapper.className;
-    for (const attr of liveWrapper.attributes) {
-        if (attr.name !== 'id' && attr.name !== 'class') {
-            newWrapper.setAttribute(attr.name, attr.value);
+        // Move all children back into the wrapper
+        Array.from(wrapperParent.childNodes).forEach(child => newWrapper.appendChild(child));
+
+        // Insert wrapper in original spot if possible
+        if (wrapperNextSibling && wrapperParent.contains(wrapperNextSibling)) {
+            wrapperParent.insertBefore(newWrapper, wrapperNextSibling);
+        } else {
+            wrapperParent.appendChild(newWrapper);
         }
     }
-
-    // Move all children back into the new wrapper
-    newWrapper.append(...wrapperParent.childNodes);
-
-    // Insert new wrapper into parent
-    if (wrapperNextSibling && wrapperParent.contains(wrapperNextSibling)) {
-        wrapperParent.insertBefore(newWrapper, wrapperNextSibling);
-    } else {
-        wrapperParent.appendChild(newWrapper);
-    }
-}
-
 }
 
 async function debugUnwrapAndCopy() {
