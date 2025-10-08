@@ -68,7 +68,7 @@
   font-weight: bold;
   padding: 1px 8px;
   pointer-events: none;
-  z-index: 9999;
+  z-index: 99999999999;
   white-space: nowrap;
 }
 
@@ -548,6 +548,7 @@
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="16px"]::before {
     content: '16px' !important;
+    font-size: 16px !important;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="20px"]::before {
