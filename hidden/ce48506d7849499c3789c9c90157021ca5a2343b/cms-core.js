@@ -185,14 +185,12 @@ function formatHtml(node, level = 0, indentChar = '  ') {
 
 async function savePage() {
     deselectAll();
-
     try {
-        // 1️⃣ Create a full temporary HTML document
-        const tempDoc = document.implementation.createHTMLDocument('');
-        const htmlClone = document.documentElement.cloneNode(true);
-        tempDoc.replaceChild(htmlClone, tempDoc.documentElement);
+        // Clone the <html> element instead of the document
+        const tempDoc = document.documentElement.cloneNode(true);
+        const tempWrapper = document.createElement('html');
+        tempWrapper.appendChild(tempDoc);
 
-        // 2️⃣ Remove unwanted CMS/script elements
         const unwantedSelectors = [
             '[data-name="cms environment"]',
             '[data-name="cms stylesheet"]',
@@ -201,49 +199,24 @@ async function savePage() {
             'link[href^="chrome-extension://"]'
         ].join(', ');
 
-        const toRemove = tempDoc.querySelectorAll(unwantedSelectors);
-        toRemove.forEach(el => el.remove());
+        // Use a temporary DOM parser environment
+        const tempDiv = document.createElement('div');
+        tempDiv.appendChild(tempWrapper);
 
-        // 3️⃣ Unwrap the #loaded-page element
-        const wrapperToUnwrap = tempDoc.querySelector('#loaded-page');
+        const wrapperToUnwrap = tempDiv.querySelector('#loaded-page');
         if (wrapperToUnwrap) {
-            const parent = wrapperToUnwrap.parentNode;
-            while (wrapperToUnwrap.firstChild) {
-                parent.insertBefore(wrapperToUnwrap.firstChild, wrapperToUnwrap);
-            }
-            parent.removeChild(wrapperToUnwrap);
+            wrapperToUnwrap.replaceWith(...wrapperToUnwrap.childNodes);
         }
 
-        // 4️⃣ Serialize + optional formatting
-        const rawHtml = '<!DOCTYPE html>\n' + tempDoc.documentElement.outerHTML;
-        const formattedHtml = typeof formatHtml === 'function' ? formatHtml(rawHtml) : rawHtml;
+        const elementsToRemove = tempDiv.querySelectorAll(unwantedSelectors);
+        elementsToRemove.forEach(el => el.remove());
 
-        // 5️⃣ Copy to clipboard — handle browser security gracefully
-        let success = false;
-        try {
-            await navigator.clipboard.writeText(formattedHtml);
-            success = true;
-        } catch (e) {
-            // Fallback: textarea trick
-            const ta = document.createElement('textarea');
-            ta.value = formattedHtml;
-            ta.style.position = 'fixed';
-            ta.style.left = '-9999px';
-            document.body.appendChild(ta);
-            ta.focus();
-            ta.select();
-            try { ta.setSelectionRange(0, ta.value.length); } catch {}
-            document.execCommand('copy');
-            document.body.removeChild(ta);
-            success = true;
-        }
+        // Now serialize and format
+        const formattedHtml = formatHtml('<!DOCTYPE html>\n' + tempDiv.innerHTML);
+        await navigator.clipboard.writeText(formattedHtml);
 
-        if (success) {
-            console.log('Formatted page HTML copied to clipboard!');
-            alert('Page HTML copied!');
-        } else {
-            throw new Error('Clipboard copy failed');
-        }
+        console.log('Formatted page HTML copied to clipboard!');
+        alert('Page HTML copied!');
     } catch (err) {
         console.error('Failed to copy HTML to clipboard:', err);
         alert('Could not copy HTML.');
