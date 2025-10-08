@@ -141,12 +141,33 @@ function addSelectionLabel() {
 
 function positionSelectionLabel(selectedElement, labelElement) {
     if (!selectedElement || !labelElement) return;
-    const selectedRect = selectedElement.getBoundingClientRect();
-    const absoluteLeft = selectedRect.left + window.scrollX;
-    const targetLeft = absoluteLeft + (selectedRect.width / 2);
+
+    // --- The Fix ---
+    // Ensure the label is absolute so we can find its reference parent
     labelElement.style.position = 'absolute';
-    labelElement.style.left = `${targetLeft}px`;
-    labelElement.style.transform = 'translateX(-50%)';
+
+    // 1. Get the positioning reference element (the "offset parent")
+    const offsetParent = labelElement.offsetParent || document.body;
+
+    // 2. Get the positions of both the target and the reference parent
+    const selectedRect = selectedElement.getBoundingClientRect();
+    const parentRect = offsetParent.getBoundingClientRect();
+
+    // 3. Calculate the center of the target RELATIVE to the viewport
+    const targetCenter = selectedRect.left + (selectedRect.width / 2);
+
+    // 4. Calculate the desired 'left' value for the label. This is the
+    //    distance from the offset parent's left edge to the target's center.
+    const labelLeft = targetCenter - parentRect.left;
+
+    // (Optional) Calculate vertical position, accounting for scroll
+    const targetTop = selectedRect.top + window.scrollY - parentRect.top;
+    const labelTop = targetTop - 5; // 5px gap
+
+    // 5. Apply the corrected position and the transform
+    labelElement.style.top = `${labelTop}px`;
+    labelElement.style.left = `${labelLeft}px`;
+    labelElement.style.transform = 'translateX(-50%)'; // Vertical transform no longer needed
 }
 
 function removeSelectionLabel() {
