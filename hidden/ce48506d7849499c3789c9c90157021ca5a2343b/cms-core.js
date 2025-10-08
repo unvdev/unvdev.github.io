@@ -185,11 +185,34 @@ function formatHtml(node, level = 0, indentChar = '  ') {
 
 async function savePage() {
     deselectAll();
-    try {
-        // Clone the entire document safely
-        const tempDoc = document.cloneNode(true);
+    console.log('[savePage] start');
 
-        // Remove unwanted elements
+    try {
+        // 1) Read live HTML as a string (no mutations)
+        const liveHtml = document.documentElement.outerHTML;
+        console.log('[savePage] liveHtml length:', liveHtml.length);
+
+        // 2) Parse into a fresh Document (this gives us a proper tempDoc)
+        const parser = new DOMParser();
+        const tempDoc = parser.parseFromString(liveHtml, 'text/html');
+        console.log('[savePage] parsed tempDoc');
+
+        // 3) Unwrap #loaded-page inside the tempDoc (robust method)
+        const wrapper = tempDoc.querySelector('#loaded-page');
+        if (wrapper) {
+            const parent = wrapper.parentNode;
+            const children = Array.from(wrapper.childNodes);
+            console.log('[savePage] found wrapper with childCount:', children.length);
+
+            // move children before wrapper, then remove wrapper
+            children.forEach(child => parent.insertBefore(child, wrapper));
+            parent.removeChild(wrapper);
+            console.log('[savePage] wrapper unwrapped');
+        } else {
+            console.log('[savePage] no #loaded-page found in tempDoc');
+        }
+
+        // 4) Remove unwanted CMS/extension selectors inside tempDoc
         const unwantedSelectors = [
             '[data-name="cms environment"]',
             '[data-name="cms stylesheet"]',
@@ -197,31 +220,63 @@ async function savePage() {
             '[id^="fa-"]',
             'link[href^="chrome-extension://"]'
         ].join(', ');
-        tempDoc.querySelectorAll(unwantedSelectors).forEach(el => el.remove());
+        const toRemove = Array.from(tempDoc.querySelectorAll(unwantedSelectors));
+        console.log('[savePage] unwanted elements found:', toRemove.length);
+        toRemove.forEach(el => el.remove());
 
-        // Find and unwrap #loaded-page
-        const wrapperToUnwrap = tempDoc.querySelector('#loaded-page');
-        if (wrapperToUnwrap) {
-            const parent = wrapperToUnwrap.parentNode;
-            const children = Array.from(wrapperToUnwrap.childNodes);
+        // 5) Format using your existing formatter (you said it expects a node)
+        let formatted = (typeof formatHtml === 'function')
+            ? formatHtml(tempDoc.documentElement)
+            : tempDoc.documentElement.outerHTML;
 
-            // Insert children before wrapper, then remove wrapper
-            children.forEach(child => parent.insertBefore(child, wrapperToUnwrap));
-            parent.removeChild(wrapperToUnwrap);
-        } else {
-            console.warn('No #loaded-page found in tempDoc');
+        // Some formatters might return a node or a string — ensure string
+        if (typeof formatted !== 'string') {
+            try { formatted = formatted.outerHTML || String(formatted); }
+            catch (e) { formatted = String(formatted); }
         }
 
-        // Format and copy
-        const formattedHtml = formatHtml(tempDoc.documentElement);
-        const cleanedHtml = '<!DOCTYPE html>\n' + formattedHtml;
+        const cleanedHtml = '<!DOCTYPE html>\n' + formatted;
+        console.log('[savePage] formatted length:', cleanedHtml.length);
+        console.log('[savePage] preview:', cleanedHtml.slice(0, 300).replace(/\n/g, ' '));
 
-        await navigator.clipboard.writeText(cleanedHtml);
-        console.log('Formatted page HTML copied to clipboard!');
+        // 6) Copy to clipboard (primary + fallback)
+        let copied = false;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            try {
+                await navigator.clipboard.writeText(cleanedHtml);
+                copied = true;
+                console.log('[savePage] navigator.clipboard.writeText SUCCESS');
+            } catch (err) {
+                console.warn('[savePage] navigator.clipboard failed:', err);
+            }
+        }
+
+        if (!copied) {
+            // fallback
+            const ta = document.createElement('textarea');
+            ta.value = cleanedHtml;
+            ta.setAttribute('readonly', '');
+            ta.style.position = 'fixed';
+            ta.style.left = '-9999px';
+            document.body.appendChild(ta);
+            ta.focus();
+            ta.select();
+            try { ta.setSelectionRange(0, ta.value.length); } catch (e) {/* iOS may throw */ }
+            const ok = document.execCommand('copy');
+            document.body.removeChild(ta);
+            copied = !!ok;
+            console.log('[savePage] execCommand copy success:', ok);
+        }
+
+        if (!copied) throw new Error('Copy failed — no clipboard access');
+
+        console.log('[savePage] formatted page HTML copied to clipboard!');
         alert('Page HTML copied!');
     } catch (err) {
-        console.error('Failed to copy HTML to clipboard:', err);
-        alert('Could not copy HTML.');
+        console.error('[savePage] Failed:', err);
+        alert('Could not copy HTML. See console for details.');
+    } finally {
+        console.log('[savePage] finished');
     }
 }
 
