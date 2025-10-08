@@ -186,10 +186,10 @@ function formatHtml(node, level = 0, indentChar = '  ') {
 async function savePage() {
     deselectAll();
     try {
-        // Clone the full HTML document
-        const tempDoc = document.documentElement.cloneNode(true);
+        // Clone the full HTML element
+        const tempHtml = document.documentElement.cloneNode(true);
 
-        // Remove unwanted elements (inside body or head)
+        // Remove unwanted elements
         const unwantedSelectors = [
             '[data-name="cms environment"]',
             '[data-name="cms stylesheet"]',
@@ -197,27 +197,26 @@ async function savePage() {
             '[id^="fa-"]',
             'link[href^="chrome-extension://"]'
         ].join(', ');
-
-        tempDoc.querySelectorAll(unwantedSelectors).forEach(el => el.remove());
+        tempHtml.querySelectorAll(unwantedSelectors).forEach(el => el.remove());
 
         // Unwrap #loaded-page inside body
-        const wrapper = tempDoc.querySelector('#loaded-page');
+        const body = tempHtml.querySelector('body');
+        const wrapper = body.querySelector('#loaded-page');
         if (wrapper) {
-            const body = tempDoc.querySelector('body');
             while (wrapper.firstChild) {
                 body.insertBefore(wrapper.firstChild, wrapper);
             }
             wrapper.remove();
         }
 
-        // Serialize the whole document
-        const formattedHtml = formatHtml(tempDoc);
+        // Convert the cloned HTML element back to string
+        const cleanedHtml = '<!DOCTYPE html>\n' + formatHtml(tempHtml);
 
-        await navigator.clipboard.writeText(formattedHtml);
-        console.log('Formatted page HTML copied to clipboard!');
+        await navigator.clipboard.writeText(cleanedHtml);
+        console.log('Page HTML copied with #loaded-page unwrapped!');
         alert('Page HTML copied!');
     } catch (err) {
-        console.error('Failed to copy HTML to clipboard:', err);
+        console.error('Failed to copy HTML:', err);
         alert('Could not copy HTML.');
     }
 }
