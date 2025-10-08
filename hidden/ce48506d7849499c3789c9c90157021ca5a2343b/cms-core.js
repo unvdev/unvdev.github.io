@@ -227,35 +227,8 @@ function formatHtml(node, level = 0, indentChar = '  ') {
 
 async function savePage() {
     deselectAll();
-
-    // 1. Find the live wrapper element and store its context
-    const liveWrapper = document.querySelector('#loaded-page');
-
-    if (!liveWrapper) {
-        console.error("#loaded-page not found in the live document. Cannot proceed.");
-        alert("Error: Could not find the page content to save.");
-        return;
-    }
-
-    const parent = liveWrapper.parentElement;
-    const nextSibling = liveWrapper.nextSibling; // Remember where the wrapper was
-    const children = Array.from(liveWrapper.childNodes); // Get a static list of its children
-
-    let cleanedHtml = '';
-
     try {
-        // --- 2. UNWRAP THE LIVE PAGE ---
-        // You may see a brief visual flicker here. This is expected.
-        children.forEach(child => parent.insertBefore(child, liveWrapper));
-        liveWrapper.remove();
-
-        // --- 3. COPY THE DOCUMENT NOW THAT IT'S UNWRAPPED ---
-        const unwrappedHtmlString = `<!DOCTYPE html>\n${document.documentElement.outerHTML}`;
-
-        // --- 4. PROCESS THE COPIED HTML (in memory) ---
-        // All subsequent operations happen on the copy, not the live page.
-        const parser = new DOMParser();
-        const tempDoc = parser.parseFromString(unwrappedHtmlString, 'text/html');
+        const tempDoc = document.cloneNode(true);
 
         const unwantedSelectors = [
             '[data-name="cms environment"]',
@@ -264,38 +237,26 @@ async function savePage() {
             '[id^="fa-"]',
             'link[href^="chrome-extension://"]'
         ].join(', ');
-        tempDoc.querySelectorAll(unwantedSelectors).forEach(el => el.remove());
+
+        const elementsToRemove = tempDoc.querySelectorAll(unwantedSelectors);
+        elementsToRemove.forEach(element => element.remove());
+
+        const wrapperToUnwrap = tempDoc.querySelector('#loaded-page');
+        if (wrapperToUnwrap) {
+            wrapperToUnwrap.replaceWith(...wrapperToUnwrap.childNodes);
+        }
 
         let formattedHtml = formatHtml(tempDoc.documentElement);
-        cleanedHtml = '<!DOCTYPE html>\n' + formattedHtml;
+        const cleanedHtml = '<!DOCTYPE html>\n' + formattedHtml;
+
+        await navigator.clipboard.writeText(cleanedHtml);
+        
+        console.log('Formatted page HTML copied to clipboard!');
+        alert('Page HTML copied!');
 
     } catch (err) {
-        console.error('An error occurred during the save process:', err);
-        alert('An error occurred. Your page will now be restored.');
-        // The 'finally' block will still run to restore the page.
-    } finally {
-        // --- 5. REWRAP THE LIVE PAGE ---
-        // This block runs NO MATTER WHAT, ensuring the user's page is never left broken.
-        
-        // Re-insert the original wrapper exactly where it was
-        parent.insertBefore(liveWrapper, nextSibling);
-        
-        // Move the original children back inside
-        children.forEach(child => liveWrapper.appendChild(child));
-        
-        console.log("Live page has been restored to its original state.");
-    }
-
-    // --- 6. COPY THE FINAL STRING TO THE CLIPBOARD ---
-    if (cleanedHtml) {
-        try {
-            await navigator.clipboard.writeText(cleanedHtml);
-            console.log('Formatted page HTML copied to clipboard!');
-            alert('Page HTML copied!');
-        } catch (copyErr) {
-            console.error('Failed to copy HTML to clipboard:', copyErr);
-            alert('Could not copy HTML.');
-        }
+        console.error('Failed to copy HTML to clipboard:', err);
+        alert('Could not copy HTML.');
     }
 }
 
