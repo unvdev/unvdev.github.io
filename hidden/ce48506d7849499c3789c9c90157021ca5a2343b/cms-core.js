@@ -316,7 +316,6 @@ document.addEventListener("click", (e) => {
                     }
                 }
 
-                addSelectionLabel();
             }
 
             return;
@@ -386,7 +385,6 @@ document.addEventListener("keydown", e => {
             }
         }
 
-        addSelectionLabel();
     }
 
 });
