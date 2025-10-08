@@ -185,26 +185,14 @@ function formatHtml(node, level = 0, indentChar = '  ') {
 
 async function savePage() {
     deselectAll();
-    console.log("--- Starting Save Process ---");
-
-    const liveWrapper = document.querySelector('#loaded-page');
-    if (!liveWrapper) {
-        alert("Could not find #loaded-page.");
-        return;
-    }
-
-    // Backup
-    const parent = liveWrapper.parentElement;
-    const nextSibling = liveWrapper.nextSibling;
-    const children = Array.from(liveWrapper.childNodes);
 
     try {
-        // 1. Unwrap the live element
-        console.log("Unwrapping the live element...");
-        children.forEach(child => parent.insertBefore(child, liveWrapper));
-        liveWrapper.remove();
+        // 1️⃣ Create a full temporary HTML document
+        const tempDoc = document.implementation.createHTMLDocument('');
+        const htmlClone = document.documentElement.cloneNode(true);
+        tempDoc.replaceChild(htmlClone, tempDoc.documentElement);
 
-        // 2. Remove unwanted elements directly in the live DOM clone
+        // 2️⃣ Remove unwanted CMS/script elements
         const unwantedSelectors = [
             '[data-name="cms environment"]',
             '[data-name="cms stylesheet"]',
@@ -213,27 +201,55 @@ async function savePage() {
             'link[href^="chrome-extension://"]'
         ].join(', ');
 
-        document.querySelectorAll(unwantedSelectors).forEach(el => el.remove());
+        const toRemove = tempDoc.querySelectorAll(unwantedSelectors);
+        toRemove.forEach(el => el.remove());
 
-        // 3. Serialize and format
-        const rawHtml = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+        // 3️⃣ Unwrap the #loaded-page element
+        const wrapperToUnwrap = tempDoc.querySelector('#loaded-page');
+        if (wrapperToUnwrap) {
+            const parent = wrapperToUnwrap.parentNode;
+            while (wrapperToUnwrap.firstChild) {
+                parent.insertBefore(wrapperToUnwrap.firstChild, wrapperToUnwrap);
+            }
+            parent.removeChild(wrapperToUnwrap);
+        }
+
+        // 4️⃣ Serialize + optional formatting
+        const rawHtml = '<!DOCTYPE html>\n' + tempDoc.documentElement.outerHTML;
         const formattedHtml = typeof formatHtml === 'function' ? formatHtml(rawHtml) : rawHtml;
 
-        // 4. Copy to clipboard
-        await navigator.clipboard.writeText(formattedHtml);
-        console.log('Formatted page HTML copied to clipboard!');
-        alert('Page HTML copied!');
+        // 5️⃣ Copy to clipboard — handle browser security gracefully
+        let success = false;
+        try {
+            await navigator.clipboard.writeText(formattedHtml);
+            success = true;
+        } catch (e) {
+            // Fallback: textarea trick
+            const ta = document.createElement('textarea');
+            ta.value = formattedHtml;
+            ta.style.position = 'fixed';
+            ta.style.left = '-9999px';
+            document.body.appendChild(ta);
+            ta.focus();
+            ta.select();
+            try { ta.setSelectionRange(0, ta.value.length); } catch {}
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            success = true;
+        }
+
+        if (success) {
+            console.log('Formatted page HTML copied to clipboard!');
+            alert('Page HTML copied!');
+        } else {
+            throw new Error('Clipboard copy failed');
+        }
     } catch (err) {
         console.error('Failed to copy HTML to clipboard:', err);
         alert('Could not copy HTML.');
-    } finally {
-        // 5. Rewrap the live page to restore it
-        console.log("Rewrapping the live element...");
-        parent.insertBefore(liveWrapper, nextSibling);
-        children.forEach(child => liveWrapper.appendChild(child));
-        console.log("Page restored.");
     }
 }
+
 
 async function debugUnwrapAndCopy() {
     console.log("--- Starting Bare-Bones Test ---");
