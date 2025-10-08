@@ -2,6 +2,10 @@
             outline: none;
         }
 
+        #loaded-page {
+           margin-top: 40px;
+        }
+
         #loaded-page.sidebar-active {
             position: absolute;
             top: 0;
@@ -18,7 +22,6 @@
             width: 100vw;
             z-index: 1000000;
             padding: 5px;
-            margin-bottom: 40px;
         }
 
         .selected {
