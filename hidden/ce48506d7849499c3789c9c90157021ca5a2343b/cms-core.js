@@ -204,14 +204,14 @@ async function savePage() {
             wrapperToUnwrap.replaceWith(...wrapperToUnwrap.childNodes);
         }
 
-        let formattedHtml = formatHtml(tempDoc.documentElement);
+        // Ensure string formatting
+        let formattedHtml = formatHtml(tempDoc.documentElement.outerHTML);
         const cleanedHtml = '<!DOCTYPE html>\n' + formattedHtml;
 
         await navigator.clipboard.writeText(cleanedHtml);
-        
+
         console.log('Formatted page HTML copied to clipboard!');
         alert('Page HTML copied!');
-
     } catch (err) {
         console.error('Failed to copy HTML to clipboard:', err);
         alert('Could not copy HTML.');
