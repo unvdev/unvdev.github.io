@@ -185,12 +185,16 @@ function formatHtml(node, level = 0, indentChar = '  ') {
 
 async function savePage() {
     deselectAll();
-    try {
-        // Clone the <html> element instead of the document
-        const tempDoc = document.documentElement.cloneNode(true);
-        const tempWrapper = document.createElement('html');
-        tempWrapper.appendChild(tempDoc);
 
+    try {
+        // Clone the full HTML element (not the Document)
+        const htmlClone = document.documentElement.cloneNode(true);
+
+        // Work within this clone using DOMParser to avoid touching the live DOM
+        const tempDoc = document.implementation.createHTMLDocument('');
+        tempDoc.replaceChild(htmlClone, tempDoc.documentElement);
+
+        // Remove unwanted selectors
         const unwantedSelectors = [
             '[data-name="cms environment"]',
             '[data-name="cms stylesheet"]',
@@ -199,22 +203,29 @@ async function savePage() {
             'link[href^="chrome-extension://"]'
         ].join(', ');
 
-        // Use a temporary DOM parser environment
-        const tempDiv = document.createElement('div');
-        tempDiv.appendChild(tempWrapper);
+        tempDoc.querySelectorAll(unwantedSelectors).forEach(el => el.remove());
 
-        const wrapperToUnwrap = tempDiv.querySelector('#loaded-page');
+        // Unwrap the #loaded-page element
+        const wrapperToUnwrap = tempDoc.querySelector('#loaded-page');
         if (wrapperToUnwrap) {
-            wrapperToUnwrap.replaceWith(...wrapperToUnwrap.childNodes);
+            const parent = wrapperToUnwrap.parentNode;
+            while (wrapperToUnwrap.firstChild) {
+                parent.insertBefore(wrapperToUnwrap.firstChild, wrapperToUnwrap);
+            }
+            parent.removeChild(wrapperToUnwrap);
         }
 
-        const elementsToRemove = tempDiv.querySelectorAll(unwantedSelectors);
-        elementsToRemove.forEach(el => el.remove());
+        // Serialize full document HTML (head + body)
+        const serializedHtml =
+            '<!DOCTYPE html>\n' +
+            tempDoc.documentElement.outerHTML;
 
-        // Now serialize and format
-        const formattedHtml = formatHtml('<!DOCTYPE html>\n' + tempDiv.innerHTML);
+        // Optional: format it if you have formatHtml()
+        const formattedHtml = typeof formatHtml === 'function'
+            ? formatHtml(serializedHtml)
+            : serializedHtml;
+
         await navigator.clipboard.writeText(formattedHtml);
-
         console.log('Formatted page HTML copied to clipboard!');
         alert('Page HTML copied!');
     } catch (err) {
