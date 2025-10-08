@@ -226,10 +226,14 @@ function formatHtml(node, level = 0, indentChar = '  ') {
 }
 
 async function savePage() {
+    // We'll call this first, as intended.
     deselectAll();
+
     try {
+        // 1. Create a clean, in-memory clone of the entire page.
         const tempDoc = document.cloneNode(true);
 
+        // 2. Remove all unwanted CMS-related elements from the CLONE.
         const unwantedSelectors = [
             '[data-name="cms environment"]',
             '[data-name="cms stylesheet"]',
@@ -237,25 +241,29 @@ async function savePage() {
             '[id^="fa-"]',
             'link[href^="chrome-extension://"]'
         ].join(', ');
+        tempDoc.querySelectorAll(unwantedSelectors).forEach(el => el.remove());
 
-        const elementsToRemove = tempDoc.querySelectorAll(unwantedSelectors);
-        elementsToRemove.forEach(element => element.remove());
-
+        // 3. Find and unwrap the #loaded-page div within the CLONE.
         const wrapperToUnwrap = tempDoc.querySelector('#loaded-page');
         if (wrapperToUnwrap) {
             wrapperToUnwrap.replaceWith(...wrapperToUnwrap.childNodes);
+        } else {
+            // This is a safety check. It shouldn't be triggered now.
+            console.warn('#loaded-page not found in the cloned document. Unwrapping was skipped.');
         }
-
+        
+        // 4. Format the final, MODIFIED clone.
         let formattedHtml = formatHtml(tempDoc.documentElement);
         const cleanedHtml = '<!DOCTYPE html>\n' + formattedHtml;
 
+        // 5. Copy the final result to the clipboard.
         await navigator.clipboard.writeText(cleanedHtml);
         
         console.log('Formatted page HTML copied to clipboard!');
         alert('Page HTML copied!');
 
     } catch (err) {
-        console.error('Failed to copy HTML to clipboard:', err);
+        console.error('Failed to save page:', err);
         alert('Could not copy HTML.');
     }
 }
