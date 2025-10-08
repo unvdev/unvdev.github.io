@@ -186,33 +186,30 @@ function formatHtml(node, level = 0, indentChar = '  ') {
 async function savePage() {
     deselectAll();
     try {
-        // Clone the full HTML element
-        const tempHtml = document.documentElement.cloneNode(true);
+        // Clone the head separately
+        const headClone = document.head.cloneNode(true);
 
-        // Remove unwanted elements
-        const unwantedSelectors = [
-            '[data-name="cms environment"]',
-            '[data-name="cms stylesheet"]',
-            '[data-name="cms javascript"]',
-            '[id^="fa-"]',
-            'link[href^="chrome-extension://"]'
-        ].join(', ');
-        tempHtml.querySelectorAll(unwantedSelectors).forEach(el => el.remove());
-
-        // Unwrap #loaded-page inside body
-        const body = tempHtml.querySelector('body');
-        const wrapper = body.querySelector('#loaded-page');
+        // Clone the body and remove #loaded-page wrapper
+        const bodyClone = document.body.cloneNode(true);
+        const wrapper = bodyClone.querySelector('#loaded-page');
         if (wrapper) {
             while (wrapper.firstChild) {
-                body.insertBefore(wrapper.firstChild, wrapper);
+                wrapper.parentNode.insertBefore(wrapper.firstChild, wrapper);
             }
             wrapper.remove();
         }
 
-        // Convert the cloned HTML element back to string
-        const cleanedHtml = '<!DOCTYPE html>\n' + formatHtml(tempHtml);
+        // Build the final HTML
+        const htmlString = `
+<!DOCTYPE html>
+<html lang="en">
+${headClone.outerHTML}
+<body>
+${bodyClone.innerHTML}
+</body>
+</html>`.trim();
 
-        await navigator.clipboard.writeText(cleanedHtml);
+        await navigator.clipboard.writeText(htmlString);
         console.log('Page HTML copied with #loaded-page unwrapped!');
         alert('Page HTML copied!');
     } catch (err) {
