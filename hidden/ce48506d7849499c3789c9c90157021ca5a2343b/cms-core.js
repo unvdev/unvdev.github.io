@@ -154,7 +154,6 @@ function positionSelectionLabel(selectedElement, labelElement) {
     const targetLeft = absoluteLeft + (selectedRect.width / 2);
 
     // Apply the styles to the label
-    labelElement.style.position = 'absolute';
     labelElement.style.top = `${targetTop}px`;
     labelElement.style.left = `${targetLeft}px`;
     labelElement.style.transform = 'translate(-50%, -100%)';
