@@ -142,32 +142,31 @@ function addSelectionLabel() {
 function positionSelectionLabel(selectedElement, labelElement) {
     if (!selectedElement || !labelElement) return;
 
-    // --- The Fix ---
-    // Ensure the label is absolute so we can find its reference parent
+    // Ensure the label is 'absolute' to find its reference parent
     labelElement.style.position = 'absolute';
 
-    // 1. Get the positioning reference element (the "offset parent")
+    // 1. Get the reference container (the nearest positioned ancestor)
     const offsetParent = labelElement.offsetParent || document.body;
 
-    // 2. Get the positions of both the target and the reference parent
+    // 2. Get the positions of both the target element and its reference container
     const selectedRect = selectedElement.getBoundingClientRect();
     const parentRect = offsetParent.getBoundingClientRect();
 
-    // 3. Calculate the center of the target RELATIVE to the viewport
-    const targetCenter = selectedRect.left + (selectedRect.width / 2);
+    // 3. Calculate the correct TOP position
+    //    This is the distance from the parent's top to the target's bottom.
+    const labelTop = selectedRect.bottom - parentRect.top + 5; // Add 5px for a gap
 
-    // 4. Calculate the desired 'left' value for the label. This is the
-    //    distance from the offset parent's left edge to the target's center.
+    // 4. Calculate the correct LEFT position (this logic was already working)
+    //    This is the distance from the parent's left to the target's center.
+    const targetCenter = selectedRect.left + (selectedRect.width / 2);
     const labelLeft = targetCenter - parentRect.left;
 
-    // (Optional) Calculate vertical position, accounting for scroll
-    const targetTop = selectedRect.top + window.scrollY - parentRect.top;
-    const labelTop = targetTop - 5; // 5px gap
-
-    // 5. Apply the corrected position and the transform
+    // 5. Apply the corrected styles
     labelElement.style.top = `${labelTop}px`;
     labelElement.style.left = `${labelLeft}px`;
-    labelElement.style.transform = 'translateX(-50%)'; // Vertical transform no longer needed
+    
+    // We only need to translate on the X-axis for horizontal centering
+    labelElement.style.transform = 'translateX(-50%)';
 }
 
 function removeSelectionLabel() {
