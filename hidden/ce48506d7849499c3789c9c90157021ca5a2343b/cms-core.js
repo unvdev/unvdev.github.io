@@ -226,14 +226,36 @@ function formatHtml(node, level = 0, indentChar = '  ') {
 }
 
 async function savePage() {
-    // We'll call this first, as intended.
     deselectAll();
 
-    try {
-        // 1. Create a clean, in-memory clone of the entire page.
-        const tempDoc = document.cloneNode(true);
+    // 1. Find the live wrapper element and store its context for rewrapping
+    const liveWrapper = document.querySelector('#loaded-page');
+    if (!liveWrapper) {
+        console.error("#loaded-page not found in the live document. Cannot proceed.");
+        alert("Error: Could not find the page content to save.");
+        return;
+    }
+    const parent = liveWrapper.parentElement;
+    const nextSibling = liveWrapper.nextSibling; // Remember the wrapper's exact position
+    const children = Array.from(liveWrapper.childNodes); // Get a static list of children
 
-        // 2. Remove all unwanted CMS-related elements from the CLONE.
+    let cleanedHtml = '';
+
+    try {
+        // --- A. UNWRAP THE LIVE PAGE ---
+        // You may see a brief visual flicker here. This is expected.
+        children.forEach(child => parent.insertBefore(child, liveWrapper));
+        liveWrapper.remove();
+
+        // --- B. COPY THE DOCUMENT'S HTML NOW THAT IT'S UNWRAPPED ---
+        const unwrappedHtmlString = `<!DOCTYPE html>\n${document.documentElement.outerHTML}`;
+
+        // --- C. PROCESS THE COPIED HTML IN MEMORY ---
+        // Create a temporary document from the clean string we just captured
+        const parser = new DOMParser();
+        const tempDoc = parser.parseFromString(unwrappedHtmlString, 'text/html');
+
+        // Now, remove the other unwanted CMS selectors from the temporary document
         const unwantedSelectors = [
             '[data-name="cms environment"]',
             '[data-name="cms stylesheet"]',
@@ -243,28 +265,33 @@ async function savePage() {
         ].join(', ');
         tempDoc.querySelectorAll(unwantedSelectors).forEach(el => el.remove());
 
-        // 3. Find and unwrap the #loaded-page div within the CLONE.
-        const wrapperToUnwrap = tempDoc.querySelector('#loaded-page');
-        if (wrapperToUnwrap) {
-            wrapperToUnwrap.replaceWith(...wrapperToUnwrap.childNodes);
-        } else {
-            // This is a safety check. It shouldn't be triggered now.
-            console.warn('#loaded-page not found in the cloned document. Unwrapping was skipped.');
-        }
-        
-        // 4. Format the final, MODIFIED clone.
-        let formattedHtml = tempDoc.documentElement.outerHTML;
-        const cleanedHtml = '<!DOCTYPE html>\n' + formattedHtml;
-
-        // 5. Copy the final result to the clipboard.
-        await navigator.clipboard.writeText(cleanedHtml);
-        
-        console.log('Formatted page HTML copied to clipboard!');
-        alert('Page HTML copied!');
+        // --- D. FORMAT THE FINAL HTML ---
+        // The unwrapping is already done, so we just format the clean tempDoc
+        let formattedHtml = formatHtml(tempDoc.documentElement);
+        cleanedHtml = '<!DOCTYPE html>\n' + formattedHtml;
 
     } catch (err) {
-        console.error('Failed to save page:', err);
-        alert('Could not copy HTML.');
+        console.error('An error occurred during the save process:', err);
+        alert('An error occurred. Your page will now be restored.');
+        // The 'finally' block will still run to restore the page.
+    } finally {
+        // --- E. REWRAP THE LIVE PAGE ---
+        // This block is guaranteed to run, ensuring the page is never left broken.
+        parent.insertBefore(liveWrapper, nextSibling);
+        children.forEach(child => liveWrapper.appendChild(child));
+        console.log("Live page has been restored to its original state.");
+    }
+
+    // --- F. COPY THE FINAL STRING TO THE CLIPBOARD ---
+    if (cleanedHtml) {
+        try {
+            await navigator.clipboard.writeText(cleanedHtml);
+            console.log('Formatted page HTML copied to clipboard!');
+            alert('Page HTML copied!');
+        } catch (copyErr) {
+            console.error('Failed to copy HTML to clipboard:', copyErr);
+            alert('Could not copy HTML.');
+        }
     }
 }
 
