@@ -152,12 +152,11 @@ function positionSelectionLabel(selectedElement, labelElement) {
     const selectedRect = selectedElement.getBoundingClientRect();
     const parentRect = offsetParent.getBoundingClientRect();
 
-    // 3. Calculate the correct TOP position
-    //    This is the distance from the parent's top to the target's bottom.
-    const labelTop = selectedRect.bottom - parentRect.top + 5; // Add 5px for a gap
+    // 3. Calculate the correct TOP position (THE MAIN CHANGE IS HERE)
+    //    This is the distance from the parent's top to the target's top.
+    const labelTop = selectedRect.top - parentRect.top;
 
-    // 4. Calculate the correct LEFT position (this logic was already working)
-    //    This is the distance from the parent's left to the target's center.
+    // 4. Calculate the correct LEFT position (this logic is the same)
     const targetCenter = selectedRect.left + (selectedRect.width / 2);
     const labelLeft = targetCenter - parentRect.left;
 
@@ -165,8 +164,8 @@ function positionSelectionLabel(selectedElement, labelElement) {
     labelElement.style.top = `${labelTop}px`;
     labelElement.style.left = `${labelLeft}px`;
     
-    // We only need to translate on the X-axis for horizontal centering
-    labelElement.style.transform = 'translateX(-50%)';
+    // THE SECOND CHANGE: Re-introduce the vertical transform
+    labelElement.style.transform = 'translate(-50%, -100%)';
 }
 
 function removeSelectionLabel() {
