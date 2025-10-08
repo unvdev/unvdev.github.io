@@ -226,61 +226,38 @@ function formatHtml(node, level = 0, indentChar = '  ') {
 }
 
 async function savePage() {
-   deselectAll();
-   try {
-       // --- START FORENSIC DEBUGGING ---
-        console.log("--- Forensic Analysis Start ---");
-        // 1. Can we find the element in the LIVE page right now?
-        console.log("1. Live element by ID:", document.getElementById('loaded-page'));
+    deselectAll();
+    try {
+        const tempDoc = document.cloneNode(true);
 
-        // 2. What does the raw HTML that we're copying look like?
-        const originalHtml = `<!DOCTYPE html>\n${document.documentElement.outerHTML}`;
-        console.log("2. Raw HTML snapshot captured. Search this text for 'loaded-page'.");
+        const unwantedSelectors = [
+            '[data-name="cms environment"]',
+            '[data-name="cms stylesheet"]',
+            '[data-name="cms javascript"]',
+            '[id^="fa-"]',
+            'link[href^="chrome-extension://"]'
+        ].join(', ');
 
-        // 3. What does the document look like AFTER being parsed?
-        const parser = new DOMParser();
-        const tempDoc = parser.parseFromString(originalHtml, 'text/html');
-        console.log("3. The body of the newly parsed tempDoc:", tempDoc.body);
+        const elementsToRemove = tempDoc.querySelectorAll(unwantedSelectors);
+        elementsToRemove.forEach(element => element.remove());
 
-        // 4. Can we find the element by ID inside this newly parsed document?
-        console.log("4. Element in tempDoc by ID:", tempDoc.getElementById('loaded-page'));
-        console.log("--- Forensic Analysis End ---");
-        // --- END FORENSIC DEBUGGING ---
+        const wrapperToUnwrap = tempDoc.querySelector('#loaded-page');
+        if (wrapperToUnwrap) {
+            wrapperToUnwrap.replaceWith(...wrapperToUnwrap.childNodes);
+        }
 
-      // 2. Find and remove all unwanted elements
-      const unwantedSelectors = [
-         '[data-name="cms environment"]',
-         '[data-name="cms stylesheet"]',
-         '[data-name="cms javascript"]',
-         '[id^="fa-"]',
-         'link[href^="chrome-extension://"]'
-      ].join(', ');
+        let formattedHtml = formatHtml(tempDoc.documentElement);
+        const cleanedHtml = '<!DOCTYPE html>\n' + formattedHtml;
 
-      const elementsToRemove = tempDoc.querySelectorAll(unwantedSelectors);
-      elementsToRemove.forEach(element => element.remove());
+        await navigator.clipboard.writeText(cleanedHtml);
+        
+        console.log('Formatted page HTML copied to clipboard!');
+        alert('Page HTML copied!');
 
-      // --- UNWRAP THE LOADED PAGE CONTENT ---
-      const wrapperToUnwrap = tempDoc.getElementById('loaded-page');
-      if (wrapperToUnwrap) {
-         // Replace the wrapper element with its own children
-         wrapperToUnwrap.replaceWith(...wrapperToUnwrap.childNodes);
-      }
-
-      // 3. Convert the cleaned document back into a formatted HTML string
-      // Assuming you have a formatHtml function defined elsewhere
-      let formattedHtml = formatHtml(tempDoc.documentElement);
-      const cleanedHtml = '<!DOCTYPE html>\n' + formattedHtml;
-
-      // 4. Copy the final, formatted HTML to the clipboard
-      await navigator.clipboard.writeText(cleanedHtml);
-
-      console.log('Formatted page HTML copied to clipboard!');
-      alert('Page HTML copied!');
-
-   } catch (err) {
-      console.error('Failed to copy HTML to clipboard:', err);
-      alert('Could not copy HTML.');
-   }
+    } catch (err) {
+        console.error('Failed to copy HTML to clipboard:', err);
+        alert('Could not copy HTML.');
+    }
 }
 
 document.addEventListener("click", (e) => {
