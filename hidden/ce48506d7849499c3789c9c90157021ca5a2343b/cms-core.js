@@ -185,16 +185,12 @@ function formatHtml(node, level = 0, indentChar = '  ') {
 
 async function savePage() {
     deselectAll();
-
     try {
-        // Clone the full HTML element (not the Document)
-        const htmlClone = document.documentElement.cloneNode(true);
+        // Clone the <html> element instead of the document
+        const tempDoc = document.documentElement.cloneNode(true);
+        const tempWrapper = document.createElement('html');
+        tempWrapper.appendChild(tempDoc);
 
-        // Work within this clone using DOMParser to avoid touching the live DOM
-        const tempDoc = document.implementation.createHTMLDocument('');
-        tempDoc.replaceChild(htmlClone, tempDoc.documentElement);
-
-        // Remove unwanted selectors
         const unwantedSelectors = [
             '[data-name="cms environment"]',
             '[data-name="cms stylesheet"]',
@@ -203,29 +199,22 @@ async function savePage() {
             'link[href^="chrome-extension://"]'
         ].join(', ');
 
-        tempDoc.querySelectorAll(unwantedSelectors).forEach(el => el.remove());
+        // Use a temporary DOM parser environment
+        const tempDiv = document.createElement('div');
+        tempDiv.appendChild(tempWrapper);
 
-        // Unwrap the #loaded-page element
-        const wrapperToUnwrap = tempDoc.querySelector('#loaded-page');
+        const wrapperToUnwrap = tempDiv.querySelector('#loaded-page');
         if (wrapperToUnwrap) {
-            const parent = wrapperToUnwrap.parentNode;
-            while (wrapperToUnwrap.firstChild) {
-                parent.insertBefore(wrapperToUnwrap.firstChild, wrapperToUnwrap);
-            }
-            parent.removeChild(wrapperToUnwrap);
+            wrapperToUnwrap.replaceWith(...wrapperToUnwrap.childNodes);
         }
 
-        // Serialize full document HTML (head + body)
-        const serializedHtml =
-            '<!DOCTYPE html>\n' +
-            tempDoc.documentElement.outerHTML;
+        const elementsToRemove = tempDiv.querySelectorAll(unwantedSelectors);
+        elementsToRemove.forEach(el => el.remove());
 
-        // Optional: format it if you have formatHtml()
-        const formattedHtml = typeof formatHtml === 'function'
-            ? formatHtml(serializedHtml)
-            : serializedHtml;
-
+        // Now serialize and format
+        const formattedHtml = formatHtml('<!DOCTYPE html>\n' + tempDiv.innerHTML);
         await navigator.clipboard.writeText(formattedHtml);
+
         console.log('Formatted page HTML copied to clipboard!');
         alert('Page HTML copied!');
     } catch (err) {
