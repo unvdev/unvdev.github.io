@@ -302,19 +302,19 @@ document.addEventListener("click", (e) => {
         } else {
             if (currentlySelected) {
                 if (target === moveUp) {
+                    removeSelectionLabel();
                     const prev = currentlySelected.previousElementSibling;
                     if (prev) {
-                        removeSelectionLabel();
                         currentlySelected.parentElement.insertBefore(currentlySelected, prev);
-                        setTimeout(addSelectionLabel, 0);
+                        addSelectionLabel();
                     }
                 } 
                 else if (target === moveDown) {
+                    removeSelectionLabel();
                     const next = currentlySelected.nextElementSibling;
                     if (!next.classList.contains("placeholder-block")) {
-                        removeSelectionLabel();
                         currentlySelected.parentElement.insertBefore(currentlySelected, next.nextElementSibling);
-                        setTimeout(addSelectionLabel, 0);
+                        addSelectionLabel();
                     } else {
                         return;
                     }
@@ -374,20 +374,20 @@ document.addEventListener("keydown", e => {
     if (currentlySelected) {
         if (e.key === 'ArrowUp') {
             e.preventDefault();
+            removeSelectionLabel();
             const prev = currentlySelected.previousElementSibling;
             if (prev) {
-                removeSelectionLabel();
                 currentlySelected.parentElement.insertBefore(currentlySelected, prev);
-                setTimeout(addSelectionLabel, 0);
+                addSelectionLabel();
             }
         } 
         else if (e.key === 'ArrowDown') {
             e.preventDefault();
+            removeSelectionLabel();
             const next = currentlySelected.nextElementSibling;
             if (!next.classList.contains("placeholder-block")) {
-                removeSelectionLabel();
                 currentlySelected.parentElement.insertBefore(currentlySelected, next.nextElementSibling);
-                setTimeout(addSelectionLabel, 0);
+                addSelectionLabel();
             } else {
                 return;
             }
