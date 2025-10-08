@@ -21,7 +21,6 @@ function deselectAll() {
       cms.classList.add("content-hide");
       styles.classList.add("content-hide");
       loadedPage.classList.remove("sidebar-active");
-      removeSelectionLabel();
    }
 }
 
@@ -35,7 +34,6 @@ function selectBuildingBlock(blockToSelect, originalTarget) {
    deselectAll();
    currentlySelected = blockToSelect;
    currentlySelected.classList.add('selected');
-   addSelectionLabel();
 }
 
 function deleteElement() {
@@ -119,46 +117,6 @@ function pasteElement() {
       }
    } finally {
       deselectAll();
-   }
-}
-
-function addSelectionLabel() {
-   const labelText = currentlySelected.dataset.name;
-   if (!labelText) return; // Don't add a label if there's no data-name
-
-   // To be safe, first remove any old label that might exist
-   removeSelectionLabel(currentlySelected);
-
-   const label = document.createElement('span');
-   label.classList.add("selected-label");
-   label.innerText = labelText;
-
-   // Place the label right after the selected element in the HTML
-   currentlySelected.after(label);
-
-   positionSelectionLabel(currentlySelected, label);
-}
-
-function positionSelectionLabel(selectedElement, labelElement) {
-   if (!selectedElement || !labelElement) return;
-   labelElement.style.position = 'absolute';
-   const offsetParent = labelElement.offsetParent || document.body;
-   const selectedRect = selectedElement.getBoundingClientRect();
-   const parentRect = offsetParent.getBoundingClientRect();
-   const labelTop = selectedRect.top - parentRect.top;
-   const targetCenter = selectedRect.left + (selectedRect.width / 2);
-   const labelLeft = targetCenter - parentRect.left;
-
-   labelElement.style.top = `${labelTop}px`;
-   labelElement.style.left = `${labelLeft}px`;
-   labelElement.style.transform = 'translate(-50%, -100%)';
-}
-
-function removeSelectionLabel() {
-   const label = document.querySelector(".selected-label");
-   // Check if the next sibling exists and is a label before removing
-   if (label) {
-      label.remove();
    }
 }
 
@@ -313,26 +271,18 @@ document.addEventListener("click", (e) => {
       } else {
          if (currentlySelected) {
             if (target === moveUp) {
-               removeSelectionLabel();
                const prev = currentlySelected.previousElementSibling;
                if (prev) {
                   currentlySelected.parentElement.insertBefore(currentlySelected, prev);
                }
-
-               addSelectionLabel();
             } else if (target === moveDown) {
-               removeSelectionLabel();
                const next = currentlySelected.nextElementSibling;
                if (!next.classList.contains("placeholder-block")) {
                   currentlySelected.parentElement.insertBefore(currentlySelected, next.nextElementSibling);
                } else {
-                  addSelectionLabel();
                   return;
                }
-
-               addSelectionLabel();
             }
-
          }
 
          return;
@@ -387,29 +337,20 @@ document.addEventListener("keydown", e => {
    if (currentlySelected) {
       if (e.key === 'ArrowUp') {
          e.preventDefault();
-         removeSelectionLabel();
          const prev = currentlySelected.previousElementSibling;
          if (prev) {
             currentlySelected.parentElement.insertBefore(currentlySelected, prev);
          }
-
-         addSelectionLabel();
       } else if (e.key === 'ArrowDown') {
          e.preventDefault();
-         removeSelectionLabel();
          const next = currentlySelected.nextElementSibling;
          if (!next.classList.contains("placeholder-block")) {
             currentlySelected.parentElement.insertBefore(currentlySelected, next.nextElementSibling);
          } else {
-            addSelectionLabel();
             return;
          }
-
-         addSelectionLabel();
       }
-
    }
-
 });
 
 deleteButton.addEventListener("click", deleteElement);
