@@ -185,36 +185,58 @@ function formatHtml(node, level = 0, indentChar = '  ') {
 
 async function savePage() {
     deselectAll();
+    const liveWrapper = document.querySelector('#loaded-page');
+
+    if (!liveWrapper) {
+        alert('No #loaded-page found!');
+        return;
+    }
+
+    // Keep a placeholder to rewrap later
+    const wrapperParent = liveWrapper.parentNode;
+    const wrapperNextSibling = liveWrapper.nextSibling;
+
     try {
-        // Clone the head separately
-        const headClone = document.head.cloneNode(true);
+        // --- Step 1: Unwrap live DOM ---
+        wrapperParent.insertBefore(...liveWrapper.childNodes, liveWrapper);
+        liveWrapper.remove();
 
-        // Clone the body and remove #loaded-page wrapper
-        const bodyClone = document.body.cloneNode(true);
-        const wrapper = bodyClone.querySelector('#loaded-page');
-        if (wrapper) {
-            while (wrapper.firstChild) {
-                wrapper.parentNode.insertBefore(wrapper.firstChild, wrapper);
-            }
-            wrapper.remove();
-        }
+        // --- Step 2: Clone the live DOM and remove unwanted elements ---
+        const tempDoc = document.cloneNode(true);
 
-        // Build the final HTML
-        const htmlString = `
-<!DOCTYPE html>
-<html lang="en">
-${headClone.outerHTML}
-<body>
-${bodyClone.innerHTML}
-</body>
-</html>`.trim();
+        const unwantedSelectors = [
+            '[data-name="cms environment"]',
+            '[data-name="cms stylesheet"]',
+            '[data-name="cms javascript"]',
+            '[id^="fa-"]',
+            'link[href^="chrome-extension://"]'
+        ].join(', ');
 
-        await navigator.clipboard.writeText(htmlString);
-        console.log('Page HTML copied with #loaded-page unwrapped!');
+        tempDoc.querySelectorAll(unwantedSelectors).forEach(el => el.remove());
+
+        // --- Step 3: Format HTML ---
+        let formattedHtml = formatHtml(tempDoc.documentElement);
+        const cleanedHtml = '<!DOCTYPE html>\n' + formattedHtml;
+
+        await navigator.clipboard.writeText(cleanedHtml);
+        console.log('Formatted page HTML copied to clipboard!');
         alert('Page HTML copied!');
+
     } catch (err) {
-        console.error('Failed to copy HTML:', err);
+        console.error('Failed to copy HTML to clipboard:', err);
         alert('Could not copy HTML.');
+    } finally {
+        // --- Step 4: Rewrap the live DOM ---
+        const newWrapper = document.createElement('div');
+        newWrapper.id = 'loaded-page';
+        // You may want to restore classes or attributes
+        // e.g., newWrapper.className = 'building-environment ...';
+        newWrapper.append(...wrapperParent.childNodes);
+        if (wrapperNextSibling) {
+            wrapperParent.insertBefore(newWrapper, wrapperNextSibling);
+        } else {
+            wrapperParent.appendChild(newWrapper);
+        }
     }
 }
 
