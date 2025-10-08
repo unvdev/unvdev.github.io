@@ -305,14 +305,15 @@ document.addEventListener("click", (e) => {
                     removeSelectionLabel();
                     const prev = currentlySelected.previousElementSibling;
                     if (prev) {
+                        removeSelectionLabel();
                         currentlySelected.parentElement.insertBefore(currentlySelected, prev);
                         addSelectionLabel();
                     }
                 } 
                 else if (target === moveDown) {
-                    removeSelectionLabel();
                     const next = currentlySelected.nextElementSibling;
                     if (!next.classList.contains("placeholder-block")) {
+                        removeSelectionLabel();
                         currentlySelected.parentElement.insertBefore(currentlySelected, next.nextElementSibling);
                         addSelectionLabel();
                     } else {
@@ -374,18 +375,18 @@ document.addEventListener("keydown", e => {
     if (currentlySelected) {
         if (e.key === 'ArrowUp') {
             e.preventDefault();
-            removeSelectionLabel();
             const prev = currentlySelected.previousElementSibling;
             if (prev) {
+                removeSelectionLabel();
                 currentlySelected.parentElement.insertBefore(currentlySelected, prev);
                 addSelectionLabel();
             }
         } 
         else if (e.key === 'ArrowDown') {
             e.preventDefault();
-            removeSelectionLabel();
             const next = currentlySelected.nextElementSibling;
             if (!next.classList.contains("placeholder-block")) {
+                removeSelectionLabel();
                 currentlySelected.parentElement.insertBefore(currentlySelected, next.nextElementSibling);
                 addSelectionLabel();
             } else {
