@@ -134,7 +134,7 @@ function addSelectionLabel() {
     label.innerText = labelText;
 
     // Place the label right after the selected element in the HTML
-    document.body.appendChild(label);
+    currentlySelected.after(label);
 
     positionSelectionLabel(currentlySelected, label);
 }
@@ -142,19 +142,21 @@ function addSelectionLabel() {
 function positionSelectionLabel(selectedElement, labelElement) {
     if (!selectedElement || !labelElement) return;
 
-    // Get the position and dimensions of the target element relative to the viewport.
+    // Get the element's position relative to the visible viewport
     const selectedRect = selectedElement.getBoundingClientRect();
 
-    // Find the horizontal center of the selected element.
-    const targetLeft = selectedRect.left + (selectedRect.width / 2);
-    
-    // Position it just above the top edge, with a 5px gap.
-    const targetTop = selectedRect.top - 5;
+    // To position absolutely in the document, we must add the current scroll position
+    const absoluteTop = selectedRect.top + window.scrollY;
+    const absoluteLeft = selectedRect.left + window.scrollX;
 
-    // Apply styles to the label
-    labelElement.style.position = 'fixed';
-    labelElement.style.left = `${targetLeft}px`;
+    // Calculate the target position: top-center of the element, with a 5px gap
+    const targetTop = absoluteTop - 5;
+    const targetLeft = absoluteLeft + (selectedRect.width / 2);
+
+    // Apply the styles to the label
+    labelElement.style.position = 'absolute';
     labelElement.style.top = `${targetTop}px`;
+    labelElement.style.left = `${targetLeft}px`;
     labelElement.style.transform = 'translate(-50%, -100%)';
 }
 
