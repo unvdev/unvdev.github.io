@@ -141,30 +141,16 @@ function addSelectionLabel() {
 
 function positionSelectionLabel(selectedElement, labelElement) {
     if (!selectedElement || !labelElement) return;
-
-    // Ensure the label is 'absolute' to find its reference parent
     labelElement.style.position = 'absolute';
-
-    // 1. Get the reference container (the nearest positioned ancestor)
     const offsetParent = labelElement.offsetParent || document.body;
-
-    // 2. Get the positions of both the target element and its reference container
     const selectedRect = selectedElement.getBoundingClientRect();
     const parentRect = offsetParent.getBoundingClientRect();
-
-    // 3. Calculate the correct TOP position (THE MAIN CHANGE IS HERE)
-    //    This is the distance from the parent's top to the target's top.
     const labelTop = selectedRect.top - parentRect.top;
-
-    // 4. Calculate the correct LEFT position (this logic is the same)
     const targetCenter = selectedRect.left + (selectedRect.width / 2);
     const labelLeft = targetCenter - parentRect.left;
 
-    // 5. Apply the corrected styles
     labelElement.style.top = `${labelTop}px`;
     labelElement.style.left = `${labelLeft}px`;
-    
-    // THE SECOND CHANGE: Re-introduce the vertical transform
     labelElement.style.transform = 'translate(-50%, -100%)';
 }
 
