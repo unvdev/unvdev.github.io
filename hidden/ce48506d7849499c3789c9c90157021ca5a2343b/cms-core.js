@@ -185,12 +185,9 @@ function formatHtml(node, level = 0, indentChar = '  ') {
 
 async function savePage() {
     deselectAll();
-
     try {
-        // Clone the <html> element instead of entire document
-        const tempHtml = document.documentElement.cloneNode(true);
+        const bodyClone = document.body.cloneNode(true);
 
-        // Remove unwanted elements
         const unwantedSelectors = [
             '[data-name="cms environment"]',
             '[data-name="cms stylesheet"]',
@@ -199,28 +196,22 @@ async function savePage() {
             'link[href^="chrome-extension://"]'
         ].join(', ');
 
-        tempHtml.querySelectorAll(unwantedSelectors).forEach(el => el.remove());
+        bodyClone.querySelectorAll(unwantedSelectors).forEach(el => el.remove());
 
-        // Unwrap #loaded-page directly into <body>
-        const wrapper = tempHtml.querySelector('#loaded-page');
+        const wrapper = bodyClone.querySelector('#loaded-page');
+        let newBodyContent = document.createElement('body');
         if (wrapper) {
-            const body = tempHtml.querySelector('body');
             while (wrapper.firstChild) {
-                body.insertBefore(wrapper.firstChild, wrapper);
+                newBodyContent.appendChild(wrapper.firstChild);
             }
-            wrapper.remove();
         }
 
-        // Format HTML exactly like your working version
-        let formattedHtml = formatHtml(tempHtml);
-        const cleanedHtml = '<!DOCTYPE html>\n' + formattedHtml;
+        let formattedHtml = formatHtml(newBodyContent);
+        const cleanedHtml = '<!DOCTYPE html>\n<html lang="en">\n' + formattedHtml + '\n</html>';
 
-        // Copy to clipboard
         await navigator.clipboard.writeText(cleanedHtml);
-
         console.log('Formatted page HTML copied to clipboard!');
         alert('Page HTML copied!');
-
     } catch (err) {
         console.error('Failed to copy HTML to clipboard:', err);
         alert('Could not copy HTML.');
