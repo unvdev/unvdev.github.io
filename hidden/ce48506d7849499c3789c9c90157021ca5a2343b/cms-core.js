@@ -228,10 +228,24 @@ function formatHtml(node, level = 0, indentChar = '  ') {
 async function savePage() {
    deselectAll();
    try {
-      // 1. Create a temporary, in-memory copy of the document
-      const originalHtml = `<!DOCTYPE html>\n${document.documentElement.outerHTML}`;
-      const parser = new DOMParser();
-      const tempDoc = parser.parseFromString(originalHtml, 'text/html');
+       // --- START FORENSIC DEBUGGING ---
+        console.log("--- Forensic Analysis Start ---");
+        // 1. Can we find the element in the LIVE page right now?
+        console.log("1. Live element by ID:", document.getElementById('loaded-page'));
+
+        // 2. What does the raw HTML that we're copying look like?
+        const originalHtml = `<!DOCTYPE html>\n${document.documentElement.outerHTML}`;
+        console.log("2. Raw HTML snapshot captured. Search this text for 'loaded-page'.");
+
+        // 3. What does the document look like AFTER being parsed?
+        const parser = new DOMParser();
+        const tempDoc = parser.parseFromString(originalHtml, 'text/html');
+        console.log("3. The body of the newly parsed tempDoc:", tempDoc.body);
+
+        // 4. Can we find the element by ID inside this newly parsed document?
+        console.log("4. Element in tempDoc by ID:", tempDoc.getElementById('loaded-page'));
+        console.log("--- Forensic Analysis End ---");
+        // --- END FORENSIC DEBUGGING ---
 
       // 2. Find and remove all unwanted elements
       const unwantedSelectors = [
