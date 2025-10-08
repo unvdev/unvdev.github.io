@@ -226,18 +226,29 @@ async function savePage() {
         console.error('Failed to copy HTML to clipboard:', err);
         alert('Could not copy HTML.');
     } finally {
-        // --- Step 4: Rewrap the live DOM ---
-        const newWrapper = document.createElement('div');
-        newWrapper.id = 'loaded-page';
-        // You may want to restore classes or attributes
-        // e.g., newWrapper.className = 'building-environment ...';
-        newWrapper.append(...wrapperParent.childNodes);
-        if (wrapperNextSibling) {
-            wrapperParent.insertBefore(newWrapper, wrapperNextSibling);
-        } else {
-            wrapperParent.appendChild(newWrapper);
+    // --- Step 4: Rewrap the live DOM ---
+    const newWrapper = document.createElement('div');
+
+    // Copy id, classes, and any other attributes from the original wrapper
+    newWrapper.id = 'loaded-page';
+    newWrapper.className = liveWrapper.className;
+    for (const attr of liveWrapper.attributes) {
+        if (attr.name !== 'id' && attr.name !== 'class') {
+            newWrapper.setAttribute(attr.name, attr.value);
         }
     }
+
+    // Move all children back into the new wrapper
+    newWrapper.append(...wrapperParent.childNodes);
+
+    // Insert new wrapper into parent
+    if (wrapperNextSibling && wrapperParent.contains(wrapperNextSibling)) {
+        wrapperParent.insertBefore(newWrapper, wrapperNextSibling);
+    } else {
+        wrapperParent.appendChild(newWrapper);
+    }
+}
+
 }
 
 async function debugUnwrapAndCopy() {
