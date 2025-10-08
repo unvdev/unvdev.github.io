@@ -230,7 +230,6 @@ async function savePage() {
     try {
         const tempDoc = document.cloneNode(true);
 
-        // ... (the code to remove unwanted selectors stays the same)
         const unwantedSelectors = [
             '[data-name="cms environment"]',
             '[data-name="cms stylesheet"]',
@@ -238,26 +237,18 @@ async function savePage() {
             '[id^="fa-"]',
             'link[href^="chrome-extension://"]'
         ].join(', ');
-        tempDoc.querySelectorAll(unwantedSelectors).forEach(el => el.remove());
 
-        // --- UNWRAP USING THE CLASSIC METHOD ---
+        const elementsToRemove = tempDoc.querySelectorAll(unwantedSelectors);
+        elementsToRemove.forEach(element => element.remove());
+
         const wrapperToUnwrap = tempDoc.querySelector('#loaded-page');
         if (wrapperToUnwrap) {
-            const parent = wrapperToUnwrap.parentElement;
-
-            // This loop manually moves each child from the wrapper to the parent,
-            // placing it right before the wrapper itself.
-            while (wrapperToUnwrap.firstChild) {
-                parent.insertBefore(wrapperToUnwrap.firstChild, wrapperToUnwrap);
-            }
-            
-            // After all children have been moved out, remove the now-empty wrapper.
-            wrapperToUnwrap.remove();
+            wrapperToUnwrap.replaceWith(...wrapperToUnwrap.childNodes);
         }
 
-        // ... (the rest of the code for formatting and copying stays the same)
         let formattedHtml = formatHtml(tempDoc.documentElement);
         const cleanedHtml = '<!DOCTYPE html>\n' + formattedHtml;
+
         await navigator.clipboard.writeText(cleanedHtml);
         
         console.log('Formatted page HTML copied to clipboard!');
