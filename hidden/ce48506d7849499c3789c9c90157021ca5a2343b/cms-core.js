@@ -305,12 +305,14 @@ document.addEventListener("click", (e) => {
                     const prev = currentlySelected.previousElementSibling;
                     if (prev) {
                         currentlySelected.parentElement.insertBefore(currentlySelected, prev);
+                        setTimeout(() => {addSelectionLabel();},0);
                     }
                 } 
                 else if (target === moveDown) {
                     const next = currentlySelected.nextElementSibling;
                     if (!next.classList.contains("placeholder-block")) {
                         currentlySelected.parentElement.insertBefore(currentlySelected, next.nextElementSibling);
+                        setTimeout(() => {addSelectionLabel();},0);
                     } else {
                         return;
                     }
@@ -373,6 +375,7 @@ document.addEventListener("keydown", e => {
             const prev = currentlySelected.previousElementSibling;
             if (prev) {
                 currentlySelected.parentElement.insertBefore(currentlySelected, prev);
+                setTimeout(() => {addSelectionLabel();},0);
             }
         } 
         else if (e.key === 'ArrowDown') {
@@ -380,6 +383,7 @@ document.addEventListener("keydown", e => {
             const next = currentlySelected.nextElementSibling;
             if (!next.classList.contains("placeholder-block")) {
                 currentlySelected.parentElement.insertBefore(currentlySelected, next.nextElementSibling);
+                setTimeout(() => {addSelectionLabel();},0);
             } else {
                 return;
             }
