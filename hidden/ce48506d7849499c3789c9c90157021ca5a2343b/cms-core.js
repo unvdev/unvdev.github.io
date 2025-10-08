@@ -186,8 +186,10 @@ function formatHtml(node, level = 0, indentChar = '  ') {
 async function savePage() {
     deselectAll();
     try {
+        // Clone the entire document safely
         const tempDoc = document.cloneNode(true);
 
+        // Remove unwanted elements
         const unwantedSelectors = [
             '[data-name="cms environment"]',
             '[data-name="cms stylesheet"]',
@@ -195,21 +197,26 @@ async function savePage() {
             '[id^="fa-"]',
             'link[href^="chrome-extension://"]'
         ].join(', ');
+        tempDoc.querySelectorAll(unwantedSelectors).forEach(el => el.remove());
 
-        const elementsToRemove = tempDoc.querySelectorAll(unwantedSelectors);
-        elementsToRemove.forEach(element => element.remove());
-
+        // Find and unwrap #loaded-page
         const wrapperToUnwrap = tempDoc.querySelector('#loaded-page');
         if (wrapperToUnwrap) {
-            wrapperToUnwrap.replaceWith(...wrapperToUnwrap.childNodes);
+            const parent = wrapperToUnwrap.parentNode;
+            const children = Array.from(wrapperToUnwrap.childNodes);
+
+            // Insert children before wrapper, then remove wrapper
+            children.forEach(child => parent.insertBefore(child, wrapperToUnwrap));
+            parent.removeChild(wrapperToUnwrap);
+        } else {
+            console.warn('No #loaded-page found in tempDoc');
         }
 
-        // Ensure string formatting
-        let formattedHtml = formatHtml(tempDoc.documentElement.outerHTML);
+        // Format and copy
+        const formattedHtml = formatHtml(tempDoc.documentElement);
         const cleanedHtml = '<!DOCTYPE html>\n' + formattedHtml;
 
         await navigator.clipboard.writeText(cleanedHtml);
-
         console.log('Formatted page HTML copied to clipboard!');
         alert('Page HTML copied!');
     } catch (err) {
