@@ -302,7 +302,6 @@ document.addEventListener("click", (e) => {
         } else {
             if (currentlySelected) {
                 if (target === moveUp) {
-                    removeSelectionLabel();
                     const prev = currentlySelected.previousElementSibling;
                     if (prev) {
                         removeSelectionLabel();
