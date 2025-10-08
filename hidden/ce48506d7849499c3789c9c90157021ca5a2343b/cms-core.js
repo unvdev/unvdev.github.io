@@ -305,18 +305,18 @@ document.addEventListener("click", (e) => {
                     const prev = currentlySelected.previousElementSibling;
                     if (prev) {
                         currentlySelected.parentElement.insertBefore(currentlySelected, prev);
-                        addSelectionLabel();
                     }
                 } 
                 else if (target === moveDown) {
                     const next = currentlySelected.nextElementSibling;
                     if (!next.classList.contains("placeholder-block")) {
                         currentlySelected.parentElement.insertBefore(currentlySelected, next.nextElementSibling);
-                        addSelectionLabel();
                     } else {
                         return;
                     }
                 }
+
+                addSelectionLabel();
             }
 
             return;
@@ -374,7 +374,6 @@ document.addEventListener("keydown", e => {
             const prev = currentlySelected.previousElementSibling;
             if (prev) {
                 currentlySelected.parentElement.insertBefore(currentlySelected, prev);
-                addSelectionLabel();
             }
         } 
         else if (e.key === 'ArrowDown') {
@@ -382,11 +381,12 @@ document.addEventListener("keydown", e => {
             const next = currentlySelected.nextElementSibling;
             if (!next.classList.contains("placeholder-block")) {
                 currentlySelected.parentElement.insertBefore(currentlySelected, next.nextElementSibling);
-                addSelectionLabel();
             } else {
                 return;
             }
         }
+
+        addSelectionLabel();
     }
 
 });
