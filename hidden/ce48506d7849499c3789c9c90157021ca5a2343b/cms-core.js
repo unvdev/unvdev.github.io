@@ -186,8 +186,10 @@ function formatHtml(node, level = 0, indentChar = '  ') {
 async function savePage() {
     deselectAll();
     try {
-        const bodyClone = document.body.cloneNode(true);
+        // Clone the full HTML document
+        const tempDoc = document.documentElement.cloneNode(true);
 
+        // Remove unwanted elements (inside body or head)
         const unwantedSelectors = [
             '[data-name="cms environment"]',
             '[data-name="cms stylesheet"]',
@@ -196,20 +198,22 @@ async function savePage() {
             'link[href^="chrome-extension://"]'
         ].join(', ');
 
-        bodyClone.querySelectorAll(unwantedSelectors).forEach(el => el.remove());
+        tempDoc.querySelectorAll(unwantedSelectors).forEach(el => el.remove());
 
-        const wrapper = bodyClone.querySelector('#loaded-page');
-        let newBodyContent = document.createElement('body');
+        // Unwrap #loaded-page inside body
+        const wrapper = tempDoc.querySelector('#loaded-page');
         if (wrapper) {
+            const body = tempDoc.querySelector('body');
             while (wrapper.firstChild) {
-                newBodyContent.appendChild(wrapper.firstChild);
+                body.insertBefore(wrapper.firstChild, wrapper);
             }
+            wrapper.remove();
         }
 
-        let formattedHtml = formatHtml(newBodyContent);
-        const cleanedHtml = '<!DOCTYPE html>\n<html lang="en">\n' + formattedHtml + '\n</html>';
+        // Serialize the whole document
+        const formattedHtml = formatHtml(tempDoc);
 
-        await navigator.clipboard.writeText(cleanedHtml);
+        await navigator.clipboard.writeText(formattedHtml);
         console.log('Formatted page HTML copied to clipboard!');
         alert('Page HTML copied!');
     } catch (err) {
