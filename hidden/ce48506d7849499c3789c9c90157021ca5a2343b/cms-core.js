@@ -253,7 +253,7 @@ async function savePage() {
         }
         
         // 4. Format the final, MODIFIED clone.
-        let formattedHtml = formatHtml(tempDoc.documentElement);
+        let formattedHtml = tempDoc.documentElement.outerHTML;
         const cleanedHtml = '<!DOCTYPE html>\n' + formattedHtml;
 
         // 5. Copy the final result to the clipboard.
