@@ -246,9 +246,8 @@ async function savePage() {
             wrapperToUnwrap.replaceWith(...wrapperToUnwrap.childNodes);
         }
 
-        let formattedHtml = tempDoc.documentElement.outerHTML;
-
-const cleanedHtml = '<!DOCTYPE html>\n' + formattedHtml;
+        let formattedHtml = formatHtml(tempDoc.documentElement);
+        const cleanedHtml = '<!DOCTYPE html>\n' + formattedHtml;
 
         await navigator.clipboard.writeText(cleanedHtml);
         
