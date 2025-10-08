@@ -141,22 +141,12 @@ function addSelectionLabel() {
 
 function positionSelectionLabel(selectedElement, labelElement) {
     if (!selectedElement || !labelElement) return;
-
-    // Get the element's position relative to the visible viewport
     const selectedRect = selectedElement.getBoundingClientRect();
-
-    // To position absolutely in the document, we must add the current scroll position
-    const absoluteTop = selectedRect.top + window.scrollY;
     const absoluteLeft = selectedRect.left + window.scrollX;
-
-    // Calculate the target position: top-center of the element, with a 5px gap
-    const targetTop = absoluteTop - 5;
     const targetLeft = absoluteLeft + (selectedRect.width / 2);
-
-    // Apply the styles to the label
-    labelElement.style.top = `${targetTop}px`;
+    labelElement.style.position = 'absolute';
     labelElement.style.left = `${targetLeft}px`;
-    labelElement.style.transform = 'translate(-50%, -100%)';
+    labelElement.style.transform = 'translateX(-50%)';
 }
 
 function removeSelectionLabel() {
