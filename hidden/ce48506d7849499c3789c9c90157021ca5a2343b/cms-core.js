@@ -237,17 +237,21 @@ async function savePage() {
             '[id^="fa-"]',
             'link[href^="chrome-extension://"]'
         ].join(', ');
-
-        const elementsToRemove = tempDoc.querySelectorAll(unwantedSelectors);
-        elementsToRemove.forEach(element => element.remove());
+        tempDoc.querySelectorAll(unwantedSelectors).forEach(el => el.remove());
 
         const wrapperToUnwrap = tempDoc.querySelector('#loaded-page');
         if (wrapperToUnwrap) {
             wrapperToUnwrap.replaceWith(...wrapperToUnwrap.childNodes);
         }
 
+        // --- NEW DEBUGGING LOGS ---
+        console.log("STATE BEFORE FORMATTING (Should be unwrapped):", tempDoc.body.innerHTML);
+        
         let formattedHtml = formatHtml(tempDoc.documentElement);
         const cleanedHtml = '<!DOCTYPE html>\n' + formattedHtml;
+
+        console.log("STATE AFTER FORMATTING (What will be copied):", cleanedHtml);
+        // --- END DEBUGGING LOGS ---
 
         await navigator.clipboard.writeText(cleanedHtml);
         
