@@ -185,10 +185,12 @@ function formatHtml(node, level = 0, indentChar = '  ') {
 
 async function savePage() {
     deselectAll();
+
     try {
+        // Clone the entire document
         const tempDoc = document.cloneNode(true);
 
-        // Remove unwanted CMS/extension elements
+        // Remove unwanted elements (CMS scripts, styles, icons, extensions)
         const unwantedSelectors = [
             '[data-name="cms environment"]',
             '[data-name="cms stylesheet"]',
@@ -196,9 +198,11 @@ async function savePage() {
             '[id^="fa-"]',
             'link[href^="chrome-extension://"]'
         ].join(', ');
-        tempDoc.querySelectorAll(unwantedSelectors).forEach(el => el.remove());
 
-        // Robust unwrap #loaded-page
+        const elementsToRemove = tempDoc.querySelectorAll(unwantedSelectors);
+        elementsToRemove.forEach(el => el.remove());
+
+        // Unwrap #loaded-page directly into <body>
         const wrapper = tempDoc.querySelector('#loaded-page');
         if (wrapper) {
             const body = wrapper.parentNode;
@@ -208,14 +212,16 @@ async function savePage() {
             body.removeChild(wrapper);
         }
 
-        // Format and copy
-        let formattedHtml = formatHtml(tempDoc.documentElement);
+        // Format the HTML
+        const formattedHtml = formatHtml(tempDoc.documentElement);
         const cleanedHtml = '<!DOCTYPE html>\n' + formattedHtml;
 
+        // Copy to clipboard
         await navigator.clipboard.writeText(cleanedHtml);
 
         console.log('Formatted page HTML copied to clipboard!');
         alert('Page HTML copied!');
+
     } catch (err) {
         console.error('Failed to copy HTML to clipboard:', err);
         alert('Could not copy HTML.');
