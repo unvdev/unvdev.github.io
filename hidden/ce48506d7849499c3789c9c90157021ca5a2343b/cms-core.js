@@ -231,31 +231,27 @@ async function savePage() {
     // 1. Find the live wrapper element and store its context for rewrapping
     const liveWrapper = document.querySelector('#loaded-page');
     if (!liveWrapper) {
-        console.error("#loaded-page not found in the live document. Cannot proceed.");
-        alert("Error: Could not find the page content to save.");
-        return;
+        console.error("#loaded-page not found. Cannot save.");
+        return alert("Error: Could not find page content to save.");
     }
     const parent = liveWrapper.parentElement;
-    const nextSibling = liveWrapper.nextSibling; // Remember the wrapper's exact position
-    const children = Array.from(liveWrapper.childNodes); // Get a static list of children
+    const nextSibling = liveWrapper.nextSibling;
+    const children = Array.from(liveWrapper.childNodes);
 
-    let cleanedHtml = '';
+    let finalHtmlToCopy = '';
 
     try {
         // --- A. UNWRAP THE LIVE PAGE ---
-        // You may see a brief visual flicker here. This is expected.
         children.forEach(child => parent.insertBefore(child, liveWrapper));
         liveWrapper.remove();
 
-        // --- B. COPY THE DOCUMENT'S HTML NOW THAT IT'S UNWRAPPED ---
+        // --- B. COPY THE UNWRAPPED DOCUMENT ---
         const unwrappedHtmlString = `<!DOCTYPE html>\n${document.documentElement.outerHTML}`;
-
+        
         // --- C. PROCESS THE COPIED HTML IN MEMORY ---
-        // Create a temporary document from the clean string we just captured
         const parser = new DOMParser();
         const tempDoc = parser.parseFromString(unwrappedHtmlString, 'text/html');
 
-        // Now, remove the other unwanted CMS selectors from the temporary document
         const unwantedSelectors = [
             '[data-name="cms environment"]',
             '[data-name="cms stylesheet"]',
@@ -264,29 +260,29 @@ async function savePage() {
             'link[href^="chrome-extension://"]'
         ].join(', ');
         tempDoc.querySelectorAll(unwantedSelectors).forEach(el => el.remove());
-
-        // --- D. FORMAT THE FINAL HTML ---
-        // The unwrapping is already done, so we just format the clean tempDoc
-        let formattedHtml = formatHtml(tempDoc.documentElement);
-        cleanedHtml = '<!DOCTYPE html>\n' + formattedHtml;
+        
+        // --- D. USE YOUR FORMATTER ON THE CLEANED, UNWRAPPED DOCUMENT ---
+        finalHtmlToCopy = formatHtml(tempDoc.documentElement);
+        // We might need to add the doctype back, depending on your formatter
+        if (!finalHtmlToCopy.startsWith('<!DOCTYPE html>')) {
+             finalHtmlToCopy = '<!DOCTYPE html>\n' + finalHtmlToCopy;
+        }
 
     } catch (err) {
         console.error('An error occurred during the save process:', err);
-        alert('An error occurred. Your page will now be restored.');
-        // The 'finally' block will still run to restore the page.
+        alert('An error occurred. Your page will be restored.');
     } finally {
         // --- E. REWRAP THE LIVE PAGE ---
-        // This block is guaranteed to run, ensuring the page is never left broken.
+        // This is guaranteed to run, restoring your page to its original state.
         parent.insertBefore(liveWrapper, nextSibling);
         children.forEach(child => liveWrapper.appendChild(child));
-        console.log("Live page has been restored to its original state.");
+        console.log("Live page has been restored.");
     }
 
-    // --- F. COPY THE FINAL STRING TO THE CLIPBOARD ---
-    if (cleanedHtml) {
+    // --- F. COPY THE FINAL RESULT TO THE CLIPBOARD ---
+    if (finalHtmlToCopy) {
         try {
-            await navigator.clipboard.writeText(cleanedHtml);
-            console.log('Formatted page HTML copied to clipboard!');
+            await navigator.clipboard.writeText(finalHtmlToCopy);
             alert('Page HTML copied!');
         } catch (copyErr) {
             console.error('Failed to copy HTML to clipboard:', copyErr);
