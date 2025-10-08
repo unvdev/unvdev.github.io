@@ -249,7 +249,10 @@ async function savePage() {
 
         // Find the wrapper element to unwrap within the tempDoc
         const wrapperToUnwrap = tempDoc.getElementById('loaded-page');
-
+        if (!wrapperToUnwrap) {
+            alert("loaded-page not found.");
+            return;
+        }
         // Check if the wrapper exists to avoid errors
         if (wrapperToUnwrap) {
             const parent = wrapperToUnwrap.parentElement;
