@@ -185,12 +185,26 @@ function formatHtml(node, level = 0, indentChar = '  ') {
 
 async function savePage() {
     deselectAll();
-    try {
-        // Clone the <html> element instead of the document
-        const tempDoc = document.documentElement.cloneNode(true);
-        const tempWrapper = document.createElement('html');
-        tempWrapper.appendChild(tempDoc);
+    console.log("--- Starting Save Process ---");
 
+    const liveWrapper = document.querySelector('#loaded-page');
+    if (!liveWrapper) {
+        alert("Could not find #loaded-page.");
+        return;
+    }
+
+    // Backup
+    const parent = liveWrapper.parentElement;
+    const nextSibling = liveWrapper.nextSibling;
+    const children = Array.from(liveWrapper.childNodes);
+
+    try {
+        // 1. Unwrap the live element
+        console.log("Unwrapping the live element...");
+        children.forEach(child => parent.insertBefore(child, liveWrapper));
+        liveWrapper.remove();
+
+        // 2. Remove unwanted elements directly in the live DOM clone
         const unwantedSelectors = [
             '[data-name="cms environment"]',
             '[data-name="cms stylesheet"]',
@@ -199,30 +213,27 @@ async function savePage() {
             'link[href^="chrome-extension://"]'
         ].join(', ');
 
-        // Use a temporary DOM parser environment
-        const tempDiv = document.createElement('div');
-        tempDiv.appendChild(tempWrapper);
+        document.querySelectorAll(unwantedSelectors).forEach(el => el.remove());
 
-        const wrapperToUnwrap = tempDiv.querySelector('#loaded-page');
-        if (wrapperToUnwrap) {
-            wrapperToUnwrap.replaceWith(...wrapperToUnwrap.childNodes);
-        }
+        // 3. Serialize and format
+        const rawHtml = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+        const formattedHtml = typeof formatHtml === 'function' ? formatHtml(rawHtml) : rawHtml;
 
-        const elementsToRemove = tempDiv.querySelectorAll(unwantedSelectors);
-        elementsToRemove.forEach(el => el.remove());
-
-        // Now serialize and format
-        const formattedHtml = formatHtml('<!DOCTYPE html>\n' + tempDiv.innerHTML);
+        // 4. Copy to clipboard
         await navigator.clipboard.writeText(formattedHtml);
-
         console.log('Formatted page HTML copied to clipboard!');
         alert('Page HTML copied!');
     } catch (err) {
         console.error('Failed to copy HTML to clipboard:', err);
         alert('Could not copy HTML.');
+    } finally {
+        // 5. Rewrap the live page to restore it
+        console.log("Rewrapping the live element...");
+        parent.insertBefore(liveWrapper, nextSibling);
+        children.forEach(child => liveWrapper.appendChild(child));
+        console.log("Page restored.");
     }
 }
-
 
 async function debugUnwrapAndCopy() {
     console.log("--- Starting Bare-Bones Test ---");
