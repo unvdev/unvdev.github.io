@@ -308,6 +308,7 @@ document.addEventListener("click", (e) => {
                     }
                 } 
                 else if (target === moveDown) {
+                    removeSelectionLabel();
                     const next = currentlySelected.nextElementSibling;
                     if (!next.classList.contains("placeholder-block")) {
                         currentlySelected.parentElement.insertBefore(currentlySelected, next.nextElementSibling);
