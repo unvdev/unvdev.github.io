@@ -187,10 +187,10 @@ async function savePage() {
     deselectAll();
 
     try {
-        // Clone the entire document
-        const tempDoc = document.cloneNode(true);
+        // Clone the <html> element instead of entire document
+        const tempHtml = document.documentElement.cloneNode(true);
 
-        // Remove unwanted elements (CMS scripts, styles, icons, extensions)
+        // Remove unwanted elements
         const unwantedSelectors = [
             '[data-name="cms environment"]',
             '[data-name="cms stylesheet"]',
@@ -199,21 +199,20 @@ async function savePage() {
             'link[href^="chrome-extension://"]'
         ].join(', ');
 
-        const elementsToRemove = tempDoc.querySelectorAll(unwantedSelectors);
-        elementsToRemove.forEach(el => el.remove());
+        tempHtml.querySelectorAll(unwantedSelectors).forEach(el => el.remove());
 
         // Unwrap #loaded-page directly into <body>
-        const wrapper = tempDoc.querySelector('#loaded-page');
+        const wrapper = tempHtml.querySelector('#loaded-page');
         if (wrapper) {
-            const body = wrapper.parentNode;
+            const body = tempHtml.querySelector('body');
             while (wrapper.firstChild) {
                 body.insertBefore(wrapper.firstChild, wrapper);
             }
-            body.removeChild(wrapper);
+            wrapper.remove();
         }
 
-        // Format the HTML
-        const formattedHtml = formatHtml(tempDoc.documentElement);
+        // Format HTML exactly like your working version
+        let formattedHtml = formatHtml(tempHtml);
         const cleanedHtml = '<!DOCTYPE html>\n' + formattedHtml;
 
         // Copy to clipboard
