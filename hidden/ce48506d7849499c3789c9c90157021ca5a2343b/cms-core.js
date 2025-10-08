@@ -306,7 +306,7 @@ document.addEventListener("click", (e) => {
                     if (prev) {
                         removeSelectionLabel();
                         currentlySelected.parentElement.insertBefore(currentlySelected, prev);
-                        addSelectionLabel();
+                        setTimeout(addSelectionLabel, 0);
                     }
                 } 
                 else if (target === moveDown) {
@@ -314,7 +314,7 @@ document.addEventListener("click", (e) => {
                     if (!next.classList.contains("placeholder-block")) {
                         removeSelectionLabel();
                         currentlySelected.parentElement.insertBefore(currentlySelected, next.nextElementSibling);
-                        addSelectionLabel();
+                        setTimeout(addSelectionLabel, 0);
                     } else {
                         return;
                     }
@@ -378,7 +378,7 @@ document.addEventListener("keydown", e => {
             if (prev) {
                 removeSelectionLabel();
                 currentlySelected.parentElement.insertBefore(currentlySelected, prev);
-                addSelectionLabel();
+                setTimeout(addSelectionLabel, 0);
             }
         } 
         else if (e.key === 'ArrowDown') {
@@ -387,7 +387,7 @@ document.addEventListener("keydown", e => {
             if (!next.classList.contains("placeholder-block")) {
                 removeSelectionLabel();
                 currentlySelected.parentElement.insertBefore(currentlySelected, next.nextElementSibling);
-                addSelectionLabel();
+                setTimeout(addSelectionLabel, 0);
             } else {
                 return;
             }
