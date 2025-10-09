@@ -101,17 +101,13 @@
 
 .building-column {
     margin: 1rem;
-    width: calc(100% - 4rem) !important;
+    width: calc(100% - 2rem) !important;
 }
 
 .building-column .building-block {
     margin-top: 1rem;
     cursor: pointer;
     border: 1px dashed silver;
-}
-
-.building-column .building-block:first-child {
-    margin-top: 0;
 }
 
         .placeholder-block {
