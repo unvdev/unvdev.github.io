@@ -97,9 +97,15 @@
 .building-environment,
 .building-container,
 .building-column {
-    border: 1rem solid transparent;
-    outline: 1px dashed silver;
     cursor: pointer;
+    outline: 1px dashed silver;
+}
+
+.building-environment,
+.building-container,
+.building-column::before {
+    content: '';
+    padding: 1rem;
 }
 
         .placeholder-block {
