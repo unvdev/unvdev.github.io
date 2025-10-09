@@ -96,8 +96,7 @@
 
 .building-environment {
     transform: scale(1.020);
-    margin-top: 2.88rem;
-    margin-bottom: 2.88rem;
+    margin: 2.88rem 0;
 }
 
 .building-container,
