@@ -89,18 +89,18 @@
     width: calc(100% - 2rem) !important;
 }
 
-.building-column {
-    margin: 1rem;
-    width: calc(100% - 2rem) !important;
-}
-
-.building-column {
-    margin: 1rem;
-    width: calc(100% - 2rem) !important;
-}
-
 .building-container > * {
     gap: 0 !important;
+}
+
+.building-column {
+    margin: 1rem;
+    width: calc(100% - 2rem) !important;
+}
+
+.building-column {
+    margin: 1rem;
+    width: calc(100% - 2rem) !important;
 }
 
 .building-column .building-block {
