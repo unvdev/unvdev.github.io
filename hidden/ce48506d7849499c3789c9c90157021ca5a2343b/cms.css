@@ -76,12 +76,6 @@
   white-space: nowrap;
 }
 
-.building-column .building-block {
-    margin-top: 1rem;
-    cursor: pointer;
-    border: 1px dashed silver;
-}
-
 .building-environment,
 .building-container,
 .building-column,
