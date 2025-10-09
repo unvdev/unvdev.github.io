@@ -98,7 +98,7 @@
 .building-container,
 .building-column {
     display: grid;
-    gap: 1rem;
+    gap: 1rem 1rem;
     cursor: pointer;
     border: 1px dashed silver;
 }
