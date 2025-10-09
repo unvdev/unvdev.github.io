@@ -36,12 +36,6 @@ const paddingLeftInput = document.getElementById("style-editor-padding-left-inpu
 const paddingRightInput = document.getElementById("style-editor-padding-right-input");
 const paddingBottomInput = document.getElementById("style-editor-padding-bottom-input");
 
-// Margin inputs
-const marginTopInput = document.getElementById("style-editor-margin-top-input");
-const marginLeftInput = document.getElementById("style-editor-margin-left-input");
-const marginRightInput = document.getElementById("style-editor-margin-right-input");
-const marginBottomInput = document.getElementById("style-editor-margin-bottom-input");
-
 // Image Options
 const imageDefault = document.getElementById("style-editor-image-default-button");
 const imageCrop = document.getElementById("style-editor-image-crop-button");
@@ -280,24 +274,6 @@ updatePaddingInput("Left", paddingLeftInput);
 updatePaddingInput("Right", paddingRightInput);
 updatePaddingInput("Bottom", paddingBottomInput);
 
-// ===============================
-// MARGIN INPUTS
-// ===============================
-function updateMarginInput(side, inputEl) {
-  inputEl.addEventListener("input", () => {
-    if (currentlySelected) {
-      currentlySelected.classList.add("custom-styles");
-      let value = parseInt(inputEl.value) || 0;
-      currentlySelected.style[`margin${side}`] = value + "px";
-    }
-  });
-}
-
-updateMarginInput("Top", marginTopInput);
-updateMarginInput("Left", marginLeftInput);
-updateMarginInput("Right", marginRightInput);
-updateMarginInput("Bottom", marginBottomInput);
-
 // Helper: Convert "rgb(r,g,b)" or "rgba(r,g,b,a)" to "#rrggbb"
 function rgbToHex(rgb) {
   if (!rgb) return "#000000";
@@ -340,12 +316,6 @@ function loadStylesFromSelected() {
   paddingLeftInput.value = parseInt(computed.paddingLeft) || 0;
   paddingRightInput.value = parseInt(computed.paddingRight) || 0;
   paddingBottomInput.value = parseInt(computed.paddingBottom) || 0;
-
-  // Margin
-  marginTopInput.value = parseInt(computed.marginTop) || 0;
-  marginLeftInput.value = parseInt(computed.marginLeft) || 0;
-  marginRightInput.value = parseInt(computed.marginRight) || 0;
-  marginBottomInput.value = parseInt(computed.marginBottom) || 0;
 
   // Border
   if (borderColorInput) borderColorInput.value = rgbToHex(computed.borderColor);
