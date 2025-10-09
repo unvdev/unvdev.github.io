@@ -97,10 +97,9 @@
 .building-environment,
 .building-container,
 .building-column {
-    display: grid;
-    gap: 1rem 1rem;
+    border: 1rem solid transparent;
+    outline: 1px dashed silver;
     cursor: pointer;
-    border: 1px dashed silver;
 }
 
         .placeholder-block {
