@@ -102,6 +102,7 @@
 .building-environment,
 .building-container,
 .building-column {
+    margin: 1rem;
     cursor: pointer;
     border: 1px dashed silver;
 }
