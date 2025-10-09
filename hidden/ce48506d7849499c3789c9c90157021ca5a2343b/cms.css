@@ -870,16 +870,8 @@
             color: #fff;
         }
 
-        .accordion-container {
-            padding: 1rem;
-        }
-
-         .accordion-content {
+        .accordion-content {
             display: block !important;
-        }
-
-        .accordion-content .building-block:first-child {
-            margin-top: 1rem !important;
         }
 
         .accordion-label> :first-child::before {
