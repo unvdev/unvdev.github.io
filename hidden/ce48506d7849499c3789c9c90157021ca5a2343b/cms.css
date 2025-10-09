@@ -99,7 +99,7 @@
 }
 
 .building-column:not(:first-child):not(:last-child) {
-    margin: 0rem;
+    margin: 2rem 0;
     width: 100% !important;
 }
 
