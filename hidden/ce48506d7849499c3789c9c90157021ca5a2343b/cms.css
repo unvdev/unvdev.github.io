@@ -94,12 +94,16 @@
     margin-top: 0;
 }
 
+.building-environment {
+    display: grid;
+    gap: 1rem;
+}
+
 .building-environment,
 .building-container,
 .building-column {
     cursor: pointer;
     border: 1px dashed silver;
-    outline: 1rem transparent;
 }
 
         .placeholder-block {
