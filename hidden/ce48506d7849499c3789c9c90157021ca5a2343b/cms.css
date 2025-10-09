@@ -99,7 +99,7 @@
     width: calc(100% - 2rem) !important;
 }
 
-.building-column > * {
+.building-container > * {
     gap: 0 !important;
 }
 
