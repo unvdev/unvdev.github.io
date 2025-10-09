@@ -106,6 +106,8 @@
 
 .building-column .building-block {
     margin-top: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
     cursor: pointer;
     border: 1px dashed silver;
 }
