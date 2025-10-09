@@ -94,11 +94,6 @@
     margin-top: 0;
 }
 
-.building-environment {
-    display: grid;
-    gap: 1rem;
-}
-
 .building-environment,
 .building-container,
 .building-column {
