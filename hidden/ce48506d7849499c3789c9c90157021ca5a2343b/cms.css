@@ -98,6 +98,16 @@
     width: calc(100% - 2rem) !important;
 }
 
+.building-column:first-child {
+    margin: 1rem;
+    width: calc(100% - 1rem) !important;
+}
+
+.building-column:last-of-type {
+    margin: 1rem;
+    width: calc(100% - 1rem) !important;
+}
+
 .building-column .building-block {
     margin-top: 1rem;
     margin-left: 1rem;
