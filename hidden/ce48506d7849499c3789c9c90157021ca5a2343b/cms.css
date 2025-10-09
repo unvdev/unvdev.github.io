@@ -97,15 +97,9 @@
 .building-environment,
 .building-container,
 .building-column {
-    cursor: pointer;
-    outline: 1px dashed silver;
-}
-
-.building-environment,
-.building-container,
-.building-column::before {
-    content: '';
     padding: 1rem;
+    cursor: pointer;
+    border: 1px dashed silver;
 }
 
         .placeholder-block {
