@@ -98,10 +98,6 @@
     width: calc(100% - 2rem) !important;
 }
 
-.building-column:not(:first-child):not(:last-child) {
-    margin: 0;
-}
-
 .building-column .building-block {
     margin-top: 1rem;
     margin-left: 1rem;
