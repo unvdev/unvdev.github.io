@@ -97,7 +97,8 @@
 .building-environment,
 .building-container,
 .building-column {
-    margin: 1rem;
+    display: grid;
+    gap: 1rem;
     cursor: pointer;
     border: 1px dashed silver;
 }
