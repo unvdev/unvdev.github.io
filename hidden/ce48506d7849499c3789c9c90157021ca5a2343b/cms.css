@@ -110,7 +110,7 @@
     margin-right: 1rem;
     width: calc(100% - 2rem) !important;
     cursor: pointer;
-    border: 1px dashed silver;
+    border: 1px dashed #2C3E50;
 }
 
         .placeholder-block {
