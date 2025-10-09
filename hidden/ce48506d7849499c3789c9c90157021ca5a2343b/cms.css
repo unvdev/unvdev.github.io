@@ -108,6 +108,7 @@
     margin-top: 1rem;
     margin-left: 1rem;
     margin-right: 1rem;
+    width: calc(100% - 2rem) !important;
     cursor: pointer;
     border: 1px dashed silver;
 }
