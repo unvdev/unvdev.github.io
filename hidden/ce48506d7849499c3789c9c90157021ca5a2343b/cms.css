@@ -94,7 +94,12 @@
     margin-top: 0;
 }
 
-.building-environment,
+.building-environment {
+    transform: scale(1.020);
+    margin-top: 2.88rem;
+    margin-bottom: 2.88rem;
+}
+
 .building-container,
 .building-column {
     margin: 1rem;
