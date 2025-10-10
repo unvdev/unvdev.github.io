@@ -110,13 +110,13 @@
 [class*="building-column-span-"]:not(.building-column-span-one) {
     margin: 0.5rem;
     width: 100%;
-    max-width: calc(100% - 2rem) !important;
+    max-width: calc(100% - 1rem) !important;
 }
 
 [class*="building-column-span-"]:not(.building-column-span-one) .building-column {
     margin: 0.5rem;
     width: 100%;
-    max-width: calc(100% - 2rem) !important;
+    max-width: calc(100% - 1rem) !important;
 }
 
 .building-column-span-one .building-column {
