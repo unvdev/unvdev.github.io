@@ -107,13 +107,21 @@
     margin-top: 0.5rem;
 }
 
-[class*="building-column-span-"] {
+[class*="building-column-span-"]:not(.building-column-span-one) {
     margin: 0.5rem;
     width: calc(100% - 1rem) !important;
 }
 
-.building-column {
+[class*="building-column-span-"]:not(.building-column-span-one) .building-column {
     width: calc(100% - 1rem) !important;
+}
+
+.building-column-span-one {
+    margin: 1rem;
+}
+
+.building-column-span-one .building-column {
+    max-width: calc(100% - 2rem) !important;
 }
 
 .building-column .building-block {
