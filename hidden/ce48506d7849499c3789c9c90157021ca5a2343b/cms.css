@@ -118,9 +118,6 @@
 
 .building-column-span-one .building-column {
     margin: 1rem;
-}
-
-.building-column-span-one .building-column {
     max-width: calc(100% - 2rem) !important;
 }
 
