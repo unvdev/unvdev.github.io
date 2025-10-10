@@ -107,7 +107,7 @@ widthInput.addEventListener("input", () => {
     currentlySelected.classList.add("custom-styles");
     let width = parseFloat(widthInput.value) || 100;
     width = Math.max(5, Math.min(100, width));
-    currentlySelected.style.maxWidth = width + "%";
+    currentlySelected.style.width = width + "%";
   }
 });
 
@@ -300,8 +300,8 @@ function loadStylesFromSelected() {
   if (backgroundColorValueSpan) backgroundColorValueSpan.textContent = rgbToHex(computed.backgroundColor).toUpperCase();
 
   // Width
-  if (currentlySelected.style.maxWidth && currentlySelected.style.maxWidth.includes("%")) {
-    widthInput.value = parseFloat(currentlySelected.style.maxWidth);
+  if (currentlySelected.style.width && currentlySelected.style.width.includes("%")) {
+    widthInput.value = parseFloat(currentlySelected.style.width);
   } else {
     const parentWidth = currentlySelected.parentElement?.offsetWidth || 1;
     const actualWidth = currentlySelected.offsetWidth;
