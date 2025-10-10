@@ -86,7 +86,8 @@
 
 .building-container {
     margin: 1rem;
-    width: calc(100% - 2rem);
+    width: 100%;
+    max-width: calc(100% - 2rem) !important;
 }
 
 .building-container > * {
@@ -108,17 +109,20 @@
 
 [class*="building-column-span-"]:not(.building-column-span-one) {
     margin: 0.5rem;
-    width: calc(100% - 1rem);
+    width: 100%;
+    max-width: calc(100% - 2rem) !important;
 }
 
 [class*="building-column-span-"]:not(.building-column-span-one) .building-column {
     margin: 0.5rem;
-    width: calc(100% - 1rem);
+    width: 100%;
+    max-width: calc(100% - 2rem) !important;
 }
 
 .building-column-span-one .building-column {
     margin: 1rem;
-    width: calc(100% - 2rem);
+    width: 100%;
+    max-width: calc(100% - 2rem) !important;
 }
 
 .building-column .building-block {
