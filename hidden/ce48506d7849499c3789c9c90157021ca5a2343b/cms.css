@@ -107,6 +107,14 @@
     margin-top: 0.5rem;
 }
 
+[class*="building-column-span-"] {
+    margin: 0.5rem;
+    width: calc(100% - 1rem) !important;
+}
+
+.building-column {
+    width: calc(100% - 1rem) !important;
+}
 
 .building-column .building-block {
     margin-top: 1rem;
