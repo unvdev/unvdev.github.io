@@ -94,8 +94,17 @@
     gap: 0 !important;
 }
 
+.building-column-span-three .building-column:first-child {
+    left: 1rem !important;
+    max-width: calc(100% - 1rem) !important;
+}
+
+.building-column-span-three .building-column:last-child {
+    right: 1rem !important;
+    max-width: calc(100% - 1rem) !important;
+}
+
 .building-column:not(:first-child):not(:last-child) {
-    margin-top: 1rem;
     max-width: calc(100% - 1rem) !important;
 }
 
