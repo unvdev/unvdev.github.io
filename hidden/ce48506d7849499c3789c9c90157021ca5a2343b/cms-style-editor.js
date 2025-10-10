@@ -103,19 +103,12 @@ borderRadiusInput?.addEventListener("input", () => {
 // WIDTH CONTROL (direct input)
 // ===============================
 widthInput.addEventListener("input", () => {
-  console.log("Fake widthInput ran.");
-    if (currentlySelected) {
-        currentlySelected.classList.add("custom-styles");
-        let uiPercent = parseFloat(widthInput.value) || 100;
-        uiPercent = Math.max(5, Math.min(100, uiPercent));
-        widthInput.value = uiPercent;
-
-        if (uiPercent >= 100) {
-            currentlySelected.style.width = "";
-        } else {
-            currentlySelected.style.width = `calc(${uiPercent}% - 2rem)`; //fake percentage
-        }
-    }
+  if (currentlySelected) {
+    currentlySelected.classList.add("custom-styles");
+    let width = parseFloat(widthInput.value) || 100;
+    width = Math.max(5, Math.min(100, width));
+    currentlySelected.style.width = width + "%";
+  }
 });
 
 // ===============================
@@ -294,41 +287,6 @@ function rgbToHex(rgb) {
     return `#${r}${g}${b}`;
 }
 
-// Helper: Convert the fake width back to the live document width
-function getRealWidthPercent() {
-    if (!currentlySelected) return 100;
-
-    const styleWidth = currentlySelected.style.width;
-    if (!styleWidth) return 100; // Default to 100 if no style is set
-
-    // Try to find a calc() value, e.g., "calc(80% - 2rem)"
-    const calcMatch = styleWidth.match(/calc\((\d*\.?\d+)%/);
-    if (calcMatch && calcMatch[1]) {
-        return parseFloat(calcMatch[1]);
-    }
-
-    // Fallback for simple percentages like "80%"
-    if (styleWidth.includes("%")) {
-        return parseFloat(styleWidth);
-    }
-
-    return 100; // Fallback
-}
-
-// Publish real width to the document
-function applyRealWidthPercent() {
-  console.log("styleEditorHelper ran.");
-    if (currentlySelected) {
-        const realPercent = getRealWidthPercent();
-
-        if (realPercent >= 100) {
-            currentlySelected.style.width = "";
-        } else {
-            currentlySelected.style.width = `${realPercent}%`;
-        }
-    }
-}
-
 // ===============================
 // LOAD STYLES FROM SELECTED ELEMENT
 // ===============================
@@ -339,16 +297,11 @@ function loadStylesFromSelected() {
     // Background
     backgroundColorInput.value = rgbToHex(computed.backgroundColor);
     if (backgroundColorValueSpan) backgroundColorValueSpan.textContent = rgbToHex(computed.backgroundColor).toUpperCase();
-    
-    // Width (Loads real value, applies fake style)
-    console.log("realPercent Converter ran.");
-    const realPercent = getRealWidthPercent();
-    widthInput.value = realPercent;
 
-    if (realPercent >= 100) {
-      currentlySelected.style.width = "";
+    if (currentlySelected.style.width && currentlySelected.style.width.includes("%")) {
+        widthInput.value = parseFloat(currentlySelected.style.width);
     } else {
-      currentlySelected.style.width = `calc(${realPercent}% - 2rem)`;
+        widthInput.value = 100;
     }
 
     highlightActiveControls();
@@ -435,8 +388,4 @@ document.addEventListener("keydown", (e) => {
             invokeStyleMenu();
         }
     }
-});
-
-widthInput.addEventListener('blur', () => {
-  applyRealWidthPercent();
 });
