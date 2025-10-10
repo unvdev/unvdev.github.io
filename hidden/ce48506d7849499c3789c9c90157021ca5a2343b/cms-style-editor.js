@@ -276,63 +276,57 @@ updatePaddingInput("Bottom", paddingBottomInput);
 
 // Helper: Convert "rgb(r,g,b)" or "rgba(r,g,b,a)" to "#rrggbb"
 function rgbToHex(rgb) {
-  if (!rgb) return "#000000";
-  const result = rgb.match(/\d+/g);
-  if (!result) return "#000000";
+    if (!rgb || rgb === "none" || rgb === "transparent") return "#FFFFFF";
+    const result = rgb.match(/\d+/g);
+    if (!result) return "#000000";
+    let [r, g, b] = result.slice(0, 3);
+    r = parseInt(r).toString(16).padStart(2, "0");
+    g = parseInt(g).toString(16).padStart(2, "0");
+    b = parseInt(b).toString(16).padStart(2, "0");
 
-  let [r, g, b] = result;
-  r = parseInt(r).toString(16).padStart(2, "0");
-  g = parseInt(g).toString(16).padStart(2, "0");
-  b = parseInt(b).toString(16).padStart(2, "0");
-
-  return `#${r}${g}${b}`;
+    return `#${r}${g}${b}`;
 }
 
 // ===============================
 // LOAD STYLES FROM SELECTED ELEMENT
 // ===============================
 function loadStylesFromSelected() {
-  if (!currentlySelected) return;
-  const computed = window.getComputedStyle(currentlySelected);
+    if (!currentlySelected) return;
+    const computed = window.getComputedStyle(currentlySelected);
 
-  // Background
-  backgroundColorInput.value = rgbToHex(computed.backgroundColor);
-  if (backgroundColorValueSpan) backgroundColorValueSpan.textContent = rgbToHex(computed.backgroundColor).toUpperCase();
+    // Background
+    backgroundColorInput.value = rgbToHex(computed.backgroundColor);
+    if (backgroundColorValueSpan) backgroundColorValueSpan.textContent = rgbToHex(computed.backgroundColor).toUpperCase();
 
-  // Width
-  if (currentlySelected.style.width && currentlySelected.style.width.includes("%")) {
-    widthInput.value = parseFloat(currentlySelected.style.width);
-  } else {
-    const parentWidth = currentlySelected.parentElement?.offsetWidth || 1;
-    const actualWidth = currentlySelected.offsetWidth;
-    widthInput.value = Math.round((actualWidth / parentWidth) * 100);
-  }
+    if (currentlySelected.style.width && currentlySelected.style.width.includes("%")) {
+        widthInput.value = parseFloat(currentlySelected.style.width);
+    } else {
+        widthInput.value = 100;
+    }
 
-  // Segmented Buttons
-  highlightActiveControls();
+    highlightActiveControls();
 
-  // Padding
-  paddingTopInput.value = parseInt(computed.paddingTop) || 0;
-  paddingLeftInput.value = parseInt(computed.paddingLeft) || 0;
-  paddingRightInput.value = parseInt(computed.paddingRight) || 0;
-  paddingBottomInput.value = parseInt(computed.paddingBottom) || 0;
+    // Padding
+    paddingTopInput.value = parseInt(computed.paddingTop) || 0;
+    paddingLeftInput.value = parseInt(computed.paddingLeft) || 0;
+    paddingRightInput.value = parseInt(computed.paddingRight) || 0;
+    paddingBottomInput.value = parseInt(computed.paddingBottom) || 0;
 
-  // Border
-  if (borderColorInput) borderColorInput.value = rgbToHex(computed.borderColor);
-  if (borderColorValueSpan) borderColorValueSpan.textContent = rgbToHex(computed.borderColor).toUpperCase();
-  if (borderWidthInput) borderWidthInput.value = parseInt(computed.borderWidth) || 0;
-  if (borderRadiusInput) borderRadiusInput.value = parseInt(computed.borderRadius) || 0;
+    // Border
+    if (borderColorInput) borderColorInput.value = rgbToHex(computed.borderColor);
+    if (borderColorValueSpan) borderColorValueSpan.textContent = rgbToHex(computed.borderColor).toUpperCase();
+    if (borderWidthInput) borderWidthInput.value = parseInt(computed.borderWidth) || 0;
+    if (borderRadiusInput) borderRadiusInput.value = parseInt(computed.borderRadius) || 0;
 
-  // Image Cropper
-  if (currentlySelected) {
-    const imageElement = currentlySelected;
-    const computedStyle = window.getComputedStyle(imageElement);
-    Math.round(imageWidthInput.value = parseFloat(computedStyle.height));
-    Math.round(imageHeightInput.value = parseFloat(computedStyle.height));
-    const objectPositionValue = computedStyle.objectPosition;
-    const positionX = objectPositionValue.split(' ')[0];
-    imagePositionInput.value = parseFloat(positionX) || 50;
-  }
+    if (currentlySelected.classList.contains("image-element")) {
+        const computedStyle = window.getComputedStyle(currentlySelected);
+        imageWidthInput.value = Math.round(parseFloat(computedStyle.width));
+        imageHeightInput.value = Math.round(parseFloat(computedStyle.height));
+
+        const objectPositionValue = computedStyle.objectPosition;
+        const positionX = objectPositionValue.split(' ')[0];
+        imagePositionInput.value = parseFloat(positionX) || 50;
+    }
 }
 
 function checkRestrictedControls() {
