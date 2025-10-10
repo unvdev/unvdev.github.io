@@ -84,7 +84,7 @@
     border: 1px dashed #2C3E50;
 }
 
-.building-container {
+/* .building-container {
     margin: 1rem;
     max-width: calc(100% - 2rem) !important;
 }
@@ -126,7 +126,7 @@
     margin-left: 1rem;
     margin-right: 1rem;
     max-width: calc(100% - 2rem) !important;
-}
+} */
 
         .placeholder-block {
             display: block;
