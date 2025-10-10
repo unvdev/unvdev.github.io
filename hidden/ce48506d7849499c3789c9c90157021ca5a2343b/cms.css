@@ -84,7 +84,8 @@
     border: 1px dashed #2C3E50;
 }
 
-.building-container {
+.building-container,
+.building-column {
     margin: 1rem;
     width: calc(100% - 2rem) !important;
 }
@@ -93,38 +94,18 @@
     gap: 0 !important;
 }
 
-/* .building-column {
-    margin: 1rem;
-    width: calc(100% - 2rem) !important;
-} */
-
-.building-column-span-three > .building-column {
-    /* Keep the vertical margin for your "onion skin" effect */
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-
-    /* CRITICAL: Reset the horizontal margins to 0 to prevent doubling up. */
-    margin-left: 0;
-    margin-right: 0;
-
-    /* The correct width for 3 columns with two 1rem gutters between them */
-    width: calc((100% - 2rem) / 3);
-}
-
-/*
- * Step 2: Create the 1rem Gutter.
- * This rule targets every column EXCEPT the first one and adds
- * a margin ONLY to its left side.
-*/
-.building-column-span-three > .building-column + .building-column {
-    margin-left: 1rem;
-}
-
 .building-column .building-block {
     margin-top: 1rem;
     margin-left: 1rem;
     margin-right: 1rem;
     max-width: calc(100% - 2rem) !important;
+}
+
+.building-column:not(:first-child):not(:last-child) {
+    margin-top: 1rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    max-width: calc(100% - 3rem) !important;
 }
 
         .placeholder-block {
