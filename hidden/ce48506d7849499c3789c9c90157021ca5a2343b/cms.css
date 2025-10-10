@@ -112,6 +112,7 @@
 }
 
 [class*="building-column-span-"]:not(.building-column-span-one) .building-column {
+    margin: 0.5rem;
     max-width: calc(100% - 1rem) !important;
 }
 
