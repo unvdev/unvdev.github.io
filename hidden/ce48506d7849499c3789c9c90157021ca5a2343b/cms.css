@@ -86,7 +86,7 @@
 
 .building-container {
     margin: 1rem;
-    width: calc(100% - 2rem) !important;
+    max-width: calc(100% - 2rem) !important;
 }
 
 .building-container > * {
