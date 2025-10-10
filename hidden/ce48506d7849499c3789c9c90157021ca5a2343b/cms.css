@@ -84,9 +84,8 @@
     border: 1px dashed #2C3E50;
 }
 
-.building-container,
-.building-column {
-    margin: 0.5rem;
+.building-container {
+    margin: 1rem;
     width: calc(100% - 2rem) !important;
 }
 
@@ -105,6 +104,11 @@
 
 .building-container:last-child {
     margin-top: 0.5rem;
+}
+
+.building-column {
+    margin: 0.5rem;
+    width: calc(100% - 2rem) !important;
 }
 
 [class*="building-column-span-"]:not(.building-column-span-one) {
