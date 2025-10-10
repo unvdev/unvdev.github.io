@@ -329,8 +329,7 @@ document.addEventListener("click", (e) => {
       // The `selectBuildingBlock` function handles the specific logic.
       selectBuildingBlock(targetBuildingBlock, target);
    } else {
-      // If the click was on the page background or another non-block element,
-      // deselect whatever is currently active.
+      styleEditorHelper();
       deselectAll();
    }
 });
