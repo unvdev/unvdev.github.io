@@ -94,6 +94,10 @@
     gap: 0 !important;
 }
 
+.building-container:not(:first-child):not(:last-child) {
+    margin-top: 0.5rem;
+}
+
 .building-column .building-block {
     margin-top: 1rem;
     margin-left: 1rem;
