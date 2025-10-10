@@ -94,11 +94,20 @@
     gap: 0 !important;
 }
 
+.building-column-span-three {
+    margin: 0.5rem;
+}
+
+.building-column-span-three .building-column {
+    margin: 0.5rem;
+    max-width: calc(100% - 1.33rem) !important;
+}
+
 .building-column .building-block {
     margin-top: 1rem;
     margin-left: 1rem;
     margin-right: 1rem;
-    max-width: calc(100% - 2rem) !important;
+    /* max-width: calc(100% - 2rem) !important; */
 }
 
         .placeholder-block {
