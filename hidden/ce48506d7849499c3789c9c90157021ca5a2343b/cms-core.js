@@ -15,7 +15,6 @@ let clipboard = {
 };
 
 function deselectAll() {
-   styleEditorHelper();
    if (currentlySelected) {
       currentlySelected.classList.remove('selected');
       currentlySelected = null;
@@ -249,38 +248,6 @@ async function savePage() {
             wrapperParent.appendChild(newWrapper);
         }
     }
-}
-
-async function debugUnwrapAndCopy() {
-    console.log("--- Starting Bare-Bones Test ---");
-    const liveWrapper = document.querySelector('#loaded-page');
-
-    if (!liveWrapper) {
-        console.log("TEST FAILED: Live wrapper not found.");
-        return;
-    }
-
-    const parent = liveWrapper.parentElement;
-    const nextSibling = liveWrapper.nextSibling;
-    const children = Array.from(liveWrapper.childNodes);
-
-    // 1. Unwrap the live page
-    console.log("Unwrapping the live element...");
-    children.forEach(child => parent.insertBefore(child, liveWrapper));
-    liveWrapper.remove();
-    console.log("Live element should now be unwrapped from the page.");
-
-    // 2. IMMEDIATELY copy the HTML and log it
-    const unwrappedHtml = document.documentElement.outerHTML;
-    console.log("--- COPIED HTML (CHECK THIS SPECIFIC BLOCK FOR THE WRAPPER) ---");
-    console.log(unwrappedHtml);
-    console.log("--- END OF COPIED HTML ---");
-
-    // 3. Rewrap the live page
-    console.log("Rewrapping the live element...");
-    parent.insertBefore(liveWrapper, nextSibling);
-    children.forEach(child => liveWrapper.appendChild(child));
-    console.log("Test finished. Page restored.");
 }
 
 document.addEventListener("click", (e) => {

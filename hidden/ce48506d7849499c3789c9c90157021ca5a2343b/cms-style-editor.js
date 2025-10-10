@@ -315,6 +315,20 @@ function getRealWidthPercent() {
     return 100; // Fallback
 }
 
+// Publish real width to the document
+function applyRealWidthPercent() {
+  console.log("styleEditorHelper ran.");
+    if (currentlySelected) {
+        const realPercent = getRealWidthPercent();
+
+        if (realPercent >= 100) {
+            currentlySelected.style.width = "";
+        } else {
+            currentlySelected.style.width = `${realPercent}%`;
+        }
+    }
+}
+
 // ===============================
 // LOAD STYLES FROM SELECTED ELEMENT
 // ===============================
@@ -423,15 +437,6 @@ document.addEventListener("keydown", (e) => {
     }
 });
 
-function styleEditorHelper() {
-  console.log("styleEditorHelper ran.");
-    if (currentlySelected) {
-        const realPercent = getRealWidthPercent();
-
-        if (realPercent >= 100) {
-            currentlySelected.style.width = "";
-        } else {
-            currentlySelected.style.width = `${realPercent}%`;
-        }
-    }
+widthInput.addEventListener('blur', () => {
+  applyRealWidthPercent();
 }
