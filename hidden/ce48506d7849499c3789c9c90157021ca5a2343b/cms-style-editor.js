@@ -102,18 +102,23 @@ borderRadiusInput?.addEventListener("input", () => {
 // ===============================
 // WIDTH CONTROL (direct input)
 // ===============================
+function getEditorWidthStyle() {
+    let uiPercent = parseFloat(widthInput.value) || 100;
+
+    if (uiPercent >= 100) {
+        return "";
+    }
+    
+    return `calc(${uiPercent}% - 2rem)`;
+}
+
 widthInput.addEventListener("input", () => {
     if (currentlySelected) {
         currentlySelected.classList.add("custom-styles");
-        let width = parseFloat(widthInput.value) || 100;
-
-        if (width >= 100) {
-            currentlySelected.style.width = "";
-            widthInput.value = 100;
-        } else {
-            width = Math.max(5, width);
-            currentlySelected.style.width = width + "%";
-        }
+        let uiPercent = parseFloat(widthInput.value) || 100;
+        uiPercent = Math.max(5, Math.min(100, uiPercent));
+        currentlySelected.style.width = getEditorWidthStyle();
+        widthInput.value = uiPercent; 
     }
 });
 
