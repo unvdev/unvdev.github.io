@@ -439,4 +439,4 @@ document.addEventListener("keydown", (e) => {
 
 widthInput.addEventListener('blur', () => {
   applyRealWidthPercent();
-}
+});
