@@ -21,6 +21,7 @@ function deselectAll() {
       cms.classList.add("content-hide");
       styles.classList.add("content-hide");
       loadedPage.classList.remove("sidebar-active");
+      styleEditorHelper();
    }
 }
 
@@ -329,7 +330,6 @@ document.addEventListener("click", (e) => {
       // The `selectBuildingBlock` function handles the specific logic.
       selectBuildingBlock(targetBuildingBlock, target);
    } else {
-      styleEditorHelper();
       deselectAll();
    }
 });

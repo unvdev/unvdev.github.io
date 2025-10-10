@@ -103,6 +103,7 @@ borderRadiusInput?.addEventListener("input", () => {
 // WIDTH CONTROL (direct input)
 // ===============================
 widthInput.addEventListener("input", () => {
+  console.log("Fake widthInput ran.");
     if (currentlySelected) {
         currentlySelected.classList.add("custom-styles");
         let uiPercent = parseFloat(widthInput.value) || 100;
@@ -326,6 +327,7 @@ function loadStylesFromSelected() {
     if (backgroundColorValueSpan) backgroundColorValueSpan.textContent = rgbToHex(computed.backgroundColor).toUpperCase();
     
     // Width (Loads real value, applies fake style)
+    console.log("realPercent Converter ran.");
     const realPercent = getRealWidthPercent();
     widthInput.value = realPercent;
 
@@ -422,6 +424,7 @@ document.addEventListener("keydown", (e) => {
 });
 
 function styleEditorHelper() {
+  console.log("styleEditorHelper ran.");
     if (currentlySelected) {
         const realPercent = getRealWidthPercent();
 
