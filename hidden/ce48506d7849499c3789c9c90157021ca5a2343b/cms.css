@@ -103,9 +103,7 @@
 
 .building-column:not(:first-child):not(:last-child) {
     margin-top: 1rem;
-    margin-left: 0.5rem;
-    margin-right: 0.5rem;
-    max-width: calc(100% - 3rem) !important;
+    max-width: calc(100% - 1rem) !important;
 }
 
         .placeholder-block {
