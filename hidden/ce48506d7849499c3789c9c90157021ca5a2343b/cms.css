@@ -94,23 +94,11 @@
     gap: 0 !important;
 }
 
-.building-column-span-three .building-column:first-child {
-    max-width: calc(100% - 2rem) !important;
-}
-
-.building-column-span-three .building-column:last-child {
-    max-width: calc(100% - 2rem) !important;
-}
-
-.building-column:not(:first-child):not(:last-child) {
-    max-width: calc(100% - 1rem) !important;
-}
-
 .building-column .building-block {
     margin-top: 1rem;
     margin-left: 1rem;
     margin-right: 1rem;
-    /* max-width: calc(100% - 2rem) !important; */
+    max-width: calc(100% - 2rem) !important;
 }
 
         .placeholder-block {
