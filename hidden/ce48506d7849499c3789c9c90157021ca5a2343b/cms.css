@@ -86,7 +86,7 @@
 
 .building-container {
     margin: 1rem;
-    width: calc(100% - 2rem) !important;
+    width: calc(100% - 2rem);
 }
 
 .building-container > * {
@@ -108,24 +108,25 @@
 
 [class*="building-column-span-"]:not(.building-column-span-one) {
     margin: 0.5rem;
-    width: calc(100% - 1rem) !important;
+    width: calc(100% - 1rem);
 }
 
 [class*="building-column-span-"]:not(.building-column-span-one) .building-column {
     margin: 0.5rem;
-    width: calc(100% - 1rem) !important;
+    width: calc(100% - 1rem);
 }
 
 .building-column-span-one .building-column {
     margin: 1rem;
-    width: calc(100% - 2rem) !important;
+    width: calc(100% - 2rem);
 }
 
 .building-column .building-block {
     margin-top: 1rem;
     margin-left: 1rem;
     margin-right: 1rem;
-    width: calc(100% - 2rem) !important;
+    width: 100%;
+    max-width: calc(100% - 2rem);
 }
 
         .placeholder-block {
