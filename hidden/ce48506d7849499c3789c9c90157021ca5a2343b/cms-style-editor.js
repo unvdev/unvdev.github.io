@@ -103,12 +103,18 @@ borderRadiusInput?.addEventListener("input", () => {
 // WIDTH CONTROL (direct input)
 // ===============================
 widthInput.addEventListener("input", () => {
-  if (currentlySelected) {
-    currentlySelected.classList.add("custom-styles");
-    let width = parseFloat(widthInput.value) || 100;
-    width = Math.max(5, Math.min(100, width));
-    currentlySelected.style.width = width + "%";
-  }
+    if (currentlySelected) {
+        currentlySelected.classList.add("custom-styles");
+        let width = parseFloat(widthInput.value) || 100;
+
+        if (width >= 100) {
+            currentlySelected.style.width = "";
+            widthInput.value = 100;
+        } else {
+            width = Math.max(5, width);
+            currentlySelected.style.width = width + "%";
+        }
+    }
 });
 
 // ===============================
