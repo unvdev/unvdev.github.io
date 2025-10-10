@@ -93,9 +93,31 @@
     gap: 0 !important;
 }
 
-.building-column {
-    margin: 1rem;
-    width: calc(100% - 2rem) !important;
+[class*="building-column-span-"] > .building-column {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+/* Second, add a left margin ONLY to the columns that are not the first one */
+[class*="building-column-span-"] > .building-column + .building-column {
+    margin-left: 1rem;
+}
+
+/* Finally, provide the CORRECT width calculation for each column count */
+
+/* For a 2-COLUMN layout (1 gutter) */
+.building-column-span-two > .building-column {
+    width: calc((100% - 1rem) / 2);
+}
+
+/* For a 3-COLUMN layout (2 gutters) */
+.building-column-span-three > .building-column {
+    width: calc((100% - 2rem) / 3);
+}
+
+/* For a 4-COLUMN layout (3 gutters) */
+.building-column-span-four > .building-column {
+    width: calc((100% - 3rem) / 4);
 }
 
 .building-column .building-block {
