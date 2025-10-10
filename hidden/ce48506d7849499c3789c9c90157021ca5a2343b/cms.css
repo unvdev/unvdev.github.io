@@ -98,9 +98,15 @@
     margin-bottom: 0.5rem;
 }
 
-.building-container:not(:first-child) {
+.building-container:not(:first-child):not(:last-child) {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.building-container:first-child {
     margin-top: 0.5rem;
 }
+
 
 .building-column .building-block {
     margin-top: 1rem;
