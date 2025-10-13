@@ -357,7 +357,7 @@ function cleanWidth() {
 function reloadCroppedImageValues() {
 if (currentlySelected.classList.contains("image-element")) {
     const computedStyle = window.getComputedStyle(currentlySelected);
-    const inlineStyle = currentlySelected.style; // Get a reference to the inline style
+    const inlineStyle = currentlySelected.style;
 
     if (inlineStyle.width && inlineStyle.width.includes("px")) {
         imageWidthInput.value = parseFloat(inlineStyle.width);
