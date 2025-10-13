@@ -313,10 +313,17 @@ function loadStylesFromSelected() {
     paddingBottomInput.value = parseInt(computed.paddingBottom) || 0;
 
     // Border
+const borderWidth = parseInt(computed.borderWidth) || 0;
+if (borderWidthInput) borderWidthInput.value = borderWidth;
+if (borderRadiusInput) borderRadiusInput.value = parseInt(computed.borderRadius) || 0;
+
+if (borderWidth > 0) {
     if (borderColorInput) borderColorInput.value = rgbToHex(computed.borderColor);
     if (borderColorValueSpan) borderColorValueSpan.textContent = rgbToHex(computed.borderColor).toUpperCase();
-    if (borderWidthInput) borderWidthInput.value = parseInt(computed.borderWidth) || 0;
-    if (borderRadiusInput) borderRadiusInput.value = parseInt(computed.borderRadius) || 0;
+} else {
+    if (borderColorInput) borderColorInput.value = '#000000';
+    if (borderColorValueSpan) borderColorValueSpan.textContent = '#000000';
+}
 
     if (currentlySelected.classList.contains("image-element")) {
         const computedStyle = window.getComputedStyle(currentlySelected);
