@@ -355,15 +355,26 @@ function cleanWidth() {
 
 //Helper: Load the cropped image styles
 function reloadCroppedImageValues() {
-      if (currentlySelected.classList.contains("image-element")) {
-        const computedStyle = window.getComputedStyle(currentlySelected);
-        imageWidthInput.value = Math.round(parseFloat(computedStyle.width));
-        imageHeightInput.value = Math.round(parseFloat(computedStyle.height));
+if (currentlySelected.classList.contains("image-element")) {
+    const computedStyle = window.getComputedStyle(currentlySelected);
+    const inlineStyle = currentlySelected.style; // Get a reference to the inline style
 
-        const objectPositionValue = computedStyle.objectPosition;
-        const positionX = objectPositionValue.split(' ')[0];
-        imagePositionInput.value = parseFloat(positionX) || 50;
+    if (inlineStyle.width && inlineStyle.width.includes("px")) {
+        imageWidthInput.value = parseFloat(inlineStyle.width);
+    } else {
+        imageWidthInput.value = Math.round(parseFloat(computedStyle.width));
     }
+
+    if (inlineStyle.height && inlineStyle.height.includes("px")) {
+        imageHeightInput.value = parseFloat(inlineStyle.height);
+    } else {
+        imageHeightInput.value = Math.round(parseFloat(computedStyle.height));
+    }
+    
+    const objectPositionValue = computedStyle.objectPosition;
+    const positionX = objectPositionValue.split(' ')[0];
+    imagePositionInput.value = parseFloat(positionX) || 50;
+}
 }
 
 // ===============================
