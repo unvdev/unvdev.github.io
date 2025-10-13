@@ -405,7 +405,8 @@ document.addEventListener("keydown", (e) => {
 const allBlocks = document.querySelectorAll('.building-block');
 const blocksWithWidth = [];
 
-allBlocks.forEach(block => {
+function findWidth() {
+  allBlocks.forEach(block => {
     if (block.style.width) {
         blocksWithWidth.push({
             element: block,
@@ -415,3 +416,4 @@ allBlocks.forEach(block => {
 });
 
 console.log('Found these blocks with inline width:', blocksWithWidth);
+}
