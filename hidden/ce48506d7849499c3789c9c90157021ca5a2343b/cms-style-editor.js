@@ -353,6 +353,19 @@ function cleanWidth() {
   }
 }
 
+//Helper: Load the cropped image styles
+function reloadCroppedImageValues() {
+      if (currentlySelected.classList.contains("image-element")) {
+        const computedStyle = window.getComputedStyle(currentlySelected);
+        imageWidthInput.value = Math.round(parseFloat(computedStyle.width));
+        imageHeightInput.value = Math.round(parseFloat(computedStyle.height));
+
+        const objectPositionValue = computedStyle.objectPosition;
+        const positionX = objectPositionValue.split(' ')[0];
+        imagePositionInput.value = parseFloat(positionX) || 50;
+    }
+}
+
 // ===============================
 // LOAD STYLES FROM SELECTED ELEMENT
 // ===============================
@@ -402,17 +415,8 @@ if (currentlySelected.style.borderColor) {
 if (borderColorInput) borderColorInput.value = finalBorderColor;
 if (borderColorValueSpan) borderColorValueSpan.textContent = finalBorderColor.toUpperCase();
 
-    if (currentlySelected.classList.contains("image-element")) {
-        const computedStyle = window.getComputedStyle(currentlySelected);
-        imageWidthInput.value = Math.round(parseFloat(computedStyle.width));
-        imageHeightInput.value = Math.round(parseFloat(computedStyle.height));
-
-        const objectPositionValue = computedStyle.objectPosition;
-        const positionX = objectPositionValue.split(' ')[0];
-        imagePositionInput.value = parseFloat(positionX) || 50;
-    }
+reloadCroppedImageValues();
 }
-
 function checkRestrictedControls() {
   const verticalAlignControls = document.getElementById("style-editor-vertical-align-controls");
   const imageControls = document.getElementById("style-editor-image-controls");
@@ -447,6 +451,7 @@ imageDefault.addEventListener("click", () => {
 
 imageCrop.addEventListener("click", () => {
     setTimeout(checkRestrictedControls, 0);
+    reloadCroppedImageValues();
 });
 
 // Open Styles Menu
