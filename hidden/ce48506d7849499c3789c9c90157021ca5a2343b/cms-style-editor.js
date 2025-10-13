@@ -292,6 +292,67 @@ function rgbToHex(rgb) {
     return `#${r}${g}${b}`;
 }
 
+//Helper: Parse both "80%" and "calc(80% - 2rem)
+function getRealWidthPercent() {
+    if (!currentlySelected) return 100;
+    const styleWidth = currentlySelected.style.width;
+    if (!styleWidth) return 100;
+
+    const calcMatch = styleWidth.match(/calc\((\d*\.?\d+)%/);
+    if (calcMatch && calcMatch[1]) {
+        return parseFloat(calcMatch[1]);
+    }
+    if (styleWidth.includes("%")) {
+        return parseFloat(styleWidth);
+    }
+    return 100;
+}
+
+//Helper: Find all elements with an inline width value
+function findWidth() {
+  const blocksWithWidth = []; 
+    const allBlocks = document.querySelectorAll('.building-block');
+
+  allBlocks.forEach(block => {
+    if (block.style.width) {
+        blocksWithWidth.push({
+            element: block,
+            width: block.style.width
+        });
+    }
+  });
+
+  return blocksWithWidth;
+}
+
+//Helper: Clean all width values
+function cleanWidth() {
+  const foundBlocks = findWidth();
+
+  if (foundBlocks && foundBlocks.length > 0) {
+    foundBlocks.forEach(item => {
+      const element = item.element;
+      const dirtyWidth = item.width;
+      let realPercent = null;
+
+      if (dirtyWidth.includes("calc")) {
+        const calcMatch = dirtyWidth.match(/calc\((\d*\.?\d+)%/);
+        
+        if (calcMatch && calcMatch[1]) {
+          realPercent = parseFloat(calcMatch[1]);
+        }
+      }
+
+      if (realPercent !== null) {
+        const cleanStyle = `${realPercent}%`;
+        element.style.width = cleanStyle;
+      }
+    });
+  } else {
+    return;
+  }
+}
+
 // ===============================
 // LOAD STYLES FROM SELECTED ELEMENT
 // ===============================
@@ -306,18 +367,14 @@ function loadStylesFromSelected() {
 const styleWidth = currentlySelected.style.width;
 let percent = 100;
 
-if (styleWidth) {
-    const calcMatch = styleWidth.match(/calc\((\d*\.?\d+)%/);
+const realPercent = getRealWidthPercent();
+widthInput.value = realPercent;
 
-    if (calcMatch && calcMatch[1]) {
-        percent = parseFloat(calcMatch[1]);
-    } 
-    else if (styleWidth.includes("%")) {
-        percent = parseFloat(styleWidth);
-    }
+if (realPercent >= 100) {
+    currentlySelected.style.width = "";
+} else {
+    currentlySelected.style.width = `calc(${realPercent}% - 2rem)`;
 }
-
-widthInput.value = percent;
 
     highlightActiveControls();
 
@@ -416,47 +473,3 @@ document.addEventListener("keydown", (e) => {
         }
     }
 });
-
-// Clean Width
-function findWidth() {
-  const blocksWithWidth = []; 
-    const allBlocks = document.querySelectorAll('.building-block');
-
-  allBlocks.forEach(block => {
-    if (block.style.width) {
-        blocksWithWidth.push({
-            element: block,
-            width: block.style.width
-        });
-    }
-  });
-
-  return blocksWithWidth;
-}
-
-function cleanWidth() {
-  const foundBlocks = findWidth();
-  
-  if (foundBlocks && foundBlocks.length > 0) {
-    foundBlocks.forEach(item => {
-      const element = item.element;
-      const dirtyWidth = item.width;
-      let realPercent = null;
-
-      if (dirtyWidth.includes("calc")) {
-        const calcMatch = dirtyWidth.match(/calc\((\d*\.?\d+)%/);
-        
-        if (calcMatch && calcMatch[1]) {
-          realPercent = parseFloat(calcMatch[1]);
-        }
-      }
-
-      if (realPercent !== null) {
-        const cleanStyle = `${realPercent}%`;
-        element.style.width = cleanStyle;
-      }
-    });
-  } else {
-    return;
-  }
-}
