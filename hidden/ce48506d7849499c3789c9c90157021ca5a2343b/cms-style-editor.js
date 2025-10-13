@@ -107,7 +107,7 @@ widthInput.addEventListener("input", () => {
     currentlySelected.classList.add("custom-styles");
     let width = parseFloat(widthInput.value) || 100;
     width = Math.max(5, Math.min(100, width));
-    currentlySelected.style.width = width + "%";
+    currentlySelected.style.width = `calc(${uiPercent}% - 2rem)`;
   }
 });
 
@@ -298,11 +298,21 @@ function loadStylesFromSelected() {
     backgroundColorInput.value = rgbToHex(computed.backgroundColor);
     if (backgroundColorValueSpan) backgroundColorValueSpan.textContent = rgbToHex(computed.backgroundColor).toUpperCase();
 
-    if (currentlySelected.style.width && currentlySelected.style.width.includes("%")) {
-        widthInput.value = parseFloat(currentlySelected.style.width);
-    } else {
-        widthInput.value = 100;
+const styleWidth = currentlySelected.style.width;
+let percent = 100;
+
+if (styleWidth) {
+    const calcMatch = styleWidth.match(/calc\((\d*\.?\d+)%/);
+
+    if (calcMatch && calcMatch[1]) {
+        percent = parseFloat(calcMatch[1]);
+    } 
+    else if (styleWidth.includes("%")) {
+        percent = parseFloat(styleWidth);
     }
+}
+
+widthInput.value = percent;
 
     highlightActiveControls();
 
