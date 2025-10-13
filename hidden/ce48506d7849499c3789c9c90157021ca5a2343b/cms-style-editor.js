@@ -417,10 +417,11 @@ document.addEventListener("keydown", (e) => {
     }
 });
 
-const allBlocks = document.querySelectorAll('.building-block');
-const blocksWithWidth = [];
-
+// Clean Width
 function findWidth() {
+  const blocksWithWidth = []; 
+    const allBlocks = document.querySelectorAll('.building-block');
+
   allBlocks.forEach(block => {
     if (block.style.width) {
         blocksWithWidth.push({
@@ -428,7 +429,34 @@ function findWidth() {
             width: block.style.width
         });
     }
-});
+  });
 
-console.log('Found these blocks with inline width:', blocksWithWidth);
+  return blocksWithWidth;
+}
+
+function cleanWidth() {
+  const foundBlocks = findWidth();
+  
+  if (foundBlocks && foundBlocks.length > 0) {
+    foundBlocks.forEach(item => {
+      const element = item.element;
+      const dirtyWidth = item.width;
+      let realPercent = null;
+
+      if (dirtyWidth.includes("calc")) {
+        const calcMatch = dirtyWidth.match(/calc\((\d*\.?\d+)%/);
+        
+        if (calcMatch && calcMatch[1]) {
+          realPercent = parseFloat(calcMatch[1]);
+        }
+      }
+
+      if (realPercent !== null) {
+        const cleanStyle = `${realPercent}%`;
+        element.style.width = cleanStyle;
+      }
+    });
+  } else {
+    return;
+  }
 }
