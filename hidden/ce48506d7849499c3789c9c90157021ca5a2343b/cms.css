@@ -81,7 +81,8 @@
 .building-column,
 .building-block {
     cursor: pointer;
-    border: 1px dashed #2C3E50;
+    outline: 2px dashed #2C3E50;
+    outline-offset: -2px;
 }
 
 .building-container {
