@@ -471,13 +471,14 @@ function checkRestrictedControls() {
 
 // Custom Event Listeners
 imageDefault.addEventListener("click", () => {
-    const imageElement = currentlySelected;
-    imageElement.removeAttribute('style');
+    currentlySelected.style.removeProperty('width');
     setTimeout(checkRestrictedControls, 0);
 });
 
 imageCrop.addEventListener("click", () => {
     setTimeout(checkRestrictedControls, 0);
+    currentlySelected.style.removeProperty('width');
+    loadCroppedImageValues();
 });
 
 // Open Styles Menu
