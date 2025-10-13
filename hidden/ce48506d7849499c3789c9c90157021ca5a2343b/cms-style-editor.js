@@ -108,8 +108,9 @@ widthInput.addEventListener("input", () => {
     let uiPercent = parseFloat(widthInput.value) || 100;
     uiPercent = Math.max(5, Math.min(100, uiPercent));
     widthInput.value = uiPercent;
+
     if (uiPercent >= 100) {
-        currentlySelected.style.width = "";
+        currentlySelected.style.width = `calc(100% - 2rem)`;
     } else {
         currentlySelected.style.width = `calc(${uiPercent}% - 1rem)`;
     }
