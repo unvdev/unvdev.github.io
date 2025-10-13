@@ -354,22 +354,38 @@ function cleanWidth() {
 }
 
 //Helper: Load the cropped image styles
-function reloadCroppedImageValues() {
+function loadCroppedImageValues() {
 if (currentlySelected.classList.contains("image-element")) {
     const computedStyle = window.getComputedStyle(currentlySelected);
     const inlineStyle = currentlySelected.style;
 
+    const isSizedByPercentage = 
+        (inlineStyle.width && inlineStyle.width.includes('%')) || 
+        (inlineStyle.height && inlineStyle.height.includes('%'));
+
+    if (isSizedByPercentage) {
+        return; 
+    }
+
+    let finalWidth, finalHeight;
+
     if (inlineStyle.width && inlineStyle.width.includes("px")) {
-        imageWidthInput.value = parseFloat(inlineStyle.width);
+        finalWidth = parseFloat(inlineStyle.width);
     } else {
-        imageWidthInput.value = Math.round(parseFloat(computedStyle.width));
+        finalWidth = Math.round(parseFloat(computedStyle.width));
     }
 
     if (inlineStyle.height && inlineStyle.height.includes("px")) {
-        imageHeightInput.value = parseFloat(inlineStyle.height);
+        finalHeight = parseFloat(inlineStyle.height);
     } else {
-        imageHeightInput.value = Math.round(parseFloat(computedStyle.height));
+        finalHeight = Math.round(parseFloat(computedStyle.height));
     }
+
+    imageWidthInput.value = finalWidth;
+    imageHeightInput.value = finalHeight;
+
+    currentlySelected.style.width = finalWidth + "px";
+    currentlySelected.style.height = finalHeight + "px";
     
     const objectPositionValue = computedStyle.objectPosition;
     const positionX = objectPositionValue.split(' ')[0];
@@ -426,7 +442,7 @@ if (currentlySelected.style.borderColor) {
 if (borderColorInput) borderColorInput.value = finalBorderColor;
 if (borderColorValueSpan) borderColorValueSpan.textContent = finalBorderColor.toUpperCase();
 
-reloadCroppedImageValues();
+loadCroppedImageValues();
 }
 function checkRestrictedControls() {
   const verticalAlignControls = document.getElementById("style-editor-vertical-align-controls");
@@ -462,7 +478,6 @@ imageDefault.addEventListener("click", () => {
 
 imageCrop.addEventListener("click", () => {
     setTimeout(checkRestrictedControls, 0);
-    reloadCroppedImageValues();
 });
 
 // Open Styles Menu
