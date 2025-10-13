@@ -185,6 +185,7 @@ function formatHtml(node, level = 0, indentChar = '  ') {
 
 async function savePage() {
     deselectAll();
+    cleanWidth();
 
     const liveWrapper = document.querySelector('#loaded-page');
     if (!liveWrapper) {
