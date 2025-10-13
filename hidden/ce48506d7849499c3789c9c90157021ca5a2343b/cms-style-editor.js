@@ -111,7 +111,7 @@ widthInput.addEventListener("input", () => {
     if (uiPercent >= 100) {
         currentlySelected.style.width = "";
     } else {
-        currentlySelected.style.width = `calc(${uiPercent}% - 2rem)`;
+        currentlySelected.style.width = `calc(${uiPercent}% - 1rem)`;
     }
   }
 });
@@ -292,7 +292,7 @@ function rgbToHex(rgb) {
     return `#${r}${g}${b}`;
 }
 
-//Helper: Parse both "80%" and "calc(80% - 2rem)
+//Helper: Parse both %s and calc(%s - 1rem)
 function getRealWidthPercent() {
     if (!currentlySelected) return 100;
     const styleWidth = currentlySelected.style.width;
@@ -373,7 +373,7 @@ widthInput.value = realPercent;
 if (realPercent >= 100) {
     currentlySelected.style.width = "";
 } else {
-    currentlySelected.style.width = `calc(${realPercent}% - 2rem)`;
+    currentlySelected.style.width = `calc(${realPercent}% - 1rem)`;
 }
 
     highlightActiveControls();
