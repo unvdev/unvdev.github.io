@@ -108,11 +108,10 @@ widthInput.addEventListener("input", () => {
     let uiPercent = parseFloat(widthInput.value) || 100;
     uiPercent = Math.max(5, Math.min(100, uiPercent));
     widthInput.value = uiPercent;
-
     if (uiPercent >= 100) {
-        currentlySelected.style.width = `calc(100% - 2rem)`;
+        currentlySelected.style.width = "";
     } else {
-        currentlySelected.style.width = `calc(${uiPercent}% - 1rem)`;
+        currentlySelected.style.width = `calc(${uiPercent}% - 2rem)`;
     }
   }
 });
@@ -293,7 +292,7 @@ function rgbToHex(rgb) {
     return `#${r}${g}${b}`;
 }
 
-//Helper: Parse both %s and calc(%s - 1rem)
+//Helper: Parse both %s and calc(%s - 2rem)
 function getRealWidthPercent() {
     if (!currentlySelected) return 100;
     const styleWidth = currentlySelected.style.width;
@@ -365,13 +364,16 @@ function loadStylesFromSelected() {
     backgroundColorInput.value = rgbToHex(computed.backgroundColor);
     if (backgroundColorValueSpan) backgroundColorValueSpan.textContent = rgbToHex(computed.backgroundColor).toUpperCase();
 
+const styleWidth = currentlySelected.style.width;
+let percent = 100;
+
 const realPercent = getRealWidthPercent();
 widthInput.value = realPercent;
 
 if (realPercent >= 100) {
-    currentlySelected.style.width = `calc(100% - 2rem)`;
+    currentlySelected.style.width = "";
 } else {
-    currentlySelected.style.width = `calc(${realPercent}% - 1rem)`;
+    currentlySelected.style.width = `calc(${realPercent}% - 2rem)`;
 }
 
     highlightActiveControls();
