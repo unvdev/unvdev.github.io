@@ -105,9 +105,14 @@ borderRadiusInput?.addEventListener("input", () => {
 widthInput.addEventListener("input", () => {
   if (currentlySelected) {
     currentlySelected.classList.add("custom-styles");
-    let width = parseFloat(widthInput.value) || 100;
-    width = Math.max(5, Math.min(100, width));
-    currentlySelected.style.width = `calc(${uiPercent}% - 2rem)`;
+    let uiPercent = parseFloat(widthInput.value) || 100;
+    uiPercent = Math.max(5, Math.min(100, uiPercent));
+    widthInput.value = uiPercent;
+    if (uiPercent >= 100) {
+        currentlySelected.style.width = "";
+    } else {
+        currentlySelected.style.width = `calc(${uiPercent}% - 2rem)`;
+    }
   }
 });
 
