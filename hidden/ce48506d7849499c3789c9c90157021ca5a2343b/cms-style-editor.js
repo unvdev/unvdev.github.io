@@ -365,14 +365,11 @@ function loadStylesFromSelected() {
     backgroundColorInput.value = rgbToHex(computed.backgroundColor);
     if (backgroundColorValueSpan) backgroundColorValueSpan.textContent = rgbToHex(computed.backgroundColor).toUpperCase();
 
-const styleWidth = currentlySelected.style.width;
-let percent = 100;
-
 const realPercent = getRealWidthPercent();
 widthInput.value = realPercent;
 
 if (realPercent >= 100) {
-    currentlySelected.style.width = "";
+    currentlySelected.style.width = `calc(100% - 2rem)`;
 } else {
     currentlySelected.style.width = `calc(${realPercent}% - 1rem)`;
 }
