@@ -476,9 +476,9 @@ imageDefault.addEventListener("click", () => {
 });
 
 imageCrop.addEventListener("click", () => {
-    setTimeout(checkRestrictedControls, 0);
     currentlySelected.style.removeProperty('width');
     loadCroppedImageValues();
+    setTimeout(checkRestrictedControls, 0);
 });
 
 // Open Styles Menu
