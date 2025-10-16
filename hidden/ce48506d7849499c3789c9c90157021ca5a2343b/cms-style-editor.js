@@ -355,42 +355,56 @@ function cleanWidth() {
 
 //Helper: Load the cropped image styles
 function loadCroppedImageValues() {
-if (currentlySelected.classList.contains("image-element")) {
-    const computedStyle = window.getComputedStyle(currentlySelected);
-    const inlineStyle = currentlySelected.style;
+    if (currentlySelected.classList.contains("image-element")) {
+        const computedStyle = window.getComputedStyle(currentlySelected);
+        const inlineStyle = currentlySelected.style;
 
-    const isSizedByPercentage = 
-        (inlineStyle.width && inlineStyle.width.includes('%')) || 
-        (inlineStyle.height && inlineStyle.height.includes('%'));
+        const isSizedByPercentage = 
+            (inlineStyle.width && inlineStyle.width.includes('%')) || 
+            (inlineStyle.height && inlineStyle.height.includes('%'));
 
-    if (isSizedByPercentage) {
-        return; 
+        if (isSizedByPercentage) {
+            return; 
+        }
+
+        // New check: Determine if the element already has a manual pixel size set.
+        const hasExistingPixelStyle = 
+            (inlineStyle.width && inlineStyle.width.includes('px')) ||
+            (inlineStyle.height && inlineStyle.height.includes('px'));
+        
+        // Determine the dimensions to display in the input fields.
+        let displayWidth, displayHeight;
+
+        if (inlineStyle.width && inlineStyle.width.includes("px")) {
+            displayWidth = parseFloat(inlineStyle.width);
+        } else {
+            displayWidth = Math.round(parseFloat(computedStyle.width));
+        }
+
+        if (inlineStyle.height && inlineStyle.height.includes("px")) {
+            displayHeight = parseFloat(inlineStyle.height);
+        } else {
+            displayHeight = Math.round(parseFloat(computedStyle.height));
+        }
+        
+        // Always update the input fields to show the current state.
+        imageWidthInput.value = displayWidth;
+        imageHeightInput.value = displayHeight;
+
+        // If no pixel style existed before, STOP here. Do not "lock in" the dimensions.
+        if (!hasExistingPixelStyle) {
+            return;
+        }
+
+        // If a pixel style DID exist, we re-apply it to ensure consistency.
+        currentlySelected.style.width = displayWidth + "px";
+        currentlySelected.style.height = displayHeight + "px";
+        
+        // The object position logic remains the same.
+        const objectPositionValue = computedStyle.objectPosition;
+        const positionX = objectPositionValue.split(' ')[0];
+        imagePositionInput.value = parseFloat(positionX) || 50;
     }
-
-    let finalWidth, finalHeight;
-
-    if (inlineStyle.width && inlineStyle.width.includes("px")) {
-        finalWidth = parseFloat(inlineStyle.width);
-    } else {
-        finalWidth = Math.round(parseFloat(computedStyle.width));
-    }
-
-    if (inlineStyle.height && inlineStyle.height.includes("px")) {
-        finalHeight = parseFloat(inlineStyle.height);
-    } else {
-        finalHeight = Math.round(parseFloat(computedStyle.height));
-    }
-
-    imageWidthInput.value = finalWidth;
-    imageHeightInput.value = finalHeight;
-
-    currentlySelected.style.width = finalWidth + "px";
-    currentlySelected.style.height = finalHeight + "px";
-    
-    const objectPositionValue = computedStyle.objectPosition;
-    const positionX = objectPositionValue.split(' ')[0];
-    imagePositionInput.value = parseFloat(positionX) || 50;
-}
 }
 
 // ===============================
