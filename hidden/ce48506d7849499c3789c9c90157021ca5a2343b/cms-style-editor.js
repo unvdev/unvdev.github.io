@@ -123,7 +123,7 @@ imageWidthInput.addEventListener("input", () => {
   if (currentlySelected) {
     currentlySelected.classList.add("custom-styles");
     let width = parseFloat(imageWidthInput.value) || 100;
-    width = Math.max(10, Math.min(2000, width));
+    width = Math.max(10, Math.min(9999, width));
     currentlySelected.style.width = width + "px";
   }
 });
@@ -135,7 +135,7 @@ imageHeightInput.addEventListener("input", () => {
   if (currentlySelected) {
     currentlySelected.classList.add("custom-styles");
     let height = parseFloat(imageHeightInput.value) || 100;
-    height = Math.max(10, Math.min(2000, height));
+    height = Math.max(10, Math.min(9999, height));
     currentlySelected.style.height = height + "px";
   }
 });
