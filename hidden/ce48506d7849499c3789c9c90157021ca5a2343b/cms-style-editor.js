@@ -359,37 +359,27 @@ function loadCroppedImageValues() {
         const computedStyle = window.getComputedStyle(currentlySelected);
         const inlineStyle = currentlySelected.style;
 
-        const isSizedByPercentage = 
-            (inlineStyle.width && inlineStyle.width.includes('%')) || 
-            (inlineStyle.height && inlineStyle.height.includes('%'));
-
-        if (isSizedByPercentage) {
+        if (inlineStyle.width && inlineStyle.width.includes('%')) {
             return; 
         }
 
-        // --- Step 1: Determine the dimensions to DISPLAY in the UI ---
         let displayWidth, displayHeight;
 
-        // For width: Prioritize an existing inline pixel value, else use the computed width.
         if (inlineStyle.width && inlineStyle.width.includes("px")) {
             displayWidth = parseFloat(inlineStyle.width);
         } else {
             displayWidth = Math.round(parseFloat(computedStyle.width));
         }
 
-        // For height: Prioritize an existing inline pixel value, else use the computed height.
         if (inlineStyle.height && inlineStyle.height.includes("px")) {
             displayHeight = parseFloat(inlineStyle.height);
         } else {
             displayHeight = Math.round(parseFloat(computedStyle.height));
         }
 
-        // --- Step 2: Update the UI input fields ONLY ---
-        // This function no longer modifies the selected element.
         imageWidthInput.value = displayWidth;
         imageHeightInput.value = displayHeight;
         
-        // The object position logic is fine and can remain.
         const objectPositionValue = computedStyle.objectPosition;
         const positionX = objectPositionValue.split(' ')[0];
         imagePositionInput.value = parseFloat(positionX) || 50;
