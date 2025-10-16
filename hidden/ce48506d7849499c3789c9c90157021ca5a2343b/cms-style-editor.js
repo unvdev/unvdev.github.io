@@ -369,14 +369,16 @@ function loadCroppedImageValues() {
             displayWidth = parseFloat(inlineStyle.width);
         } else {
             displayWidth = Math.round(parseFloat(computedStyle.width));
-            inlineStyle.width = displayWidth;
+            // THE FIX: Add the "px" unit to the number
+            inlineStyle.width = displayWidth + "px";
         }
 
         if (inlineStyle.height && inlineStyle.height.includes("px")) {
             displayHeight = parseFloat(inlineStyle.height);
         } else {
             displayHeight = Math.round(parseFloat(computedStyle.height));
-            inlineStyle.height = displayHeight;
+            // THE FIX: Add the "px" unit to the number
+            inlineStyle.height = displayHeight + "px";
         }
 
         imageWidthInput.value = displayWidth;
