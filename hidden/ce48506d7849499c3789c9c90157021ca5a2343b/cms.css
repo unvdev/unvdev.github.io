@@ -126,7 +126,7 @@
     max-width: calc(100% - 2rem) !important;
 }
 
-.building-column .building-block {
+.building-column .building-block:not(.accordion-container) {
     margin-top: 1rem;
     margin-left: 1rem;
     margin-right: 1rem;
