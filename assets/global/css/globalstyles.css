@@ -750,6 +750,8 @@ footer {
 /*Accordion*/
 
 .accordion-container {
+    display: block;
+    position: relative;
     width: 100%;
 }
 
