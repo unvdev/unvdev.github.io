@@ -400,19 +400,18 @@ function loadStylesFromSelected() {
     backgroundColorInput.value = rgbToHex(computed.backgroundColor);
     if (backgroundColorValueSpan) backgroundColorValueSpan.textContent = rgbToHex(computed.backgroundColor).toUpperCase();
 
-const styleWidth = currentlySelected.style.width;
-let percent = 100;
-
-const realPercent = getRealWidthPercent();
-widthInput.value = realPercent;
-
-if (realPercent >= 100) {
-    currentlySelected.style.width = "";
+if (currentlySelected.style.width && currentlySelected.style.width.includes("px")) {
+    loadCroppedImageValues();
 } else {
-    currentlySelected.style.width = `calc(${realPercent}% - 2rem)`;
-}
+    const realPercent = getRealWidthPercent();
+    widthInput.value = realPercent;
 
-    highlightActiveControls();
+    if (realPercent >= 100) {
+        currentlySelected.style.width = "";
+    } else {
+        currentlySelected.style.width = `calc(${realPercent}% - 2rem)`;
+    }
+}
 
     // Padding
     paddingTopInput.value = parseInt(computed.paddingTop) || 0;
@@ -438,7 +437,7 @@ if (currentlySelected.style.borderColor) {
 if (borderColorInput) borderColorInput.value = finalBorderColor;
 if (borderColorValueSpan) borderColorValueSpan.textContent = finalBorderColor.toUpperCase();
 
-loadCroppedImageValues();
+highlightActiveControls();
 }
 function checkRestrictedControls() {
   const verticalAlignControls = document.getElementById("style-editor-vertical-align-controls");
