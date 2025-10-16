@@ -467,14 +467,14 @@ function checkRestrictedControls() {
 
 // Custom Event Listeners
 imageDefault.addEventListener("click", () => {
-    currentlySelected.style.removeProperty('width');
-    currentlySelected.style.removeProperty('height');
+    // currentlySelected.style.removeProperty('width');
+    // currentlySelected.style.removeProperty('height');
     setTimeout(checkRestrictedControls, 0);
 });
 
 imageCrop.addEventListener("click", () => {
-    currentlySelected.style.removeProperty('width');
-    currentlySelected.style.removeProperty('height');
+    // currentlySelected.style.removeProperty('width');
+    // currentlySelected.style.removeProperty('height');
     loadCroppedImageValues();
     setTimeout(checkRestrictedControls, 0);
 });
