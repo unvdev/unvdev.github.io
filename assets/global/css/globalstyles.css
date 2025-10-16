@@ -753,6 +753,7 @@ footer {
     display: block;
     position: relative;
     width: 100%;
+    overflow: auto;
 }
 
 .accordion:hover {
