@@ -358,30 +358,34 @@ function cleanWidth() {
 
 //Helper: Load the cropped image styles
 function loadCroppedImageValues() {
-    // We only want to debug if an image is selected
-    if (currentlySelected && currentlySelected.classList.contains("image-element")) {
-        
-        console.log("--- Starting loadCroppedImageValues ---");
-        
+    if (currentlySelected.classList.contains("image-element")) {
+        const computedStyle = window.getComputedStyle(currentlySelected);
         const inlineStyle = currentlySelected.style;
 
-        // CRITICAL TEST: What is the inline style right now?
-        console.log("1. The current inlineStyle.width is:", `"${inlineStyle.width}"`);
+        if (inlineStyle.width && inlineStyle.width.includes('%')) {
+            return; 
+        }
+
+        let displayWidth, displayHeight;
 
         if (inlineStyle.width && inlineStyle.width.includes("px")) {
-            console.log("2. SUCCESS: Found 'px' in the width. Will use the inline style.");
             displayWidth = parseFloat(inlineStyle.width);
         } else {
-            console.error("3. FAILED: Did NOT find 'px'. Will use the computed width instead.");
-            const computedStyle = window.getComputedStyle(currentlySelected);
             displayWidth = Math.round(parseFloat(computedStyle.width));
         }
 
-        console.log("4. Final displayWidth that will be used:", displayWidth);
+        if (inlineStyle.height && inlineStyle.height.includes("px")) {
+            displayHeight = parseFloat(inlineStyle.height);
+        } else {
+            displayHeight = Math.round(parseFloat(computedStyle.height));
+        }
+
         imageWidthInput.value = displayWidth;
+        imageHeightInput.value = displayHeight;
         
-        // (The height and position logic can remain as-is for this test)
-        // ...
+        const objectPositionValue = computedStyle.objectPosition;
+        const positionX = objectPositionValue.split(' ')[0];
+        imagePositionInput.value = parseFloat(positionX) || 50;
     }
 }
 
