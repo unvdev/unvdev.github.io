@@ -468,12 +468,14 @@ function checkRestrictedControls() {
 imageDefault.addEventListener("click", () => {
     currentlySelected.style.removeProperty('width');
     currentlySelected.style.removeProperty('height');
+    currentlySelected.style.removeProperty('objectPosition');
     setTimeout(checkRestrictedControls, 0);
 });
 
 imageCrop.addEventListener("click", () => {
     currentlySelected.style.removeProperty('width');
     currentlySelected.style.removeProperty('height');
+    currentlySelected.style.removeProperty('objectPosition');
     loadCroppedImageValues();
     setTimeout(checkRestrictedControls, 0);
 });
