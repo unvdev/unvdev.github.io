@@ -367,40 +367,29 @@ function loadCroppedImageValues() {
             return; 
         }
 
-        // New check: Determine if the element already has a manual pixel size set.
-        const hasExistingPixelStyle = 
-            (inlineStyle.width && inlineStyle.width.includes('px')) ||
-            (inlineStyle.height && inlineStyle.height.includes('px'));
-        
-        // Determine the dimensions to display in the input fields.
+        // --- Step 1: Determine the dimensions to DISPLAY in the UI ---
         let displayWidth, displayHeight;
 
+        // For width: Prioritize an existing inline pixel value, else use the computed width.
         if (inlineStyle.width && inlineStyle.width.includes("px")) {
             displayWidth = parseFloat(inlineStyle.width);
         } else {
             displayWidth = Math.round(parseFloat(computedStyle.width));
         }
 
+        // For height: Prioritize an existing inline pixel value, else use the computed height.
         if (inlineStyle.height && inlineStyle.height.includes("px")) {
             displayHeight = parseFloat(inlineStyle.height);
         } else {
             displayHeight = Math.round(parseFloat(computedStyle.height));
         }
-        
-        // Always update the input fields to show the current state.
+
+        // --- Step 2: Update the UI input fields ONLY ---
+        // This function no longer modifies the selected element.
         imageWidthInput.value = displayWidth;
         imageHeightInput.value = displayHeight;
-
-        // If no pixel style existed before, STOP here. Do not "lock in" the dimensions.
-        if (!hasExistingPixelStyle) {
-            return;
-        }
-
-        // If a pixel style DID exist, we re-apply it to ensure consistency.
-        currentlySelected.style.width = displayWidth + "px";
-        currentlySelected.style.height = displayHeight + "px";
         
-        // The object position logic remains the same.
+        // The object position logic is fine and can remain.
         const objectPositionValue = computedStyle.objectPosition;
         const positionX = objectPositionValue.split(' ')[0];
         imagePositionInput.value = parseFloat(positionX) || 50;
