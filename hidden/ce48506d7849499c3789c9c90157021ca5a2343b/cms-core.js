@@ -278,7 +278,7 @@ document.addEventListener("click", (e) => {
                }
             } else if (target === moveDown) {
                const next = currentlySelected.nextElementSibling;
-               if (!next.classList.contains("placeholder-block")) {
+               if (!next.classList.contains("placeholder-block") || !next.classList.contains("accordion-content")) {
                   currentlySelected.parentElement.insertBefore(currentlySelected, next.nextElementSibling);
                } else {
                   return;
@@ -343,7 +343,7 @@ document.addEventListener("keydown", e => {
       } else if (e.key === 'ArrowDown') {
          e.preventDefault();
          const next = currentlySelected.nextElementSibling;
-         if (!next.classList.contains("placeholder-block")) {
+         if (!next.classList.contains("placeholder-block") || !next.classList.contains("accordion-content")) {
             currentlySelected.parentElement.insertBefore(currentlySelected, next.nextElementSibling);
          } else {
             return;
