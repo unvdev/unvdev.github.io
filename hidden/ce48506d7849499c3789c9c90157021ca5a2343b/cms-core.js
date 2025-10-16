@@ -278,12 +278,10 @@ document.addEventListener("click", (e) => {
                }
             } else if (target === moveDown) {
                const next = currentlySelected.nextElementSibling;
-               if (!next.classList.contains("placeholder-block")) {
-                  currentlySelected.parentElement.insertBefore(currentlySelected, next.nextElementSibling);
-               } else if (next.classList.contains("accordion-content")) {
+               if (next.classList.contains("placeholder-block") || next.classList.contains("accordion-content")) {
                   return;
                } else {
-                  return;
+                  currentlySelected.parentElement.insertBefore(currentlySelected, next.nextElementSibling);
                }
             }
          }
@@ -345,12 +343,10 @@ document.addEventListener("keydown", e => {
       } else if (e.key === 'ArrowDown') {
          e.preventDefault();
          const next = currentlySelected.nextElementSibling;
-         if (!next.classList.contains("placeholder-block")) {
-            currentlySelected.parentElement.insertBefore(currentlySelected, next.nextElementSibling);
-         } else if (next.classList.contains("accordion-content")) {
+         if (next.classList.contains("placeholder-block") || next.classList.contains("accordion-content")) {
             return;
          } else {
-            return;
+            currentlySelected.parentElement.insertBefore(currentlySelected, next.nextElementSibling);
          }
       }
    }
