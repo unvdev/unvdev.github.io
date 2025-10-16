@@ -103,7 +103,10 @@ borderRadiusInput?.addEventListener("input", () => {
 // WIDTH CONTROL (direct input)
 // ===============================
 widthInput.addEventListener("input", () => {
-  if (currentlySelected) {
+  if (currentlySelected && currentlySelected.style.width && currentlySelected.style.width.includes("px")) {
+    return;
+  }
+  else if (currentlySelected) {
     currentlySelected.classList.add("custom-styles");
     let uiPercent = parseFloat(widthInput.value) || 100;
     uiPercent = Math.max(5, Math.min(100, uiPercent));
