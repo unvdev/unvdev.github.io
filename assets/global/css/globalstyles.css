@@ -754,7 +754,6 @@ footer {
     flex-direction: column;
     position: relative;
     width: 100%;
-    overflow: auto;
 }
 
 .accordion:hover {
