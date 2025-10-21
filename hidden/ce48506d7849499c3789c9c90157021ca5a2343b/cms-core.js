@@ -82,15 +82,15 @@ function pasteElement() {
          return;
       }
 
-      if (copiedElement.classList.contains('building-container')) {
-         if (currentlySelected.classList.contains('building-container')) {
-            currentlySelected.insertAdjacentHTML('afterend', clipboard.html);
-            return;
-         } else {
-            alert('A building container can only be pasted after another container.');
-            return;
-         }
-      }
+      // if (copiedElement.classList.contains('building-container')) {
+      //    if (currentlySelected.classList.contains('building-container')) {
+      //       currentlySelected.insertAdjacentHTML('afterend', clipboard.html);
+      //       return;
+      //    } else {
+      //       alert('A building container can only be pasted after another container.');
+      //       return;
+      //    }
+      // }
 
       if (currentlySelected.classList.contains('building-column')) {
          const placeholder = currentlySelected.querySelector('.placeholder-block');
