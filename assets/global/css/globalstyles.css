@@ -555,7 +555,7 @@ footer {
 /* 2 columns */
 .building-column-span-two {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     width: 100%;
     /* padding: 1rem; */
     gap: 1rem;
