@@ -546,7 +546,7 @@ footer {
 /* 1 column */
 .building-column-span-one {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
     width: 100%;
     /* padding: 1rem; */
     gap: 1rem;
@@ -573,7 +573,7 @@ footer {
 /* 4 columns */
 .building-column-span-four {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     width: 100%;
     /* padding: 1rem; */
     gap: 1rem;
@@ -582,7 +582,7 @@ footer {
 /* 5 columns */
 .building-column-span-five {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     width: 100%;
     /* padding: 1rem; */
     gap: 1rem;
@@ -591,7 +591,7 @@ footer {
 /* 6 columns */
 .building-column-span-six {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(6, minmax(0, 1fr));
     width: 100%;
     /* padding: 1rem; */
     gap: 1rem;
@@ -619,11 +619,11 @@ footer {
 @media (max-width: 1200px) {
     :not(.building-column-static) {
     &.building-column-span-six {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     &.building-column-span-five {
-        grid-template-columns: repeat(6, 1fr);
+        grid-template-columns: repeat(6, minmax(0, 1fr));
     }
 
     &.building-column-span-five .building-column:nth-child(-n+3) {
@@ -635,15 +635,15 @@ footer {
     }
 
     &.building-column-span-four {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
    &.building-column-span-three {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     &.building-column-span-two {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 }
@@ -651,11 +651,11 @@ footer {
 @media (max-width: 960px) {
     :not(.building-column-static) {
     &.building-column-span-six {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     &.building-column-span-five {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     &.building-column-span-five .building-column:nth-child(-n+3) {
@@ -671,7 +671,7 @@ footer {
     }
 
     &.building-column-span-three {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     &.building-column-span-three .building-column:nth-child(3) {
@@ -689,7 +689,7 @@ footer {
     &.building-column-span-two,
     &.building-column-span-asymm-left,
     &.building-column-span-asymm-right {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
     }
 
     &.building-column-span-five .building-column:nth-child(-n+3) {
